@@ -13,6 +13,7 @@ class Curriculum extends Migration
      */
     public function up()
     {
+        
         Schema::create('curriculum', function (Blueprint $table) {
             $table->increments('id');
             $table->string('curriculumCode')->unique();
