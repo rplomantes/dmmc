@@ -15,7 +15,7 @@
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('idno') ? ' has-error' : '' }}">
-                            <label for="idno" class="col-md-4 control-label">Id No</label>
+                            <label for="idno" class="col-md-4 control-label">ID No</label>
 
                             <div class="col-md-6">
                                 <input id="email"  class="form-control" name="idno" value="{{ old('idno') }}" required autofocus>
