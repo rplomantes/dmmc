@@ -40,6 +40,12 @@ class Kernel extends HttpKernel
             'throttle:60,1',
             'bindings',
         ],
+        
+        'ajax' => [
+            /*
+             * Add Middleware here to add rules to ajax route
+             */
+        ],
     ];
 
     /**
