@@ -17,7 +17,6 @@ class DepartmentPermission extends Migration
             $table->increments('id');
             $table->string('idno');
             $table->string('departmentCode');
-            $table->rememberToken();
             $table->timestamps();
         });
     }

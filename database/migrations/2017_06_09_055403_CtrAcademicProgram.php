@@ -18,7 +18,6 @@ class CtrAcademicProgram extends Migration
             $table->string('academicProgram');
             $table->string('departmentCode');
             $table->string('departmentName');
-            $table->rememberToken();
             $table->timestamps();
         });
     }

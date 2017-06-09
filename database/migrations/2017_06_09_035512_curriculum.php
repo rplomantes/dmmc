@@ -27,7 +27,6 @@ class Curriculum extends Migration
             $table->string('yearLevel');
             $table->string('period');
             $table->string('courseType');
-            $table->rememberToken();
             $table->timestamps();
         });
     }

@@ -17,7 +17,6 @@ class PreRequisites extends Migration
             $table->increments('id');
             $table->string('courseCode');
             $table->string('preRequisites');
-            $table->rememberToken();
             $table->timestamps();
         });
     }

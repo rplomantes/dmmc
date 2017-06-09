@@ -28,7 +28,6 @@ class CourseOffering extends Migration
             $table->string('schoolyear');
             $table->string('period');
             $table->string('instructorID');
-            $table->rememberToken();
             $table->timestamps();
         });
     }

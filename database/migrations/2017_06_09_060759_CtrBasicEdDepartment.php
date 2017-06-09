@@ -18,7 +18,6 @@ class CtrBasicEdDepartment extends Migration
             $table->string('departmentCode');
             $table->string('departmentName');
             $table->string('level');
-            $table->rememberToken();
             $table->timestamps();
         });
     }
