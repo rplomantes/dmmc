@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CtrAcademicProgram extends Migration
+class CreatePreRequisitesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CtrAcademicProgram extends Migration
      */
     public function up()
     {
-        Schema::create('CtrAcademicProgram', function (Blueprint $table) {
+        Schema::create('pre_requisites', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('academicProgram');
-            $table->string('departmentCode');
-            $table->string('departmentName');
+            $table->string('courseCode');
+            $table->string('preRequisites');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CtrAcademicProgram extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('CtrAcademicProgram');
+        Schema::dropIfExists('pre_requisites');
     }
 }

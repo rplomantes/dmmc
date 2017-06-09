@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class DepartmentPermission extends Migration
+class CreateDeptPermissionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class DepartmentPermission extends Migration
      */
     public function up()
     {
-        Schema::create('departmentPermission', function (Blueprint $table) {
+        Schema::create('dept_permissions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('idno');
             $table->string('departmentCode');
@@ -28,6 +28,6 @@ class DepartmentPermission extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('departmentPermission');
+        Schema::dropIfExists('dept_permissions');
     }
 }

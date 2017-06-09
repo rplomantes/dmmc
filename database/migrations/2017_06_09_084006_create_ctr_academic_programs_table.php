@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CtrBasicEdDepartment extends Migration
+class CreateCtrAcademicProgramsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CtrBasicEdDepartment extends Migration
      */
     public function up()
     {
-        Schema::create('CtrBasicEdDepartment', function (Blueprint $table) {
+        Schema::create('ctr_academic_programs', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('academicProgram');
             $table->string('departmentCode');
             $table->string('departmentName');
-            $table->string('level');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CtrBasicEdDepartment extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('CtrBasicEdDepartment');
+        Schema::dropIfExists('ctr_academic_programs');
     }
 }
