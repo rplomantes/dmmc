@@ -38,6 +38,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapApiRoutes();
 
         $this->mapWebRoutes();
+        
         $this->mapAjaxRoutes();
 
         //
@@ -78,7 +79,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapAjaxRoutes()
     {
-        Route::middleware('ajax')
+        Route::prefix('ajax')
+             ->middleware('ajax')
              ->namespace($this->namespace)
              ->group(base_path('routes/ajax.php'));
     }
