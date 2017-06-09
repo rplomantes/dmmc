@@ -13,3 +13,8 @@ and open the template in the editor.
     background-color: #053f6f;
     border-color: #d3e0e9;
 }
+
+a:focus, a:hover {
+    color: #216a94;
+    text-decoration: none;
+}

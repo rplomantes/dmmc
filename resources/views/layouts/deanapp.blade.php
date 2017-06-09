@@ -13,6 +13,10 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/customize.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet">
+    
+    <!--Jquery -->
+    <script src="{{ asset('js/jquery.js') }}"></script>
    
 </head>
 <body>
@@ -50,22 +54,22 @@
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color:#fff">
-                                    {{ Auth::user()->lastname }}, {{ Auth::user()->firstname}} <span class="caret"></span>
+                                   <i class="fa fa-user"></i>  {{ Auth::user()->lastname }}, {{ Auth::user()->firstname}} 
                                 </a>
 
-                                <ul class="dropdown-menu" role="menu">
+                                <!--<ul class="dropdown-menu" role="menu">-->
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                            Logout
+                                             <span style="color:#fff"><i class="fa fa-sign-out"></i> Logout</span>
                                         </a>
 
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
-                                    </li>
-                                </ul>
+                                   </li>
+                                <!--</ul>-->
                             </li>
                         @endif
                     </ul>
@@ -82,8 +86,8 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="glyphicon glyphicon-folder-close">
-                            </span>Content</a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="fa fa-folder-o">
+                            </span> Content</a>
                         </h4>
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse in">
@@ -91,7 +95,7 @@
                             <table class="table">
                                 <tr>
                                     <td>
-                                        <i class="fa fa-home fa-3x" aria-hidden="true"><a href="http://www.jquery2dotnet.com">Articles</a>
+                                        <a href="{{url('/')}}"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -117,8 +121,8 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><span class="glyphicon glyphicon-th">
-                            </span>Modules</a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><span class="fa fa-file">
+                            </span> Curriculum Management</a>
                         </h4>
                     </div>
                     <div id="collapseTwo" class="panel-collapse collapse">
@@ -126,7 +130,7 @@
                             <table class="table">
                                 <tr>
                                     <td>
-                                        <a href="http://www.jquery2dotnet.com">Orders</a> <span class="label label-success">$ 320</span>
+                                        <a href="http://www.jquery2dotnet.com">Curriculum</a> <span class="label label-success">$ 320</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -226,9 +230,6 @@
         </div>
     </div>
 </div>
-    
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>
