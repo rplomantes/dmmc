@@ -70,4 +70,15 @@ class RouteServiceProvider extends ServiceProvider
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
     }
+    
+    /**
+     * Define the "ajax" routes for the application.
+     * 
+     */
+    protected function mapAjaxRoutes()
+    {
+        Route::middleware('ajax')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/ajax.php'));
+    }
 }
