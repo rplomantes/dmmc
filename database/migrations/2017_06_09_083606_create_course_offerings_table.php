@@ -15,16 +15,9 @@ class CreateCourseOfferingsTable extends Migration
     {
         Schema::create('course_offerings', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('coursecode')->unique();
+            $table->string('coursecode');
             $table->string('coursename');
-            $table->string('room');
-            $table->string('sunday');
-            $table->string('monday');
-            $table->string('tuesday');
-            $table->string('wednesday');
-            $table->string('thursday');
-            $table->string('friday');
-            $table->string('saturday');
+            $table->string('section')->default(1);
             $table->string('schoolyear');
             $table->string('period');
             $table->string('instructorID');
