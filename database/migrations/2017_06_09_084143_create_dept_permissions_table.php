@@ -15,7 +15,7 @@ class CreateDeptPermissionsTable extends Migration
     {
         Schema::create('dept_permissions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('idno');
+            $table->string('id_no');
             $table->string('department_code');
             $table->timestamps();
         });

@@ -19,11 +19,11 @@ class CreateStatusesTable extends Migration
             $table->date('date_assessed');
             $table->date('date_enrolled');
             $table->date('date_dropped');
-            $table->integer('is_new')->default(0);
+            $table->integer('isnew')->default(0);
             $table->integer('status');
             $table->string('academic_type');
             $table->string('academic_program');
-            $table->string('grade_level');
+            $table->string('level');
             $table->string('section');
             $table->string('track');
             $table->string('strand');
