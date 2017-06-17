@@ -15,17 +15,16 @@ class CreateCurriculaTable extends Migration
     {
         Schema::create('curricula', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('curriculumCode');
-            $table->string('curriculumName');
-            $table->string('programCode');
-            $table->string('programName');
-            $table->string('coursecode');
-            $table->string('coursename');
+            $table->string('curriculum_id');
+            $table->string('program_code');
+            $table->string('program_name');
+            $table->string('course_code');
+            $table->string('course_name');
             $table->integer('units');
             $table->decimal('hours', 5,2);
-            $table->string('yearLevel');
+            $table->string('level');
             $table->string('period');
-            $table->string('courseType');
+            $table->string('course_type');
             $table->timestamps();
         });
     }

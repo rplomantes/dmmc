@@ -15,8 +15,8 @@ class CreatePreRequisitesTable extends Migration
     {
         Schema::create('pre_requisites', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('courseCode');
-            $table->string('preRequisites');
+            $table->string('course_code');
+            $table->string('pre_requisites');
             $table->timestamps();
         });
     }

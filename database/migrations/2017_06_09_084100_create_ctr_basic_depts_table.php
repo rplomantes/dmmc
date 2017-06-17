@@ -15,9 +15,11 @@ class CreateCtrBasicDeptsTable extends Migration
     {
         Schema::create('ctr_basic_depts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('departmentCode');
-            $table->string('departmentName');
+            $table->string('academic_type');
+            $table->string('academic_program');
             $table->string('level');
+            $table->string('track');
+            $table->string('strand');
             $table->timestamps();
         });
     }
