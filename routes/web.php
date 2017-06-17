@@ -17,7 +17,8 @@ Route::get('/', function () {
 */
 
 Route::auth();
-Route::get('/','Main\loginController@index');
 Auth::routes();
+Route::get('/','Main\loginController@index');
 
-//Route::get('/home', 'HomeController@index')->name('home');
+//Registrar
+Route::get('/registrar/profile','\mainController@profile');

@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class = "col-md-6">
-                 <img src = "{{url("/images","dmmclogo.png")}}" alt="DMMCIHS Logo" class="img-thumbnail">
+                 <img src = "{{url("/images","dmmclogo.jpeg")}}" alt="DMMCIHS Logo" class="img-thumbnail">
              </div>
             <div class = "col-md-6">
             <div class="panel panel-default">

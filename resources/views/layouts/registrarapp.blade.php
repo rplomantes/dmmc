@@ -86,8 +86,8 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="fa fa-folder-o">
-                            </span> Content</a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="fa fa-user-circle fa-fw">
+                            </span> Registrar</a>
                         </h4>
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse in">
@@ -95,23 +95,23 @@
                             <table class="table">
                                 <tr>
                                     <td>
-                                        <a href="{{url('/')}}"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+                                        <a href="{{url('/')}}"><i class="fa fa-home fa-fw" aria-hidden="true"></i> Home</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span class="glyphicon glyphicon-flash text-success"></span><a href="http://www.jquery2dotnet.com">News</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-file text-info"></span><a href="http://www.jquery2dotnet.com">Newsletters</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-comment text-success"></span><a href="http://www.jquery2dotnet.com">Comments</a>
+                                        <a href="#"><i class="fa fa-bell fa-fw" aria-hidden="true"></i> Notifications</a>
                                         <span class="badge">42</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="{{url('/registrar/profile')}}"><i class="fa fa-user fa-fw" aria-hidden="true"></i> User Profile</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#"><i class="fa fa-lock fa-fw" aria-hidden="true"></i> Change Password</a>
                                     </td>
                                 </tr>
                             </table>
@@ -121,8 +121,8 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><span class="fa fa-file">
-                            </span> Curriculum Management</a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><span class="fa fa-child fa-fw">
+                            </span> K-12 Department</a>
                         </h4>
                     </div>
                     <div id="collapseTwo" class="panel-collapse collapse">
@@ -130,22 +130,12 @@
                             <table class="table">
                                 <tr>
                                     <td>
-                                        <a href="http://www.jquery2dotnet.com">Curriculum</a> <span class="label label-success">$ 320</span>
+                                        <a href="#"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i> Registration</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a href="http://www.jquery2dotnet.com">Invoices</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="http://www.jquery2dotnet.com">Shipments</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="http://www.jquery2dotnet.com">Tex</a>
+                                        <a href="#"><i class="fa fa-flag fa-fw" aria-hidden="true"></i> Reports</a>
                                     </td>
                                 </tr>
                             </table>
@@ -155,8 +145,8 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><span class="glyphicon glyphicon-user">
-                            </span>Account</a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><span class="fa fa-university fa-fw">
+                            </span> College Department</a>
                         </h4>
                     </div>
                     <div id="collapseThree" class="panel-collapse collapse">
@@ -164,24 +154,28 @@
                             <table class="table">
                                 <tr>
                                     <td>
-                                        <a href="http://www.jquery2dotnet.com">Change Password</a>
+                                        <a href="#"><i class="fa fa-book fa-fw" aria-hidden="true"></i> Curriculum</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a href="http://www.jquery2dotnet.com">Notifications</a> <span class="label label-info">5</span>
+                                        <a href="#"><i class="fa fa-exchange fa-fw" aria-hidden="true"></i> Course Offering</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a href="http://www.jquery2dotnet.com">Import/Export</a>
+                                        <a href="#"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i> Registration</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span class="glyphicon glyphicon-trash text-danger"></span><a href="http://www.jquery2dotnet.com" class="text-danger">
-                                            Delete Account</a>
+                                        <a href="#"><i class="fa fa-list fa-fw" aria-hidden="true"></i> List of Students</a>
                                     </td>
+                                <tr>
+                                    <td>
+                                        <a href="#"><i class="fa fa-flag fa-fw" aria-hidden="true"></i> Reports</a>
+                                    </td>
+                                </tr>
                                 </tr>
                             </table>
                         </div>
@@ -190,8 +184,8 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"><span class="glyphicon glyphicon-file">
-                            </span>Reports</a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"><span class="fa fa-star fa-fw">
+                            </span> Special Courses</a>
                         </h4>
                     </div>
                     <div id="collapseFour" class="panel-collapse collapse">
@@ -199,22 +193,17 @@
                             <table class="table">
                                 <tr>
                                     <td>
-                                        <span class="glyphicon glyphicon-usd"></span><a href="http://www.jquery2dotnet.com">Sales</a>
+                                        <a href="#"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i> Registration</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span class="glyphicon glyphicon-user"></span><a href="http://www.jquery2dotnet.com">Customers</a>
+                                        <a href="#"><i class="fa fa-exchange fa-fw" aria-hidden="true"></i> Course Offering</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span class="glyphicon glyphicon-tasks"></span><a href="http://www.jquery2dotnet.com">Products</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-shopping-cart"></span><a href="http://www.jquery2dotnet.com">Shopping Cart</a>
+                                        <a href="#"><i class="fa fa-flag fa-fw" aria-hidden="true"></i> Reports</a>
                                     </td>
                                 </tr>
                             </table>

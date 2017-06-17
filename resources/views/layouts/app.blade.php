@@ -32,7 +32,7 @@
                     <!-- Branding Image -->
                    
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        <div style="color:#fff">DMMC INSTITUTE OF HEALTH AND SCIENCE</div>
+                        <div style="color:#fff">DMMC INSTITUTE OF HEALTH SCIENCES</div>
                     </a>
                 </div>
 
@@ -76,8 +76,15 @@
         @yield('content')
     </div>
     
+    <footer class="footer" style="position: absolute; bottom: 0;width: 100%;height: 50px;background-color: #053f6f;color: whitesmoke">
+        <div class="container">
+            <p style="position: absolute; padding-top: 3px;">
+                <i>Copyright &COPY; 2017 DMMC Institute of Health Sciences</i> 
+                <br>Powered by: <a href="http://www.nephilaweb.com.ph">Nephila Web Technology Inc.</a>
+            </p>
+        </div>
+    </footer>
     
-
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
 </body>

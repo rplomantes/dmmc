@@ -15,7 +15,7 @@ class CreateCurriculaTable extends Migration
     {
         Schema::create('curricula', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('curriculumCode')->unique();
+            $table->string('curriculumCode');
             $table->string('curriculumName');
             $table->string('programCode');
             $table->string('programName');

@@ -20,6 +20,10 @@ class CreateCourseOfferingsTable extends Migration
             $table->string('section')->default(1);
             $table->string('schoolyear');
             $table->string('period');
+            $table->integer('units');
+            $table->decimal('hours', 5,2);
+            $table->string('yearLevel');
+            $table->string('courseType');
             $table->string('instructorID');
             $table->timestamps();
         });
