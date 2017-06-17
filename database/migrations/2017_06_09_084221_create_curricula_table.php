@@ -15,7 +15,7 @@ class CreateCurriculaTable extends Migration
     {
         Schema::create('curricula', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('curriculum_id');
+            $table->string('curriculum_id')->unique();
             $table->string('curriculum_year');
             $table->string('program_code');
             $table->string('program_name');
@@ -26,6 +26,7 @@ class CreateCurriculaTable extends Migration
             $table->string('level');
             $table->string('period');
             $table->string('course_type');
+            $table->integer('is_current')->default(0);
             $table->timestamps();
         });
     }
