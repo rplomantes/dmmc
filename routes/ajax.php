@@ -17,6 +17,3 @@ Route::get('/', function () {
 
 //Dean
 Route::get('/ajax/getmainstudentlist','Dean\Main\AjaxController@getmainstudentlist');
-
-//Registrar
-Route::get('/ajax/getmainstudentlistregistrar','Registrar\Main\AjaxController@getmainstudentlistregistrar');

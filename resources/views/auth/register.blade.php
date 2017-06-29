@@ -87,8 +87,8 @@
                             <div class="col-md-6">
                                 
                                 <select id="name"  class="form-control" name="accesslevel" >
-                                    <option value="1">Dean</option>
-                                    <option value="2">Guidance</option>
+                                    <option value="1">Guidance</option>
+                                    <option value="2">Dean</option>
                                     <option value="3">Registrar</option>
                                     <option value="4">Cashier</option>
                                     <option value="5">Accounting</option>

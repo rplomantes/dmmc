@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Registrar\Main;
+namespace App\Http\Controllers\Guidance\Main;
 
 use Illuminate\Support\Facades\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
-
-class AjaxController extends Controller {
-
+class AjaxController extends Controller
+{
     //
-    function getmainstudentlistregistrar() {
-        if (Request::ajax()) {
+    function getmainstudentlist(){
+        if(Request::ajax()){
             return Input::get("search");
-        }
+        }   
+            
     }
-
 }

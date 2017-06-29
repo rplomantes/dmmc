@@ -16,9 +16,19 @@ Route::get('/', function () {
 });
 */
 
+Route::get('/ajax/college/getcurriculum','Registrar\Main\AjaxController@getCurriculum');
+
 Route::auth();
 Auth::routes();
 Route::get('/','Main\loginController@index');
 
 //Registrar
 Route::get('/registrar/profile','\mainController@profile');
+Route::get('/registrar/curriculum/college','Registrar\College\curriculumController@index');
+Route::get('/registrar/curriculum/college/add','Registrar\College\curriculumController@add');
+Route::post('/registrar/curriculum/addcurriculum','Registrar\College\curriculumController@addcurriculum');
+
+//Guidance
+Route::get('/guidance/newstudent',function () {
+    return view('guidance.newstudent');
+});

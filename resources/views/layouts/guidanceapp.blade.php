@@ -87,7 +87,7 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="fa fa-user-circle fa-fw">
-                            </span> Registrar</a>
+                            </span> Guidance</a>
                         </h4>
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse in">
@@ -106,7 +106,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a href="{{url('/registrar/profile')}}"><i class="fa fa-user fa-fw" aria-hidden="true"></i> User Profile</a>
+                                        <a href="{{url('/guidance/profile')}}"><i class="fa fa-user fa-fw" aria-hidden="true"></i> User Profile</a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -122,7 +122,7 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><span class="fa fa-child fa-fw">
-                            </span> K-12 Department</a>
+                            </span> Application for Admission</a>
                         </h4>
                     </div>
                     <div id="collapseTwo" class="panel-collapse collapse">
@@ -130,80 +130,7 @@
                             <table class="table">
                                 <tr>
                                     <td>
-                                        <a href="#"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i> Registration</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="#"><i class="fa fa-flag fa-fw" aria-hidden="true"></i> Reports</a>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><span class="fa fa-university fa-fw">
-                            </span> College Department</a>
-                        </h4>
-                    </div>
-                    <div id="collapseThree" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <table class="table">
-                                <tr>
-                                    <td>
-                                        <a href="{{url('/registrar/curriculum/college')}}"><i class="fa fa-book fa-fw" aria-hidden="true"></i> Curriculum</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="#"><i class="fa fa-exchange fa-fw" aria-hidden="true"></i> Course Offering</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="#"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i> Registration</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="#"><i class="fa fa-list fa-fw" aria-hidden="true"></i> List of Students</a>
-                                    </td>
-                                <tr>
-                                    <td>
-                                        <a href="#"><i class="fa fa-flag fa-fw" aria-hidden="true"></i> Reports</a>
-                                    </td>
-                                </tr>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"><span class="fa fa-star fa-fw">
-                            </span> Special Courses</a>
-                        </h4>
-                    </div>
-                    <div id="collapseFour" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <table class="table">
-                                <tr>
-                                    <td>
-                                        <a href="#"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i> Registration</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="#"><i class="fa fa-exchange fa-fw" aria-hidden="true"></i> Course Offering</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="#"><i class="fa fa-flag fa-fw" aria-hidden="true"></i> Reports</a>
+                                        <a href="{{url('/guidance/newstudent')}}"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i>New Student</a>
                                     </td>
                                 </tr>
                             </table>

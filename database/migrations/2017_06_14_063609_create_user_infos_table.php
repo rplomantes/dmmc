@@ -15,8 +15,8 @@ class CreateUserInfosTable extends Migration
     {
         Schema::create('user_infos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('studentID')->unique();
-            $table->string('contactNo');
+            $table->string('idno')->unique();
+            $table->string('contact_no');
             $table->string('street');
             $table->string('brgy');
             $table->string('city/town');
@@ -26,7 +26,7 @@ class CreateUserInfosTable extends Migration
             $table->string('birthday');
             $table->string('birthplace');
             $table->string('citizenship');
-            $table->string('civilStat');
+            $table->string('civil_status');
             $table->string('religion');
             $table->string('lrn');
             $table->timestamps();

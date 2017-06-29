@@ -15,9 +15,9 @@ class loginController extends Controller {
     //
     function index() {
         if (Auth::user()->accesslevel == '1') {
-            return view('dean.index');
-        } else if (Auth::user()->accesslevel == '2') {
             return view('guidance.index');
+        } else if (Auth::user()->accesslevel == '2') {
+            return view('dean.index');
         } else if (Auth::user()->accesslevel == '3') {
             return view('registrar.index');
         } else if (Auth::user()->accesslevel == '4') {
