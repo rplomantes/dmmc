@@ -130,7 +130,17 @@
                             <table class="table">
                                 <tr>
                                     <td>
-                                        <a href="{{url('/guidance/newstudent')}}"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i>New Student</a>
+                                        <a href="{{url('/guidance/newstudent')}}"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Add Applicant to Pre-registration</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="{{url('/guidance/newstudent')}}"><i class="fa fa-list fa-fw" aria-hidden="true"></i> List of Applicants Per Exam Schedule</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="{{url('/guidance/newstudent')}}"><i class="fa fa-tripadvisor fa-fw" aria-hidden="true"></i> Create Entrance Exam Schedule</a>
                                     </td>
                                 </tr>
                             </table>

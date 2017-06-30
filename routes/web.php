@@ -29,6 +29,5 @@ Route::get('/registrar/curriculum/college/add','Registrar\College\curriculumCont
 Route::post('/registrar/curriculum/addcurriculum','Registrar\College\curriculumController@addcurriculum');
 
 //Guidance
-Route::get('/guidance/newstudent',function () {
-    return view('guidance.newstudent');
-});
+Route::get('/guidance/newstudent','Guidance\NewStudentController@newstudent');
+Route::post('/guidance/addapplicant','Guidance\NewStudentController@addapplicant');
