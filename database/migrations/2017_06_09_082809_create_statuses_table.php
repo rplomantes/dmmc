@@ -36,7 +36,7 @@ class CreateStatusesTable extends Migration
             $table->string('remarks');
             $table->foreign('idno')
                 ->references('idno')->on('users')
-                ->onDelete('cascade');
+                ->onUpdate('cascade');
             $table->timestamps();
         });
     }

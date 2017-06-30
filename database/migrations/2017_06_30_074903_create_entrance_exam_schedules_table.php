@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCtrBasicDeptsTable extends Migration
+class CreateEntranceExamSchedulesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,8 @@ class CreateCtrBasicDeptsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ctr_basic_depts', function (Blueprint $table) {
+        Schema::create('entrance_exam_schedules', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('academic_type');
-            $table->string('academic_program');
-            $table->string('level');
-            $table->string('track');
-            $table->string('strand');
             $table->timestamps();
         });
     }
@@ -31,6 +26,6 @@ class CreateCtrBasicDeptsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ctr_basic_depts');
+        Schema::dropIfExists('entrance_exam_schedules');
     }
 }

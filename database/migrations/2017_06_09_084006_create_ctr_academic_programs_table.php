@@ -20,6 +20,8 @@ class CreateCtrAcademicProgramsTable extends Migration
             $table->string('program_code');
             $table->string('program_name');
             $table->string('major');
+            $table->string('level');
+            $table->string('track');
             $table->timestamps();
         });
     }

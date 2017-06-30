@@ -17,7 +17,6 @@ class CreateStudentInfosTable extends Migration
             $table->increments('id');
             $table->string('idno');
             $table->string('course');
-            $table->string('course2');
             $table->string('birthdate');
             $table->string('civil_status');
             $table->string('address');
@@ -30,6 +29,10 @@ class CreateStudentInfosTable extends Migration
             $table->string('school');
             $table->string('prev_course');
             $table->timestamps();
+            $table->foreign('idno')
+                    ->references('idno')
+                    ->on('users')
+                    ->onUpdate('cascade');
         });
     }
 

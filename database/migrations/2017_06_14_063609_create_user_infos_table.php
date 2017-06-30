@@ -30,6 +30,10 @@ class CreateUserInfosTable extends Migration
             $table->string('religion');
             $table->string('lrn');
             $table->timestamps();
+            $table->foreign('idno')
+                    ->references('idno')
+                    ->on('users')
+                    ->onUpdate('cascade');
         });
     }
 
