@@ -18,9 +18,9 @@
             @if(count($programs)>0)
             <form class="form-horizontal" role="form" method="POST" action="{{ url('/guidance','addapplicant') }}">
                 {{ csrf_field() }}
-                <input type="hidden" value=<?php echo uniqid(); ?> name="refno">
+                <input type="hidden" value=<?php $refid=uniqid(); echo $refid;?> name="refno">
                 <div class="form form-group">
-                    <div class="col-sm-8"><h3>Add Applicant to Pre-registration</h3></div>
+                    <div class="col-sm-7"><h3>Add Applicant to Pre-registration</h3></div>
                     <div class="col-sm-4">
                         <input type="radio" name="status_upon_admission" value="Freshmen" checked> Freshman
                         <input type="radio" name="status_upon_admission" value="Transferee"> Transferee

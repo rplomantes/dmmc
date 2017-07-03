@@ -31,6 +31,7 @@ Route::post('/registrar/curriculum/addcurriculum','Registrar\College\curriculumC
 //Guidance
 Route::get('/guidance/newstudent','Guidance\NewStudentController@newstudent');
 Route::post('/guidance/addapplicant','Guidance\NewStudentController@addapplicant');
+Route::get('/guidance/list_of_applicants','Guidance\ListApplicantsController@listApplicants');
 
 //ajax routes
 Route::get('/ajax/guidance/getMajor/{course}','Guidance\NewStudentController@getMajor');

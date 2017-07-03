@@ -22,6 +22,8 @@ class loginController extends Controller {
             return view('registrar.index');
         } else if (Auth::user()->accesslevel == '4') {
             return view('cashier.index');
+        } else if (Auth::user()->accesslevel == '5') {
+            return view('accounting.index');
         } else {
             return ("hello");
         }
