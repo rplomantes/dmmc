@@ -135,7 +135,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a href="{{url('/guidance/newstudent')}}"><i class="fa fa-list fa-fw" aria-hidden="true"></i> List of Applicants Per Exam Schedule</a>
+                                        <a href="{{url('/guidance/newstudent')}}"><i class="fa fa-list fa-fw" aria-hidden="true"></i> List of Applicants</a>
                                     </td>
                                 </tr>
                                 <tr>

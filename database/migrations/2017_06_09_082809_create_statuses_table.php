@@ -16,22 +16,22 @@ class CreateStatusesTable extends Migration
         Schema::create('statuses', function (Blueprint $table) {
             $table->increments('id');
             $table->string('idno');
-            $table->date('date_assessed');
-            $table->date('date_enrolled');
-            $table->date('date_dropped');
+            $table->date('date_assessed')->nullable();
+            $table->date('date_enrolled')->nullable();
+            $table->date('date_dropped')->nullable();
             $table->integer('isnew')->default(0);
             $table->integer('status');
-            $table->string('academic_type');
-            $table->string('academic_program');
-            $table->string('level');
-            $table->string('section');
-            $table->string('track');
-            $table->string('strand');
-            $table->integer('batch');
-            $table->string('school_year');
-            $table->string('period');
-            $table->integer('class_no');
-            $table->string('plan');
+            $table->string('academic_type')->nullable();
+            $table->string('academic_program')->nullable();
+            $table->string('level')->nullable();
+            $table->string('section')->nullable();
+            $table->string('track')->nullable();
+            $table->string('strand')->nullable();
+            $table->integer('batch')->nullable();
+            $table->string('school_year')->nullable();
+            $table->string('period')->nullable();
+            $table->integer('class_no')->nullable();
+            $table->string('plan')->nullable();
             $table->integer('isesc')->default(0);
             $table->string('remarks');
             $table->foreign('idno')
