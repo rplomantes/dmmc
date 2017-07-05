@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Guidance;
+namespace App\Http\Controllers\Guidance\Admission;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -9,14 +9,13 @@ Use Illuminate\Support\Facades\DB;
 use App\User;
 use App\StudentInfo;
 use App\Status;
-use Response;
 
 class NewStudentController extends Controller
 {
     //
     function newstudent(){
-        $programs = DB::Select("Select distinct program_code, program_name from ctr_academic_programs");
-        return view('guidance.newstudent',  compact('programs'));
+        $programs = DB::Select("Select distinct id, program_code, program_name from ctr_academic_programs");
+        return view('guidance.admission.newstudent',  compact('programs'));
     }
     
     function addapplicant(Request $request){
@@ -24,7 +23,6 @@ class NewStudentController extends Controller
             'lastname'=>'required',
             'firstname'=>'required',
             'course'=>'required',
-            'course2'=>'required',
             'email'=>'required',
             'address'=>'required',
             'contact_no'=>'required',
@@ -37,7 +35,7 @@ class NewStudentController extends Controller
     function createapplicant($request){
         $user = new User;
         
-        $refno=$user->idno = $request->input('refno');
+        $idno=$user->idno = $request->input('refno');
         $lastname=$user->lastname = $request->input('lastname');
         $firstname=$user->firstname = $request->input('firstname');
         $middlename=$user->middlename = $request->input('middlename');
@@ -51,9 +49,9 @@ class NewStudentController extends Controller
         
         $student_info = new StudentInfo;
         
-        $student_info->idno = $refno;
-        $course1=$student_info->course = $request->input('course');
-        $major1=$student_info->major = $request->input('major');
+        $student_info->idno = $idno;
+        $course=$student_info->course = $request->input('course');
+        $major=$student_info->major = $request->input('major');
         $course2=$student_info->course2 = $request->input('course2');
         $major2=$student_info->major2 = $request->input('major2');
         $student_info->birthdate = "";
@@ -73,7 +71,7 @@ class NewStudentController extends Controller
         
         $status = new Status;
         
-        $status->idno = $refno;
+        $status->idno = $idno;
         $status->isnew = 1;
         $status->status = 0;
         $status->academic_type = "";
@@ -92,16 +90,6 @@ class NewStudentController extends Controller
         
         $status->save();
             
-        return view('guidance.studentinfo', compact('refno', 'lastname', 'firstname', 'middlename', 'extensionname', 'course1', 'major1', 'course2', 'major2'));
-    }
-
-    public function getMajor($course) {
-        $data = DB::select("SELECT DISTINCT major FROM ctr_academic_programs WHERE program_code = '$course'");
-        return Response::json($data);
-    }
-    public function getMajor2($course2) {
-        $data = DB::select("SELECT DISTINCT major FROM ctr_academic_programs WHERE program_code = '$course2'");
-        return Response::json($data);
-    }
-    
+        return view('guidance.admission.studentinfo', compact('idno', 'lastname', 'firstname', 'middlename', 'extensionname', 'course', 'major', 'course2', 'major2'));
+    }    
 }

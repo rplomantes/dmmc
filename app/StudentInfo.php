@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class StudentInfo extends Model
 {
-    //
+    protected $primaryKey = 'idno';
 }

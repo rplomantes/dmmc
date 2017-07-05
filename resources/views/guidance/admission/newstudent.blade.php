@@ -50,6 +50,7 @@
                         <label class="label">Second Choice </label>
                         <select name="course2" id="course2" class="form form-control" onchange="getMajor2(this.value)">
                             <option value="">Please Select Second Choice</option>
+                            <option value="">None</option>
                             @foreach($programs as $program)
                             <option value="{{$program->program_code}}">{{$program->program_code}} - {{$program->program_name}}</option>
                             @endforeach
@@ -74,7 +75,7 @@
                         <input type="text" name="firstname" class="form form-control" placeholder="First Name" value="{{old('firstname')}}">
                     </div>    
                     <div class="col-sm-3">
-                        <input type="text" name="middlename" class="form form-control" placeholder="Middle Name" value="{{old('firstname')}}">
+                        <input type="text" name="middlename" class="form form-control" placeholder="Middle Name" value="{{old('middlename')}}">
                     </div> 
                     <div class="col-sm-3">
                         <input type="text" name="extensionname" class="form form-control" placeholder="Extension Name" value="{{old('extensionname')}}">

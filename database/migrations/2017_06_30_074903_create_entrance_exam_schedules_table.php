@@ -15,7 +15,11 @@ class CreateEntranceExamSchedulesTable extends Migration
     {
         Schema::create('entrance_exam_schedules', function (Blueprint $table) {
             $table->increments('id');
+            $table->datetime('datetime');
+            $table->string('place');
+            $table->integer('is_remove')->default(0);
             $table->timestamps();
+            
         });
     }
 

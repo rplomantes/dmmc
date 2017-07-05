@@ -18,7 +18,7 @@ class CreateStudentInfosTable extends Migration
             $table->string('idno');
             $table->string('course');
             $table->string('major')->nullable();
-            $table->string('course2');
+            $table->string('course2')->nullable();
             $table->string('major2')->nullable();
             $table->string('birthdate');
             $table->string('civil_status');

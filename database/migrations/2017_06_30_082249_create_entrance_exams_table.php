@@ -17,14 +17,14 @@ class CreateEntranceExamsTable extends Migration
         $table->increments('id');
             $table->string('idno');
             $table->string('course_intended');
-            $table->string('second_choice');
-            $table->string('exam_result');
-            $table->string('exam_description');
-            $table->integer('exam_schedule');
-            $table->integer('date_issued');
-            $table->integer('issued_by');
-            $table->integer('graded_by');
-            $table->integer('remarks');
+            $table->string('second_choice')->nullable();
+            $table->string('exam_result')->nullable();
+            $table->string('exam_description')->nullable();
+            $table->string('exam_schedule');
+            $table->string('date_issued');
+            $table->string('issued_by');
+            $table->string('graded_by')->nullable();
+            $table->string('remarks')->nullable();
             $table->timestamps();
             $table->foreign('idno')
                     ->references('idno')

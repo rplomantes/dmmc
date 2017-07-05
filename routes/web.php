@@ -29,10 +29,13 @@ Route::get('/registrar/curriculum/college/add','Registrar\College\curriculumCont
 Route::post('/registrar/curriculum/addcurriculum','Registrar\College\curriculumController@addcurriculum');
 
 //Guidance
-Route::get('/guidance/newstudent','Guidance\NewStudentController@newstudent');
-Route::post('/guidance/addapplicant','Guidance\NewStudentController@addapplicant');
-Route::get('/guidance/list_of_applicants','Guidance\ListApplicantsController@listApplicants');
+Route::get('/guidance/newstudent','Guidance\Admission\NewStudentController@newstudent');
+Route::post('/guidance/addapplicant','Guidance\Admission\NewStudentController@addapplicant');
+Route::get('/guidance/list_of_applicants','Guidance\Admission\ListApplicantsController@listApplicants');
+Route::get('/guidance/viewinfo/{idno}','Guidance\Admission\ListApplicantsController@viewinfo');
+Route::post('/guidance/schedule_applicant','Guidance\Admission\ExamScheduleController@schedApplicant');
 
 //ajax routes
-Route::get('/ajax/guidance/getMajor/{course}','Guidance\NewStudentController@getMajor');
-Route::get('/ajax/guidance/getMajor2/{course2}','Guidance\NewStudentController@getMajor2');
+Route::get('/ajax/getmainstudentlist','Guidance\Main\AjaxController@getmainstudentlist');
+Route::get('/ajax/guidance/getMajor/{course}','Guidance\Main\AjaxController@getMajor');
+Route::get('/ajax/guidance/getMajor2/{course2}','Guidance\Main\AjaxController@getMajor2');

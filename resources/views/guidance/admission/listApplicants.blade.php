@@ -19,27 +19,26 @@
             <table class="table table-condensed">
                 <thead>
                 <th class="col-sm-2">ID number</th>
-                <th class="col-sm-5">Name</th>
+                <th class="col-sm-4">Name</th>
                 <th class="col-sm-3">Intended Course</th>
                 <th class="col-sm-1">Status</th>
-                <th class="col-sm-1">Action</th>
+                <th class="col-sm-2">Action</th>
                 </thead>
                 @foreach($lists as $list)
                 <tbody>
-                    <tr>
+                    <tr id="displaystudent">
                         <td>{{$list->idno}}</td>
-                        <td>{{$list->lastname}}, {{$list->firstname}} {{$list->middlename}}</td>
+                        <td>{{$list->lastname}} {{$list->extensionname}}, {{$list->firstname}} {{$list->middlename}}</td>
                         <td>{{$list->course}} @if(($list->major) !== null) Major in {{$list->major}} @else @endif</td>
                         <td>{{$list->status}}</td>
-                        <td><a href="{{ url('#') }}">View</a></td>
+                        <td><a href="/guidance/viewinfo/{{$list->idno}}">View Profile</a></td>
                     </tr>
                 </tbody>
                 @endforeach
             </table>
         </div>    
     </div>    
-</div>  
-
+</div>
 <!--Ajax Module-->
 <script type="text/javascript">
     $(document).ready(function () {
@@ -54,8 +53,10 @@
                     url: "/ajax/getmainstudentlist",
                     data: array,
                     success: function (data) {
-                        $("#displaystudent").html(data);
-                        $("#search").val("");
+                        $('#displaystudent').empty();
+                        $.each(data, function (index, users) {$row.remove();
+                            $('#displaystudent').append('<td>' +users.idno+ '</td><td>' +users.lastname+', '+users.firstname+' '+users.middlename+ '</td>');
+                        });
                     }
                 });
             }
