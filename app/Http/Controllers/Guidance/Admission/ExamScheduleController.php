@@ -71,6 +71,8 @@ class ExamScheduleController extends Controller {
         $student_info->contact_no = $request->input('contact_no');
         $student_info->last_school = $request->input('last_school_attended');
         $student_info->year_graduated = $request->input('year_graduated');
+        $student_info->birthdate = $request->input('birthdate');
+        $student_info->civil_status = $request->input('civil_status');
         $student_info->gen_ave = $request->input('gen_ave');
         $student_info->honor = $request->input('honors_received');
         $student_info->is_transferee = 0;

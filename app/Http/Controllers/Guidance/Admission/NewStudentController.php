@@ -24,6 +24,7 @@ class NewStudentController extends Controller
             'firstname'=>'required',
             'course'=>'required',
             'email'=>'required',
+            'birthdate'=>'required',
             'address'=>'required',
             'contact_no'=>'required',
             
@@ -47,6 +48,12 @@ class NewStudentController extends Controller
         
         $user->save();
         
+        if ($request->input('name_of_school')==null){
+            $is_transferee = 0;
+        } else {
+            $is_transferee = 1;
+        };
+        
         $student_info = new StudentInfo;
         
         $student_info->idno = $idno;
@@ -54,15 +61,15 @@ class NewStudentController extends Controller
         $student_info->major = $request->input('major');
         $student_info->course2 = $request->input('course2');
         $student_info->major2 = $request->input('major2');
-        $student_info->birthdate = "";
-        $student_info->civil_status = "";
+        $student_info->birthdate = $request->input('birthdate');
+        $student_info->civil_status = $request->input('civil_status');
         $student_info->address = $request->input('address');
         $student_info->contact_no = $request->input('contact_no');
         $student_info->last_school = $request->input('last_school_attended');
         $student_info->year_graduated = $request->input('year_graduated');
         $student_info->gen_ave = $request->input('gen_ave');
         $student_info->honor = $request->input('honors_received');
-        $student_info->is_transferee = 0;
+        $student_info->is_transferee = $is_transferee;
         $student_info->school = $request->input('name_of_school');
         $student_info->prev_course = $request->input('prev_course');
         $student_info->status_upon_admission = $request->input('status_upon_admission');

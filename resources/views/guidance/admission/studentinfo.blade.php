@@ -5,7 +5,7 @@
 </style>
 <div class="row">
     <div class="col-sm-12">
-        @if ($value==0)
+        @if ($value==1)
         @foreach ($exams as $exam)
         <div class="alert alert-danger">Entrance exam already scheduled on <b>{{$exam->exam_schedule}}</b></div>
         @endforeach
@@ -24,8 +24,7 @@
                 @endforeach
             </ul>
         </div>
-        @endif
-        @foreach ($lists as $list)        
+        @endif       
         <form class="form-horizontal" role="form" method="POST" action="{{ url('/guidance', 'schedule_applicant') }}">
             {{ csrf_field() }}
             <div class="form form-group">
@@ -61,6 +60,24 @@
                     <input type="text" name="extensionname" class="form form-control" value = '{{$list->extensionname}}' placeholder="Extension Name">
                 </div>
             </div>
+            
+            <div class="form form-group">
+                    <div class="col-sm-6">
+                        <label class="label">Birth Date</label>
+                        <input type="date" name="birthdate" class="form form-control" placeholder="yyyy-dd-mm" value='{{$list->birthdate}}'>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="label">Civil Status</label>
+                        <select name="civil_status" class="form form-control">
+                            <option value=''></option>
+                            <option value="single" <?php if($list->civil_status=='single'){echo "selected=\"selected\""; }?>>Single</option>
+                            <option value="married" <?php if($list->civil_status=='married'){echo "selected=\"selected\""; }?>>Married</option>
+                            <option value="divorced" <?php if($list->civil_status=='divorced'){echo "selected=\"selected\""; }?>>Divorced</option>
+                            <option value="widowed" <?php if($list->civil_status=='widowed'){echo "selected=\"selected\""; }?>>Widowed</option>
+                        </select>
+                    </div>
+                </div>
+            
             <div class='form form-group'>
                 <div class="col-sm-12">
                     <label class="label">Address</label>
@@ -108,7 +125,7 @@
             </div>
             <div class="form form-group">
                 <div class="col-sm-12"><label class="label">Entrance Exam Date</label></div>
-                @if ($value==1)
+                @if ($value==0)
                 <div class="col-sm-12">
                     <select class='form form-control' name="exam_date" >
                         <option value=''>Choose Entrance Exam Schedule</option>
@@ -133,7 +150,7 @@
                 </div>    
             </div>
         </form>
-        @endforeach
+        
     </div>
 </div>
 @stop

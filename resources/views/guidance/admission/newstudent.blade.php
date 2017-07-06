@@ -66,7 +66,7 @@
 
                 <div class="form form-group">
                     <div class="col-sm-12">
-                        <label class="label">Student Name 
+                        <label class="label">Student Name </label>
                     </div>
                     <div class="col-sm-3">
                         <input type="text" name ="lastname" class="form form-control" placeholder="Last Name" value="{{old('lastname')}}">
@@ -80,6 +80,22 @@
                     <div class="col-sm-3">
                         <input type="text" name="extensionname" class="form form-control" placeholder="Extension Name" value="{{old('extensionname')}}">
                     </div> 
+                </div>
+                
+                <div class="form form-group">
+                    <div class="col-sm-6">
+                        <label class="label">Birth Date</label>
+                        <input type="date" name="birthdate" class="form form-control" placeholder="yyyy-dd-mm" value="{{old('birthdate')}}">
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="label">Civil Status</label>
+                        <select name="civil_status" class="form form-control">
+                            <option value="single">Single</option>
+                            <option value="married">Married</option>
+                            <option value="divorced">Divorced</option>
+                            <option value="widowed">Widowed</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="form form-group"> 

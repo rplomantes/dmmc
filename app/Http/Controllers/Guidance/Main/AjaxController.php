@@ -16,9 +16,9 @@ class AjaxController extends Controller {
     //
     function getmainstudentlist() {
         if (Request::ajax()) {
-            $idno = Input::get("search");
-            $data = DB::select("SELECT * FROM `users` join statuses on users.idno = statuses.idno join student_infos on student_infos.idno = users.idno where users.idno = '$idno' and statuses.status = 0 order by users.lastname asc");
-            return Response::json($data);
+            $search = Input::get("search");
+            $lists = DB::select("SELECT * FROM `users` join statuses on users.idno = statuses.idno join student_infos on student_infos.idno = users.idno where statuses.status = 0  and (users.lastname like '$search%' or users.firstname like '$search%' or users.idno like '$search')order by users.lastname asc");
+            return view('guidance.ajax.getmainstudentlist',compact('lists'));
         }
     }
 
