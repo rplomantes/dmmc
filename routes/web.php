@@ -34,6 +34,7 @@ Route::post('/guidance/addapplicant','Guidance\Admission\NewStudentController@ad
 Route::get('/guidance/list_of_applicants','Guidance\Admission\ListApplicantsController@listApplicants');
 Route::get('/guidance/viewinfo/{idno}','Guidance\Admission\ListApplicantsController@viewinfo');
 Route::post('/guidance/schedule_applicant','Guidance\Admission\ExamScheduleController@schedApplicant');
+Route::get('/guidance/exam_sched_creator','Guidance\Admission\ExamSchedCreatorController@createSched');
 
 //ajax routes
 Route::get('/ajax/getmainstudentlist','Guidance\Main\AjaxController@getmainstudentlist');

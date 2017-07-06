@@ -140,7 +140,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a href="{{url('/guidance/newstudent')}}"><i class="fa fa-tripadvisor fa-fw" aria-hidden="true"></i> Create Entrance Exam Schedule</a>
+                                        <a href="{{url('/guidance/exam_sched_creator')}}"><i class="fa fa-tripadvisor fa-fw" aria-hidden="true"></i> Create Entrance Exam Schedule</a>
                                     </td>
                                 </tr>
                             </table>

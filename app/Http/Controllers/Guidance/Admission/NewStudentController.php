@@ -36,10 +36,10 @@ class NewStudentController extends Controller
         $user = new User;
         
         $idno=$user->idno = $request->input('refno');
-        $lastname=$user->lastname = $request->input('lastname');
-        $firstname=$user->firstname = $request->input('firstname');
-        $middlename=$user->middlename = $request->input('middlename');
-        $extensionname=$user->extensionname = $request->input('extensionname');
+        $user->lastname = $request->input('lastname');
+        $user->firstname = $request->input('firstname');
+        $user->middlename = $request->input('middlename');
+        $user->extensionname = $request->input('extensionname');
         $user->email = $request->input('email');
         $user->isactive = 0;
         $user->accesslevel = 0;
@@ -50,10 +50,10 @@ class NewStudentController extends Controller
         $student_info = new StudentInfo;
         
         $student_info->idno = $idno;
-        $course=$student_info->course = $request->input('course');
-        $major=$student_info->major = $request->input('major');
-        $course2=$student_info->course2 = $request->input('course2');
-        $major2=$student_info->major2 = $request->input('major2');
+        $student_info->course = $request->input('course');
+        $student_info->major = $request->input('major');
+        $student_info->course2 = $request->input('course2');
+        $student_info->major2 = $request->input('major2');
         $student_info->birthdate = "";
         $student_info->civil_status = "";
         $student_info->address = $request->input('address');
@@ -89,7 +89,7 @@ class NewStudentController extends Controller
         $status->remarks = "";
         
         $status->save();
-            
-        return view('guidance.admission.studentinfo', compact('idno', 'lastname', 'firstname', 'middlename', 'extensionname', 'course', 'major', 'course2', 'major2'));
+           
+        return app('App\Http\Controllers\Guidance\Admission\ListApplicantsController')->viewinfo($idno);
     }    
 }

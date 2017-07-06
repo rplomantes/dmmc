@@ -38,6 +38,6 @@ class listApplicantsController extends Controller
                 ->orderBy('datetime','asc')
                 ->get();
         
-        return view('guidance.admission.studentinfo2', compact('lists', 'dates', 'value', 'exams'));
+        return view('guidance.admission.studentinfo', compact('lists', 'dates', 'value', 'exams'));
     }
 }
