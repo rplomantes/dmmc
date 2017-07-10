@@ -71,6 +71,7 @@ class RegisterController extends Controller
             'extensionname' => $data['extensionname'],
             'email' => $data['email'],
             'accesslevel' => $data['accesslevel'],
+            'academic_program' => $data['academic_program'],
             'isactive' => $data['isactive'],
             'password' => bcrypt($data['password']),
         ]);

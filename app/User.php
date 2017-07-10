@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     
-    protected $primaryKey = 'idno';
+    
     protected $fillable = [
         'idno', 'lastname', 'middlename','firstname','extensionname','accesslevel','isactive' ,'email', 'password',
     ];
@@ -29,7 +29,5 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
     
-    function status(){
-        $this->hasMany("Status");
-    }
+   
 }

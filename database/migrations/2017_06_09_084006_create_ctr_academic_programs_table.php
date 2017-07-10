@@ -15,13 +15,13 @@ class CreateCtrAcademicProgramsTable extends Migration
     {
         Schema::create('ctr_academic_programs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('academic_type');
-            $table->string('academic_program');
-            $table->string('program_code');
-            $table->string('program_name');
-            $table->string('major');
-            $table->string('level');
-            $table->string('track');
+            $table->string('academic_type')->nullable();
+            $table->string('academic_program')->nullable();
+            $table->string('program_code')->nullable();
+            $table->string('program_name')->nullable();
+            $table->string('major')->nullable();
+            $table->string('level')->nullable();
+            $table->string('track')->nullable();
             $table->timestamps();
         });
     }

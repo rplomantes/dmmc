@@ -33,7 +33,11 @@
                         <select name="course" id="course" class="form form-control" onchange="getMajor(this.value)">
                             <option value="">Please Select Intended Course</option>
                             @foreach($programs as $program)
-                            <option value="{{$program->program_code}}">{{$program->program_code}} - {{$program->program_name}}</option>
+                            <option value="{{$program->program_code}}"
+                                    @if(old('course')== $program->program_code )
+                                    selected = "selected"
+                                    @endif
+                                    >{{$program->program_code}} - {{$program->program_name}}</option>
                             @endforeach
                         </select>    
                     </div>

@@ -1,5 +1,7 @@
+<?php
+$academics = Illuminate\Support\Facades\DB::Select("Select distinct academic_program from ctr_academic_programs");
+?>
 @extends('layouts.app')
-
 @section('content')
 <div class="container">
     <div class="row">
@@ -101,8 +103,27 @@
                                 @endif
                             </div>
                         </div>
+                          <div class="form-group{{ $errors->has('accesslevel') ? ' has-error' : '' }}">
+                            <label for="idno" class="col-md-4 control-label">Academic Program</label>
 
-              
+                            <div class="col-md-6">
+                                
+                                <select id="name"  class="form-control" name="accademic_program" >
+                                   @if(count($academics)>0)
+                                            <option value="None">None</option>
+                                        @foreach($academics as $academic)
+                                            <option value="{{$academic->academic_program}}">{{$academic->academic_program}}</option>
+                                        @endforeach
+                                   @endif
+                                </select>    
+                                <input type="hidden" name="isactive" value="1">
+                                @if ($errors->has('idno'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('idno') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
                         
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>

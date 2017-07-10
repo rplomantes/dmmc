@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->integer('accesslevel')->default(0);
             $table->integer('isactive')->default(1);
             $table->string('password')->nullable();
+            $table->string('academic_program');
             $table->rememberToken();
             $table->timestamps();
         });
