@@ -5,11 +5,13 @@
         <div class="col-sm-10 col-sm-offset-1">
             <div id="imaginary_container"> 
                 <div class="input-group stylish-input-group">
-                    <input type="text" id="search" class="form-control"  placeholder="Search" >
-                    <span class="input-group-addon">
-                            <span class="fa fa-search"></span>      
-                    </span>
-                </div>
+                   
+                        <input type="text" id="search" class="form-control"  placeholder="Search" >
+                            <span class="input-group-addon">
+                                <span class="fa fa-search"></span>      
+                        </span>
+                       
+               </div>
             </div>
         </div>
 </div>
@@ -28,10 +30,11 @@
            var key = theEvent.keyCode || theEvent.which;
            var array={};
            array['search']=$("#search").val();
+           array['academic_program'] ="{{Auth::user()->academic_program}}";
            if(key==13){
                $.ajax({
                    type:"GET",
-                   url:"/ajax/getmainstudentlist",
+                   url:"/ajax/getdeanstudentlist",
                    data:array,
                    success:function(data){
                        $("#displaystudent").html(data);

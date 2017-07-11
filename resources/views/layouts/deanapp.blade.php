@@ -87,7 +87,7 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="fa fa-folder-o">
-                            </span> Content</a>
+                            </span> Dean - {{Auth::user()->academic_program}}</a>
                         </h4>
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse in">
@@ -100,24 +100,20 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span class="glyphicon glyphicon-flash text-success"></span><a href="http://www.jquery2dotnet.com">News</a>
+                                        <span class="fa fa-pencil"></span> <a href="">Student List Per Subject</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span class="glyphicon glyphicon-file text-info"></span><a href="http://www.jquery2dotnet.com">Newsletters</a>
+                                        <span class="fa fa-newspaper-o"></span> <a href="">Student Record</a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-comment text-success"></span><a href="http://www.jquery2dotnet.com">Comments</a>
-                                        <span class="badge">42</span>
-                                    </td>
-                                </tr>
+                                
                             </table>
                         </div>
                     </div>
                 </div>
+                <!--
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
@@ -220,7 +216,7 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
         <div class="col-sm-9 col-md-9">

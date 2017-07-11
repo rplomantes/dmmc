@@ -14,7 +14,7 @@ class NewStudentController extends Controller
 {
     //
     function newstudent(){
-        $programs = DB::Select("Select distinct id, program_code, program_name from ctr_academic_programs");
+        $programs = DB::Select("Select distinct program_code ,program_name from ctr_academic_programs");
         return view('guidance.admission.newstudent',  compact('programs'));
     }
     

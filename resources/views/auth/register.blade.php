@@ -103,12 +103,12 @@ $academics = Illuminate\Support\Facades\DB::Select("Select distinct academic_pro
                                 @endif
                             </div>
                         </div>
-                          <div class="form-group{{ $errors->has('accesslevel') ? ' has-error' : '' }}">
+                          <div class="form-group{{ $errors->has('academic_program') ? ' has-error' : '' }}">
                             <label for="idno" class="col-md-4 control-label">Academic Program</label>
 
                             <div class="col-md-6">
                                 
-                                <select id="name"  class="form-control" name="accademic_program" >
+                                <select id="name"  class="form-control" name="academic_program" >
                                    @if(count($academics)>0)
                                             <option value="None">None</option>
                                         @foreach($academics as $academic)

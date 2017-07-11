@@ -15,13 +15,14 @@ class CreateCourseOfferingsTable extends Migration
     {
         Schema::create('course_offerings', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('program_code');
             $table->string('course_code');
             $table->string('course_name');
             $table->string('section')->default(1);
             $table->string('school_year');
             $table->string('period');
             $table->integer('units');
-            $table->decimal('hours', 5,2);
+            $table->decimal('hours', 5,2)->nullable();
             $table->string('year_level');
             $table->string('course_type');
             $table->string('instructor_id');
