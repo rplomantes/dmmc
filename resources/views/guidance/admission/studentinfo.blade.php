@@ -82,6 +82,10 @@
                 <td>Entrance Exam Schedule</td>
                 <td>{{ date ('M d, Y (D) - g:i A', strtotime($exam->datetime))}} - {{$exam->place}}</td>
             </tr>
+            <tr>
+                <td>Entrance Exam Result</td>
+                <td>{{$exam->exam_result}}</td>
+            </tr>
         </table> 
         <a href="/guidance/viewmodifyinfo/{{$list->idno}}"><div class='btn btn-primary col-sm-6'>Modify</div></a> 
         <a href="/guidance/admission_slip/{{$list->idno}}"><div class='btn btn-success col-sm-6'>Print Entrance Exam Slip</div></a>

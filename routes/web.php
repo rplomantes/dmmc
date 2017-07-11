@@ -44,6 +44,9 @@ Route::post('/guidance/schedApplicant','Guidance\Admission\ExamScheduleControlle
 Route::get('/guidance/admission_slip/{idno}','Guidance\Admission\ExamScheduleController@printAdmission');
 Route::get('/guidance/addexamsched','Guidance\Admission\ExamSchedCreatorController@addexamsched');
 Route::post('/guidance/addsched','Guidance\Admission\ExamSchedCreatorController@addsched');
+Route::get('/guidance/view_examsched/{id}','Guidance\Admission\ExamSchedCreatorController@viewmodifysched');
+Route::post('/guidance/updatesched','Guidance\Admission\ExamSchedCreatorController@updatesched');
+Route::get('/guidance/entrance_exam_result', 'Guidance\Admission\ExamResultController@viewresult');
 
 //ajax routes
 Route::get('/ajax/getmainstudentlist','Guidance\Main\AjaxController@getmainstudentlist');

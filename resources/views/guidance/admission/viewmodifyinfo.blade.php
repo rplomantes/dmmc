@@ -165,7 +165,7 @@
                 </div>
                 @if ($value==1)
                 <div class="form form-group">
-                    <div class="col-sm-12">
+                    <div class="col-sm-6">
                         <input type="hidden" name="is_exam" value="1">
                         <label class="label">Entrance Exam Schedule</label>
                         <select name="exam_date" id="exam_date" class='form form-control'>
@@ -176,6 +176,14 @@
                                     >{{ date ('M d, Y (D) - g:i A', strtotime($date->datetime))}} - {{$date->place}}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="label">Exam Result</label><br>
+                        @if ($exam->exam_result=="")
+                        No exam result yet.<br>
+                        @endif
+                        <input type="radio" name="exam_result" value="Passed"> Passed<br>
+                        <input type="radio" name="exam_result" value="Failed"> Failed
                     </div>
                 </div>
                 @else 

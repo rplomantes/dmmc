@@ -143,6 +143,11 @@
                                         <a href="{{url('/guidance/exam_sched_creator')}}"><i class="fa fa-tripadvisor fa-fw" aria-hidden="true"></i> Entrance Exam Schedule</a>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td>
+                                        <a href="{{url('/guidance/entrance_exam_result')}}"><i class="fa fa-check-square-o fa-fw" aria-hidden="true"></i> Entrance Exam Result</a>
+                                    </td>
+                                </tr>
                             </table>
                         </div>
                     </div>
