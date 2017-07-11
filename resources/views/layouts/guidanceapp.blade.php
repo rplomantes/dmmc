@@ -14,10 +14,10 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/customize.css') }}" rel="stylesheet">
     <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet">
     
     <!--Jquery -->
-    <script src="{{ asset('js/jquery.js') }}"></script>
-   
+    <script src="{{ asset('js/jquery.js') }}"></script>  
 </head>
 <body>
     <div id="app">
@@ -140,7 +140,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a href="{{url('/guidance/exam_sched_creator')}}"><i class="fa fa-tripadvisor fa-fw" aria-hidden="true"></i> Create Entrance Exam Schedule</a>
+                                        <a href="{{url('/guidance/exam_sched_creator')}}"><i class="fa fa-tripadvisor fa-fw" aria-hidden="true"></i> Entrance Exam Schedule</a>
                                     </td>
                                 </tr>
                             </table>

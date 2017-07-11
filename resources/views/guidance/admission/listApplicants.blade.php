@@ -31,7 +31,7 @@
                     <tr>
                         <td>{{$list->idno}}</td>
                         <td>{{$list->lastname}} {{$list->extensionname}}, {{$list->firstname}} {{$list->middlename}}</td>
-                        <td>{{$list->course}} @if(($list->major) !== null) Major in {{$list->major}} @else @endif</td>
+                        <td>{{$list->course}}</td>
                         <td>{{$list->status}}</td>
                         <td><a href="/guidance/viewinfo/{{$list->idno}}">View Profile</a></td>
                     </tr>

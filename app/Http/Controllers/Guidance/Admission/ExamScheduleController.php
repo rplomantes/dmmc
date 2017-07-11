@@ -6,10 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 Use Illuminate\Support\Facades\DB;
-use App\User;
-use App\StudentInfo;
 use App\EntranceExam;
-use App\EntranceExamSchedule;
+use PDF;
 
 function __construct() {
     
@@ -18,70 +16,79 @@ function __construct() {
 class ExamScheduleController extends Controller {
 
 //
+    function schedule($idno) {
+        $dates = DB::table('entrance_exam_schedules')
+                ->where('is_remove', '=', 0)
+                ->orderBy('datetime', 'asc')
+                ->get();
+
+        $list = DB::table('users')
+                ->join('statuses', 'users.idno', '=', 'statuses.idno')
+                ->join('student_infos', 'users.idno', '=', 'student_infos.idno')
+                ->where('users.idno', '=', $idno)
+                ->where('statuses.status', '=', 0)
+                ->orderBy('users.lastname', 'asc')
+                ->first();
+
+        $exam = DB::table('entrance_exams')
+                ->join ('entrance_exam_schedules', 'entrance_exams.exam_schedule','=','entrance_exam_schedules.id')
+                ->where('idno', '=', $idno)
+                ->first();
+
+        if (count($exam) == 0) {
+            $value = 0;
+        } else {
+            $value = 1;
+        }
+        return view('guidance.admission.schedApplicant', compact('list', 'dates', 'value', 'exam'));
+    }
+
     function schedApplicant(Request $request) {
         $this->validate($request, [
-            'lastname' => 'required',
-            'firstname' => 'required',
-            'email' => 'required',
-            'address' => 'required',
-            'contact_no' => 'required',
             'exam_date' => 'required'
         ]);
-
-        $idno = $request->input('idno');
-        $lists = DB::select("select * from entrance_exams where idno='$idno'");
-
-        if (count($lists) > 0) {
-            return app('App\Http\Controllers\Guidance\Admission\ListApplicantsController')->viewinfo($idno);
-        } else {
-            return $this->createSchedapplicant($request);
-        }
+        return $this->createSchedapplicant($request);
     }
 
     function createSchedapplicant($request) {
 
         $EntranceExam = new EntranceExam;
 
-        $idno=$EntranceExam->idno = $request->input('idno');
+        $idno = $EntranceExam->idno = $request->input('idno');
         $EntranceExam->course_intended = $request->input('course');
         $EntranceExam->second_choice = $request->input('course2');
         $EntranceExam->exam_result = "";
         $EntranceExam->exam_description = "";
-        $schedule = $EntranceExam->exam_schedule = $request->input('exam_date');
+        $EntranceExam->exam_schedule = $request->input('exam_date');
         $EntranceExam->date_issued = date('Y-m-d');
-        $EntranceExam->issued_by = "";
+        $EntranceExam->issued_by = Auth::user()->idno;
         $EntranceExam->graded_by = "";
         $EntranceExam->remarks = "";
 
         $EntranceExam->save();
 
-        
-        $user = User::find($idno);
+        return redirect("guidance/viewinfo/$idno");
 
-        $user->firstname = $request->input('firstname');
-        $user->middlename = $request->input('middlename');
-        $user->lastname = $request->input('lastname');
-        $user->extensionname = $request->input('extensionname');
-        $user->email = $request->input('email');
-
-        $user->save();
-        
-        $student_info = StudentInfo::find($idno);
-        $student_info->address = $request->input('address');
-        $student_info->contact_no = $request->input('contact_no');
-        $student_info->last_school = $request->input('last_school_attended');
-        $student_info->year_graduated = $request->input('year_graduated');
-        $student_info->birthdate = $request->input('birthdate');
-        $student_info->civil_status = $request->input('civil_status');
-        $student_info->gen_ave = $request->input('gen_ave');
-        $student_info->honor = $request->input('honors_received');
-        $student_info->is_transferee = 0;
-        $student_info->school = $request->input('name_of_school');
-        $student_info->prev_course = $request->input('prev_course');
-        
-        $student_info->save();
-
-        return ("Exam Schedules on $schedule" );
+        //return app('App\Http\Controllers\Guidance\Admission\ListApplicantsController')->viewinfo($idno);
     }
+
+    function printAdmission($idno) {
+        
+        $list = DB::table('users')
+                ->join('statuses', 'users.idno', '=', 'statuses.idno')
+                ->join('student_infos', 'users.idno', '=', 'student_infos.idno')
+                ->where('users.idno', '=', $idno)
+                ->where('statuses.status', '=', 0)
+                ->orderBy('users.lastname', 'asc')
+                ->first();
+
+        $exam = DB::table('entrance_exams')
+                ->join ('entrance_exam_schedules', 'entrance_exams.exam_schedule','=','entrance_exam_schedules.id')
+                ->where('idno', '=', $idno)
+                ->first();
+        
+        $pdf = PDF::loadView('guidance.print.admissionSlip', compact('list', 'exam'));
+        return $pdf->stream("admission_slip_$idno.pdf");
+        }
 
 }

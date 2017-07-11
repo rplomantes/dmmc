@@ -17,19 +17,15 @@ class AjaxController extends Controller {
     function getmainstudentlist() {
         if (Request::ajax()) {
             $search = Input::get("search");
-            $lists = DB::select("SELECT * FROM `users` join statuses on users.idno = statuses.idno join student_infos on student_infos.idno = users.idno where statuses.status = 0  and (users.lastname like '$search%' or users.firstname like '$search%' or users.idno like '$search')order by users.lastname asc");
+            $lists = DB::select("SELECT * FROM `users` join statuses on users.idno = statuses.idno join student_infos on student_infos.idno = users.idno where statuses.status = 0  and (users.lastname like '%$search%' or users.firstname like '%$search%' or users.idno like '%$search')order by users.lastname asc");
             return view('guidance.ajax.getmainstudentlist',compact('lists'));
         }
     }
-
-    public function getMajor($course) {
-        $data = DB::select("SELECT DISTINCT major FROM ctr_academic_programs WHERE program_code = '$course'");
-        return Response::json($data);
+    function getexamschedule() {
+        if (Request::ajax()) {
+            $search = Input::get("search");
+            $scheds = DB::select("SELECT * FROM `entrance_exam_schedules` where entrance_exam_schedules.datetime like '%$search%' or entrance_exam_schedules.place like '%$search%' or entrance_exam_schedules.id like '%$search%' order by entrance_exam_schedules.is_remove asc");
+            return view('guidance.ajax.getexamschedule',compact('scheds'));
+        }
     }
-
-    public function getMajor2($course2) {
-        $data = DB::select("SELECT DISTINCT major FROM ctr_academic_programs WHERE program_code = '$course2'");
-        return Response::json($data);
-    }
-
 }
