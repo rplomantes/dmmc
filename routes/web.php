@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 */
-
+include_once 'web2.php';
 Route::get('/ajax/college/getcurriculum','Registrar\Main\AjaxController@getCurriculum');
 
 Route::auth();
@@ -49,4 +49,3 @@ Route::post('/guidance/addsched','Guidance\Admission\ExamSchedCreatorController@
 Route::get('/ajax/getmainstudentlist','Guidance\Main\AjaxController@getmainstudentlist');
 Route::get('/ajax/guidance/getMajor/{course}','Guidance\Main\AjaxController@getMajor');
 Route::get('/ajax/guidance/getMajor2/{course2}','Guidance\Main\AjaxController@getMajor2');
-Route::get('/ajax/getdeanstudentlist','Dean\Ajax\GetStudentList@index');
