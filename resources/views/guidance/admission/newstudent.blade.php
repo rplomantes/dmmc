@@ -30,7 +30,7 @@
                 <div class="form form-group"> 
                     <div class="col-sm-6">
                         <label class="label">Course Intended To Enroll </label>
-                        <select name="course" id="course" class="form form-control" onchange="getMajor(this.value)">
+                        <select name="course" id="course" class="form form-control">
                             <option value="">Please Select Intended Course</option>
                             @foreach($programs as $program)
                             <option value="{{$program->program_code}}"
@@ -40,30 +40,15 @@
                                     >{{$program->program_code}} - {{$program->program_name}}</option>
                             @endforeach
                         </select>    
-                    </div>
-                    <div class="col-sm-6">
-                        <label class="label">Major In </label>
-                        <select name="major" id="major" class="form form-control">
-                            <option value=""></option> 
-                        </select>    
-                    </div>
-                </div>
-
-                <div class="form form-group"> 
+                    </div> 
                     <div class="col-sm-6">
                         <label class="label">Second Choice </label>
-                        <select name="course2" id="course2" class="form form-control" onchange="getMajor2(this.value)">
+                        <select name="course2" id="course2" class="form form-control">
                             <option value="">Please Select Second Choice</option>
                             <option value="">None</option>
                             @foreach($programs as $program)
                             <option value="{{$program->program_code}}">{{$program->program_code}} - {{$program->program_name}}</option>
                             @endforeach
-                        </select>    
-                    </div>
-                    <div class="col-sm-6">
-                        <label class="label">Major In </label>
-                        <select name="major2" id="major2" class="form form-control">
-                            <option value="None"></option>
                         </select>    
                     </div>
                 </div>
@@ -160,34 +145,4 @@
         @endif
     </div>
 </div>
-
-<script>
-function getMajor(course) {
-    $.ajax({
-        type: "GET",
-        url: "/ajax/guidance/getMajor/" + course,
-        success: function (data) {
-            $('#major') .empty();
-            $.each(data, function (index,ctr_academic_programs) {
-                $('#major').append('<option value="' + ctr_academic_programs.major + '">' + ctr_academic_programs.major + '</option>');
-            });
-        }
-    });
-}
-;
-function getMajor2(course2) {
-    $.ajax({
-        type: "GET",
-        url: "/ajax/guidance/getMajor2/" + course2,
-        success: function (data) {
-            $('#major2') .empty();
-            $.each(data, function (index,ctr_academic_programs) {
-                $('#major2').append('<option value="' + ctr_academic_programs.major + '">' + ctr_academic_programs.major + '</option>');
-            });
-        }
-    });
-}
-;
-</script>
-
 @stop

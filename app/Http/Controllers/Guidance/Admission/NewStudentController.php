@@ -45,6 +45,7 @@ class NewStudentController extends Controller
         $user->isactive = 0;
         $user->accesslevel = 0;
         $user->password = "";
+        $user->academic_program = "";
         
         $user->save();
         
@@ -57,10 +58,8 @@ class NewStudentController extends Controller
         $student_info = new StudentInfo;
         
         $student_info->idno = $idno;
-        $student_info->course = $request->input('course');
-        $student_info->major = $request->input('major');
+        $course=$student_info->course = $request->input('course');
         $student_info->course2 = $request->input('course2');
-        $student_info->major2 = $request->input('major2');
         $student_info->birthdate = $request->input('birthdate');
         $student_info->civil_status = $request->input('civil_status');
         $student_info->address = $request->input('address');
@@ -82,7 +81,9 @@ class NewStudentController extends Controller
         $status->isnew = 1;
         $status->status = 0;
         $status->academic_type = "";
-        $status->academic_program = "";
+        $status->academic_program = $this->getAcademicProgram($course);
+        $status->program_code = "";
+        $status->program_name = "";
         $status->level = "";
         $status->section = "";
         $status->track = "";
@@ -97,6 +98,11 @@ class NewStudentController extends Controller
         
         $status->save();
            
-        return app('App\Http\Controllers\Guidance\Admission\ListApplicantsController')->viewinfo($idno);
-    }    
+        return redirect("guidance/viewinfo/$idno");
+    }
+
+    function getAcademicProgram($course){
+        $academic_program = \App\CtrAcademicProgram::where('program_code',$course)->first();
+        return $academic_program->academic_program;
+    }
 }

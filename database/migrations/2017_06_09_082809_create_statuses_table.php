@@ -23,6 +23,8 @@ class CreateStatusesTable extends Migration
             $table->integer('status');
             $table->string('academic_type')->nullable();
             $table->string('academic_program')->nullable();
+            $table->string('program_code')->nullable();
+            $table->string('program_name')->nullable();
             $table->string('level')->nullable();
             $table->string('section')->nullable();
             $table->string('track')->nullable();

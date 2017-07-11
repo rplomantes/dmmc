@@ -29,7 +29,7 @@ class listApplicantsController extends Controller {
                 ->first();
 
         $exam = DB::table('entrance_exams')
-                ->join ('entrance_exam_schedules', 'entrance_exams.exam_schedule','=','entrance_exam_schedules.id')
+                ->join('entrance_exam_schedules', 'entrance_exams.exam_schedule', '=', 'entrance_exam_schedules.id')
                 ->where('idno', '=', $idno)
                 ->first();
 
@@ -52,7 +52,7 @@ class listApplicantsController extends Controller {
                 ->first();
 
         $exam = DB::table('entrance_exams')
-                ->join ('entrance_exam_schedules', 'entrance_exams.exam_schedule','=','entrance_exam_schedules.id')
+                ->join('entrance_exam_schedules', 'entrance_exams.exam_schedule', '=', 'entrance_exam_schedules.id')
                 ->where('idno', '=', $idno)
                 ->first();
 
@@ -97,6 +97,7 @@ class listApplicantsController extends Controller {
         $user->lastname = $request->input('lastname');
         $user->extensionname = $request->input('extensionname');
         $user->email = $request->input('email');
+        $user->academic_program = "";
 
         $user->save();
 
@@ -107,10 +108,8 @@ class listApplicantsController extends Controller {
         }
 
         $student_info = StudentInfo::where('idno', $idno)->first();
-        $student_info->course = $request->input('course');
-        $student_info->major = $request->input('major');
+        $course=$student_info->course = $request->input('course');
         $student_info->course2 = $request->input('course2');
-        $student_info->major2 = $request->input('major2');
         $student_info->birthdate = $request->input('birthdate');
         $student_info->civil_status = $request->input('civil_status');
         $student_info->address = $request->input('address');
@@ -127,6 +126,11 @@ class listApplicantsController extends Controller {
         $student_info->status_upon_admission = $request->input('status_upon_admission');
 
         $student_info->save();
+        
+        $status = \App\Status::where('idno', $idno)->first();
+        $status->academic_program = $this->getAcademicProgram($course);
+
+        $status->save();
 
         if ($request->input('is_exam') == 1) {
 
@@ -137,12 +141,16 @@ class listApplicantsController extends Controller {
             $EntranceExam->exam_schedule = $request->input('exam_date');
 
             $EntranceExam->save();
-            
         } else {
             
         }
 
         return redirect("guidance/viewinfo/$idno");
+    }
+
+    function getAcademicProgram($course) {
+        $academic_program = \App\CtrAcademicProgram::where('program_code', $course)->first();
+        return $academic_program->academic_program;
     }
 
 }
