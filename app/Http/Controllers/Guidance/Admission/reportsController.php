@@ -24,10 +24,15 @@ class reportsController extends Controller {
 
     function generateNow($request) {
 
-        $prog=$request->input('acad_prog');
+        $prog=$request->acad_prog;
+        $type=$request->acad_type;
         
-        $lists = DB::select("SELECT * FROM users JOIN student_infos.idno on student_infos.idno = users.idno JOIN statuses ON statuses.idno = users.idno JOIN entrance_exams ON entrance_exams.idno = users.idno JOIN entrance_exam_schedules ON entrance_exam_schedules.id = entrance_exams.exam_schedule WHERE statuses.academic_program = '$prog' or student_infos.course='$prog' and entrance_exams.exam_result = 'Passed'");
-
+        if ($type!=='TESDA') {
+        
+        $lists = DB::select("SELECT * FROM users JOIN student_infos on student_infos.idno = users.idno JOIN statuses ON statuses.idno = users.idno JOIN entrance_exams ON entrance_exams.idno = users.idno JOIN entrance_exam_schedules ON entrance_exam_schedules.id = entrance_exams.exam_schedule WHERE (statuses.academic_program = '$prog' or student_infos.course='$prog') and entrance_exams.exam_result = 'Passed' and statuses.academic_type = '$type'");
+        } else {
+        $lists = DB::select("SELECT * FROM users JOIN student_infos on student_infos.idno = users.idno JOIN statuses ON statuses.idno = users.idno JOIN entrance_exams ON entrance_exams.idno = users.idno JOIN entrance_exam_schedules ON entrance_exam_schedules.id = entrance_exams.exam_schedule WHERE statuses.academic_type = '$type' and entrance_exams.exam_result = 'Passed' and statuses.academic_type = '$type'");
+        }
         $program = $request;
         
         $pdf = PDF::loadView('guidance.print.report', compact('lists', 'program'));

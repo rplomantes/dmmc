@@ -53,12 +53,12 @@ class ExamScheduleController extends Controller {
 
         $EntranceExam = new EntranceExam;
 
-        $idno = $EntranceExam->idno = $request->input('idno');
-        $EntranceExam->course_intended = $request->input('course');
-        $EntranceExam->second_choice = $request->input('course2');
+        $idno = $EntranceExam->idno = $request->idno;
+        $EntranceExam->course_intended = $request->course;
+        $EntranceExam->second_choice = $request->course2;
         $EntranceExam->exam_result = "";
         $EntranceExam->exam_description = "";
-        $EntranceExam->exam_schedule = $request->input('exam_date');
+        $EntranceExam->exam_schedule = $request->exam_date;
         $EntranceExam->date_issued = date('Y-m-d');
         $EntranceExam->issued_by = Auth::user()->idno;
         $EntranceExam->graded_by = "";

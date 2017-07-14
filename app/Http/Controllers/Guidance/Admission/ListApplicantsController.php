@@ -65,8 +65,11 @@ class listApplicantsController extends Controller {
                 ->orderBy('datetime', 'asc')
                 ->get();
 
-        $programs = DB::Select("Select distinct program_code, program_name from ctr_academic_programs");
-
+        if ($list->academic_type == 'College' or $list->academic_type == 'TESDA') {
+            $programs = DB::Select("Select distinct program_code, program_name from ctr_academic_programs  where academic_type='College' or academic_type='TESDA'");
+        } else {
+            $programs = DB::Select("Select distinct track from ctr_academic_programs  where academic_type='Senior High School'");
+        }
         return view('guidance.admission.viewmodifyinfo', compact('list', 'exam', 'programs', 'dates', 'value'));
     }
 
@@ -87,14 +90,14 @@ class listApplicantsController extends Controller {
 
     function updateinfo($request) {
 
-        $idno = $request->input('idno');
+        $idno = $request->idno;
 
         $user = User::where('idno', $idno)->first();
-        $user->firstname = $request->input('firstname');
-        $user->middlename = $request->input('middlename');
-        $user->lastname = $request->input('lastname');
-        $user->extensionname = $request->input('extensionname');
-        $user->email = $request->input('email');
+        $user->firstname = $request->firstname;
+        $user->middlename = $request->middlename;
+        $user->lastname = $request->lastname;
+        $user->extensionname = $request->extensionname;
+        $user->email = $request->email;
         $user->academic_program = "";
 
         $user->save();
@@ -106,22 +109,22 @@ class listApplicantsController extends Controller {
         }
 
         $student_info = StudentInfo::where('idno', $idno)->first();
-        $course = $student_info->course = $request->input('course');
-        $student_info->course2 = $request->input('course2');
-        $student_info->birthdate = $request->input('birthdate');
-        $student_info->civil_status = $request->input('civil_status');
-        $student_info->address = $request->input('address');
-        $student_info->contact_no = $request->input('contact_no');
-        $student_info->last_school = $request->input('last_school_attended');
-        $student_info->year_graduated = $request->input('year_graduated');
-        $student_info->birthdate = $request->input('birthdate');
-        $student_info->civil_status = $request->input('civil_status');
-        $student_info->gen_ave = $request->input('gen_ave');
-        $student_info->honor = $request->input('honors_received');
+        $course = $student_info->course = $request->course;
+        $student_info->course2 = $request->course2;
+        $student_info->birthdate = $request->birthdate;
+        $student_info->civil_status = $request->civil_status;
+        $student_info->address = $request->address;
+        $student_info->contact_no = $request->contact_no;
+        $student_info->last_school = $request->last_school_attended;
+        $student_info->year_graduated = $request->year_graduated;
+        $student_info->birthdate = $request->birthdate;
+        $student_info->civil_status = $request->civil_status;
+        $student_info->gen_ave = $request->gen_ave;
+        $student_info->honor = $request->honors_received;
         $student_info->is_transferee = $is_transferee;
-        $student_info->school = $request->input('name_of_school');
-        $student_info->prev_course = $request->input('prev_course');
-        $student_info->status_upon_admission = $request->input('status_upon_admission');
+        $student_info->school = $request->name_of_school;
+        $student_info->prev_course = $request->prev_course;
+        $student_info->status_upon_admission = $request->status_upon_admission;
 
         $student_info->save();
 
@@ -135,9 +138,9 @@ class listApplicantsController extends Controller {
 
             $EntranceExam = EntranceExam::where('idno', $idno)->first();
 
-            $EntranceExam->course_intended = $request->input('course');
-            $EntranceExam->second_choice = $request->input('course2');
-            $EntranceExam->exam_schedule = $request->input('exam_date');
+            $EntranceExam->course_intended = $request->course;
+            $EntranceExam->second_choice = $request->course2;
+            $EntranceExam->exam_schedule = $request->exam_date;
 
             $EntranceExam->save();
         } else {

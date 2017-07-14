@@ -43,6 +43,9 @@
                                > Returnee
                     </div>
                 </div>
+                
+                @if ($list->academic_type=='College' or $list->academic_type == 'TESDA')
+                
                 <div class="form form-group"> 
                     <div class="col-sm-12">
                         <label class="label">Course Intended To Enroll </label>
@@ -74,7 +77,42 @@
                         </select>    
                     </div>
                 </div>
+                
+                @else
+                
+                <div class="form form-group"> 
+                    <div class="col-sm-12">
+                        <label class="label">Track Intended To Enroll </label>
+                        <select name="course" id="course" class="form form-control">
+                            <option value="">Please Select Intended Track</option>
+                            @foreach($programs as $program)
+                            <option value="{{$program->track}}"
+                                    @if ($list->course== $program->track)
+                                    selected='selected'
+                                    @endif
+                                    >{{$program->track}}</option>
+                            @endforeach
+                        </select> 
+                    </div>
+                </div>
 
+                <div class="form form-group"> 
+                    <div class="col-sm-12">
+                        <label class="label">Second Choice </label>
+                        <select name="course2" id="course2" class="form form-control">
+                            <option value="">Please Select Second Choice</option>
+                            <option value="">None</option>
+                            @foreach($programs as $program)
+                            <option value="{{$program->track}}"
+                                    @if ($list->course2== $program->track)
+                                    selected='selected'
+                                    @endif>{{$program->track}}</option>
+                            @endforeach
+                        </select>    
+                    </div>
+                </div>
+                @endif
+                
                 <div class="form form-group">
                     <div class="col-sm-12">
                         <label class="label">Student Name </label>

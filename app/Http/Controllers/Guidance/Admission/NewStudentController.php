@@ -14,7 +14,7 @@ class NewStudentController extends Controller {
 
     //
     function newstudent() {
-        $programs = DB::Select("Select distinct program_code ,program_name from ctr_academic_programs where academic_type='College'");
+        $programs = DB::Select("Select distinct program_code ,program_name from ctr_academic_programs where academic_type='College' or academic_type='TESDA'");
         return view('guidance.admission.newstudent', compact('programs'));
     }
 
@@ -29,7 +29,9 @@ class NewStudentController extends Controller {
             'firstname' => 'required',
             'course' => 'required',
             'email' => 'required',
-            'birthdate' => 'required',
+            'month' => 'required',
+            'day' => 'required',
+            'year' => 'required',
             'address' => 'required',
             'contact_no' => 'required',
         ]);
@@ -40,12 +42,12 @@ class NewStudentController extends Controller {
     function createapplicant($request) {
         $user = new User;
 
-        $idno = $user->idno = $request->input('refno');
-        $user->lastname = $request->input('lastname');
-        $user->firstname = $request->input('firstname');
-        $user->middlename = $request->input('middlename');
-        $user->extensionname = $request->input('extensionname');
-        $user->email = $request->input('email');
+        $idno = $user->idno = $request->refno;
+        $user->lastname = $request->lastname;
+        $user->firstname = $request->firstname;
+        $user->middlename = $request->middlename;
+        $user->extensionname = $request->extensionname;
+        $user->email = $request->email;
         $user->isactive = 0;
         $user->accesslevel = 0;
         $user->password = "";
@@ -53,29 +55,31 @@ class NewStudentController extends Controller {
 
         $user->save();
 
-        if ($request->input('name_of_school') == null) {
+        if ($request->name_of_school == null) {
             $is_transferee = 0;
         } else {
             $is_transferee = 1;
         };
 
+        $birthdate = "$request->year-$request->month-$request->day";
+        
         $student_info = new StudentInfo;
 
         $student_info->idno = $idno;
-        $course = $student_info->course = $request->input('course');
-        $student_info->course2 = $request->input('course2');
-        $student_info->birthdate = $request->input('birthdate');
-        $student_info->civil_status = $request->input('civil_status');
-        $student_info->address = $request->input('address');
-        $student_info->contact_no = $request->input('contact_no');
-        $student_info->last_school = $request->input('last_school_attended');
-        $student_info->year_graduated = $request->input('year_graduated');
-        $student_info->gen_ave = $request->input('gen_ave');
-        $student_info->honor = $request->input('honors_received');
+        $course = $student_info->course = $request->course;
+        $student_info->course2 = $request->course2;
+        $student_info->birthdate = $birthdate;
+        $student_info->civil_status = $request->civil_status;
+        $student_info->address = $request->address;
+        $student_info->contact_no = $request->contact_no;
+        $student_info->last_school = $request->last_school_attended;
+        $student_info->year_graduated = $request->year_graduated;
+        $student_info->gen_ave = $request->gen_ave;
+        $student_info->honor = $request->honors_received;
         $student_info->is_transferee = $is_transferee;
-        $student_info->school = $request->input('name_of_school');
-        $student_info->prev_course = $request->input('prev_course');
-        $student_info->status_upon_admission = $request->input('status_upon_admission');
+        $student_info->school = $request->name_of_school;
+        $student_info->prev_course = $request->prev_course;
+        $student_info->status_upon_admission = $request->status_upon_admission;
 
         $student_info->save();
 

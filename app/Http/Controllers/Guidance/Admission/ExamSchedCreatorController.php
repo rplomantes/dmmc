@@ -39,9 +39,9 @@ class ExamSchedCreatorController extends Controller {
         
         $exam_sched = new EntranceExamSchedule;
         
-        $exam_sched->datetime = $request->input('datetime');
-        $exam_sched->place = $request->input('place');
-        $exam_sched->is_remove = $request->input('is_remove');
+        $exam_sched->datetime = $request->datetime;
+        $exam_sched->place = $request->place;
+        $exam_sched->is_remove = $request->is_remove;
         
         $exam_sched -> save();
         
@@ -74,9 +74,9 @@ class ExamSchedCreatorController extends Controller {
         $id=$request->input('id');
         
         $exam_sched = EntranceExamSchedule::where('id', $id)->first();
-        $exam_sched->datetime = $request->input('datetime');
-        $exam_sched->place = $request->input('place');
-        $exam_sched->is_remove = $request->input('is_remove');
+        $exam_sched->datetime = $request->datetime;
+        $exam_sched->place = $request->place;
+        $exam_sched->is_remove = $request->is_remove;
         
         $exam_sched -> save();
         
