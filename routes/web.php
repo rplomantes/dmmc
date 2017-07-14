@@ -30,6 +30,7 @@ Route::post('/registrar/curriculum/addcurriculum','Registrar\College\curriculumC
 
 //Guidance
 Route::get('/guidance/newstudent','Guidance\Admission\NewStudentController@newstudent');
+Route::get('/guidance/newstudent_shs','Guidance\Admission\NewStudentController@newstudent_shs');
 Route::post('/guidance/addapplicant','Guidance\Admission\NewStudentController@addapplicant');
 Route::get('/guidance/list_of_applicants','Guidance\Admission\ListApplicantsController@listApplicants');
 Route::get('/guidance/viewinfo/{idno}','Guidance\Admission\ListApplicantsController@viewinfo');

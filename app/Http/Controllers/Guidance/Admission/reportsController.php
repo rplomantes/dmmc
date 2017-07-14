@@ -26,7 +26,7 @@ class reportsController extends Controller {
 
         $prog=$request->input('acad_prog');
         
-        $lists = DB::select("SELECT * FROM users JOIN statuses ON statuses.idno = users.idno JOIN entrance_exams ON entrance_exams.idno = users.idno JOIN entrance_exam_schedules ON entrance_exam_schedules.id = entrance_exams.exam_schedule WHERE statuses.academic_program = '$prog' and entrance_exams.exam_result = 'Passed'");
+        $lists = DB::select("SELECT * FROM users JOIN student_infos.idno on student_infos.idno = users.idno JOIN statuses ON statuses.idno = users.idno JOIN entrance_exams ON entrance_exams.idno = users.idno JOIN entrance_exam_schedules ON entrance_exam_schedules.id = entrance_exams.exam_schedule WHERE statuses.academic_program = '$prog' or student_infos.course='$prog' and entrance_exams.exam_result = 'Passed'");
 
         $program = $request;
         

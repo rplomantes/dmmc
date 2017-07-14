@@ -20,6 +20,7 @@ class CreateCollegeTuitionsTable extends Migration
             $table->string('period');
             $table->decimal('per_unit',10,2);
             $table->decimal('per_hour',10,2);
+            $table->string('branch')->nullable();
             $table->timestamps();
         });
     }

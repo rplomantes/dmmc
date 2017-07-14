@@ -18,6 +18,7 @@ class CreateEntranceExamSchedulesTable extends Migration
             $table->datetime('datetime');
             $table->string('place');
             $table->integer('is_remove')->default(0);
+            $table->string('branch')->nullable();
             $table->timestamps();
             
         });

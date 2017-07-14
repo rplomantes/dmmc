@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->integer('isactive')->default(1);
             $table->string('password')->nullable();
             $table->string('academic_program');
+            $table->string('branch')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

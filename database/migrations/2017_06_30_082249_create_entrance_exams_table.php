@@ -25,6 +25,7 @@ class CreateEntranceExamsTable extends Migration
             $table->string('issued_by');
             $table->string('graded_by')->nullable();
             $table->string('remarks')->nullable();
+            $table->string('branch')->nullable();
             $table->timestamps();
             $table->foreign('idno')
                     ->references('idno')

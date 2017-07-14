@@ -18,6 +18,7 @@ class CreateCtrSchoolYearsTable extends Migration
             $table->string('academic_type');
             $table->string('school_year');
             $table->string('period');
+            $table->string('branch')->nullable();
             $table->timestamps();
         });
     }

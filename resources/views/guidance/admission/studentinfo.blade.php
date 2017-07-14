@@ -88,7 +88,7 @@
             </tr>
         </table> 
         <a href="{{url('guidance',array('viewmodifyinfo',$list->idno))}}"><div class='btn btn-primary col-sm-6'>Modify</div></a> 
-        <a href="{{url('guidance',array('admission_slip',$list->idno))}}"><div class='btn btn-success col-sm-6'>Print Entrance Exam Slip</div></a>
+        <a href="{{url('guidance',array('admission_slip',$list->idno))}}" target="_blank"><div class='btn btn-success col-sm-6'>Print Entrance Exam Slip</div></a>
 
         @else
 

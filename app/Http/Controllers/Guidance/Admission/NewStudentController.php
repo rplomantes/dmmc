@@ -10,33 +10,37 @@ use App\User;
 use App\StudentInfo;
 use App\Status;
 
-class NewStudentController extends Controller
-{
+class NewStudentController extends Controller {
+
     //
-    function newstudent(){
-        $programs = DB::Select("Select distinct program_code ,program_name from ctr_academic_programs");
-        return view('guidance.admission.newstudent',  compact('programs'));
+    function newstudent() {
+        $programs = DB::Select("Select distinct program_code ,program_name from ctr_academic_programs where academic_type='College'");
+        return view('guidance.admission.newstudent', compact('programs'));
     }
-    
-    function addapplicant(Request $request){
+
+    function newstudent_shs() {
+        $programs = DB::Select("Select distinct track from ctr_academic_programs where academic_type='Senior High School'");
+        return view('guidance.admission.newstudent_shs', compact('programs'));
+    }
+
+    function addapplicant(Request $request) {
         $this->validate($request, [
-            'lastname'=>'required',
-            'firstname'=>'required',
-            'course'=>'required',
-            'email'=>'required',
-            'birthdate'=>'required',
-            'address'=>'required',
-            'contact_no'=>'required',
-            
+            'lastname' => 'required',
+            'firstname' => 'required',
+            'course' => 'required',
+            'email' => 'required',
+            'birthdate' => 'required',
+            'address' => 'required',
+            'contact_no' => 'required',
         ]);
-        
+
         return $this->createapplicant($request);
     }
-    
-    function createapplicant($request){
+
+    function createapplicant($request) {
         $user = new User;
-        
-        $idno=$user->idno = $request->input('refno');
+
+        $idno = $user->idno = $request->input('refno');
         $user->lastname = $request->input('lastname');
         $user->firstname = $request->input('firstname');
         $user->middlename = $request->input('middlename');
@@ -46,19 +50,19 @@ class NewStudentController extends Controller
         $user->accesslevel = 0;
         $user->password = "";
         $user->academic_program = "";
-        
+
         $user->save();
-        
-        if ($request->input('name_of_school')==null){
+
+        if ($request->input('name_of_school') == null) {
             $is_transferee = 0;
         } else {
             $is_transferee = 1;
         };
-        
+
         $student_info = new StudentInfo;
-        
+
         $student_info->idno = $idno;
-        $course=$student_info->course = $request->input('course');
+        $course = $student_info->course = $request->input('course');
         $student_info->course2 = $request->input('course2');
         $student_info->birthdate = $request->input('birthdate');
         $student_info->civil_status = $request->input('civil_status');
@@ -72,11 +76,11 @@ class NewStudentController extends Controller
         $student_info->school = $request->input('name_of_school');
         $student_info->prev_course = $request->input('prev_course');
         $student_info->status_upon_admission = $request->input('status_upon_admission');
-        
+
         $student_info->save();
-        
+
         $status = new Status;
-        
+
         $status->idno = $idno;
         $status->isnew = 1;
         $status->status = 0;
@@ -95,19 +99,30 @@ class NewStudentController extends Controller
         $status->plan = "";
         $status->isesc = 0;
         $status->remarks = "";
-        
+
         $status->save();
-           
+
         return redirect("guidance/viewinfo/$idno");
     }
 
-    function getAcademicProgram($course){
-        $academic_program = \App\CtrAcademicProgram::where('program_code',$course)->first();
-        return $academic_program->academic_program;
+    function getAcademicProgram($course) {
+        if ($course == 'ABM' or $course == 'STEM' or $course == 'GAS' or $course == 'HUMMS') {
+            $academic_program = \App\CtrAcademicProgram::where('track', $course)->first();
+            return $academic_program->academic_program;
+        } else {
+            $academic_program = \App\CtrAcademicProgram::where('program_code', $course)->first();
+            return $academic_program->academic_program;
+        }
     }
-    
-    function getAcademicType($course){
-        $academic_type = \App\CtrAcademicProgram::where('program_code',$course)->first();
-        return $academic_type->academic_type;
+
+    function getAcademicType($course) {
+        if ($course == 'ABM' or $course == 'STEM' or $course == 'GAS' or $course == 'HUMMS') {
+            $academic_program = \App\CtrAcademicProgram::where('track', $course)->first();
+            return $academic_program->academic_type;
+        } else {
+            $academic_program = \App\CtrAcademicProgram::where('program_code', $course)->first();
+            return $academic_program->academic_type;
+        }
     }
+
 }

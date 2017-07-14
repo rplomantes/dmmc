@@ -20,7 +20,7 @@
                 {{ csrf_field() }}
                 <input type="hidden" value=<?php $refid=uniqid(); echo $refid;?> name="refno">
                 <div class="form form-group">
-                    <div class="col-sm-7"><h3>College Pre-registration Form</h3></div>
+                    <div class="col-sm-7"><h3>Senior High School Pre-registration Form</h3></div>
                     <div class="col-sm-4">
                         <input type="radio" name="status_upon_admission" value="Freshmen" checked> Freshman
                         <input type="radio" name="status_upon_admission" value="Transferee"> Transferee
@@ -29,15 +29,15 @@
                 </div>
                 <div class="form form-group"> 
                     <div class="col-sm-6">
-                        <label class="label">Course Intended To Enroll </label>
+                        <label class="label">Track Intended To Enroll </label>
                         <select name="course" id="course" class="form form-control">
-                            <option value="">Please Select Intended Course</option>
+                            <option value="">Please Select Track Intended to Enroll</option>
                             @foreach($programs as $program)
-                            <option value="{{$program->program_code}}"
-                                    @if(old('course')== $program->program_code )
+                            <option value="{{$program->track}}"
+                                    @if(old('course')== $program->track )
                                     selected = "selected"
                                     @endif
-                                    >{{$program->program_code}} - {{$program->program_name}}</option>
+                                    >{{$program->track}}</option>
                             @endforeach
                         </select>    
                     </div> 
@@ -45,9 +45,8 @@
                         <label class="label">Second Choice </label>
                         <select name="course2" id="course2" class="form form-control">
                             <option value="">Please Select Second Choice</option>
-                            <option value="">None</option>
                             @foreach($programs as $program)
-                            <option value="{{$program->program_code}}">{{$program->program_code}} - {{$program->program_name}}</option>
+                            <option value="{{$program->track}}">{{$program->track}}</option>
                             @endforeach
                         </select>    
                     </div>

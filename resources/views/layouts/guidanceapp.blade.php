@@ -130,7 +130,12 @@
                             <table class="table">
                                 <tr>
                                     <td>
-                                        <a href="{{url('/guidance/newstudent')}}"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Add Applicant to Pre-registration</a>
+                                        <a href="{{url('/guidance/newstudent')}}"><i class="fa fa-user fa-fw" aria-hidden="true"></i> College Application</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="{{url('/guidance/newstudent_shs')}}"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Senioh High School Application</a>
                                     </td>
                                 </tr>
                                 <tr>

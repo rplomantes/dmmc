@@ -19,6 +19,7 @@ class CreateSchedulesTable extends Migration
             $table->string('room');
             $table->string('day');
             $table->string('time');
+            $table->string('branch')->nullable();
             $table->timestamps();
         });
     }

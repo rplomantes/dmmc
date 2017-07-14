@@ -49,11 +49,11 @@ class AjaxController extends Controller {
     public function getacademicprogram($acad_type) {
         if (Request::ajax()) {
 
-            if ($acad_type == 'COLLEGE') {
+            if ($acad_type == 'College') {
                 $datas = DB::select("select distinct academic_program from ctr_academic_programs where academic_type = '$acad_type'");
                 return view('guidance.ajax.getacademicprogram-college', compact('datas'));
-            } else if ($acad_type == 'SENIOR HIGH') {
-                $datas = DB::select("select distinct program_code, program_name from ctr_academic_programs where academic_type = '$acad_type'");
+            } else if ($acad_type == 'Senior High School') {
+                $datas = DB::select("select distinct track from ctr_academic_programs where academic_type = '$acad_type'");
                 return view('guidance.ajax.getacademicprogram-senior', compact('datas'));
             } else {
                 $datas = DB::select("select distinct program_code, program_name from ctr_academic_programs where academic_type = '$acad_type'");

@@ -14,7 +14,7 @@
         </ul>
     </div>
     @endif
-        <form class="form-horizontal" method="POST" action="{{url('/guidance', 'generate_report')}}">
+        <form class="form-horizontal" target="_blank" method="POST" action="{{url('/guidance', 'generate_report')}}">
             {{ csrf_field()}}
             <h3>List of Passed Applicants</h3>
 
