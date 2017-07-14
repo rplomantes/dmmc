@@ -182,8 +182,14 @@
                         @if ($exam->exam_result=="")
                         No exam result yet.<br>
                         @endif
-                        <input type="radio" name="exam_result" value="Passed"> Passed<br>
-                        <input type="radio" name="exam_result" value="Failed"> Failed
+                        <input type="radio" name="exam_result[{{$list->idno}}]" value="Passed" onclick="changevalue('{{$list->idno}}', 'Passed')" 
+                               @if($exam->exam_result == "Passed")
+                               checked="checked"
+                               @endif> Passed
+                               <input type="radio" name="exam_result[{{$list->idno}}]" value="Failed" onclick="changevalue('{{$list->idno}}', 'Failed')"
+                               @if($exam->exam_result == "Failed")
+                               checked="checked"
+                               @endif> Failed
                     </div>
                 </div>
                 @else 
@@ -198,4 +204,16 @@
         </div>
     </div>
 </div>
+<script>
+    function changevalue(idno, value){
+    $.ajax({
+    type: "GET",
+            url: "/ajax/changevalue/" + idno + "/" + value,
+            data: "",
+            success: function (data) {
+            }
+    });
+//        alert(idno + " " +value);
+    }
+</script>
 @stop

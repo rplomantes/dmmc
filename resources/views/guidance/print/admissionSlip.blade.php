@@ -4,7 +4,8 @@
     <b>DMMC IHS ADMISSION TEST PERMIT</b><br><br><br>
 </div>
 
-<table class="table" width="100%"><tr>
+<table class="table" width="100%">
+    <tr>
         <td>Reference No:</td>
         <td style="border-bottom: 1pt solid black;"><b>{{strtoupper($list->idno)}}</b></td>
     </tr>

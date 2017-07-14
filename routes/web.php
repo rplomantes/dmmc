@@ -44,11 +44,18 @@ Route::post('/guidance/schedApplicant','Guidance\Admission\ExamScheduleControlle
 Route::get('/guidance/admission_slip/{idno}','Guidance\Admission\ExamScheduleController@printAdmission');
 Route::get('/guidance/addexamsched','Guidance\Admission\ExamSchedCreatorController@addexamsched');
 Route::post('/guidance/addsched','Guidance\Admission\ExamSchedCreatorController@addsched');
+Route::get('/guidance/delete_examsched/{id}', 'Guidance\Admission\ExamSchedCreatorController@deletesched');
 Route::get('/guidance/view_examsched/{id}','Guidance\Admission\ExamSchedCreatorController@viewmodifysched');
 Route::post('/guidance/updatesched','Guidance\Admission\ExamSchedCreatorController@updatesched');
-Route::get('/guidance/entrance_exam_result', 'Guidance\Admission\ExamResultController@viewresult');
+Route::get('/guidance/viewbatch/{id}', 'Guidance\Admission\ExamResultController@viewlist');
+
+Route::get('/guidance/reports','Guidance\Admission\reportsController@index');
+Route::post('/guidance/generate_report', 'Guidance\Admission\reportsController@generate');
 
 //ajax routes
 Route::get('/ajax/getmainstudentlist','Guidance\Main\AjaxController@getmainstudentlist');
-Route::get('/ajax/guidance/getMajor/{course}','Guidance\Main\AjaxController@getMajor');
-Route::get('/ajax/guidance/getMajor2/{course2}','Guidance\Main\AjaxController@getMajor2');
+Route::get('/ajax/getexamschedule/', 'Guidance\Main\AjaxController@getexamschedule');
+Route::get('/ajax/getexambatch/', 'Guidance\Main\AjaxController@getexambatch');
+Route::get('/ajax/changevalue/{idno}/{value}', 'Guidance\Main\AjaxController@changevalue');
+Route::get('/ajax/getacademicprogram/{acad_type}', 'Guidance\Main\AjaxController@getacademicprogram');
+Route::get('/ajax/getacad_prog/{acad_type}/{acad_prog}', 'Guidance\Main\AjaxController@getacad_prog');

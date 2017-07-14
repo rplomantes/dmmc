@@ -82,7 +82,7 @@ class NewStudentController extends Controller
         $status->status = 0;
         $status->academic_type = "";
         $status->academic_program = $this->getAcademicProgram($course);
-        $status->program_code = "";
+        $status->academic_type = $this->getAcademicType($course);
         $status->program_name = "";
         $status->level = "";
         $status->section = "";
@@ -104,5 +104,10 @@ class NewStudentController extends Controller
     function getAcademicProgram($course){
         $academic_program = \App\CtrAcademicProgram::where('program_code',$course)->first();
         return $academic_program->academic_program;
+    }
+    
+    function getAcademicType($course){
+        $academic_type = \App\CtrAcademicProgram::where('program_code',$course)->first();
+        return $academic_type->academic_type;
     }
 }

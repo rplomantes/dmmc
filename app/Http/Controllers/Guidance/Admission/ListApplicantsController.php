@@ -14,7 +14,7 @@ class listApplicantsController extends Controller {
 
     //
     function listApplicants() {
-        $lists = DB::Select("SELECT * FROM `users` join statuses on users.idno = statuses.idno join student_infos on student_infos.idno = users.idno where statuses.status = 0 order by users.lastname asc");
+        $lists = DB::Select("SELECT * FROM `users` join statuses on users.idno = statuses.idno join student_infos on student_infos.idno = users.idno where statuses.status = 0 or statuses.status = 1 or statuses.status = -1 order by users.lastname asc");
         return view('guidance.admission.listApplicants', compact('lists'));
     }
 
@@ -24,7 +24,6 @@ class listApplicantsController extends Controller {
                 ->join('statuses', 'users.idno', '=', 'statuses.idno')
                 ->join('student_infos', 'users.idno', '=', 'student_infos.idno')
                 ->where('users.idno', '=', $idno)
-                ->where('statuses.status', '=', 0)
                 ->orderBy('users.lastname', 'asc')
                 ->first();
 
@@ -47,7 +46,6 @@ class listApplicantsController extends Controller {
                 ->join('statuses', 'users.idno', '=', 'statuses.idno')
                 ->join('student_infos', 'users.idno', '=', 'student_infos.idno')
                 ->where('users.idno', '=', $idno)
-                ->where('statuses.status', '=', 0)
                 ->orderBy('users.lastname', 'asc')
                 ->first();
 
@@ -129,6 +127,7 @@ class listApplicantsController extends Controller {
         
         $status = \App\Status::where('idno', $idno)->first();
         $status->academic_program = $this->getAcademicProgram($course);
+        $status->academic_type = $this->getAcademicType($course);
 
         $status->save();
 
@@ -151,6 +150,11 @@ class listApplicantsController extends Controller {
     function getAcademicProgram($course) {
         $academic_program = \App\CtrAcademicProgram::where('program_code', $course)->first();
         return $academic_program->academic_program;
+    }
+    
+    function getAcademicType($course){
+        $academic_type = \App\CtrAcademicProgram::where('program_code',$course)->first();
+        return $academic_type->academic_type;
     }
 
 }

@@ -26,7 +26,6 @@ class ExamScheduleController extends Controller {
                 ->join('statuses', 'users.idno', '=', 'statuses.idno')
                 ->join('student_infos', 'users.idno', '=', 'student_infos.idno')
                 ->where('users.idno', '=', $idno)
-                ->where('statuses.status', '=', 0)
                 ->orderBy('users.lastname', 'asc')
                 ->first();
 
@@ -78,7 +77,6 @@ class ExamScheduleController extends Controller {
                 ->join('statuses', 'users.idno', '=', 'statuses.idno')
                 ->join('student_infos', 'users.idno', '=', 'student_infos.idno')
                 ->where('users.idno', '=', $idno)
-                ->where('statuses.status', '=', 0)
                 ->orderBy('users.lastname', 'asc')
                 ->first();
 

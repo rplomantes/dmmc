@@ -17,7 +17,11 @@ class ExamSchedCreatorController extends Controller {
     }
     
     function addexamsched() {
+        if (Auth::user()->accesslevel == '1'){
         return view('guidance.admission.addExamSched');
+        } else {
+            Return ('Not Authorized');
+        }
     }
     
     function addsched(Request $request) {

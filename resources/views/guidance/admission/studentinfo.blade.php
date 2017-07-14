@@ -57,7 +57,7 @@
                 <td>{{$list->honor}}</td>
             </tr>
             <tr>
-                <td>If transferee</td>
+                <td width="40%">If transferee</td>
                 <td>School - {{$list->school}} <br>Course - {{$list->prev_course}}</td>
             </tr>
 
@@ -66,7 +66,7 @@
         <h3>Course</h3>
         <table class='table'>
             <tr>
-                <td>Intended Course to Enroll</td>
+                <td width="40%">Intended Course to Enroll</td>
                 <td>{{$list->course}}</td>
             </tr>
             <tr>
@@ -79,7 +79,7 @@
         <h3>Entrance Exam</h3>
         <table class='table'>
             <tr>
-                <td>Entrance Exam Schedule</td>
+                <td width="40%">Entrance Exam Schedule</td>
                 <td>{{ date ('M d, Y (D) - g:i A', strtotime($exam->datetime))}} - {{$exam->place}}</td>
             </tr>
             <tr>
@@ -87,13 +87,13 @@
                 <td>{{$exam->exam_result}}</td>
             </tr>
         </table> 
-        <a href="/guidance/viewmodifyinfo/{{$list->idno}}"><div class='btn btn-primary col-sm-6'>Modify</div></a> 
-        <a href="/guidance/admission_slip/{{$list->idno}}"><div class='btn btn-success col-sm-6'>Print Entrance Exam Slip</div></a>
+        <a href="{{url('guidance',array('viewmodifyinfo',$list->idno))}}"><div class='btn btn-primary col-sm-6'>Modify</div></a> 
+        <a href="{{url('guidance',array('admission_slip',$list->idno))}}"><div class='btn btn-success col-sm-6'>Print Entrance Exam Slip</div></a>
 
         @else
 
-        <a href="/guidance/viewmodifyinfo/{{$list->idno}}"><div class='btn btn-primary col-sm-6'>Modify</div></a> 
-        <a href="/guidance/schedule_applicant/{{$list->idno}}"><div class='btn btn-success col-sm-6'>Schedule Entrance Exam</div></a>
+        <a href="{{url('guidance',array('viewmodifyinfo',$list->idno))}}"><div class='btn btn-primary col-sm-6'>Modify</div></a> 
+        <a href="{{url('guidance',array('schedule_applicant',$list->idno))}}"><div class='btn btn-success col-sm-6'>Schedule Entrance Exam</div></a>
         @endif
         
         </form>
