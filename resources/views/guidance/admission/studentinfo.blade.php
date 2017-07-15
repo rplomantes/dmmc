@@ -62,7 +62,7 @@
             </tr>
 
         </table>
-
+        @if ($list->academic_type == 'College')
         <h3>Course</h3>
         <table class='table'>
             <tr>
@@ -74,7 +74,21 @@
                 <td>{{$list->course2}}</td>
             </tr>
         </table>
-             
+        @elseif ($list->academic_type=='Senior High School')
+        <h3>Senior High School</h3>
+        <table class='table'>
+            <tr>
+                <td width="40%">Intended Track to Enroll</td>
+                <td>{{$list->course}}</td>
+            </tr>
+            <tr>
+                <td>Second Choice</td>
+                <td>{{$list->course2}}</td>
+            </tr>
+        </table>
+        @else
+        <div class='alert alert-danger'>No Department yet has been set to the Applicant. Please see administrator.</div>
+        @endif
         @if ($value==1)
         <h3>Entrance Exam</h3>
         <table class='table'>
@@ -95,7 +109,7 @@
         <a href="{{url('guidance',array('viewmodifyinfo',$list->idno))}}"><div class='btn btn-primary col-sm-6'>Modify</div></a> 
         <a href="{{url('guidance',array('schedule_applicant',$list->idno))}}"><div class='btn btn-success col-sm-6'>Schedule Entrance Exam</div></a>
         @endif
-        
+
         </form>
     </div>
 </div>

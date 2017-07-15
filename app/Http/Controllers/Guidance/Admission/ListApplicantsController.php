@@ -14,8 +14,7 @@ class listApplicantsController extends Controller {
 
     //
     function listApplicants() {
-        $lists = DB::Select("SELECT * FROM `users` join statuses on users.idno = statuses.idno join student_infos on student_infos.idno = users.idno where statuses.status = 0 or statuses.status = 1 or statuses.status = -1 order by users.lastname asc");
-        return view('guidance.admission.listApplicants', compact('lists'));
+        return view('guidance.admission.listApplicants');
     }
 
     function viewinfo($idno) {

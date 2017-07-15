@@ -78,7 +78,7 @@
                     </div>
                 </div>
                 
-                @else
+                @elseif ($list->academic_type=='Senior High School')
                 
                 <div class="form form-group"> 
                     <div class="col-sm-12">
@@ -111,6 +111,8 @@
                         </select>    
                     </div>
                 </div>
+                @else
+                <div class='alert alert-danger'>No Department yet has been set to the Applicant. Please see administrator.</div>
                 @endif
                 
                 <div class="form form-group">

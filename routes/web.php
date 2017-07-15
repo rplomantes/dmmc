@@ -41,7 +41,6 @@ Route::post('/guidance/modifyinfo', 'Guidance\Admission\ListApplicantsController
 Route::get('/guidance/schedule_applicant/{idno}','Guidance\Admission\ExamScheduleController@schedule');
 Route::post('/guidance/schedApplicant','Guidance\Admission\ExamScheduleController@schedApplicant');
 
-
 Route::get('/guidance/admission_slip/{idno}','Guidance\Admission\ExamScheduleController@printAdmission');
 Route::get('/guidance/addexamsched','Guidance\Admission\ExamSchedCreatorController@addexamsched');
 Route::post('/guidance/addsched','Guidance\Admission\ExamSchedCreatorController@addsched');
@@ -53,7 +52,7 @@ Route::get('/guidance/viewbatch/{id}', 'Guidance\Admission\ExamResultController@
 Route::get('/guidance/reports','Guidance\Admission\reportsController@index');
 Route::post('/guidance/generate_report', 'Guidance\Admission\reportsController@generate');
 
-//ajax routes
+//ajax guidance routes
 Route::get('/ajax/getmainstudentlist','Guidance\Main\AjaxController@getmainstudentlist');
 Route::get('/ajax/getexamschedule/', 'Guidance\Main\AjaxController@getexamschedule');
 Route::get('/ajax/getexambatch/', 'Guidance\Main\AjaxController@getexambatch');

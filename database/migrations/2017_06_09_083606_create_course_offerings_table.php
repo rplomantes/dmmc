@@ -26,6 +26,7 @@ class CreateCourseOfferingsTable extends Migration
             $table->string('year_level');
             $table->string('course_type');
             $table->string('instructor_id');
+            $table->string('schedule_id');
             $table->timestamps();
         });
     }

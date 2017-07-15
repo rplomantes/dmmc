@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Registrar\College;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Curriculum;
+use DB;
 
 class curriculumController extends Controller {
 
     function index() {
+       $programs=DB::select("Select distinct program_code, program_name from ctr_academic_programs"); 
         return view('registrar/curriculum');
     }
     
