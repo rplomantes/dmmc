@@ -10,7 +10,7 @@ use DB;
 class curriculumController extends Controller {
 
     function index() {
-       $programs=DB::select("Select distinct program_code, program_name from ctr_academic_programs"); 
+       $programs=DB::select("Select distinct program_code, program_name from ctr_academic_programs where"); 
         return view('registrar/curriculum');
     }
     

@@ -16,7 +16,7 @@ class CreateGradeCollegesTable extends Migration
         Schema::create('grade_colleges', function (Blueprint $table) {
             $table->increments('id');
             $table->string('idno');
-            $table->string('course_offering_id');
+            $table->integer('course_offering_id');
             $table->string('course_code');
             $table->string('course_name');
             $table->decimal('prelim', 5,2);
