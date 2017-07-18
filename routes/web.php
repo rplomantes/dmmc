@@ -16,17 +16,18 @@ Route::get('/', function () {
 });
 */
 include_once 'web2.php';
-Route::get('/ajax/college/getcurriculum','Registrar\Main\AjaxController@getCurriculum');
 
 Route::auth();
 Auth::routes();
 Route::get('/','Main\loginController@index');
 
 //Registrar
-Route::get('/registrar/profile','\mainController@profile');
-Route::get('/registrar/curriculum/college','Registrar\College\curriculumController@index');
-Route::get('/registrar/curriculum/college/add','Registrar\College\curriculumController@add');
-Route::post('/registrar/curriculum/addcurriculum','Registrar\College\curriculumController@addcurriculum');
+Route::get('/registrar/view_curriculum','Registrar\Curriculum\CurriculumController@curriculum');
+Route::get('/registrar/list_curricula/{program_code}','Registrar\Curriculum\CurriculumController@list_curricula');
+Route::get('/registrar/curriculum/{curriculum_year}/{program_code}','Registrar\Curriculum\CurriculumController@viewcurriculum');
+Route::get('/registrar/course_offering', 'Registrar\Curriculum\CourseOfferingController@index');
+Route::get('/registrar/view_course_offering/{program_code}', 'Registrar\Curriculum\CourseOfferingController@view');
+
 
 //Guidance
 Route::get('/guidance/newstudent','Guidance\Admission\NewStudentController@newstudent');
@@ -59,3 +60,8 @@ Route::get('/ajax/getexambatch/', 'Guidance\Main\AjaxController@getexambatch');
 Route::get('/ajax/changevalue/{idno}/{value}', 'Guidance\Main\AjaxController@changevalue');
 Route::get('/ajax/getacademicprogram/{acad_type}', 'Guidance\Main\AjaxController@getacademicprogram');
 Route::get('/ajax/getacad_prog/{acad_type}/{acad_prog}', 'Guidance\Main\AjaxController@getacad_prog');
+
+//ajax registrar routes
+Route::get('/registrar/ajax/getlist/{program_code}/{curriculum_year}/{period}/{level}','Registrar\Main\AjaxController@getList');
+Route::get('/registrar/ajax/getcourseoffered/{program_code}/{curriculum_year}/{period}/{level}/{section}','Registrar\Main\AjaxController@getCourseOffered');
+Route::get('/registrar/ajax/getsubject/{program_code}/{curriculum_year}/{period}/{level}/{section}/{course_code}','Registrar\Main\AjaxController@getSubject');

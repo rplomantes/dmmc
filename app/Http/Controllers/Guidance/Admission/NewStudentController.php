@@ -91,7 +91,8 @@ class NewStudentController extends Controller {
         $status->academic_type = "";
         $status->academic_program = $this->getAcademicProgram($course);
         $status->academic_type = $this->getAcademicType($course);
-        $status->program_name = "";
+        $status->program_code = $this->getProgramCode($course);
+        $status->program_name = $this->getProgramName($course);
         $status->level = "";
         $status->section = "";
         $status->track = "";
@@ -126,6 +127,26 @@ class NewStudentController extends Controller {
         } else {
             $academic_program = \App\CtrAcademicProgram::where('program_code', $course)->first();
             return $academic_program->academic_type;
+        }
+    }
+    
+    function getProgramCode($course) {
+        if ($course == 'ABM' or $course == 'STEM' or $course == 'GAS' or $course == 'HUMMS') {
+            $academic_program = \App\CtrAcademicProgram::where('track', $course)->first();
+            return $academic_program->program_code;
+        } else {
+            $academic_program = \App\CtrAcademicProgram::where('program_code', $course)->first();
+            return $academic_program->program_code;
+        }
+    }
+    
+    function getProgramName($course) {
+        if ($course == 'ABM' or $course == 'STEM' or $course == 'GAS' or $course == 'HUMMS') {
+            $academic_program = \App\CtrAcademicProgram::where('track', $course)->first();
+            return $academic_program->program_name;
+        } else {
+            $academic_program = \App\CtrAcademicProgram::where('program_code', $course)->first();
+            return $academic_program->program_name;
         }
     }
 

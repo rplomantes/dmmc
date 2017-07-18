@@ -19,12 +19,12 @@ class CreateGradeCollegesTable extends Migration
             $table->integer('course_offering_id');
             $table->string('course_code');
             $table->string('course_name');
-            $table->decimal('prelim', 5,2);
-            $table->decimal('midterm', 5,2);
-            $table->decimal('final', 5,2);
-            $table->decimal('final_grade', 5,2);
-            $table->decimal('grade_point', 5,2);
-            $table->string('remarks');
+            $table->decimal('prelim', 5,2)->nullable();
+            $table->decimal('midterm', 5,2)->nullable();
+            $table->decimal('final', 5,2)->nullable();
+            $table->decimal('final_grade', 5,2)->nullable();
+            $table->decimal('grade_point', 5,2)->nullable();
+            $table->string('remarks')->nullable();
             $table->string('period');
             $table->string('school_year');
             $table->integer('is_lock')->default(0);

@@ -23,10 +23,9 @@ class CreateCourseOfferingsTable extends Migration
             $table->string('period');
             $table->integer('units');
             $table->decimal('hours', 5,2)->nullable();
-            $table->string('year_level');
+            $table->string('level');
             $table->string('course_type');
             $table->integer('instructor_id');
-            $table->integer('schedule_id');
             $table->timestamps();
         });
     }
