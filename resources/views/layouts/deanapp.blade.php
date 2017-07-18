@@ -87,7 +87,7 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="fa fa-folder-o">
-                            </span> Dean - {{Auth::user()->academic_program}}</a>
+                            </span> ACADEMIC - ({{Auth::user()->academic_program}})</a>     
                         </h4>
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse in">

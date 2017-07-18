@@ -17,7 +17,7 @@ class ViewStudentStatus extends Controller
                 return view('dean.main.viewstudentstatus',compact('idno','status'));
             }
             elseif($status==-1){
-                return view('dean.failed');
+                return view('dean.failed',compact('idno','status'));
             }
         } else {
             return view('dean.unauthorized');
