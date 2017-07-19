@@ -21,6 +21,9 @@ class AddToGradeCollege extends Controller
             $newgrade->course_offering_id = Input::get('offeringid');
             $newgrade->course_code=$offering->course_code;
             $newgrade->course_name=$offering->course_name;
+            $newgrade->lec=$offering->lec;
+            $newgrade->lab=$offering->lab;
+            $newgrade->hours=$offering->hours;
             $newgrade->school_year=$offering->school_year;
             $newgrade->period=$offering->period;
             $newgrade->save();
@@ -31,12 +34,17 @@ class AddToGradeCollege extends Controller
                     ->get();
             
             if(count($studentcourses)>0){
-                $data = "<table width=\"100%\"><tr><td>Subject</td><td>Room/Schedule</td><td>Instructor</td><td>Remove</td></tr>";
+                $data = "<table width=\"100%\"><tr><td>Subject</td><td>Units</td><td>Room/Schedule</td><td>Instructor</td><td>Remove</td></tr>";
+                $units=0;
                 foreach($studentcourses as $studentcourse){
                     $data = $data."<tr><td>" . $studentcourse->course_code . " - ". $studentcourse->course_name
+                            ."</td><td>" . ($studentcourse->lec + $studentcourse->lab)
                             . "</td><td>" . $this->getSchedule($studentcourse->course_offering_id)
-                            . "</td><td>". $this->getInstructorId($studentcourse->course_offering_id) . "</td><td><a href=\"#\" onclick=\"removesubject('".$studentcourse->id."')\">Remove</a></td></tr>";
+                            . "</td><td>". $this->getInstructorId($studentcourse->course_offering_id) . "</td><td><a href=\"javascript: void(0);\" onclick=\"removesubject('".$studentcourse->id."')\">Remove</a></td></tr>";
+                
+                    $units=$units + $studentcourse->lec+$studentcourse->lab;
                 }
+                $data=$data."<tr><td>ToTal Units</td><td colspan=\"4\">$units</td></tr>";
                 $data=$data."</table>";
                 return $data;
             }else{
@@ -76,12 +84,17 @@ class AddToGradeCollege extends Controller
                     ->get();
             
             if(count($studentcourses)>0){
-                $data = "<table width=\"100%\"><tr><td>Subject</td><td>Room/Schedule</td><td>Instructor</td><td>Remove</td></tr>";
+                $data = "<table width=\"100%\"><tr><td>Subject</td><td>Units</td><td>Room/Schedule</td><td>Instructor</td><td>Remove</td></tr>";
+                $units=0;
                 foreach($studentcourses as $studentcourse){
-                    $data = $data."<tr><td>" . $studentcourse->course_code . " - ". $studentcourse->course_name
+                $data = $data."<tr><td>" . $studentcourse->course_code . " - ". $studentcourse->course_name
+                            ."</td><td>" .($studentcourse->lec + $studentcourse->lab)
                             . "</td><td>" . $this->getSchedule($studentcourse->course_offering_id)
-                            . "</td><td>". $this->getInstructorId($studentcourse->course_offering_id) . "</td><td><a href=\"#\" onclick=\"removesubject('".$studentcourse->id."')\">Remove</a></td></tr>";
+                            . "</td><td>". $this->getInstructorId($studentcourse->course_offering_id) . "</td><td><a href=\"javascript: void(0);\" onclick=\"removesubject('".$studentcourse->id."')\">Remove</a></td></tr>";
+                
+                    $units = $units + $studentcourse->lec + $studentcourse->lab;
                 }
+                $data=$data."<tr><td>Total Units</td><td colspan=\"4\">$units</td></tr>";
                 $data=$data."</table>";
                 return $data;
             }else{

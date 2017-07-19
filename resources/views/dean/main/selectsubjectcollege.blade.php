@@ -79,7 +79,7 @@
 
        
     </div>
-<div class="container">    
+<div class="container-fluid">    
 
 <?php
 $idno=$request->idno;
@@ -133,12 +133,18 @@ $sections =  \App\CourseOffering::distinct()->where('program_code',$request->pro
                 <div id="student_course">
                 <?php
                     $grade_colleges=  \App\GradeCollege::where('idno',$idno)->where('school_year',$school_year->school_year)->where('period',$school_year->period)->get();
+                    $units=0;
                 ?>
                 @if(count($grade_colleges)>0)
-                <table class="table table-condensed"><tr><td>Subject Subject</td><td>Schedule/Room</td><td>Instructor</td><td>Remove</td></tr>
+                <table class="table table-condensed"><tr><td>Subject Subject</td><td>Units</td><td>Schedule/Room</td><td>Instructor</td><td>Remove</td></tr>
                     @foreach($grade_colleges as $grade_college)
-                        <tr><td>{{$grade_college->course_code}} - {{$grade_college->course_name}}</td><td></td><td></td><td><a href="#" onclick="removesubject('{{$grade_college->id}}')">Remove</a></td></tr>
+                    <?php
+                    $units = $units+$grade_college->lec+$grade_college->lab;
+                    ?>
+                        <tr><td>{{$grade_college->course_code}} - {{$grade_college->course_name}}</td>
+                            <td>{{$grade_college->lec+$grade_college->lab}}</td><td></td><td></td><td><a href="javascript: void(0);" onclick="removesubject('{{$grade_college->id}}')">Remove</a></td></tr>
                     @endforeach
+                    <tr><td>Total Units</td><td colspan="4">{{$units}}</td></tr>
                 </table>
                 @else
                     No Subject Selected Yet!!
@@ -156,6 +162,25 @@ $sections =  \App\CourseOffering::distinct()->where('program_code',$request->pro
 </div>
 <script src="{{ asset('js/app.js') }}"></script>
 <script>
+$("#search").keypress(function(e){
+   if(e.keyCode==13){
+       array={}
+       array['idno']="{{$idno}}";
+       array['school_year']=$("#school_year").val();
+       array['period']=$("#period").val();
+       array['program_code']=$("#program_code").val();
+       array['search']=$("#search").val();
+       $.ajax({
+        type:"GET",
+        url:"/dean/ajax/getofferingpersearch",
+        data:array,
+        success:function(data){
+            $("#offerings").html(data);
+        }
+            
+    });
+   } 
+});    
 $("#section").change(function(){
     array={};
     array['idno']="{{$idno}}";

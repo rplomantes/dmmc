@@ -9,4 +9,5 @@ Route::get('/dean/ajax/getofferingpersection','Dean\Ajax\GetOfferingPersection@i
 Route::get('/dean/ajax/addtogradecollege','Dean\Ajax\AddToGradeCollege@index');
 Route::get('/dean/ajax/removesubject','Dean\Ajax\AddToGradeCollege@removesubject');
 Route::get('/dean/ajax/addallsubjects','Dean\Ajax\GetOfferingPersection@addallsubjects');
+Route::get('/dean/ajax/getofferingpersearch','Dean\Ajax\GetOfferingPersection@search');
 ?>

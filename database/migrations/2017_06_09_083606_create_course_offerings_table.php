@@ -21,7 +21,8 @@ class CreateCourseOfferingsTable extends Migration
             $table->string('section')->default(1);
             $table->string('school_year');
             $table->string('period');
-            $table->integer('units');
+            $table->integer('lec');
+            $table->integer('lab')->nullable();
             $table->decimal('hours', 5,2)->nullable();
             $table->string('level');
             $table->string('course_type');
