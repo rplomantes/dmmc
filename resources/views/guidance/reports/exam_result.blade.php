@@ -47,7 +47,7 @@
     function changeprogram(acad_type)
             $.ajax( {
             type: "GET",
-                    url: "/ajax/getacademicprogram/" + acad_type,
+                    url: "/guidance/ajax/getacademicprogram/" + acad_type,
                     success: function (data) {
                     $('#acad_progs').empty();
                             $('#acad_program').html(data);

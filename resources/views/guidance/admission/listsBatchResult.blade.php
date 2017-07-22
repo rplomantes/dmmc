@@ -39,7 +39,7 @@
     function changevalue(idno, value){
     $.ajax({
     type: "GET",
-            url: "/ajax/changevalue/" + idno + "/" + value,
+            url: "/guidance/ajax/changevalue/" + idno + "/" + value,
             data: "",
             success: function (data) {
             }

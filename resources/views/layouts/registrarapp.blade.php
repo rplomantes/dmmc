@@ -130,16 +130,26 @@
                                     <table class="table">
                                         <tr>
                                             <td>
-                                                <a href="{{url('registrar', array('view_curriculum'))}}"><i class="fa fa-book fa-fw" aria-hidden="true"></i> View Curriculum</a>
+                                                <a href="{{url('registrar', array('view_curriculum','college'))}}"><i class="fa fa-book fa-fw" aria-hidden="true"></i> View Curriculum</a>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <a href="{{url('registrar', array('course_offering'))}}"><i class="fa fa-exchange fa-fw" aria-hidden="true"></i> Subject Offering</a>
+                                                <a href="{{url('registrar', array('course_offering','college'))}}"><i class="fa fa-exchange fa-fw" aria-hidden="true"></i> Subject Offering</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a href="{{url('registrar', array('course_scheduling','college'))}}"><i class="fa fa-exchange fa-fw" aria-hidden="true"></i> Subject Schedules</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a href="{{url('registrar', array('assign_instructor','college'))}}"><i class="fa fa-exchange fa-fw" aria-hidden="true"></i> Assign Instructor</a>
                                             </td>
                                         </tr>
                                             <td>
-                                                <a href="{{url('registrar', array('reports'))}}"><i class="fa fa-flag fa-fw" aria-hidden="true"></i> Reports</a>
+                                                <a href="{{url('registrar', array('reports','college'))}}"><i class="fa fa-flag fa-fw" aria-hidden="true"></i> Reports</a>
                                             </td>
                                         </tr>
                                         </tr>

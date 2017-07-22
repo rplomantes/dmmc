@@ -16,13 +16,13 @@ $curriculums = \App\Curriculum::distinct()->where('program_code', $program_code)
             <table class="table table-condensed">
                 <thead>
                 <th class="col-sm-6">Curriculum Year</th>
-                <th class="col-sm-6">Action</th>
+                <th class="col-sm-6">View</th>
                 </thead>
                 <tbody>
                     @foreach($curriculums as $curriculum)
                     <tr>
                         <td>{{$curriculum->curriculum_year}}</td>
-                        <td><a href="{{url('registrar',array('curriculum',$curriculum->curriculum_year,$programs->program_code))}}">View</td>
+                        <td><a href="{{url('registrar',array('curriculum','college',$curriculum->curriculum_year,$programs->program_code))}}">View</td>
                     </tr>
                     @endforeach
                 </tbody>

@@ -53,7 +53,7 @@ else if($academic_type=="TESDA"){
                                 <select name="program_code" class="form form-control">
                                     @foreach($programs as $program)
                                         <option value="{{$program->program_code}}"
-                                            @if($program->program_code == $status->course)
+                                            @if($program->program_code == $status->program_code)
                                             selected="selected"
                                             @endif>{{$program->program_name}}</option>
                                     @endforeach

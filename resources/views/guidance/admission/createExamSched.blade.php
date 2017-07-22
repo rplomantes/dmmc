@@ -64,7 +64,7 @@
                 $('#displayexamschedule').empty();
                 $.ajax({
                     type: "GET",
-                    url: "/ajax/getexamschedule",
+                    url: "/guidance/ajax/getexamschedule",
                     data: array,
                     success: function (data) {  
                         $('#displayexamschedule').html(data)

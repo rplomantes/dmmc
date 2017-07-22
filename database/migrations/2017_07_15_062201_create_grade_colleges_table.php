@@ -32,6 +32,10 @@ class CreateGradeCollegesTable extends Migration
             $table->string('school_year');
             $table->integer('is_lock')->default(0);
             $table->timestamps();
+            $table->foreign('idno')
+                    ->references('idno')
+                    ->on('users')
+                    ->onUpdate('cascade');
         });
     }
 

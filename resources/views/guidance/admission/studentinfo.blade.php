@@ -101,9 +101,17 @@
                 <td>{{$exam->exam_result}}</td>
             </tr>
         </table> 
-        <a href="{{url('guidance',array('viewmodifyinfo',$list->idno))}}"><div class='btn btn-primary col-sm-6'>Modify</div></a> 
-        <a href="{{url('guidance',array('admission_slip',$list->idno))}}" target="_blank"><div class='btn btn-success col-sm-6'>Print Entrance Exam Slip</div></a>
-
+        <?php
+        $status = \App\Status::where('idno', $list->idno)->first();
+        ?>
+            @if ($status->status==0)
+                <a href="{{url('guidance',array('viewmodifyinfo',$list->idno))}}"><div class='btn btn-primary col-sm-6'>Modify</div></a> 
+                <a href="{{url('guidance',array('admission_slip',$list->idno))}}" target="_blank"><div class='btn btn-success col-sm-6'>Print Entrance Exam Slip</div></a>
+            @elseif ($status->status==1)
+            <div class="alert alert-success">You passed the Entrance Exam. Next step see Dean's Office for assessment.</div>
+            @elseif ($status->status==-1)
+                <a href="{{url('guidance',array('viewmodifyinfo',$list->idno))}}"><div class='btn btn-primary col-sm-12'>Modify</div></a>
+            @endif
         @else
 
         <a href="{{url('guidance',array('viewmodifyinfo',$list->idno))}}"><div class='btn btn-primary col-sm-6'>Modify</div></a> 

@@ -29,6 +29,12 @@ class CreateStudentInfosTable extends Migration
             $table->string('is_transferee');
             $table->string('school')->nullable();
             $table->string('prev_course')->nullable();
+            $table->string('program_code')->nullable();
+            $table->string('program_name')->nullable();
+            $table->string('school_year')->nullable();
+            $table->string('period')->nullable();
+            $table->string('level')->nullable();
+            
             $table->string('status_upon_admission');
             $table->timestamps();
             $table->foreign('idno')

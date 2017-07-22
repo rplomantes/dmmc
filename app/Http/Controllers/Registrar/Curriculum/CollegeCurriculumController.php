@@ -6,18 +6,18 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
 
-class CurriculumController extends Controller
+class CollegeCurriculumController extends Controller
 {
     function curriculum(){
        $curriculums = \App\CtrAcademicProgram::distinct()->where('academic_type', 'College')->orWhere('academic_type', 'TESDA')->get(['program_code', 'program_name']);
-       Return view ('registrar.curriculum.view_curriculum', compact('curriculums'));
+       Return view ('registrar.curriculum.college_view_curriculum', compact('curriculums'));
     }
     
     function list_curricula($program_code){
-        return view('registrar.curriculum.list_curriculum', compact('program_code'));
+        return view('registrar.curriculum.college_list_curriculum', compact('program_code'));
     }
     
     function viewcurriculum($curriculum_year, $program_code) {
-        return view ('registrar.curriculum.viewcurriculum', compact('program_code', 'curriculum_year'));
+        return view ('registrar.curriculum.college_viewcurriculum', compact('program_code', 'curriculum_year'));
     }
 }

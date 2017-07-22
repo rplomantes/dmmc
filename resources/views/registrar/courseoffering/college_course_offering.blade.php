@@ -14,11 +14,11 @@
                 <th class="col-sm-3">View</th>
                 </thead>
                 <tbody>
-                    @foreach($curriculums as $curriculum)
+                    @foreach($programs as $program)
                     <tr>
-                        <td>{{$curriculum->program_code}}</td>
-                        <td>{{$curriculum->program_name}}</td>
-                        <td><a href="{{url('registrar',array('list_curricula', $curriculum->program_code))}}">View Curricula</td>
+                        <td>{{$program->program_code}}</td>
+                        <td>{{$program->program_name}}</td>
+                        <td><a href="{{url('registrar',array('view_course_offering','college', $program->program_code))}}">View Subject Offering</td>
                     </tr>
                     @endforeach
                 </tbody>

@@ -21,12 +21,19 @@ Route::auth();
 Auth::routes();
 Route::get('/','Main\loginController@index');
 
-//Registrar
-Route::get('/registrar/view_curriculum','Registrar\Curriculum\CurriculumController@curriculum');
-Route::get('/registrar/list_curricula/{program_code}','Registrar\Curriculum\CurriculumController@list_curricula');
-Route::get('/registrar/curriculum/{curriculum_year}/{program_code}','Registrar\Curriculum\CurriculumController@viewcurriculum');
-Route::get('/registrar/course_offering', 'Registrar\Curriculum\CourseOfferingController@index');
-Route::get('/registrar/view_course_offering/{program_code}', 'Registrar\Curriculum\CourseOfferingController@view');
+//Registrar Curriculum
+Route::get('/registrar/view_curriculum/college','Registrar\Curriculum\CollegeCurriculumController@curriculum');
+Route::get('/registrar/list_curricula/college/{program_code}','Registrar\Curriculum\CollegeCurriculumController@list_curricula');
+Route::get('/registrar/curriculum/college/{curriculum_year}/{program_code}','Registrar\Curriculum\CollegeCurriculumController@viewcurriculum');
+//Registrar Course Offering
+Route::get('/registrar/course_offering/college', 'Registrar\CourseOffering\CollegeCourseOfferingController@index');
+Route::get('/registrar/view_course_offering/college/{program_code}', 'Registrar\CourseOffering\CollegeCourseOfferingController@view');
+//Registrar Course Schedule
+Route::get('/registrar/course_scheduling/college','Registrar\CourseSchedule\CollegeCourseSchedule@index');
+Route::get('/registrar/course_scheduling_list/college/{id}','Registrar\CourseSchedule\CollegeCourseSchedule@listcourseschedule');
+//Registrar Assign Instructor
+Route::get('/registrar/assign_instructor/college', 'Registrar\AssignInstructor\CollegeAssignInstructorController@index');
+Route::get('/registrar/assign_instructor/view_profile/{id}', 'Registrar\AssignInstructor\CollegeAssignInstructorController@viewprofile');
 
 
 //Guidance
@@ -41,7 +48,6 @@ Route::get('/guidance/viewmodifyinfo/{idno}', 'Guidance\Admission\ListApplicants
 Route::post('/guidance/modifyinfo', 'Guidance\Admission\ListApplicantsController@modifyinfo');
 Route::get('/guidance/schedule_applicant/{idno}','Guidance\Admission\ExamScheduleController@schedule');
 Route::post('/guidance/schedApplicant','Guidance\Admission\ExamScheduleController@schedApplicant');
-
 Route::get('/guidance/admission_slip/{idno}','Guidance\Admission\ExamScheduleController@printAdmission');
 Route::get('/guidance/addexamsched','Guidance\Admission\ExamSchedCreatorController@addexamsched');
 Route::post('/guidance/addsched','Guidance\Admission\ExamSchedCreatorController@addsched');
@@ -49,19 +55,29 @@ Route::get('/guidance/delete_examsched/{id}', 'Guidance\Admission\ExamSchedCreat
 Route::get('/guidance/view_examsched/{id}','Guidance\Admission\ExamSchedCreatorController@viewmodifysched');
 Route::post('/guidance/updatesched','Guidance\Admission\ExamSchedCreatorController@updatesched');
 Route::get('/guidance/viewbatch/{id}', 'Guidance\Admission\ExamResultController@viewlist');
-
 Route::get('/guidance/reports','Guidance\Admission\reportsController@index');
 Route::post('/guidance/generate_report', 'Guidance\Admission\reportsController@generate');
 
 //ajax guidance routes
-Route::get('/ajax/getmainstudentlist','Guidance\Main\AjaxController@getmainstudentlist');
-Route::get('/ajax/getexamschedule/', 'Guidance\Main\AjaxController@getexamschedule');
-Route::get('/ajax/getexambatch/', 'Guidance\Main\AjaxController@getexambatch');
-Route::get('/ajax/changevalue/{idno}/{value}', 'Guidance\Main\AjaxController@changevalue');
-Route::get('/ajax/getacademicprogram/{acad_type}', 'Guidance\Main\AjaxController@getacademicprogram');
-Route::get('/ajax/getacad_prog/{acad_type}/{acad_prog}', 'Guidance\Main\AjaxController@getacad_prog');
+Route::get('/guidance/ajax/getmainstudentlist','Guidance\Main\AjaxController@getmainstudentlist');
+Route::get('/guidance/ajax/getexamschedule/', 'Guidance\Main\AjaxController@getexamschedule');
+Route::get('/guidance/ajax/getexambatch/', 'Guidance\Main\AjaxController@getexambatch');
+Route::get('/guidance/ajax/changevalue/{idno}/{value}', 'Guidance\Main\AjaxController@changevalue');
+Route::get('/guidance/ajax/getacademicprogram/{acad_type}', 'Guidance\Main\AjaxController@getacademicprogram');
+Route::get('/guidance/ajax/getacad_prog/{acad_type}/{acad_prog}', 'Guidance\Main\AjaxController@getacad_prog');
 
 //ajax registrar routes
-Route::get('/registrar/ajax/getlist/{program_code}/{curriculum_year}/{period}/{level}','Registrar\Main\AjaxController@getList');
-Route::get('/registrar/ajax/getcourseoffered/{program_code}/{curriculum_year}/{period}/{level}/{section}','Registrar\Main\AjaxController@getCourseOffered');
-Route::get('/registrar/ajax/getsubject/{program_code}/{curriculum_year}/{period}/{level}/{section}/{course_code}','Registrar\Main\AjaxController@getSubject');
+Route::get('/registrar/ajax/getmainstudentlist','Registrar\Main\AjaxController@getmainstudentlist');
+Route::get('/registrar/ajax/getlist/{program_code}/{curriculum_year}/{period}/{level}','Registrar\Ajax\collegeCourseOffering@getList');
+Route::get('/registrar/ajax/getcourseoffered/{program_code}/{curriculum_year}/{period}/{level}/{section}','Registrar\Ajax\collegeCourseOffering@getCourseOffered');
+Route::get('/registrar/ajax/getsubject/{program_code}/{curriculum_year}/{period}/{level}/{section}/{course_code}','Registrar\Ajax\collegeCourseOffering@getSubject');
+Route::get('/registrar/ajax/removesubject/{id}','Registrar\Ajax\collegeCourseOffering@removeSubject');
+Route::get('/registrar/ajax/addallsubjects','Registrar\Ajax\collegeCourseOffering@addAllSubjects');
+Route::get('/registrar/ajax/getyearsection/{program_code}','Registrar\Ajax\collegeCourseSchedule@getcourses');
+Route::get('/registrar/ajax/getexistingsched/{room}','Registrar\Ajax\collegeCourseSchedule@getexistingsched');
+//ajax resistrar course offering
+Route::get('/registrar/ajax/addschedule_college','Registrar\Ajax\collegeCourseSchedule@addschedule');
+Route::get('/registrar/ajax/changeroom_college/{sched_id}/{value}','Registrar\Ajax\collegeCourseSchedule@changeroom');
+Route::get('/registrar/ajax/changeday_college/{sched_id}/{value}','Registrar\Ajax\collegeCourseSchedule@changeday');
+Route::get('/registrar/ajax/changetime_college/{sched_id}/{value}','Registrar\Ajax\collegeCourseSchedule@changetime');
+Route::get('/registrar/ajax/deletesched_college/{sched_id}','Registrar\Ajax\collegeCourseSchedule@deletesched');

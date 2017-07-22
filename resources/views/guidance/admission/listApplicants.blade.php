@@ -33,7 +33,7 @@
                 $('#displaystudent').empty();
                 $.ajax({
                     type: "GET",
-                    url: "/ajax/getmainstudentlist",
+                    url: "/guidance/ajax/getmainstudentlist",
                     data: array,
                     success: function (data) {
                         $('#displaystudent').html(data)

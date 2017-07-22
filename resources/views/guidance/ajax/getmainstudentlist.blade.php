@@ -12,7 +12,7 @@
         <td>{{$list->idno}}</td>
         <td>{{$list->lastname}} {{$list->extensionname}}, {{$list->firstname}} {{$list->middlename}}</td>
         <td>{{$list->course}}</td>
-        <td>@if ($list->status==1) Passed @elseif ($list->status==0) Pre-registered @else Failed @endif</td>
+        <td>@if ($list->status==1) Passed @elseif ($list->status==0) Pre-registered @elseif ($list->status==-1) Failed @endif</td>
         <td><a href='{{url('guidance',array('viewinfo',$list->idno))}}'>View Profile</a></td>
     </tr>
     @endforeach
