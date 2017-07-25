@@ -20,6 +20,8 @@ else if($academic_type == "Basic Education"){
     
 }
 else if($academic_type=="TESDA"){
+    $programs = \Illuminate\Support\Facades\DB::Select("Select distinct program_code, program_name from ctr_academic_programs where academic_program = '$academic_program'");
+    $levels = \Illuminate\Support\Facades\DB::Select("Select level from ctr_academic_programs where program_code = '" . $info->course . "'");
     
 }
 ?>
@@ -123,6 +125,44 @@ else if($academic_type=="TESDA"){
                 </form>
             
             @elseif($status->academic_program=="TESDA")
+            <form class="form-horizontal" method="POST" action="{{url('dean',array('main','selectsubjecttesda'))}}">    
+                {{ csrf_field() }}
+                <input type="hidden" name="academic_program" value="{{$status->academic_program}}">
+                <input type="hidden" name="idno" value="{{$idno}}">
+               <div class="form form-group">       
+                        <div class="col-sm-12">
+                            <label>Select Course To Register</label>
+                                <select name="program_code" class="form form-control">
+                                    @foreach($programs as $program)
+                                        <option value="{{$program->program_code}}"
+                                            @if($program->program_code == $status->program_code)
+                                            selected="selected"
+                                            @endif>{{$program->program_name}}</option>
+                                    @endforeach
+                                </select>
+                        </div>
+                    </div>
+                    <div class="form form-group">    
+                        <div class="col-sm-12">
+                            <label>Select Level</label>
+                               <select name="level" class="form form-control">
+                                    @foreach($levels as $level)
+                                    <option value="{{$level->level}}"
+                                            @if($status->level == $level->level)
+                                            selected="selected"
+                                            @endif
+                                            >{{$level->level}}</option>
+                                    @endforeach
+                                </select>
+                        </div> 
+                    </div>
+                    <div class="form form-group">
+                        <div class="col-sm-12">
+                            <input type="submit" value="Next >> Select Subjects" class="form form-control btn btn-primary">
+                        </div>    
+                    </div>    
+                    
+                </form>
             @endif
             
             </td></tr>        

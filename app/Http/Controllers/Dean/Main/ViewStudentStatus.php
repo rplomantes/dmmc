@@ -16,6 +16,9 @@ class ViewStudentStatus extends Controller
             if($status <= 1 AND $status >=0){
                 return view('dean.main.viewstudentstatus',compact('idno','status'));
             }
+            elseif($status == 2){
+                return view('dean.main.studentstatus2',compact('idno','student_status'));
+            }
             elseif($status==-1){
                 return view('dean.failed',compact('idno','status'));
             }

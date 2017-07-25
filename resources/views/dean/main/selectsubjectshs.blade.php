@@ -83,12 +83,12 @@
 
 <?php
 $idno=$request->idno;
-$program_name=  \App\CtrAcademicProgram::where('program_code',$request->program_code)->first()->program_name;
+$program_name=  \App\CtrAcademicProgram::where('track',$request->track)->first()->program_name;
 $user = \App\User::where('idno',$idno)->first();
 $info = \App\StudentInfo::where('idno',$idno)->first();
 $status = \App\Status::where('idno',$idno)->first();
 $school_year= \App\CtrSchoolYear::where('academic_type',$status->academic_type)->first();
-$sections =  \App\CourseOffering::distinct()->where('program_code',$request->program_code)->where('level',$request->level)
+$sections =  \App\CourseOffering::distinct()->where('track',$request->track)->where('level',$request->level)
             ->get(['section']);
 ?>
 <h3>Select Subject to Register</h3>
@@ -98,8 +98,8 @@ $sections =  \App\CourseOffering::distinct()->where('program_code',$request->pro
     <tr><td>Contact Number</td><td>{{$info->contact_no}}</td></tr>
     <tr><td>Email Address</td><td>{{$user->email}}</td></tr>            
     <tr><td colspan="2"><strong>Registered To:</strong></tr></tr>
-    <tr><td>Course</td><td><strong style="color:red">{{$program_name}}</strong></td></tr>
     <tr><td>Level</td><td><strong style="color:red">{{$request->level}}</strong></td></tr>
+    <tr><td>Track</td><td><strong style="color:red">{{$request->track}}</strong></td></tr>
     <tr><td colspan="2"></td></tr>                        
     <tr><td width="50%">
     <div class="form form-group"> 
@@ -110,6 +110,7 @@ $sections =  \App\CourseOffering::distinct()->where('program_code',$request->pro
                 <input type="hidden" id="period" value="{{$school_year->period}}">
                 <input type="hidden" id="program_code" value="{{$request->program_code}}">
                 <input type="hidden" id="level" value="{{$request->level}}">
+                <input type="hidden" id="track" value="{{$request->track}}">
                 <select class="form form-control" id="section">
                   <option>Select Section</option>  
                  @foreach($sections as $section)
@@ -132,19 +133,19 @@ $sections =  \App\CourseOffering::distinct()->where('program_code',$request->pro
                 <h5>Subject to Enroll:</h5>
                 <div id="student_course">
                 <?php
-                    $grade_colleges=  \App\GradeCollege::where('idno',$idno)->where('school_year',$school_year->school_year)->where('period',$school_year->period)->get();
-                    $units=0;
+                    $grade_shs=  \App\GradeShs::where('idno',$idno)->where('school_year',$school_year->school_year)->where('period',$school_year->period)->get();
+                    $hours=0;
                 ?>
-                @if(count($grade_colleges)>0)
-                <table class="table table-condensed"><tr><td>Subject Subject</td><td>Units</td><td>Schedule/Room</td><td>Instructor</td><td>Remove</td></tr>
-                    @foreach($grade_colleges as $grade_college)
+                @if(count($grade_shs)>0)
+                <table class="table table-condensed"><tr><td>Subject</td><td>Hours</td><td>Schedule/Room</td><td>Instructor</td><td>Remove</td></tr>
+                    @foreach($grade_shs as $grade_hs)
                     <?php
-                    $units = $units+$grade_college->lec+$grade_college->lab;
+                    $hours = $hours+$grade_hs->hours;
                     ?>
-                        <tr><td>{{$grade_college->course_code}} - {{$grade_college->course_name}}</td>
-                            <td>{{$grade_college->lec+$grade_college->lab}}</td><td></td><td></td><td><a href="javascript: void(0);" onclick="removesubject('{{$grade_college->id}}')">Remove</a></td></tr>
+                        <tr><td>{{$grade_hs->course_code}} - {{$grade_hs->course_name}}</td>
+                            <td>{{$grade_hs->hours}}</td><td></td><td></td><td><a href="javascript: void(0);" onclick="removesubject('{{$grade_hs->id}}')">Remove</a></td></tr>
                     @endforeach
-                    <tr><td>Total Units</td><td colspan="4">{{$units}}</td></tr>
+                    <tr><td>Total Hours</td><td colspan="4">{{$hours}}</td></tr>
                 </table>
                 @else
                     No Subject Selected Yet!!
@@ -172,7 +173,8 @@ $("#search").keypress(function(e){
        array['idno']="{{$idno}}";
        array['school_year']=$("#school_year").val();
        array['period']=$("#period").val();
-       array['program_code']=$("#program_code").val();
+       array['track']=$("#track").val();
+       array['level']=$("#level").val();
        array['search']=$("#search").val();
        $.ajax({
         type:"GET",
@@ -190,12 +192,13 @@ $("#section").change(function(){
     array['idno']="{{$idno}}";
     array['school_year']=$("#school_year").val();
     array['period']=$("#period").val();
-    array['program_code']=$("#program_code").val();
+    array['track']=$("#track").val();
     array['level']=$("#level").val();
     array['section']=$("#section").val();
+    
     $.ajax({
         type:"GET",
-        url:"/dean/ajax/getofferingpersection",
+        url:"/dean/ajax/getofferingpersectionshs",
         data:array,
         success:function(data){
             $("#offerings").html(data);
@@ -204,14 +207,14 @@ $("#section").change(function(){
     });
 });
 
-function addtogradecollege(idno, offeringid){
+function addtogradeshs(idno, offeringid){
     array={};
     array['idno']=idno;
     array['offeringid']=offeringid;
     
     $.ajax({
         type:"GET",
-        url:"/dean/ajax/addtogradecollege",
+        url:"/dean/ajax/addtogradeshs",
         data:array,
         success:function(data){
             $("#student_course").html(data);
@@ -228,7 +231,7 @@ function removesubject(id){
     if(confirm("Are You Sure To Remove?")){
     $.ajax({
         type:"GET",
-        url:"/dean/ajax/removesubject",
+        url:"/dean/ajax/removesubjectshs",
         data:array,
         success:function(data){
             $("#student_course").html(data);
@@ -242,13 +245,13 @@ function addallsubjects(){
     array['idno']="{{$idno}}";
     array['school_year']=$("#school_year").val();
     array['period']=$("#period").val();
-    array['program_code']=$("#program_code").val();
+    array['track']=$("#track").val();
     array['level']=$("#level").val();
     array['section']=$("#section").val();
    // if( confirm("Are You Sure To Add All Subjects?"){
     $.ajax({
         type:"GET",
-        url:"/dean/ajax/addallsubjects",
+        url:"/dean/ajax/addallsubjectsshs",
         data:array,
         success:function(data){
             $("#student_course").html(data);
