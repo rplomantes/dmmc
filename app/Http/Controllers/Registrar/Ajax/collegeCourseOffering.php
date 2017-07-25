@@ -28,8 +28,9 @@ class collegeCourseOffering extends Controller {
     function getsubject($program_code, $curriculum_year, $period, $level, $section, $course_code) {
         $course_name = \App\Curriculum::distinct()->where('course_code', $course_code)->get(['course_name', 'course_code'])->first();
         $course_details = \App\Curriculum::where('course_code', $course_code)->where('program_code', $program_code)->where('is_current', 1)->first();
-        $counter = \App\CourseOffering::where('course_code', $course_code)->where('program_code', $program_code)->where('period', $period)->where('level', $level)->where('section', $section)->get();
         $school_year = \App\CtrSchoolYear::where('academic_type', 'College')->first();
+        $counter = \App\CourseOffering::where('course_code', $course_code)->where('program_code', $program_code)->where('period', $school_year->period)->where('school_year', $school_year->school_year)->where('level', $level)->where('section', $section)->get();
+        
         if (Request::ajax()) {
             if (count($counter) == 0) {
                 $addsubject = new CourseOffering;
@@ -89,7 +90,7 @@ class collegeCourseOffering extends Controller {
 
             if (count($curriculums) > 0) {
                 foreach ($curriculums as $curriculum) {
-                    $counter = \App\CourseOffering::where('course_code', $curriculum->course_code)->where('program_code', $curriculum->program_code)->where('period', $curriculum->period)->where('level', $curriculum->level)->where('section', $section)->get();
+                    $counter = \App\CourseOffering::where('course_code', $curriculum->course_code)->where('school_year', $school_year->school_year)->where('program_code', $curriculum->program_code)->where('period', $school_year->period)->where('level', $curriculum->level)->where('section', $section)->first();
                     if (count($counter) == 0) {
                         $addsubject = new CourseOffering;
                         $addsubject->program_code = $program_code;
