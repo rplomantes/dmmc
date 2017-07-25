@@ -90,7 +90,7 @@
                                         </span> Registrar</a>
                                 </h4>
                             </div>
-                            <div id="collapseOne" class="panel-collapse collapse in">
+                            <div id="collapseOne" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <table class="table">
                                         <tr>
@@ -121,11 +121,11 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><span class="fa fa-university fa-fw">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><span class="fa fa-university fa-fw">
                                         </span> College</a>
                                 </h4>
                             </div>
-                            <div id="collapseThree" class="panel-collapse collapse">
+                            <div id="collapseTwo" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <table class="table">
                                         <tr>
@@ -150,6 +150,45 @@
                                         </tr>
                                             <td>
                                                 <a href="{{url('registrar', array('reports','college'))}}"><i class="fa fa-flag fa-fw" aria-hidden="true"></i> Reports</a>
+                                            </td>
+                                        </tr>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><span class="fa fa-university fa-fw">
+                                        </span> Senior High School</a>
+                                </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <table class="table">
+                                        <tr>
+                                            <td>
+                                                <a href="{{url('registrar', array('view_curriculum','shs'))}}"><i class="fa fa-book fa-fw" aria-hidden="true"></i> View Curriculum</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a href="{{url('registrar', array('course_offering','shs'))}}"><i class="fa fa-exchange fa-fw" aria-hidden="true"></i> Subject Offering</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a href="{{url('registrar', array('course_scheduling','shs'))}}"><i class="fa fa-exchange fa-fw" aria-hidden="true"></i> Subject Schedules</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a href="{{url('registrar', array('assign_instructor','shs'))}}"><i class="fa fa-exchange fa-fw" aria-hidden="true"></i> Assign Instructor</a>
+                                            </td>
+                                        </tr>
+                                            <td>
+                                                <a href="{{url('registrar', array('reports','shs'))}}"><i class="fa fa-flag fa-fw" aria-hidden="true"></i> Reports</a>
                                             </td>
                                         </tr>
                                         </tr>

@@ -7,7 +7,7 @@
     <div class="col-sm-12">
 
         <h3>Student Information</h3>
-        <table class='table'>
+        <table class='table table-condensed'>
             <tr>
                 <td>Reference No</td>
                 <td><b>{{$list->idno}}</b></td>

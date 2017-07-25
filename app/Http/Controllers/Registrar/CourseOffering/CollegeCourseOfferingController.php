@@ -10,7 +10,7 @@ class CollegeCourseOfferingController extends Controller
 {
     //
     function index(){
-        $programs = \App\CtrAcademicProgram::distinct()->where('academic_type', 'College')->orWhere('academic_type', 'TESDA')->get(['program_code', 'program_name']);
+        $programs = \App\CtrAcademicProgram::distinct()->where('academic_type', 'College')->get(['program_code', 'program_name']);
         return view('registrar.courseoffering.college_course_offering', compact('programs'));
     }
     

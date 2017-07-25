@@ -7,6 +7,7 @@
 <div class="row">
     <div class='col-sm-12'>
         <div id="imaginary_container">
+            <h3>Instructors</h3>
             @if (count($instructors)>0)
             <table class="table">
                 <thead>

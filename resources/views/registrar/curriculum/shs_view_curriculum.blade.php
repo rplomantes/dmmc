@@ -7,19 +7,18 @@
 <div class="row">
     <div class='col-sm-12'>
         <div id="imaginary_container">
-            <h3>Subject Offering</h3>
             <table class="table table-condensed">
                 <thead>
-                <th class="col-sm-3">Program Code</th>
-                <th class="col-sm-6">Program Name</th>
+                <th class="col-sm-3">Senior High School</th>
+                <th class="col-sm-6">Track</th>
                 <th class="col-sm-3">View</th>
                 </thead>
                 <tbody>
-                    @foreach($programs as $program)
+                    @foreach($curriculums as $curriculum)
                     <tr>
-                        <td>{{$program->program_code}}</td>
-                        <td>{{$program->program_name}}</td>
-                        <td><a href="{{url('registrar',array('view_course_offering','college', $program->program_code))}}">View Subject Offering</td>
+                        <td>{{$curriculum->program_code}}</td>
+                        <td>{{$curriculum->track}}</td>
+                        <td><a href="{{url('registrar',array('list_curricula','shs', $curriculum->track))}}">View Curricula</td>
                     </tr>
                     @endforeach
                 </tbody>

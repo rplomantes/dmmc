@@ -1,5 +1,5 @@
 @if (count($schedules)>0)
-<table class="table">
+<table class="table table-condensed">
     <thead>
     <th class="col-sm-2">Subject</th>
     <th class="col-sm-4">Year & Section</th>

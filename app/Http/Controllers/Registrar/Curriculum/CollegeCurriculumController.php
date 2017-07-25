@@ -9,7 +9,7 @@ use DB;
 class CollegeCurriculumController extends Controller
 {
     function curriculum(){
-       $curriculums = \App\CtrAcademicProgram::distinct()->where('academic_type', 'College')->orWhere('academic_type', 'TESDA')->get(['program_code', 'program_name']);
+       $curriculums = \App\CtrAcademicProgram::distinct()->where('academic_type', 'College')->get(['program_code', 'program_name']);
        Return view ('registrar.curriculum.college_view_curriculum', compact('curriculums'));
     }
     
