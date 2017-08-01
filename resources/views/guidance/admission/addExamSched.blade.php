@@ -21,7 +21,12 @@
                 <div class="form form-group">
                     <div class='col-sm-6'>
                         <label class='label'>Date & Time</label>
-                        <input name="datetime" type='text' id='datepicker' class='form form-control' placeholder='yyyy-mm-dd hh:mm:ss'>
+                        <div class="input-group stylish-input-group">
+                            <input name="datetime" type='text' id='datetimepicker' class='form form-control' placeholder='yyyy-mm-dd hh:mm:ss'>
+                            <span class="input-group-addon">
+                                <span class="fa fa-calendar"></span> 
+                            </span>
+                        </div>
                     </div>
                     <div class='col-sm-6'>
                         <label class='label'>Place</label>

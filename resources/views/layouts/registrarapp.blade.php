@@ -14,7 +14,7 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/customize.css') }}" rel="stylesheet">
         <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet">
-
+        <link href="{{ asset('css/jquery-ui.css') }}" rel="stylesheet">
         <!--Jquery -->
         <script src="{{ asset('js/jquery.js') }}"></script>
 
@@ -121,6 +121,26 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"><span class="fa fa-check-square fa-fw">
+                                        </span> Assessment</a>
+                                </h4>
+                            </div>
+                            <div id="collapseFour" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <table class="table">
+                                        <tr>
+                                            <td>
+                                                <a href="{{url('/')}}"><i class="fa fa-check-square fa-fw" aria-hidden="true"></i> Assessment</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><span class="fa fa-university fa-fw">
                                         </span> College</a>
                                 </h4>
@@ -160,7 +180,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><span class="fa fa-university fa-fw">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><span class="fa fa-child fa-fw">
                                         </span> Senior High School</a>
                                 </h4>
                             </div>
@@ -206,5 +226,8 @@
             </div>
         </div>
         <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/jquery-1.12.4.js') }}"></script>
+        <script src="{{ asset('js/jquery-ui.js') }}"></script>
     </body>
+
 </html>

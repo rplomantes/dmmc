@@ -1,8 +1,87 @@
-@extends('layouts.registrarapp')
-@section('content')
+<!DOCTYPE html>
+<html lang="{{ app()->getLocale() }}">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
+        <title>DMMCIHS School Management System</title>
+
+        <!-- Styles -->
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/customize.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/jquery-ui.css') }}" rel="stylesheet">
+        <!--Jquery -->
+        <script src="{{ asset('js/jquery.js') }}"></script>
 <style>
     .label{color: gray;}
 </style>
+    </head>
+    <body>
+        <div id="app">
+            <nav class="navbar navbar-default navbar-static-top">
+                <div class="container">
+                    <div class="navbar-header">
+
+                        <!-- Collapsed Hamburger -->
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
+                            <span class="sr-only">Toggle Navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+                        <!-- Branding Image -->
+
+                        <a class="navbar-brand" href="{{ url('/') }}">
+                            <div style="color:#fff">DMMC INSTITUTE OF HEALTH SCIENCES</div>
+                        </a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                        <!-- Left Side Of Navbar -->
+                        <ul class="nav navbar-nav">
+                            &nbsp;
+                        </ul>
+
+                        <!-- Right Side Of Navbar -->
+                        <ul class="nav navbar-nav navbar-right">
+                            <!-- Authentication Links -->
+                            @if (Auth::guest())
+
+                            @else
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color:#fff">
+                                    <i class="fa fa-user fa-fw"></i>  {{ Auth::user()->lastname }}, {{ Auth::user()->firstname}} 
+                                </a>
+
+                                <!--<ul class="dropdown-menu" role="menu">-->
+                            <li>
+                                <a href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+    document.getElementById('logout-form').submit();">
+                                    <span style="color:#fff"><i class="fa fa-sign-out fa-fw"></i> Logout</span>
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    {{ csrf_field() }}
+                                </form>
+                            </li>
+                            <!--</ul>-->
+                            </li>
+                            @endif
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            
+                <div class="col-sm-12">
+                    <div class="well">
+
 
 <?php
 $school_year = \App\CtrSchoolYear::where('academic_type', 'College')->first();
@@ -53,7 +132,7 @@ $courses = \App\CourseOffering::distinct()->where('school_year', $school_year->s
                     </select>
                 </div>
             </div>
-            
+
             <div class="col-sm-12"><br>
                 <!--lower left-->
                 <div class="col-sm-6" id="course_offering">
@@ -65,9 +144,9 @@ $courses = \App\CourseOffering::distinct()->where('school_year', $school_year->s
                     <table class="table table-condensed">
                         <thead>
                         <th class="col-sm-2">Subject Code</th>
-                        <th class="col-sm-4">Section</th>
+                        <th class="col-sm-3">Section</th>
                         <th class="col-sm-3">Schedule</th>
-                        <th class="col-sm-2">Room</th>
+                        <th class="col-sm-3">Room</th>
                         <th class="col-sm-1">Remove</th>
                         </thead>
                         <tbody>
@@ -85,15 +164,19 @@ $courses = \App\CourseOffering::distinct()->where('school_year', $school_year->s
                                 </td>
                                 <td>
                                     <?php
-                                    $schedule2s = \App\Schedule::where('course_offering_id', $load->id)->get();
+                                    $schedule2s = \App\Schedule::distinct()->where('course_offering_id', $load->id)->get(['time_start', 'time_end', 'room']);
                                     ?>
                                     @foreach ($schedule2s as $schedule2)
-                                    {{$schedule2->day}} {{$schedule2->time}}<br>
+                                    <?php
+                                    $days = \App\Schedule::where('course_offering_id', $load->id)->where('time_start', $schedule2->time_start)->where('time_end', $schedule2->time_end)->where('room', $schedule2->room)->get(['day']);
+                                    ?>
+                                    @foreach ($days as $day){{$day->day}}@endforeach {{date('g:i A', strtotime($schedule2->time_start))}} - {{date('g:i A', strtotime($schedule2->time_end))}} <br>
+                                    <!--{{$schedule2->day}} {{$schedule2->time_start}} - {{$schedule2->time_end}}<br>-->
                                     @endforeach
                                 </td>
                                 <td>
                                     <?php
-                                    $schedule3s = \App\Schedule::where('course_offering_id', $load->id)->get();
+                                    $schedule3s = \App\Schedule::distinct()->where('course_offering_id', $load->id)->get(['time_start', 'time_end', 'room']);
                                     ?>
                                     @foreach ($schedule3s as $schedule3)
                                     {{$schedule3->room}}<br>
@@ -135,6 +218,7 @@ $courses = \App\CourseOffering::distinct()->where('school_year', $school_year->s
     }
 
     function addloadcourse(id) {
+    array = {};
     array['instructor_id'] = $("#instructor_id").val();
     $.ajax({
     type: "GET",
@@ -149,6 +233,7 @@ $courses = \App\CourseOffering::distinct()->where('school_year', $school_year->s
     }
 
     function removeload(id) {
+    array = {};
     array['instructor_id'] = $("#instructor_id").val();
     $.ajax({
     type: "GET",
@@ -162,4 +247,12 @@ $courses = \App\CourseOffering::distinct()->where('school_year', $school_year->s
     });
     }
 </script>
-@stop
+</div>
+                </div>
+            </div>
+        </div>
+        <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/jquery-1.12.4.js') }}"></script>
+        <script src="{{ asset('js/jquery-ui.js') }}"></script>
+    </body>
+</html>

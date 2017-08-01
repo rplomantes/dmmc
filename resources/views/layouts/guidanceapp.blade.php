@@ -15,6 +15,7 @@
     <link href="{{ asset('css/customize.css') }}" rel="stylesheet">
     <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet">
     <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{{asset ('jquery.datetimepicker.css')}}">
     
     <!--Jquery -->
     <script src="{{ asset('js/jquery.js') }}"></script>  
@@ -167,5 +168,21 @@
     </div>
 </div>
 <script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('build/jquery.datetimepicker.full.js')}}"></script>
+<script>
+$('#datetimepicker').datetimepicker({
+dayOfWeekStart : 1,
+lang:'en'
+});
+$('#datetimepicker').datetimepicker();
+
+$('#datepicker').datetimepicker({
+dayOfWeekStart : 1,
+timepicker:false,
+format:'Y-m-d',
+lang:'en'
+});
+$('#datepicker').datetimepicker();
+</script>
 </body>
 </html>

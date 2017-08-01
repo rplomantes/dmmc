@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Registrar\Ajax;
 use Illuminate\Support\Facades\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
-use DB;
-use App\CourseOffering;
 use App\Schedule;
 
 class collegeCourseSchedule extends Controller {
@@ -36,14 +34,22 @@ class collegeCourseSchedule extends Controller {
             $school_year = Input::get("school_year");
             $period = Input::get("period");
 
-            $schedules = \App\Schedule::join('course_offerings', 'course_offering_id', '=', 'course_offerings.id')
+//            $schedules = \App\Schedule::join('course_offerings', 'course_offering_id', '=', 'course_offerings.id')
+//                    ->where('course_offerings.school_year', $school_year)
+//                    ->where('course_offerings.period', $period)
+//                    ->where('room', $room)
+//                    ->orderBy('course_code')
+//                    ->get();
+//            return view('registrar.ajax.college_getexistingsched', compact('schedules'));
+            
+            $courses = \App\Schedule::distinct()->join('course_offerings', 'course_offering_id', '=', 'course_offerings.id')
                     ->where('course_offerings.school_year', $school_year)
                     ->where('course_offerings.period', $period)
                     ->where('room', $room)
                     ->orderBy('course_code')
-                    ->get();
-
-            return view('registrar.ajax.college_getexistingsched', compact('schedules'));
+                    ->get(['course_offering_id', 'course_code', 'program_code', 'level', 'section']);
+            
+            return view('registrar.ajax.college_getexistingsched', compact('courses', 'school_year', 'period', 'room'));
         }
     }
 
@@ -55,13 +61,15 @@ class collegeCourseSchedule extends Controller {
             $course_id = Input::get("course_offering_id");
             $room = Input::get("room");
             $day = Input::get("day");
-            $time = Input::get("time");
+            $time_start = Input::get("time_start");
+            $time_end = Input::get("time_end");
 
             $addsched = new Schedule;
             $addsched->course_offering_id = $course_id;
             $addsched->room = "$room";
             $addsched->day = "$day";
-            $addsched->time = "$time";
+            $addsched->time_start = "$time_start";
+            $addsched->time_end = "$time_end";
             $addsched->save();
          
             $schedules = \App\Schedule::where('course_offering_id', $course_id)->get();
@@ -103,7 +111,7 @@ class collegeCourseSchedule extends Controller {
         }
     }
     
-    function changetime($sched_id, $value){
+    function changetime_start($sched_id, $value){
         
         if (Request::ajax()) {
             
@@ -112,7 +120,24 @@ class collegeCourseSchedule extends Controller {
             $room = Input::get("room");
             
             $changetime = Schedule::where('id', $sched_id)->first();
-            $changetime->time=$value;
+            $changetime->time_start=$value;
+            $changetime->save();
+
+        return $this->getexistingsched($room);
+
+        }
+    }
+    
+    function changetime_end($sched_id, $value){
+        
+        if (Request::ajax()) {
+            
+            $school_year = Input::get("school_year");
+            $period = Input::get("period");
+            $room = Input::get("room");
+            
+            $changetime = Schedule::where('id', $sched_id)->first();
+            $changetime->time_end=$value;
             $changetime->save();
 
         return $this->getexistingsched($room);
@@ -133,6 +158,22 @@ class collegeCourseSchedule extends Controller {
         
         return view('registrar.ajax.college_popsched', compact('schedules'));
             
+        }
+    }
+    
+    public function getlistroom(\Illuminate\Http\Request $request) {
+        $query = $request->get('term','');
+        
+        $rooms= \App\CtrRooms::where('room','LIKE','%'.$query.'%')->get();
+        
+        $data=array();
+        foreach ($rooms as $room) {
+                $data[]=array('value'=>$room->room,'id'=>$room->id);
+        }
+        if(count($data)){
+             return $data;
+        }else{
+            return ['value'=>'No Result Found','id'=>''];
         }
     }
 

@@ -47,13 +47,7 @@ class collegeAssignInstructor extends Controller {
     }
     
     function removecourses($id) {
-        if (Request::ajax()) {
-            $course = Input::get("course");
-            $section = Input::get("section");
-            $level = Input::get("level");
-            $school_year = Input::get("school_year");
-            $period = Input::get("period");
-            
+        if (Request::ajax()) {            
             $instructor_id = Input::get("instructor_id");
 
             $addcoursetoinstructor = \App\CourseOffering::find($id);

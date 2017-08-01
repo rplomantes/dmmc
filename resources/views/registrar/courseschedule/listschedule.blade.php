@@ -9,6 +9,7 @@ $school_year = \App\CtrSchoolYear::where('academic_type', 'College')->first();
 <div class="row">
     <div class='col-sm-12'>
         <div id="imaginary_container">
+            <h3>{{$course_offering->program_code}}</h3>
             <h3>{{$course_offering->course_code}} - {{$course_offering->course_name}}</h3>
             <h4>{{$course_offering->level}} year - @if ($course_offering->period== '1st') 1st Semester @elseif ($course_offering->period== '2nd') 2nd Semester @elseif ($course_offering->period== 'Summer') Summer @else @endif</h4>
             <h4>Section: {{$course_offering->section}}</h4>
@@ -17,31 +18,41 @@ $school_year = \App\CtrSchoolYear::where('academic_type', 'College')->first();
             <input type="hidden" id="period" value="{{$school_year->period}}">
             <input type="hidden" id="course_id" value="{{$course_offering->id}}">
 
-
-
             <!--Top-->
             <div class="col-sm-3">
                 <label class="label">Room</label>
-                <select class="form form-control" id="room">
-                    <option value="">Select Room</option>
-                    <option value="Rm 101">Rm 101</option>
-                    <option value="Rm 102">Rm 102</option>
-                    <option value="Rm 103">Rm 103</option>
-                    <option value="Rm 104">Rm 104</option>
-                </select>
+                <input id="room" class="form form-control">
             </div>
 
-            <div class="col-sm-3">
+            <!--            <div class="col-sm-3">
+                            <label class="label">Day</label>
+                            <input id="day" class="form form-control">
+                        </div>-->
+
+            <div class="col-sm-2">
                 <label class="label">Day</label>
-                <input id="day" class="form form-control">
+                <select id="day" class="form form-control" >
+                    <option value="">Select Day</option>
+                    <option value="M">Mon</option>
+                    <option value="T">Tue</option>
+                    <option value="W">Wed</option>
+                    <option value="Th">Thur</option>
+                    <option value="F">Fri</option>
+                    <option value="Sa">Sat</option>
+                    <option value="Su">Sun</option>
+                </select>
             </div>
-            <div class="col-sm-3">
-                <label class="label">Time</label>
-                <input id="time" class="form form-control">
+            <div class="col-sm-2">
+                <label class="label">Time Start</label>
+                <input id="time_start" class="form form-control">
+            </div>
+            <div class="col-sm-2">
+                <label class="label">Time End</label>
+                <input id="time_end" class="form form-control">
             </div>
             <div class="col-sm-3">
                 <label class="label"><br></label>
-                <input type="submit" value="Add" class="col-sm-6 btn btn-info" onclick="addschedule(room2.value)">
+                <input type="submit" value="Add" class="col-sm-6 btn btn-info" onclick="addschedule()">
             </div>
 
 
@@ -51,17 +62,31 @@ $school_year = \App\CtrSchoolYear::where('academic_type', 'College')->first();
                 <div id="popSched">
                     <table class="table table-condensed">
                         <thead>
-                        <th class="col-sm-3">Room</th>
-                        <th class="col-sm-3">Day</th>
-                        <th class="col-sm-3">Time</th>
-                        <th class="col-sm-3">Delete</th>
+                        <th class="col-sm-4">Room</th>
+                        <th class="col-sm-2">Day</th>
+                        <th class="col-sm-3">Time Start</th>
+                        <th class="col-sm-3">Time End</th>
+                        <th class="col-sm-1">Delete</th>
                         </thead>
                         <tbody>
                             @foreach ($schedules as $schedule)
                             <tr>
-                                <td><input onchange="changeroom('{{$schedule->id}}', this.value)" id="room" type="text" class="form form-control" value="{{$schedule->room}}"></td>
-                                <td><input onchange="changeday('{{$schedule->id}}', this.value)" id="day" type="text" class="form form-control" value="{{$schedule->day}}"></td>
-                                <td><input onchange="changetime('{{$schedule->id}}', this.value)" id="time" type="text" class="form form-control" value="{{$schedule->time}}"></td>
+                                <td><input onchange="changeroom('{{$schedule->id}}', this.value)" type="text" class="form form-control" value="{{$schedule->room}}"></td>
+                                <!--<td><input onchange="changeday('{{$schedule->id}}', this.value)" id="day" type="text" class="form form-control" value="{{$schedule->day}}"></td>-->
+                                <td>
+                                    <select onchange="changeday('{{$schedule->id}}', this.value)"class="form form-control">
+                                        <option value="">Select Day</option>
+                                        <option value="M" @if ($schedule->day==='M') selected="selected" @endif>Mon</option>
+                                        <option value="T" @if ($schedule->day==='T') selected="selected" @endif>Tue</option>
+                                        <option value="W" @if ($schedule->day==='W') selected="selected" @endif>Wed</option>
+                                        <option value="Th" @if ($schedule->day==='Th') selected="selected" @endif>Thur</option>
+                                        <option value="F" @if ($schedule->day==='F') selected="selected" @endif>Fri</option>
+                                        <option value="Sa" @if ($schedule->day==='Sa') selected="selected" @endif>Sat</option>
+                                        <option value="Su" @if ($schedule->day==='Su') selected="selected" @endif>Sun</option>
+                                    </select>
+                                </td>
+                                <td><input onchange="changetime_start('{{$schedule->id}}', this.value)" type="text" class="form form-control" value="{{$schedule->time_start}}"></td>
+                                <td><input onchange="changetime_end('{{$schedule->id}}', this.value)" type="text" class="form form-control" value="{{$schedule->time_end}}"></td>
                                 <td><div class="col-sm-12 btn btn-danger" onclick="deletesched('{{$schedule->id}}')">Delete</div></td>
                             </tr>
                             @endforeach
@@ -74,13 +99,7 @@ $school_year = \App\CtrSchoolYear::where('academic_type', 'College')->first();
             <div class="col-sm-6">
                 <h4>Room Directory</h4>
                 <label class="label">Room</label>
-                <select class="form form-control" id='room2' onchange="getexistingsched(this.value)">
-                    <option value="">Select Room</option>
-                    <option value="Rm 101">Rm 101</option>
-                    <option value="Rm 102">Rm 102</option>
-                    <option value="Rm 103">Rm 103</option>
-                    <option value="Rm 104">Rm 104</option>
-                </select>
+                <input id="room2" class="form form-control" onchange="getexistingsched(this.value)">
                 <div id='showsched'>
 
                 </div>
@@ -136,14 +155,29 @@ $school_year = \App\CtrSchoolYear::where('academic_type', 'College')->first();
     });
     }
 
-    function changetime(sched_id, value) {
+    function changetime_start(sched_id, value) {
     array = {};
     array['school_year'] = $("#school_year").val();
     array['period'] = $("#period").val();
     array['room'] = $("#room2").val();
     $.ajax({
     type: "GET",
-            url: "/registrar/ajax/changetime_college/" + sched_id + "/" + value,
+            url: "/registrar/ajax/changetime_start_college/" + sched_id + "/" + value,
+            data:array,
+            success: function (data) {
+            $('#showsched').html(data);
+            }
+    });
+    }
+    
+    function changetime_end(sched_id, value) {
+    array = {};
+    array['school_year'] = $("#school_year").val();
+    array['period'] = $("#period").val();
+    array['room'] = $("#room2").val();
+    $.ajax({
+    type: "GET",
+            url: "/registrar/ajax/changetime_end_college/" + sched_id + "/" + value,
             data:array,
             success: function (data) {
             $('#showsched').html(data);
@@ -165,7 +199,7 @@ $school_year = \App\CtrSchoolYear::where('academic_type', 'College')->first();
             }
     });
     }
-    
+
     function addschedule(room2){
     array = {};
     array['school_year'] = $("#school_year").val();
@@ -173,7 +207,9 @@ $school_year = \App\CtrSchoolYear::where('academic_type', 'College')->first();
     array['course_offering_id'] = $("#course_id").val();
     array['room'] = $("#room").val();
     array['day'] = $("#day").val();
-    array['time'] = $("#time").val();
+    array['time_start'] = $("#time_start").val();
+    array['time_end'] = $("#time_end").val();
+    room2 = $("#room2").val();
     $.ajax({
     type: "GET",
             url: "/registrar/ajax/addschedule_college",
@@ -185,5 +221,39 @@ $school_year = \App\CtrSchoolYear::where('academic_type', 'College')->first();
 
     });
     }
+
+    $(document).ready(function() {
+    src = "{{ URL::to('registrar/ajax/room/autocomplete')}}";
+    $("#room").autocomplete({
+    source: function(request, response) {
+    $.ajax({
+    url: src,
+            dataType: "json",
+            data: {
+            term : request.term
+            },
+            success: function(data) {
+            response(data);
+            }
+    });
+    },
+            minLength: 1,
+    });
+    $("#room2").autocomplete({
+    source: function(request, response) {
+    $.ajax({
+    url: src,
+            dataType: "json",
+            data: {
+            term : request.term
+            },
+            success: function(data) {
+            response(data);
+            }
+    });
+    },
+            minLength: 1,
+    });
+    });
 </script>
 @stop

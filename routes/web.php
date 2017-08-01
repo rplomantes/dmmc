@@ -90,8 +90,10 @@ Route::get('/registrar/ajax/getexistingsched/{room}','Registrar\Ajax\collegeCour
 Route::get('/registrar/ajax/addschedule_college','Registrar\Ajax\collegeCourseSchedule@addschedule');
 Route::get('/registrar/ajax/changeroom_college/{sched_id}/{value}','Registrar\Ajax\collegeCourseSchedule@changeroom');
 Route::get('/registrar/ajax/changeday_college/{sched_id}/{value}','Registrar\Ajax\collegeCourseSchedule@changeday');
-Route::get('/registrar/ajax/changetime_college/{sched_id}/{value}','Registrar\Ajax\collegeCourseSchedule@changetime');
+Route::get('/registrar/ajax/changetime_start_college/{sched_id}/{value}','Registrar\Ajax\collegeCourseSchedule@changetime_start');
+Route::get('/registrar/ajax/changetime_end_college/{sched_id}/{value}','Registrar\Ajax\collegeCourseSchedule@changetime_end');
 Route::get('/registrar/ajax/deletesched_college/{sched_id}','Registrar\Ajax\collegeCourseSchedule@deletesched');
+Route::get('/registrar/ajax/room/autocomplete','Registrar\Ajax\collegeCourseSchedule@getlistroom');
 
 //ajax registrar assign instructor
 Route::get('/registrar/ajax/get_courseoffering_college','Registrar\Ajax\collegeAssignInstructor@getcourses');

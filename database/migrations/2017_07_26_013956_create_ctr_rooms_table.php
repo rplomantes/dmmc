@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSchedulesTable extends Migration
+class CreateCtrRoomsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateSchedulesTable extends Migration
      */
     public function up()
     {
-        Schema::create('schedules', function (Blueprint $table) {
+        Schema::create('ctr_rooms', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('course_offering_id');
             $table->string('room');
-            $table->string('day');
-            $table->time('time_start');
-            $table->time('time_end');
-            $table->string('branch')->nullable();
+            $table->integer('is_available')->default(1);
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreateSchedulesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('schedules');
+        Schema::dropIfExists('ctr_rooms');
     }
 }

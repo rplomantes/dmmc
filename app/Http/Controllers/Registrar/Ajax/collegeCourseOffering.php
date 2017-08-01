@@ -111,5 +111,4 @@ class collegeCourseOffering extends Controller {
             return $this->getCourseOffered($program_code, $curriculum_year, $period, $level, $section);
         }
     }
-
 }

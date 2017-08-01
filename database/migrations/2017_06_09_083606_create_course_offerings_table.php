@@ -27,6 +27,7 @@ class CreateCourseOfferingsTable extends Migration
             $table->decimal('hours', 5,2)->nullable();
             $table->string('level');
             $table->string('course_type');
+            $table->string('percent_tuition');
             $table->integer('instructor_id')->nullable();
             $table->timestamps();
         });

@@ -29,9 +29,9 @@ class reportsController extends Controller {
         
         if ($type!=='TESDA') {
         
-        $lists = DB::select("SELECT * FROM users JOIN student_infos on student_infos.idno = users.idno JOIN statuses ON statuses.idno = users.idno JOIN entrance_exams ON entrance_exams.idno = users.idno JOIN entrance_exam_schedules ON entrance_exam_schedules.id = entrance_exams.exam_schedule WHERE (statuses.academic_program = '$prog' or student_infos.course='$prog') and entrance_exams.exam_result = 'Passed' and statuses.academic_type = '$type'");
+        $lists = DB::select("SELECT * FROM users JOIN student_infos on student_infos.idno = users.idno JOIN statuses ON statuses.idno = users.idno JOIN entrance_exams ON entrance_exams.idno = users.idno JOIN entrance_exam_schedules ON entrance_exam_schedules.id = entrance_exams.exam_schedule WHERE (statuses.academic_program = '$prog' or student_infos.course='$prog') and entrance_exams.exam_result = 'Passed' and statuses.academic_type = '$type' and statuses.status = 1");
         } else {
-        $lists = DB::select("SELECT * FROM users JOIN student_infos on student_infos.idno = users.idno JOIN statuses ON statuses.idno = users.idno JOIN entrance_exams ON entrance_exams.idno = users.idno JOIN entrance_exam_schedules ON entrance_exam_schedules.id = entrance_exams.exam_schedule WHERE statuses.academic_type = '$type' and entrance_exams.exam_result = 'Passed' and statuses.academic_type = '$type'");
+        $lists = DB::select("SELECT * FROM users JOIN student_infos on student_infos.idno = users.idno JOIN statuses ON statuses.idno = users.idno JOIN entrance_exams ON entrance_exams.idno = users.idno JOIN entrance_exam_schedules ON entrance_exam_schedules.id = entrance_exams.exam_schedule WHERE statuses.academic_type = '$type' and entrance_exams.exam_result = 'Passed' and statuses.academic_type = '$type' and statuses.academic_type = '$type' and statuses.status = 1");
         }
         $program = $request;
         

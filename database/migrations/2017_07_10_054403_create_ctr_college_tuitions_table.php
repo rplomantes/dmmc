@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCollegeTuitionsTable extends Migration
+class CreateCtrCollegeTuitionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateCollegeTuitionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('college_tuitions', function (Blueprint $table) {
+        Schema::create('ctr_college_tuitions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('program_code');
             $table->string('level');
@@ -32,6 +32,6 @@ class CreateCollegeTuitionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('college_tuitions');
+        Schema::dropIfExists('ctr_college_tuitions');
     }
 }

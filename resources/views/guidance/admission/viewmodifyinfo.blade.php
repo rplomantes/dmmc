@@ -43,9 +43,9 @@
                                > Returnee
                     </div>
                 </div>
-                
+
                 @if ($list->academic_type=='College' or $list->academic_type == 'TESDA')
-                
+
                 <div class="form form-group"> 
                     <div class="col-sm-12">
                         <label class="label">Course Intended To Enroll </label>
@@ -77,9 +77,9 @@
                         </select>    
                     </div>
                 </div>
-                
+
                 @elseif ($list->academic_type=='Senior High School')
-                
+
                 <div class="form form-group"> 
                     <div class="col-sm-12">
                         <label class="label">Track Intended To Enroll </label>
@@ -114,7 +114,7 @@
                 @else
                 <div class='alert alert-danger'>No Department yet has been set to the Applicant. Please see administrator.</div>
                 @endif
-                
+
                 <div class="form form-group">
                     <div class="col-sm-12">
                         <label class="label">Student Name </label>
@@ -136,7 +136,12 @@
                 <div class="form form-group">
                     <div class="col-sm-6">
                         <label class="label">Birth Date</label>
-                        <input type="date" name="birthdate" class="form form-control" placeholder="yyyy-dd-mm" value="{{$list->birthdate}}">
+                        <div class="input-group stylish-input-group">
+                            <input type="date" name="birthdate" id="datepicker" class="form form-control" placeholder="yyyy-dd-mm" value="{{$list->birthdate}}">
+                            <span class="input-group-addon">
+                                <span class="fa fa-calendar"></span> 
+                            </span>
+                        </div>
                     </div>
                     <div class="col-sm-6">
                         <label class="label">Civil Status</label>
