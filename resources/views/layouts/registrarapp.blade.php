@@ -169,7 +169,7 @@
                                             </td>
                                         </tr>
                                             <td>
-                                                <a href="{{url('registrar', array('reports','college'))}}"><i class="fa fa-flag fa-fw" aria-hidden="true"></i> Reports</a>
+                                                <a href="{{url('registrar', array('reports','college'))}}"><i class="fa fa-bar-chart-o fa-fw" aria-hidden="true"></i> Reports</a>
                                             </td>
                                         </tr>
                                         </tr>
@@ -208,7 +208,7 @@
                                             </td>
                                         </tr>
                                             <td>
-                                                <a href="{{url('registrar', array('reports','shs'))}}"><i class="fa fa-flag fa-fw" aria-hidden="true"></i> Reports</a>
+                                                <a href="{{url('registrar', array('reports','shs'))}}"><i class="fa fa-bar-chart-o fa-fw" aria-hidden="true"></i> Reports</a>
                                             </td>
                                         </tr>
                                         </tr>
