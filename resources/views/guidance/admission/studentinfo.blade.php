@@ -149,7 +149,7 @@
         @endif
         
         @if($status->status!==-1)
-        
+        <br>
         <div class="row">
             <div class="row bs-wizard" style="border-bottom:0;">
                 
@@ -169,7 +169,7 @@
                 <div
                     @if ($status->status==1) 
                         class="col-xs-3 bs-wizard-step active" 
-                    @elseif ($status->status==2 or $status->status==3)
+                    @elseif ($status->status==2 or $status->status==3 or $status->status==4)
                         class="col-xs-3 bs-wizard-step complete"
                     @else
                         class="col-xs-3 bs-wizard-step"
