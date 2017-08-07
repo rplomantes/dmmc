@@ -49,8 +49,8 @@
             type: "GET",
                     url: "/guidance/ajax/getacademicprogram/" + acad_type,
                     success: function (data) {
-                    $('#acad_progs').empty();
-                            $('#acad_program').html(data);
+                    $('#acad_program').empty();
+                    $('#acad_program').html(data);
                     }
             }
             );

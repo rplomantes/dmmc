@@ -14,6 +14,7 @@ $levels = \App\Curriculum::distinct()->where('program_code', $program_code)->whe
         <div id="imaginary_container">
             <h3>{{$program->program_name}} - {{$program_code}} </h3>
             <h4>Curriculum Year: {{$curriculum_year}} </h4>
+            <?php $totalUnits = 0; ?>
             @foreach ($levels as $level)
             <table class="table table-condensed">
                 <thead>
@@ -43,8 +44,8 @@ $curriculums = \App\Curriculum::where('program_code', $program_code)->where('cur
                     <tr>
                         <td>{{$curriculum->course_code}}</td>
                         <td>{{$curriculum->course_name}}</td>
-                        <td>{{$curriculum->lec}} <?php $totalLec = $curriculum->lec + $totalLec; ?></td>
-                        <td>{{$curriculum->lab}} <?php $totalLab = $curriculum->lab + $totalLab; ?></td>
+                        <td>@if ($curriculum->lec==0) @else {{$curriculum->lec}} @endif <?php $totalLec = $curriculum->lec + $totalLec; ?></td>
+                        <td>@if ($curriculum->lab==0) @else {{$curriculum->lab}} @endif <?php $totalLab = $curriculum->lab + $totalLab; ?></td>
                         <td>{!!$curriculum->lec + $curriculum->lab!!}</td>
                     </tr>
                     @endforeach
@@ -53,11 +54,20 @@ $curriculums = \App\Curriculum::where('program_code', $program_code)->where('cur
                         <th><div align='right'>Total</div> </th>
                         <th><?php echo $totalLec; ?></th>
                         <th><?php echo $totalLab; ?></th>
-                        <th>{!! $totalLec + $totalLab !!}</th>
+                        <th><?php $totalUnits = $totalUnits + $totalLec + $totalLab; ?> {!! $totalLec + $totalLab !!}</th>
                     </tr>
                 </tbody>
             </table>
             @endforeach
+            <table class="table table-condensed">
+                <tr>
+                        <th class='col-sm-2'></th>
+                        <th class='col-sm-7'></th>
+                        <th class='col-sm-1'></th>
+                        <th class='col-sm-1'>Total Units:</th>
+                        <th class='col-sm-1'>{!! $totalUnits !!}</th>
+                </tr>
+            </table>
         </div>
     </div>
 </div>

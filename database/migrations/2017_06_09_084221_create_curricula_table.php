@@ -21,11 +21,12 @@ class CreateCurriculaTable extends Migration
             $table->string('course_code');
             $table->string('course_name');
             $table->integer('lec');
-            $table->integer('lab');
-            $table->decimal('hours', 5,2);
+            $table->integer('lab')->nullable();
+            $table->decimal('hours', 5,2)->nullable();
             $table->string('level');
             $table->string('period');
-            $table->string('course_type');
+            $table->string('course_type')->nullable();
+            $table->integer('percent_tuition')->default(100);
             $table->integer('is_current')->default(0);
             $table->timestamps();
         });

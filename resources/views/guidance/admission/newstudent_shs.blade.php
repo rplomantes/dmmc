@@ -71,71 +71,14 @@
                 </div>
                 
                 <div class="form form-group">
-                    <div class="col-sm-2">
+                    <div class="col-sm-6">
                         <label class="label">Birth Date</label>
-                        <select name='month' class='form-control'>
-                            <option value=''>Month</option>
-                            <option value='01'>January</option>
-                            <option value='02'>February</option>
-                            <option value='03'>March</option>
-                            <option value='04'>April</option>
-                            <option value='05'>May</option>
-                            <option value='06'>June</option>
-                            <option value='07'>July</option>
-                            <option value='08'>August</option>
-                            <option value='09'>September</option>
-                            <option value='10'>October</option>
-                            <option value='11'>November</option>
-                            <option value='12'>December</option>
-                        </select>
-                        <!--<input type="date" name="month" class="form form-control" placeholder="yyyy-dd-mm" value="{{old('birthdate')}}">-->
-                    </div>
-                    <div class="col-sm-2">
-                        <label class="label"> </label>
-                        <select name='day' class='form-control'>
-                            <option value=''>Day</option>
-                            <option value='01'>01</option>
-                            <option value='02'>02</option>
-                            <option value='03'>03</option>
-                            <option value='04'>04</option>
-                            <option value='05'>05</option>
-                            <option value='06'>06</option>
-                            <option value='07'>07</option>
-                            <option value='09'>08</option>
-                            <option value='09'>09</option>
-                            <option value='10'>10</option>
-                            <option value='11'>11</option>
-                            <option value='12'>12</option>
-                            <option value='13'>13</option>
-                            <option value='14'>14</option>
-                            <option value='15'>15</option>
-                            <option value='16'>16</option>
-                            <option value='17'>17</option>
-                            <option value='18'>18</option>
-                            <option value='19'>19</option>
-                            <option value='10'>20</option>
-                            <option value='11'>21</option>
-                            <option value='12'>22</option>
-                            <option value='13'>23</option>
-                            <option value='14'>24</option>
-                            <option value='15'>25</option>
-                            <option value='16'>26</option>
-                            <option value='17'>27</option>
-                            <option value='18'>28</option>
-                            <option value='19'>29</option>
-                            <option value='30'>30</option>
-                            <option value='31'>31</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-2">
-                        <label class="label"> </label>
-                        <select name='year' class='form-control'>
-                            <?php $startdate = date("Y"); $enddate = 1960; $years = range ($startdate,$enddate) ?>
-                            <option value=''>Year</option>
-                            @foreach ($years as $year)
-                            <option value='{{$year}}'>{{$year}}</option>
-                            @endforeach
-                        </select>
+                        <div class="input-group stylish-input-group">
+                            <input type="date" name="birthdate" id="datepicker" class="form form-control" placeholder="yyyy-dd-mm" value="{{old('birthdate')}}">
+                            <span class="input-group-addon">
+                                <span class="fa fa-calendar"></span> 
+                            </span>
+                        </div>
                     </div>
                     <div class="col-sm-6">
                         <label class="label">Civil Status</label>

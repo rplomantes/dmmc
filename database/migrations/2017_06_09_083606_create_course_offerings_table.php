@@ -16,7 +16,7 @@ class CreateCourseOfferingsTable extends Migration
         Schema::create('course_offerings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('program_code');
-            $table->string('track');
+            $table->string('track')->nullable();
             $table->string('course_code');
             $table->string('course_name');
             $table->string('section')->default(1);
@@ -26,8 +26,8 @@ class CreateCourseOfferingsTable extends Migration
             $table->integer('lab')->nullable();
             $table->decimal('hours', 5,2)->nullable();
             $table->string('level');
-            $table->string('course_type');
-            $table->string('percent_tuition');
+            $table->string('course_type')->nullable();
+            $table->integer('percent_tuition');
             $table->integer('instructor_id')->nullable();
             $table->timestamps();
         });

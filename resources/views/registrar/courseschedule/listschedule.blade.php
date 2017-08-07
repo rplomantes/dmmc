@@ -44,11 +44,11 @@ $school_year = \App\CtrSchoolYear::where('academic_type', 'College')->first();
             </div>
             <div class="col-sm-2">
                 <label class="label">Time Start</label>
-                <input id="time_start" class="form form-control">
+                <input id="time_start" class="form form-control" placeholder="24 hour format">
             </div>
             <div class="col-sm-2">
                 <label class="label">Time End</label>
-                <input id="time_end" class="form form-control">
+                <input id="time_end" class="form form-control" placeholder="24 hour format">
             </div>
             <div class="col-sm-3">
                 <label class="label"><br></label>
@@ -64,8 +64,8 @@ $school_year = \App\CtrSchoolYear::where('academic_type', 'College')->first();
                         <thead>
                         <th class="col-sm-4">Room</th>
                         <th class="col-sm-2">Day</th>
-                        <th class="col-sm-3">Time Start</th>
-                        <th class="col-sm-3">Time End</th>
+                        <th class="col-sm-3">Start</th>
+                        <th class="col-sm-3">End</th>
                         <th class="col-sm-1">Delete</th>
                         </thead>
                         <tbody>

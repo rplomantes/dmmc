@@ -18,8 +18,8 @@ class CreateCtrCollegeTuitionsTable extends Migration
             $table->string('program_code');
             $table->string('level');
             $table->string('period');
-            $table->decimal('per_unit',10,2);
-            $table->decimal('per_hour',10,2);
+            $table->decimal('per_unit',10,2)->nullable();
+            $table->decimal('per_hour',10,2)->nullable();
             $table->string('branch')->nullable();
             $table->timestamps();
         });

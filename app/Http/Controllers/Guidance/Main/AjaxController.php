@@ -57,7 +57,7 @@ class AjaxController extends Controller {
                 return view('guidance.ajax.getacademicprogram-senior', compact('datas'));
             } else {
                 $datas = DB::select("select distinct program_code, program_name from ctr_academic_programs where academic_type = '$acad_type'");
-                return view('guidance.ajax.getacad_prog', compact('datas'));
+                return;
             }
         }
     }

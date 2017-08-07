@@ -10,10 +10,18 @@
 .bs-wizard > .bs-wizard-step + .bs-wizard-step {}
 .bs-wizard > .bs-wizard-step .bs-wizard-stepnum {color: #595959; font-size: 16px; margin-bottom: 5px;}
 .bs-wizard > .bs-wizard-step .bs-wizard-info {color: #999; font-size: 14px;}
-.bs-wizard > .bs-wizard-step > .bs-wizard-dot {position: absolute; width: 30px; height: 30px; display: block; background: #3097d1; top: 45px; left: 50%; margin-top: -15px; margin-left: -15px; border-radius: 50%;} 
-.bs-wizard > .bs-wizard-step > .bs-wizard-dot:after {content: ' '; width: 14px; height: 14px; background: #053f6f; border-radius: 50px; position: absolute; top: 8px; left: 8px; } 
+
+.bs-wizard > .bs-wizard-step .bs-wizard-stepnum-active {color: #053f6f; font-size: 16px; margin-bottom: 5px;}
+.bs-wizard > .bs-wizard-step .bs-wizard-info-active {color: #3097d1; font-size: 14px;}
+
+.bs-wizard > .bs-wizard-step > .bs-wizard-dot-active {position: absolute; width: 30px; height: 30px; display: block; background: #3097d1; top: 45px; left: 50%; margin-top: -15px; margin-left: -15px; border-radius: 50%;} 
+.bs-wizard > .bs-wizard-step > .bs-wizard-dot-active:after {content: ' '; width: 14px; height: 14px; background: #053f6f; border-radius: 50px; position: absolute; top: 8px; left: 8px; } 
+
+.bs-wizard > .bs-wizard-step > .bs-wizard-dot {position: absolute; width: 30px; height: 30px; display: block; background: darkgray; top: 45px; left: 50%; margin-top: -15px; margin-left: -15px; border-radius: 50%;} 
+.bs-wizard > .bs-wizard-step > .bs-wizard-dot:after {content: ' '; width: 14px; height: 14px; background: gray; border-radius: 50px; position: absolute; top: 8px; left: 8px; } 
+
 .bs-wizard > .bs-wizard-step > .progress {position: relative; border-radius: 0px; height: 8px; box-shadow: none; margin: 20px 0;}
-.bs-wizard > .bs-wizard-step > .progress > .progress-bar {width:0px; box-shadow: none; background: #3097d1;}
+.bs-wizard > .bs-wizard-step > .progress > .progress-bar {width:0px; box-shadow: none; background: gray;}
 .bs-wizard > .bs-wizard-step.complete > .progress > .progress-bar {width:100%;}
 .bs-wizard > .bs-wizard-step.active > .progress > .progress-bar {width:50%;}
 .bs-wizard > .bs-wizard-step:first-child.active > .progress > .progress-bar {width:0%;}
@@ -109,7 +117,7 @@
             </tr>
         </table>
         @else
-        <div class='alert alert-danger'>No Department yet has been set to the Applicant. Please see administrator.</div>
+        <!--<div class='alert alert-danger'>No Department yet has been set to the Applicant. Please see administrator.</div>-->
         @endif
         
         <?php
@@ -162,7 +170,13 @@
                 >
                   <div class="text-center bs-wizard-stepnum">Step 1: Guidance Office</div>
                   <div class="progress"><div class="progress-bar"></div></div>
-                  <a href="#" class="bs-wizard-dot"></a>
+                  <a href="javascript:void(0)"
+                    @if ($status->status==0) 
+                        class="bs-wizard-dot-active" 
+                    @else
+                        class="bs-wizard-dot" 
+                    @endif
+                ></a>
                   <div class="bs-wizard-info text-center">Take Entrance Exam</div>
                 </div>
                 
@@ -177,7 +191,15 @@
                 >
                   <div class="text-center bs-wizard-stepnum">Step 2: Dean's Office</div>
                   <div class="progress"><div class="progress-bar"></div></div>
-                  <a href="#" class="bs-wizard-dot"></a>
+                  <a href="javascript:void(0)"
+                    @if ($status->status==1) 
+                        class="bs-wizard-dot-active" 
+                    @elseif ($status->status==2 or $status->status==3 or $status->status==4)
+                        class="bs-wizard-dot"
+                    @else
+                        class="bs-wizard-dot"
+                    @endif
+                ></a>
                   <div class="bs-wizard-info text-center">Assess your Subjects</div>
                 </div>
                 
@@ -190,10 +212,18 @@
                         class="col-xs-3 bs-wizard-step"
                     @endif
                 >
-                  <div class="text-center bs-wizard-stepnum">Step 3: Cashier</div>
+                  <div class="text-center bs-wizard-stepnum">Step 3: Registrar's Office</div>
                   <div class="progress"><div class="progress-bar"></div></div>
-                  <a href="#" class="bs-wizard-dot"></a>
-                  <div class="bs-wizard-info text-center">Go to Cashier for Payment</div>
+                  <a href="javascript:void(0)"
+                    @if ($status->status==2) 
+                        class="bs-wizard-dot-active" 
+                    @elseif ($status->status==3 or $status->status==4)
+                        class="bs-wizard-dot"
+                    @else
+                        class="bs-wizard-dot"
+                    @endif
+                ></a>
+                  <div class="bs-wizard-info text-center">Issuing of ID Number</div>
                 </div>
                 
                 <div
@@ -205,10 +235,18 @@
                         class="col-xs-3 bs-wizard-step"
                     @endif
                 >
-                  <div class="text-center bs-wizard-stepnum">Step 4: Registrar's Office</div>
+                  <div class="text-center bs-wizard-stepnum">Step 4: Cashier's Office</div>
                   <div class="progress"><div class="progress-bar"></div></div>
-                  <a href="#" class="bs-wizard-dot"></a>
-                  <div class="bs-wizard-info text-center">Claiming of ID</div>
+                  <a href="javascript:void(0)"
+                    @if ($status->status==3) 
+                        class="bs-wizard-dot-active" 
+                    @elseif ($status->status==4)
+                        class="bs-wizard-dot"
+                    @else
+                        class="bs-wizard-dot"
+                    @endif
+                ></a>
+                  <div class="bs-wizard-info text-center">Go to Cashier for Payment</div>
                 </div>
             </div>
         </div>

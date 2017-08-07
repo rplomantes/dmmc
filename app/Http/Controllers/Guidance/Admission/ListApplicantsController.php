@@ -64,8 +64,10 @@ class listApplicantsController extends Controller {
                 ->orderBy('datetime', 'asc')
                 ->get();
 
-        if ($list->academic_type == 'College' or $list->academic_type == 'TESDA') {
+        if ($list->academic_type == 'College') {
             $programs = DB::Select("Select distinct program_code, program_name from ctr_academic_programs  where academic_type='College' or academic_type='TESDA'");
+        } else if ($list->academic_type == 'TESDA') {
+            $programs = DB::Select("Select distinct program_code, program_name from ctr_academic_programs  where academic_type='TESDA'");
         } else {
             $programs = DB::Select("Select distinct track from ctr_academic_programs  where academic_type='Senior High School'");
         }

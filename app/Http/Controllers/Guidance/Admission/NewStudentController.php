@@ -14,7 +14,7 @@ class NewStudentController extends Controller {
 
     //
     function newstudent() {
-        $programs = DB::Select("Select distinct program_code ,program_name from ctr_academic_programs where academic_type='College' or academic_type='TESDA'");
+        $programs = DB::Select("Select distinct program_code ,program_name from ctr_academic_programs where academic_type='College'");
         return view('guidance.admission.newstudent', compact('programs'));
     }
 
@@ -29,9 +29,7 @@ class NewStudentController extends Controller {
             'firstname' => 'required',
             'course' => 'required',
             'email' => 'required',
-            'month' => 'required',
-            'day' => 'required',
-            'year' => 'required',
+            'birthdate' => 'required',
             'address' => 'required',
             'contact_no' => 'required',
         ]);
@@ -61,14 +59,13 @@ class NewStudentController extends Controller {
             $is_transferee = 1;
         };
 
-        $birthdate = "$request->year-$request->month-$request->day";
         
         $student_info = new StudentInfo;
 
         $student_info->idno = $idno;
         $course = $student_info->course = $request->course;
         $student_info->course2 = $request->course2;
-        $student_info->birthdate = $birthdate;
+        $student_info->birthdate = $request->birthdate;
         $student_info->civil_status = $request->civil_status;
         $student_info->address = $request->address;
         $student_info->contact_no = $request->contact_no;

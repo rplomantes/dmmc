@@ -45,6 +45,7 @@ class collegeCourseOffering extends Controller {
                 $addsubject->hours = $course_details->hours;
                 $addsubject->level = $level;
                 $addsubject->course_type = $course_details->course_type;
+                $addsubject->percent_tuition = $course_details->percent_tuition;
                 $addsubject->save();
             } else {
                 
@@ -104,6 +105,7 @@ class collegeCourseOffering extends Controller {
                         $addsubject->hours = $curriculum->hours;
                         $addsubject->level = $level;
                         $addsubject->course_type = $curriculum->course_type;
+                        $addsubject->percent_tuition = $curriculum->percent_tuition;
                         $addsubject->save();
                     }
                 }
