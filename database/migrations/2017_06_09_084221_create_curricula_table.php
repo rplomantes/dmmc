@@ -23,6 +23,7 @@ class CreateCurriculaTable extends Migration
             $table->integer('lec');
             $table->integer('lab')->nullable();
             $table->decimal('hours', 5,2)->nullable();
+            $table->string('track')->nullable();
             $table->string('level');
             $table->string('period');
             $table->string('course_type')->nullable();

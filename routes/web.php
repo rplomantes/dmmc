@@ -21,6 +21,10 @@ Route::auth();
 Auth::routes();
 Route::get('/','Main\loginController@index');
 
+//Registrar Assessment
+Route::get('/registrar/viewinfo/{idno}','Registrar\Assessment\AssessmentController@viewinfo');
+Route::get('/registrar/assessment_of_payment/{idno}','Registrar\Assessment\AssessmentController@viewassessment');
+
 //Registrar Curriculum
 Route::get('/registrar/view_curriculum/college','Registrar\Curriculum\CollegeCurriculumController@curriculum');
 Route::get('/registrar/list_curricula/college/{program_code}','Registrar\Curriculum\CollegeCurriculumController@list_curricula');
@@ -33,18 +37,28 @@ Route::get('/registrar/curriculum/shs/{curriculum_year}/{track}','Registrar\Curr
 //Registrar Course Offering
 Route::get('/registrar/course_offering/college', 'Registrar\CourseOffering\CollegeCourseOfferingController@index');
 Route::get('/registrar/view_course_offering/college/{program_code}', 'Registrar\CourseOffering\CollegeCourseOfferingController@view');
+//shs
+Route::get('/registrar/course_offering/shs', 'Registrar\CourseOffering\SHSCourseOfferingController@index');
+Route::get('/registrar/view_course_offering/shs/{track}', 'Registrar\CourseOffering\SHSCourseOfferingController@view');
 
 //Registrar Course Schedule
 Route::get('/registrar/course_scheduling/college','Registrar\CourseSchedule\CollegeCourseSchedule@index');
-Route::get('/registrar/course_scheduling_list/college/{id}','Registrar\CourseSchedule\CollegeCourseSchedule@listcourseschedule');
+Route::get('/registrar/course_scheduling_list/{id}','Registrar\CourseSchedule\CollegeCourseSchedule@listcourseschedule');
+//shs
+Route::get('/registrar/course_scheduling/shs','Registrar\CourseSchedule\SHSCourseSchedule@index');
 
 //Registrar Assign Instructor
 Route::get('/registrar/assign_instructor/college', 'Registrar\AssignInstructor\CollegeAssignInstructorController@index');
-Route::get('/registrar/assign_instructor/view_profile/{id}', 'Registrar\AssignInstructor\CollegeAssignInstructorController@viewprofile');
-Route::get('/registrar/assign_instructor/loadsubjects/{id}', 'Registrar\AssignInstructor\CollegeAssignInstructorController@loadsubjects');
-Route::get('/registrar/assign_instructor/modify/{id}', 'Registrar\AssignInstructor\CollegeAssignInstructorController@viewmodify');
-Route::post('/registrar/assign_instructor/modifyinfo', 'Registrar\AssignInstructor\CollegeAssignInstructorController@modifyinfo');
-
+Route::get('/registrar/assign_instructor/view_profile_college/{id}', 'Registrar\AssignInstructor\CollegeAssignInstructorController@viewprofile');
+Route::get('/registrar/assign_instructor/loadsubjects_college/{id}', 'Registrar\AssignInstructor\CollegeAssignInstructorController@loadsubjects');
+Route::get('/registrar/assign_instructor/modify_college/{id}', 'Registrar\AssignInstructor\CollegeAssignInstructorController@viewmodify');
+Route::post('/registrar/assign_instructor/modifyinfo_college', 'Registrar\AssignInstructor\CollegeAssignInstructorController@modifyinfo');
+//shs
+Route::get('/registrar/assign_instructor/shs', 'Registrar\AssignInstructor\SHSAssignInstructorController@index');
+Route::get('/registrar/assign_instructor/view_profile_shs/{id}', 'Registrar\AssignInstructor\SHSAssignInstructorController@viewprofile');
+Route::get('/registrar/assign_instructor/loadsubjects_shs/{id}', 'Registrar\AssignInstructor\SHSAssignInstructorController@loadsubjects');
+Route::get('/registrar/assign_instructor/modify_shs/{id}', 'Registrar\AssignInstructor\SHSAssignInstructorController@viewmodify');
+Route::post('/registrar/assign_instructor/modifyinfo_shs', 'Registrar\AssignInstructor\SHSAssignInstructorController@modifyinfo');
 
 //Guidance
 Route::get('/guidance/newstudent','Guidance\Admission\NewStudentController@newstudent');
@@ -85,6 +99,13 @@ Route::get('/registrar/ajax/removesubject/{id}','Registrar\Ajax\collegeCourseOff
 Route::get('/registrar/ajax/addallsubjects','Registrar\Ajax\collegeCourseOffering@addAllSubjects');
 Route::get('/registrar/ajax/getyearsection/{program_code}','Registrar\Ajax\collegeCourseSchedule@getcourses');
 Route::get('/registrar/ajax/getexistingsched/{room}','Registrar\Ajax\collegeCourseSchedule@getexistingsched');
+//shs
+Route::get('/registrar/ajax/getlist/shs/{track}/{curriculum_year}/{period}/{level}','Registrar\Ajax\shsCourseOffering@getList');
+Route::get('/registrar/ajax/getcourseoffered/shs/{track}/{curriculum_year}/{period}/{level}/{section}','Registrar\Ajax\shsCourseOffering@getCourseOffered');
+Route::get('/registrar/ajax/getsubject/shs/{track}/{curriculum_year}/{period}/{level}/{section}/{course_code}','Registrar\Ajax\shsCourseOffering@getSubject');
+Route::get('/registrar/ajax/removesubject/shs/{id}','Registrar\Ajax\shsCourseOffering@removeSubject');
+Route::get('/registrar/ajax/addallsubjects/shs','Registrar\Ajax\shsCourseOffering@addAllSubjects');
+Route::get('/registrar/ajax/getyearsection/shs/{track}','Registrar\Ajax\shsCourseSchedule@getcourses');
 
 //ajax resistrar course offering
 Route::get('/registrar/ajax/addschedule_college','Registrar\Ajax\collegeCourseSchedule@addschedule');
@@ -99,3 +120,7 @@ Route::get('/registrar/ajax/room/autocomplete','Registrar\Ajax\collegeCourseSche
 Route::get('/registrar/ajax/get_courseoffering_college','Registrar\Ajax\collegeAssignInstructor@getcourses');
 Route::get('/registrar/ajax/add_coursetoinstructor_college/{id}','Registrar\Ajax\collegeAssignInstructor@addcourses');
 Route::get('/registrar/ajax/remove_coursetoinstructor_college/{id}','Registrar\Ajax\collegeAssignInstructor@removecourses');
+//shs
+Route::get('/registrar/ajax/get_courseoffering_shs','Registrar\Ajax\shsAssignInstructor@getcourses');
+Route::get('/registrar/ajax/add_coursetoinstructor_shs/{id}','Registrar\Ajax\shsAssignInstructor@addcourses');
+Route::get('/registrar/ajax/remove_coursetoinstructor_shs/{id}','Registrar\Ajax\shsAssignInstructor@removecourses');

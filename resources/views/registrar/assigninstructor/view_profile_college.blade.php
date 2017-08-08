@@ -48,11 +48,19 @@
                             <?php
                             $schedules = \App\Schedule::where('course_offering_id', $load->id)->get();
                             ?>
+                            @if ($load->program_code=='Senior High School')
+                            {{$load->course_name}}
+                            @else
                             {{$load->course_code}}
+                            @endif
 
                         </td>
                         <td>
+                            @if ($load->program_code=='Senior High School')
+                            {{$load->track}} - {{$load->level}} - {{$load->section}}
+                            @else 
                             {{$load->program_code}} - {{$load->level}} year - section {{$load->section}}
+                            @endif
                         </td>
                         <td>
                             <?php
@@ -84,8 +92,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><a href="{{url('registrar', array('assign_instructor', 'modify', $instructor->id))}}"><div class="col-sm-12 btn btn-success">Modify</div></a></td>
-                    <td><a href="{{url('registrar', array('assign_instructor', 'loadsubjects', $instructor->id))}}"><div class="col-sm-12 btn btn-primary">Load Subjects</div></a></td>
+                    <td><a href="{{url('registrar', array('assign_instructor', 'modify_college', $instructor->id))}}"><div class="col-sm-12 btn btn-success">Modify</div></a></td>
+                    <td><a href="{{url('registrar', array('assign_instructor', 'loadsubjects_college', $instructor->id))}}"><div class="col-sm-12 btn btn-primary">Load Subjects</div></a></td>
                 </tr>
             </table>
         </div>

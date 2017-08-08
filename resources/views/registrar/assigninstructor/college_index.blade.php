@@ -20,7 +20,7 @@
                     <tr>
                         <td>{{$instructor->idno}}</td>
                         <td>{{$instructor->firstname}} {{$instructor->middlename}} {{$instructor->lastname}} {{$instructor->extensionname}}</td>
-                        <td><a href="{{url('registrar', array('assign_instructor', 'view_profile', $instructor->id))}}">View Profile</td>
+                        <td><a href="{{url('registrar', array('assign_instructor', 'view_profile_college', $instructor->id))}}">View Profile</td>
                     </tr>
                     @endforeach
                 </tbody>

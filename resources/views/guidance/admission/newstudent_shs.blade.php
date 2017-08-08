@@ -29,9 +29,9 @@
                 </div>
                 <div class="form form-group"> 
                     <div class="col-sm-6">
-                        <label class="label">Track Intended To Enroll </label>
+                        <label class="label">Strand Intended To Enroll* </label>
                         <select name="course" id="course" class="form form-control">
-                            <option value="">Please Select Intended Track</option>
+                            <option value="">Please Select Intended Strand</option>
                             @foreach($programs as $program)
                             <option value="{{$program->track}}"
                                     @if(old('course')== $program->track )
@@ -42,7 +42,7 @@
                         </select>    
                     </div> 
                     <div class="col-sm-6">
-                        <label class="label">Second Choice </label>
+                        <label class="label">Second Choice* </label>
                         <select name="course2" id="course2" class="form form-control">
                             <option value="">Please Select Second Choice</option>
                             @foreach($programs as $program)
@@ -54,7 +54,7 @@
 
                 <div class="form form-group">
                     <div class="col-sm-12">
-                        <label class="label">Student Name </label>
+                        <label class="label">Student Name* </label>
                     </div>
                     <div class="col-sm-3">
                         <input type="text" name ="lastname" class="form form-control" placeholder="Last Name" value="{{old('lastname')}}">
@@ -72,7 +72,7 @@
                 
                 <div class="form form-group">
                     <div class="col-sm-6">
-                        <label class="label">Birth Date</label>
+                        <label class="label">Birth Date*</label>
                         <div class="input-group stylish-input-group">
                             <input type="date" name="birthdate" id="datepicker" class="form form-control" placeholder="yyyy-dd-mm" value="{{old('birthdate')}}">
                             <span class="input-group-addon">
@@ -93,19 +93,19 @@
 
                 <div class="form form-group"> 
                     <div class="col-sm-12">
-                        <label class="label">Address</label>
+                        <label class="label">Address*</label>
                         <input type="text" name="address" class="form form-control" value="{{old('address')}}">
                     </div>
                 </div>
 
                 <div class="form form-group">
                     <div class="col-sm-6">
-                        <label class="label">Contact Number</label>
+                        <label class="label">Contact Number*</label>
                         <input type="text" name="contact_no" class="form form-control" value="{{old('contact_no')}}">
                     </div>
 
                     <div class="col-sm-6">
-                        <label class="label">Email Address </label>
+                        <label class="label">Email Address* </label>
                         <input type="email" name="email" class="form form-control" value="{{old('email')}}">
                     </div>
                 </div>    
@@ -134,7 +134,7 @@
                         <input type="text" name="name_of_school" class="form form-control" placeholder="Name of School" value="{{old('name_of_school')}}">
                     </div>
                     <div class="col-sm-4">
-                        <input type="text" name="prev_course" class="form form-control" placeholder="Course" value="{{old('prev_course')}}">
+                        <input type="text" name="prev_course" class="form form-control" placeholder="Course/Strand" value="{{old('prev_course')}}">
                     </div>
                 </div>
                 <div class="form form-group">

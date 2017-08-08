@@ -82,9 +82,9 @@
 
                 <div class="form form-group"> 
                     <div class="col-sm-12">
-                        <label class="label">Track Intended To Enroll </label>
+                        <label class="label">Strand Intended To Enroll </label>
                         <select name="course" id="course" class="form form-control">
-                            <option value="">Please Select Intended Track</option>
+                            <option value="">Please Select Intended Strand</option>
                             @foreach($programs as $program)
                             <option value="{{$program->track}}"
                                     @if ($list->course== $program->track)
@@ -205,7 +205,7 @@
                         <input type="text" name="name_of_school" class="form form-control" placeholder="Name of School" value="{{$list->school}}">
                     </div>
                     <div class="col-sm-4">
-                        <input type="text" name="prev_course" class="form form-control" placeholder="Course" value="{{$list->prev_course}}">
+                        <input type="text" name="prev_course" class="form form-control" placeholder="Course/Strand" value="{{$list->prev_course}}">
                     </div>
                 </div>
                 @if ($value==1)

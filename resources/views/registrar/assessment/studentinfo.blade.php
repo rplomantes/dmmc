@@ -1,4 +1,4 @@
-@extends('layouts.guidanceapp')
+@extends('layouts.registrarapp')
 @section('content')
 <style>
     .label{color: gray;}
@@ -33,131 +33,65 @@
 .bs-wizard > .bs-wizard-step.disabled a.bs-wizard-dot{ pointer-events: none; }
 /*END Form Wizard*/
 </style>
+
+<?php
+$user = \App\User::where('idno', $idno)->first();
+$student_info = \App\StudentInfo::where('idno', $idno)->first();
+?>
 <div class="row">
     <div class="col-sm-12">
 
         <h3>Student Information</h3>
         <table class='table table-condensed'>
             <tr>
-                <td>Reference No</td>
-                <td><b>{{$list->idno}}</b></td>
-            </tr>
-            <tr>
-                <td>Date Pre-registered</td>
-                <td>{{ date ('M d, Y', strtotime ($list->created_at))}}</td>
+                <td>ID No</td>
+                <td><b>{{$idno}}</b></td>
             </tr>
             <tr>
                 <td>Name</td>
-                <td>{{$list->firstname}} {{$list->middlename}} {{$list->lastname}} {{$list->extensionname}}</td>
+                <td>{{$user->firstname}} {{$user->middlename}} {{$user->lastname}} {{$user->extensionname}}</td>
             </tr>
             <tr>
                 <td>Address</td>
-                <td>{{$list->address}}</td>
+                <td>{{$student_info->address}}</td>
             </tr>
             <tr>
                 <td>Birth Date</td>
-                <td>{{$list->birthdate}}</td>
+                <td>{{$student_info->birthdate}}</td>
             </tr>
             <tr>
                 <td>Civil Status</td>
-                <td>{{$list->civil_status}}</td>
+                <td>{{$student_info->civil_status}}</td>
             </tr>
             <tr>
                 <td>Contact Number</td>
-                <td>{{$list->contact_no}}</td>
+                <td>{{$student_info->contact_no}}</td>
             </tr>
             <tr>
                 <td>Email Address</td>
-                <td>{{$list->email}}</td>
+                <td>{{$user->email}}</td>
             </tr>
             <tr>
-                <td>School Last Attended</td>
-                <td>{{$list->last_school}}</td>
-            </tr>
-            <tr>
-                <td>Year Graduated</td>
-                <td>{{$list->year_graduated}}</td>
-            </tr>
-            <tr>
-                <td>General Average</td>
-                <td>{{$list->gen_ave}}</td>
-            </tr>
-            <tr>
-                <td>Honor Received</td>
-                <td>{{$list->honor}}</td>
-            </tr>
-            <tr>
-                <td width="40%">If transferee</td>
-                <td>School - {{$list->school}} <br>Course - {{$list->prev_course}}</td>
+                @if ($status->academic_type!=="Senior High School")
+                <td>Course</td>
+                <td>{{$status->program_name}}</td>
+                @else
+                <td>Strand</td>
+                <td>{{$status->track}}</td>
+                @endif
             </tr>
 
         </table>
-        @if ($list->academic_type == 'College')
-        <h3>Course</h3>
-        <table class='table'>
-            <tr>
-                <td width="40%">Intended Course to Enroll</td>
-                <td>{{$list->course}}</td>
-            </tr>
-            <tr>
-                <td>Second Choice</td>
-                <td>{{$list->course2}}</td>
-            </tr>
-        </table>
-        @elseif ($list->academic_type=='Senior High School')
-        <h3>Senior High School</h3>
-        <table class='table'>
-            <tr>
-                <td width="40%">Intended Strand to Enroll</td>
-                <td>{{$list->course}}</td>
-            </tr>
-            <tr>
-                <td>Second Choice</td>
-                <td>{{$list->course2}}</td>
-            </tr>
-        </table>
-        @else
-        <!--<div class='alert alert-danger'>No Department yet has been set to the Applicant. Please see administrator.</div>-->
-        @endif
         
-        <?php
-        $status = \App\Status::where('idno', $list->idno)->first();
-        ?>
-        
-        @if ($value==1)
-        <h3>Entrance Exam</h3>
-        <table class='table'>
-            <tr>
-                <td width="40%">Entrance Exam Schedule</td>
-                <td>{{ date ('M d, Y (D) - g:i A', strtotime($exam->datetime))}} - {{$exam->place}}</td>
-            </tr>
-            <tr>
-                <td>Entrance Exam Result</td>
-                <td>{{$exam->exam_result}}</td>
-            </tr>
-        </table> 
-        @if ($status->status==0)
-        <a href="{{url('guidance',array('viewmodifyinfo',$list->idno))}}"><div class='btn btn-primary col-sm-6'>Modify</div></a> 
-        <a href="{{url('guidance',array('admission_slip',$list->idno))}}" target="_blank"><div class='btn btn-success col-sm-6'>Print Entrance Exam Slip</div></a>
-
-        @elseif ($status->status==1)
-        <a href="{{url('guidance',array('viewmodifyinfo',$list->idno))}}"><div class='btn btn-primary col-sm-12'>Modify</div></a>
-
-        @elseif ($status->status==-1)
-        <div class="alert alert-danger">Sorry you have failed the Entrance Exam!!!</div>
-        <a href="{{url('guidance',array('viewmodifyinfo',$list->idno))}}"><div class='btn btn-primary col-sm-12'>Modify</div></a>
-        @elseif ($status->status==2)
-
-        @endif
-        @else
-
-        <a href="{{url('guidance',array('viewmodifyinfo',$list->idno))}}"><div class='btn btn-primary col-sm-6'>Modify</div></a> 
-        <a href="{{url('guidance',array('schedule_applicant',$list->idno))}}"><div class='btn btn-success col-sm-6'>Schedule Entrance Exam</div></a>
-        
-        @endif
-        
-        @if($status->status!==-1)
+        @if ($status->status==2)
+        <a href="{{url('registrar',array('assessment_of_payment',$idno))}}"><div class='btn btn-primary col-sm-12'>Assess Payment</div></a>
         <br>
+        @elseif ($status->status=1)
+        <a href="{{url('registrar',array('assessment_of_subject',$idno))}}"><div class='btn btn-primary col-sm-12'>Assess Subject</div></a>
+        <br>
+        @endif
+               
+        @if($status->status!==-1)
         <div class="row">
             <div class="row bs-wizard" style="border-bottom:0;">
                 

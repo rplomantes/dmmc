@@ -2,7 +2,7 @@
 @section('content')
 <?php
 $tracks = \App\CtrAcademicProgram::where('track', $track)->first();
-$curriculums = \App\Curriculum::distinct()->where('program_code', $track)->get(['curriculum_year']);
+$curriculums = \App\Curriculum::distinct()->where('track', $track)->get(['curriculum_year']);
 ?>
 <style>
     .label{color: gray;}

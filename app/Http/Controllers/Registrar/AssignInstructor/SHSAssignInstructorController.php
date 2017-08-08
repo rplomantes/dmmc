@@ -5,28 +5,28 @@ namespace App\Http\Controllers\Registrar\AssignInstructor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
-class CollegeAssignInstructorController extends Controller
+class SHSAssignInstructorController extends Controller
 {
     function index(){
         $instructors = User::where('accesslevel', 10)->get();
-        return view('registrar.assigninstructor.college_index', compact('instructors'));
+        return view('registrar.assigninstructor.shs_index', compact('instructors'));
     }
     
     function viewprofile($id){
         $instructor = User::where('id', $id)->first();
-        return view('registrar.assigninstructor.view_profile_college', compact('instructor'));
+        return view('registrar.assigninstructor.view_profile_shs', compact('instructor'));
     }
     
     function loadsubjects($id){
         $user = \App\User::where('id', $id)->first();
         
-        return view('registrar.assigninstructor.loadsubjects_college', compact('user'));
+        return view('registrar.assigninstructor.loadsubjects_shs', compact('user'));
     }
     
     function viewmodify($id){
         $user = \App\User::where('id', $id)->first();
         
-        return view('registrar.assigninstructor.viewmodify_college', compact('user'));
+        return view('registrar.assigninstructor.viewmodify_shs', compact('user'));
     }
     
     function modifyinfo(Request $request) {
@@ -54,6 +54,6 @@ class CollegeAssignInstructorController extends Controller
 
         $user->save();
 
-        return redirect("/registrar/assign_instructor/view_profile_college/$id");
+        return redirect("/registrar/assign_instructor/view_profile_shs/$id");
     }
 }

@@ -16,7 +16,7 @@
                 </ul>
             </div>
             @endif
-            <form class="form-horizontal" role="form" method="POST" action="{{ url('/registrar',array('assign_instructor','modifyinfo'))}}">
+            <form class="form-horizontal" role="form" method="POST" action="{{ url('/registrar',array('assign_instructor','modifyinfo_college'))}}">
                 {{ csrf_field() }}
                 <input type='hidden' value='{{$user->id}}' name='id'>
                 <div class="form form-group">

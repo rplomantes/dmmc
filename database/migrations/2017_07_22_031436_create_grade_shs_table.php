@@ -15,12 +15,9 @@ class CreateGradeShsTable extends Migration
     {
         Schema::create('grade_shs', function (Blueprint $table) {
             $table->increments('id');
-             $table->string('idno');
+            $table->string('idno');
             $table->integer('course_offering_id');
-            $table->string('course_code');
-            $table->string('course_name');
-            $table->integer('lec')->nullable();
-            $table->integer('lab')->nullable();
+            $table->string('track');
             $table->decimal('hours', 5,2);
             $table->decimal('first_qtr', 5,2)->nullable();
             $table->decimal('second_qtr', 5,2)->nullable();

@@ -87,7 +87,7 @@
 $school_year = \App\CtrSchoolYear::where('academic_type', 'College')->first();
 $loads = \App\CourseOffering::where('instructor_id', $user->id)->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get();
 
-$courses = \App\CourseOffering::distinct()->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get(['program_code']);
+$courses = \App\CourseOffering::distinct()->where('school_year', $school_year->school_year)->where('period', $school_year->period)->where('program_code','!=' ,'Senior High School')->get(['program_code']);
 ?>
 
 <div class="row">

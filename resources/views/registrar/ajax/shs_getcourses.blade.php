@@ -1,15 +1,13 @@
 @if (count($courses)>0)
 <table class="table table-condensed">
     <thead>
-    <th class="col-sm-2">Subject Code</th>
-    <th class="col-sm-4">Subject Name</th>
+    <th class="col-sm-6">Subject Name</th>
     <th class="col-sm-4">Schedule</th>
     <th class="col-sm-2">Room</th>
 </thead>
 <tbody>
     @foreach($courses as $course)
     <tr>
-        <td>{{$course->course_code}}</td>
         <td>
             <?php
             $schedules = \App\Schedule::where('course_offering_id', $course->id)->get();
