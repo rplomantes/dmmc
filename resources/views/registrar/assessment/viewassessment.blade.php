@@ -91,14 +91,14 @@
                 $grades = \App\GradeShs::where('idno', $idno)->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get();
             }
             ?>
-            
+
             <input type="hidden" id="idno" value="{{$idno}}">
             <input type="hidden" id="level" value="{{$status->level}}">
             <input type="hidden" id="school_year" value="{{$school_year->school_year}}">
             <input type="hidden" id="period" value="{{$school_year->period}}">
             <input type="hidden" id="program_code" value="{{$status->program_code}}">
             <input type="hidden" id="academic_type" value="{{$status->academic_type}}">
-            
+
             <div class="col-sm-12">
                 <div class="well">
                     <div class="row">
@@ -112,8 +112,8 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="col-sm-12">
-                                Subject Registered:
-                                
+                                <h4>Subject Registered:</h4>
+
                                 @if ($status->academic_type == "College")
                                 <table class="table table-condensed">
                                     <thead>
@@ -123,9 +123,11 @@
                                     <th>Lab</th>
                                     <th>Units</th>
                                     </thead>
-                                    <?php $totalLec = 0;
+                                    <?php
+                                    $totalLec = 0;
                                     $totalLab = 0;
-                                    $totalUnits = 0; ?>
+                                    $totalUnits = 0;
+                                    ?>
                                     @foreach ($grades as $grade)
                                     <tr>
                                         <td>{{$grade->course_code}}</td>
@@ -141,42 +143,46 @@
                                         <th><?php echo $totalLec; ?></th>
                                         <th><?php if ($totalLab != 0) {
                                         echo $totalLab;
-                                    } else {
-                                        
                                     } ?>
                                         </th>
                                         <th><?php $totalUnits = $totalUnits + $totalLec + $totalLab; ?> {!! $totalLec + $totalLab !!}</th>
                                     </tr>
                                 </table>
-                                
-                                
+
+
                                 @else
                                 <table class="table table-condensed">SHS</table>
                                 @endif
-                                
-                                
+
+
                             </div>
                             <div class="col-sm-12">
-                                Payment Options:
+                                <h4>Payment Options:</h4>
                                 @if ($status->academic_type == "College")
                                 <form class="form-horizontal">
                                     <div class="form form-group">
                                         <div class="col-sm-6">
+<?php
+$list_type_of_accounts = \App\CtrSpecialDiscount::where('program_code', $status->program_code)->where('level', $status->level)->get();
+$list_plans = \App\CtrDueDate::distinct()->get(['plan']);
+?>
                                             <label class="label">Select Type of Account </label>
                                             <select id="type_of_account" class="form form-control">
                                                 <option value="">Select Type of Account</option>
                                                 <option value="regular">Regular</option>
-                                                <option value="Special Discount(15k)">Special Discount(15k)</option>
-                                                <option value="Special Discount(8k)">Special Discount(8k)</option>
+                                                @foreach($list_type_of_accounts as $list_type_of_account)
+                                                <option value="{{$list_type_of_account->special_discount_code}}">{{$list_type_of_account->special_discount_code}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
                                             <label class="label">Select Plan </label>
                                             <select id="plan" class="form form-control">
                                                 <option value="">Select Plan</option>
-                                                <option value="full">Full Payment</option>
-                                                <option value="option 1">Option 1 (3 Payments)</option>
-                                                <option value="option 2">Option 2 (6 Payments)</option>
+                                                <option value="Full">Full Payment</option>
+                                                @foreach ($list_plans as $list_plan)
+                                                <option value="{{$list_plan->plan}}">{{$list_plan->plan}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -186,27 +192,31 @@
                                         </div>    
                                     </div>
                                 </form>
-                                
-                                
+
+
                                 @else
                                 <table class="table table-condensed">SHS</table>
                                 @endif
-                                
-                                
+
+
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="col-sm-12">
-                                Payment Summary:
+                                <h4>Payment Summary:</h4>
                                 <div id="paymentsummary">
-                                    
+
                                 </div>
                             </div>
+                        </div>
+                    </div><hr>
+                    <div class='row'>
+                        <div class='col-sm-12' id='process_assessment'>
                         </div>
                     </div>
                 </div>
             </div>
-    </div>
+        </div>
         <script>
             function computePayment() {
                 array = {};
@@ -223,14 +233,16 @@
                     url: "/registrar/ajax/assessment/computePayment",
                     data: array,
                     success: function (data) {
+                        $('#paymentsummary').empty();
                         $('#paymentsummary').html(data);
+                        $('#process_assessment').html("<div class='col-sm-12 btn btn-success'>Process Assessment</div>").show();
                     }
 
                 });
             }
-                </script>
-                <script src="{{ asset('js/app.js') }}"></script>
-                <script src="{{ asset('js/jquery-1.12.4.js') }}"></script>
-                <script src="{{ asset('js/jquery-ui.js') }}"></script>
-            </body>
-        </html>
+        </script>
+        <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/jquery-1.12.4.js') }}"></script>
+        <script src="{{ asset('js/jquery-ui.js') }}"></script>
+    </body>
+</html>

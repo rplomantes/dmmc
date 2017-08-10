@@ -39,6 +39,7 @@ $program_name = \App\CtrAcademicProgram::where('program_code', $program_code)->f
                             <option value='2nd'>2nd</option>
                             <option value='3rd'>3rd</option>
                             <option value='4th'>4th</option>
+                            <option value='5th'>5th</option>
                         </select>
                     </div>
                     <div class='col-sm-3'>
