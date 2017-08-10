@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCtrLabFeesTable extends Migration
+class CreateLedgersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateCtrLabFeesTable extends Migration
      */
     public function up()
     {
-        Schema::create('ctr_lab_fees', function (Blueprint $table) {
+        Schema::create('ledgers', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('idno');
             $table->string('program_code');
             $table->string('level');
+            $table->string('school_year');
             $table->string('period');
             $table->string('category');
             $table->string('description');
@@ -24,7 +26,14 @@ class CreateCtrLabFeesTable extends Migration
             $table->string('acccounting_code')->nullable();
             $table->string('category_switch');
             $table->decimal('amount',10,2);
+            $table->decimal('payment',10,2);
+            $table->decimal('discount',10,2);
+            $table->integer('discount_id');
             $table->timestamps();
+            $table->foreign('idno')
+                    ->references('idno')
+                    ->on('users')
+                    ->onUpdate('cascade');
         });
     }
 
@@ -35,6 +44,6 @@ class CreateCtrLabFeesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ctr_lab_fees');
+        Schema::dropIfExists('ledgers');
     }
 }

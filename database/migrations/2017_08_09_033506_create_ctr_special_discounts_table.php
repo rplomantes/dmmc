@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCtrLabFeesTable extends Migration
+class CreateCtrSpecialDiscountsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateCtrLabFeesTable extends Migration
      */
     public function up()
     {
-        Schema::create('ctr_lab_fees', function (Blueprint $table) {
+        Schema::create('ctr_special_discounts', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('special_discount_code');
             $table->string('program_code');
             $table->string('level');
-            $table->string('period');
             $table->string('category');
             $table->string('description');
             $table->string('receipt_details');
@@ -35,6 +35,6 @@ class CreateCtrLabFeesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ctr_lab_fees');
+        Schema::dropIfExists('ctr_special_discounts');
     }
 }

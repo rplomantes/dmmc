@@ -23,7 +23,10 @@ Route::get('/','Main\loginController@index');
 
 //Registrar Assessment
 Route::get('/registrar/viewinfo/{idno}','Registrar\Assessment\AssessmentController@viewinfo');
-Route::get('/registrar/assessment_of_payment/{idno}','Registrar\Assessment\AssessmentController@viewassessment');
+Route::get('/registrar/assess_payment/{idno}','Registrar\Assessment\AssessmentController@viewassessment');
+
+//ajax assessment
+Route::get('/registrar/ajax/assessment/computePayment', 'Registrar\Ajax\paymentAssessment@computePayment');
 
 //Registrar Curriculum
 Route::get('/registrar/view_curriculum/college','Registrar\Curriculum\CollegeCurriculumController@curriculum');

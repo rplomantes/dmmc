@@ -23,7 +23,7 @@ class CreateCtrCollegeOtherFeesTable extends Migration
             $table->string('receipt_details');
             $table->string('acccounting_code')->nullable();
             $table->string('category_switch');
-            $table->decimal('amount',7,2);
+            $table->decimal('amount',10,2);
             $table->timestamps();
         });
     }

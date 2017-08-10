@@ -84,10 +84,10 @@ $student_info = \App\StudentInfo::where('idno', $idno)->first();
         </table>
         
         @if ($status->status==2)
-        <a href="{{url('registrar',array('assessment_of_payment',$idno))}}"><div class='btn btn-primary col-sm-12'>Assess Payment</div></a>
+        <a href="{{url('registrar',array('assess_payment',$idno))}}"><div class='btn btn-primary col-sm-12'>Assess Payment</div></a>
         <br>
         @elseif ($status->status=1)
-        <a href="{{url('registrar',array('assessment_of_subject',$idno))}}"><div class='btn btn-primary col-sm-12'>Assess Subject</div></a>
+        <a href="{{url('registrar',array('assess_subject',$idno))}}"><div class='btn btn-primary col-sm-12'>Assess Subject</div></a>
         <br>
         @endif
                

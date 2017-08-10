@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCtrShsTuitionsTable extends Migration
+class CreateCtrDueDatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateCtrShsTuitionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ctr_shs_tuitions', function (Blueprint $table) {
+        Schema::create('ctr_due_dates', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('track');
-            $table->string('level');
-            $table->string('period');
-            $table->decimal('amount',10,2);
-            $table->string('branch')->nullable();
+            $table->string('plan');
+            $table->date('due_date');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreateCtrShsTuitionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ctr_shs_tuitions');
+        Schema::dropIfExists('ctr_due_dates');
     }
 }
