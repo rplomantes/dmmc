@@ -9,7 +9,7 @@
         <div id="imaginary_container">
             <h3>Instructors</h3>
             @if (count($instructors)>0)
-            <table class="table">
+            <table class="table table-condensed">
                 <thead>
                 <th>ID</th>
                 <th>Name</th>

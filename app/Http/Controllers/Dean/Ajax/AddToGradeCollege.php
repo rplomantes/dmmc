@@ -26,6 +26,7 @@ class AddToGradeCollege extends Controller
             $newgrade->hours=$offering->hours;
             $newgrade->school_year=$offering->school_year;
             $newgrade->period=$offering->period;
+            $newgrade->percent_tuition=$offering->percent_tuition;
             $newgrade->save();
             }
             $studentcourses = \App\GradeCollege::where('idno',$idno)
@@ -34,7 +35,7 @@ class AddToGradeCollege extends Controller
                     ->get();
             
             if(count($studentcourses)>0){
-                $data = "<table width=\"100%\"><tr><td>Subject</td><td>Units</td><td>Room/Schedule</td><td>Instructor</td><td>Remove</td></tr>";
+                $data = "<table class=\"table table-condensed\" width=\"100%\"><tr><td>Subject</td><td>Units</td><td>Room/Schedule</td><td>Instructor</td><td>Remove</td></tr>";
                 $units=0;
                 foreach($studentcourses as $studentcourse){
                     $data = $data."<tr><td>" . $studentcourse->course_code . " - ". $studentcourse->course_name
@@ -48,7 +49,7 @@ class AddToGradeCollege extends Controller
                 $data=$data."</table>";
                 return $data;
             }else{
-                return "No Subject Selected Yet...";
+                return "<div class='alert alert-danger'>No Subject Selected Yet!!</div>";
             }
         }
     }
@@ -75,7 +76,7 @@ class AddToGradeCollege extends Controller
                     ->get();
             
             if(count($studentcourses)>0){
-                $data = "<table width=\"100%\"><tr><td>Subject</td><td>Hours</td><td>Room/Schedule</td><td>Instructor</td><td>Remove</td></tr>";
+                $data = "<table class=\"table table-condensed\" width=\"100%\"><tr><td>Subject</td><td>Hours</td><td>Room/Schedule</td><td>Instructor</td><td>Remove</td></tr>";
                 $hours=0;
                 foreach($studentcourses as $studentcourse){
                     $data = $data."<tr><td>" . $studentcourse->course_code . " - ". $studentcourse->course_name
@@ -89,7 +90,7 @@ class AddToGradeCollege extends Controller
                 $data=$data."</table>";
                 return $data;
             }else{
-                return "No Subject Selected Yet...";
+                return "<div class='alert alert-danger'>No Subject Selected Yet!!</div>";
             }
         }
         
@@ -97,17 +98,30 @@ class AddToGradeCollege extends Controller
     
      public function getInstructorId($offeringid){
         $offering_id = \App\CourseOffering::find($offeringid);
-        return $offering_id->instructor_id;
+            $instructor = \App\User::where('id', $offering_id->instructor_id)->first();
+            
+            if (count($instructor)>0){
+            $data = $instructor->firstname." ".$instructor->lastname." ".$instructor->extensionname;
+            return $data;
+            }else {
+                return "";
+            }
     }
     
      public function getSchedule($course_offering_id){
-            $schedules = \App\Schedule::where('course_offering_id',$course_offering_id)->get();
+            $schedules = \App\Schedule::distinct()->where('course_offering_id', $course_offering_id)->get(['time_start', 'time_end', 'room']);
             $data = "";
-            if(count($schedules)>0){
-               foreach($schedules as $schedule){
-                   $data = $data."[".$schedule->room."-".$schedule->day." ".$schedule->time."]";
-               } 
-                
+            $whatDay = "";
+            $finalSched="";
+            
+            foreach($schedules as $schedule){
+                $days = \App\Schedule::distinct()->where('course_offering_id', $course_offering_id)->where('time_start', $schedule->time_start)->where('time_end', $schedule->time_end)->where('room', $schedule->room)->get(['day']);
+                foreach ($days as $day){
+                    $whatDay = $whatDay."".$day->day;
+                }
+                    $finalSched = $schedule->room." [".$whatDay." ".date('g:i A', strtotime($schedule->time_start))." - ".date('g:i A', strtotime($schedule->time_end))."]";
+                    $whatDay = "";
+                    $data = $data." ".$finalSched."<br>";
             }
             return $data;
         }
@@ -126,7 +140,7 @@ class AddToGradeCollege extends Controller
                     ->get();
             
             if(count($studentcourses)>0){
-                $data = "<table width=\"100%\"><tr><td>Subject</td><td>Units</td><td>Room/Schedule</td><td>Instructor</td><td>Remove</td></tr>";
+                $data = "<table class=\"table table-condensed\" width=\"100%\"><tr><td>Subject</td><td>Units</td><td>Room/Schedule</td><td>Instructor</td><td>Remove</td></tr>";
                 $units=0;
                 foreach($studentcourses as $studentcourse){
                 $data = $data."<tr><td>" . $studentcourse->course_code . " - ". $studentcourse->course_name
@@ -140,7 +154,7 @@ class AddToGradeCollege extends Controller
                 $data=$data."</table>";
                 return $data;
             }else{
-                return "No Subject Selected Yet...";
+                return "<div class='alert alert-danger'>No Subject Selected Yet!!</div>";
             }
            
         }
@@ -160,7 +174,7 @@ class AddToGradeCollege extends Controller
                     ->get();
             
             if(count($studentcourses)>0){
-                $data = "<table width=\"100%\"><tr><td>Subject</td><td>Hours</td><td>Room/Schedule</td><td>Instructor</td><td>Remove</td></tr>";
+                $data = "<table class=\"table table-condensed\" width=\"100%\"><tr><td>Subject</td><td>Hours</td><td>Room/Schedule</td><td>Instructor</td><td>Remove</td></tr>";
                 $hours=0;
                 foreach($studentcourses as $studentcourse){
                 $data = $data."<tr><td>" . $studentcourse->course_code . " - ". $studentcourse->course_name
@@ -174,7 +188,7 @@ class AddToGradeCollege extends Controller
                 $data=$data."</table>";
                 return $data;
             }else{
-                return "No Subject Selected Yet...";
+                return "<div class='alert alert-danger'>No Subject Selected Yet!!</div>";
             }
            
         }

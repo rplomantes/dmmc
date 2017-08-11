@@ -25,20 +25,20 @@ class GetOfferingPersection extends Controller
                     ->where("section",$section)->get();
            
             if(count($offerings)>0){
-                $data="<table border=\"0\" width=\"100%\"><tr><td>Subject</td><td>Units</td><td>Room/Schedule</td><td>Instructor</td></tr>";
+                $data="<table class=\"table table-condensed\" border=\"0\" width=\"100%\"><tr><td>Subject</td><td>Units</td><td>Room/Schedule</td><td>Instructor</td></tr>";
                 foreach($offerings as $offering){
             
                         $data = $data."<tr><td><a href=\"javascript: void(0);\" onclick=\"addtogradecollege('" .$idno . "','" . $offering->id ."')\" >".$offering->course_code." - " . $offering->course_name 
                              . "</a></td><td>" . ($offering->lec + $offering->lab)
                              . "</td><td>" . $this->getSchedule($offering->id) 
-                             . "</td><td>".$offering->instructor_id."</td></tr>";
+                             . "</td><td>".$this->getInstructorId($offering->id)."</td></tr>";
     
                     }
                  $data=$data."</table>";
                  $data=$data."<div class=\"col-sm-12\"><a href=\"javascript: void(0);\" class=\"btn btn-primary form-control\" onclick =\"addallsubjects()\" id=\"addallsubject\">Add All >>></a></div>";
                  return $data;
             }else{
-                return "No Subject Offerings For this Level";
+                return "<div class='alert alert-danger'>No Subject Offerings For This Level.</div>";
             }
         }
     }
@@ -62,7 +62,7 @@ class GetOfferingPersection extends Controller
             
              
              if(count($offerings)>0){
-                $data="<table border=\"0\" width=\"100%\"><tr><td>Subject</td><td>Hours</td><td>Room/Schedule</td><td>Instructor</td></tr>";
+                $data="<table class=\"table table-condensed\" border=\"0\" width=\"100%\"><tr><td>Subject</td><td>Hours</td><td>Room/Schedule</td><td>Instructor</td></tr>";
                 foreach($offerings as $offering){
             
                         $data = $data."<tr><td><a href=\"javascript: void(0);\" onclick=\"addtogradeshs('" .$idno . "','" . $offering->id ."')\" >".$offering->course_code." - " . $offering->course_name 
@@ -75,26 +75,39 @@ class GetOfferingPersection extends Controller
                  $data=$data."<div class=\"col-sm-12\"><a href=\"javascript: void(0);\" class=\"btn btn-primary form-control\" onclick =\"addallsubjects()\" id=\"addallsubject\">Add All >>></a></div>";
                  return $data;
             }else{
-                return "No Subject Offerings For this Level";
+                return "<div class='alert alert-danger'>No Subject Offerings For This Level.</div>";
             }
         }   
    }
         
         public function getSchedule($course_offering_id){
-            $schedules = \App\Schedule::where('course_offering_id',$course_offering_id)->get();
+            $schedules = \App\Schedule::distinct()->where('course_offering_id', $course_offering_id)->get(['time_start', 'time_end', 'room']);
             $data = "";
-            if(count($schedules)>0){
-               foreach($schedules as $schedule){
-                   $data = $data."[".$schedule->room."-".$schedule->day." ".$schedule->time."]";
-               } 
-                
+            $whatDay = "";
+            $finalSched="";
+            
+            foreach($schedules as $schedule){
+                $days = \App\Schedule::distinct()->where('course_offering_id', $course_offering_id)->where('time_start', $schedule->time_start)->where('time_end', $schedule->time_end)->where('room', $schedule->room)->get(['day']);
+                foreach ($days as $day){
+                    $whatDay = $whatDay."".$day->day;
+                }
+                    $finalSched = $schedule->room." [".$whatDay." ".date('g:i A', strtotime($schedule->time_start))." - ".date('g:i A', strtotime($schedule->time_end))."]";
+                    $whatDay = "";
+                    $data = $data." ".$finalSched."<br>";
             }
             return $data;
         }
         
-         public function getInstructorId($offeringid){
-        $offering_id = \App\CourseOffering::find($offeringid);
-        return $offering_id->instructor_id;
+         public function getInstructorId($offeringid){             
+            $offering_id = \App\CourseOffering::find($offeringid);
+            $instructor = \App\User::where('id', $offering_id->instructor_id)->first();
+            
+            if (count($instructor)>0){
+            $data = $instructor->firstname." ".$instructor->lastname." ".$instructor->extensionname;
+            return $data;
+            }else {
+                return "";
+            }
     }
         
     
@@ -126,6 +139,7 @@ class GetOfferingPersection extends Controller
                             $newgrade->lec=$offering->lec;
                             $newgrade->lab=$offering->lab;
                             $newgrade->hours=$offering->hours;
+                            $newgrade->percent_tuition=$offering->percent_tuition;
                             $newgrade->save();
                         }
                     }
@@ -136,7 +150,7 @@ class GetOfferingPersection extends Controller
                     ->get();
             
                 if(count($studentcourses)>0){
-                    $data = "<table width=\"100%\"><tr><td>Subject</td><td>Units</td><td>Room/Schedule</td><td>Instructor</td><td>Remove</td></tr>";
+                    $data = "<table class=\"table table-condensed\" width=\"100%\"><tr><td>Subject</td><td>Units</td><td>Room/Schedule</td><td>Instructor</td><td>Remove</td></tr>";
                         $units=0;
                         foreach($studentcourses as $studentcourse){
                             $units = $units + $studentcourse->lec+$studentcourse->lab;
@@ -149,7 +163,7 @@ class GetOfferingPersection extends Controller
                 $data=$data."<tr><td>Total Units</td><td colspan=\"4\">$units</td></table>";
                 return $data;
             }else{
-                return "No Subject Selected Yet...";
+                return "<div class='alert alert-danger'>No Subject Selected Yet!!</div>";
             }
                 }
             }
@@ -187,20 +201,20 @@ class GetOfferingPersection extends Controller
                     
            
             if(count($offerings)>0){
-                $data="<table border=\"0\" width=\"100%\"><tr><td>Subject</td><td>Units</td><td>Room/Schedule</td><td>Instructor</td></tr>";
+                $data="<table class=\"table table-condensed\" border=\"0\" width=\"100%\"><tr><td>Subject</td><td>Units</td><td>Room/Schedule</td><td>Instructor</td></tr>";
                 foreach($offerings as $offering){
             
                         $data = $data."<tr><td><a href=\"javascript: void(0);\" onclick=\"addtogradecollege('" .$idno . "','" . $offering->id ."')\" >".$offering->course_code." - " . $offering->course_name 
                              . "</a></td><td>" . ($offering->lec + $offering->lab)
                              . "</td><td>" . $this->getSchedule($offering->id) 
-                             . "</td><td>".$offering->instructor_id."</td></tr>";
+                             . "</td><td>".$this->getInstructorId($offering->id)."</td></tr>";
     
                     }
                  $data=$data."</table>";
                  $data=$data."<div class=\"col-sm-12\"><a href=\"javascript: void(0);\" class=\"btn btn-primary form-control\" onclick =\"addallsubjects()\" id=\"addallsubject\">Add All >>></a></div>";
                  return $data;
             }else{
-                return "No Subject Offerings For this Level";
+                return "<div class='alert alert-danger'>No Subject Offerings For This Level.</div>";
             }
         }
         }
@@ -241,7 +255,7 @@ class GetOfferingPersection extends Controller
                     ->get();
             
                 if(count($studentcourses)>0){
-                    $data = "<table width=\"100%\"><tr><td>Subject</td><td>Hours</td><td>Room/Schedule</td><td>Instructor</td><td>Remove</td></tr>";
+                    $data = "<table class=\"table table-condensed\" width=\"100%\"><tr><td>Subject</td><td>Hours</td><td>Room/Schedule</td><td>Instructor</td><td>Remove</td></tr>";
                         $hours=0;
                         foreach($studentcourses as $studentcourse){
                             $hours = $hours + $studentcourse->hours;
@@ -254,7 +268,7 @@ class GetOfferingPersection extends Controller
                 $data=$data."<tr><td>Total Hours</td><td colspan=\"4\">$hours</td></table>";
                 return $data;
             }else{
-                return "No Subject Selected Yet...";
+                return "<div class='alert alert-danger'>No Subject Selected Yet!!</div>";
             }
                 }
             }
