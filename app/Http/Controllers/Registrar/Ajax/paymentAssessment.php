@@ -13,11 +13,11 @@ class paymentAssessment extends Controller {
         if (Request::ajax()) {
 
             $idno = Input::get("idno");
-            $plan = Input::get("plan");//cash,3months,6months
+            $plan = Input::get("plan");
             $level = Input::get("level");
             $period = Input::get("period");
             $school_year = Input::get("school_year");
-            $type_of_account = Input::get("type_of_account");//regular,15k,8k
+            $type_of_account = Input::get("type_of_account");
             $program_code = Input::get("program_code");
             $academic_type = Input::get("academic_type");
 
@@ -45,23 +45,6 @@ class paymentAssessment extends Controller {
                 
 
             }
- 
-        }
-        return view('registrar.assessment.ajax.displayassessment', compact('grades', 'tuition', 'other_fees', 'plans', 'type_of_account'));
-    }
-    
-    function getCollegeTuition($idno,$school_year,$period,$level,$program_code){
-        $tuitionrate = \App\CtrCollegeTuition::where('program_code',$program_code)->where('level',$level)->where('period',$period)->first()->per_unit/100;
-        $gradestudent = \App\GradeCollege::where("idno",$idno)->where("school_year",$school_year)
-                ->where('period',$period)->get();
-        if(count($gradestudent)>0){
-            $tf=0;
-            foreach($gradestudent as $gs){
-                $tf=$tf+(($gs->percent_tuition/100*$gs->lec)+(($gs->percent_tuition/100*$gs->lab)*3));
-            }
-            return $tf;
-        } else{
-            return  0;
         }
     }
     
