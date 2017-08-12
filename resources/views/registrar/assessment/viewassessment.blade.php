@@ -64,7 +64,7 @@
                             <li>
                                 <a href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
-    document.getElementById('logout-form').submit();">
+                                    document.getElementById('logout-form').submit();">
                                     <span style="color:#fff"><i class="fa fa-sign-out fa-fw"></i> Logout</span>
                                 </a>
 
@@ -84,7 +84,8 @@
             $status = \App\Status::where('idno', $idno)->first();
             $studentinfo = \App\StudentInfo::where('idno', $idno)->first();
             $school_year = \App\CtrSchoolYear::where('academic_type', $status->academic_type)->first();
-
+            $special_discounts=  \App\CtrSpecialDiscount::where("program_code",$status->program_code)->where('level',$status->level)->get();
+            $discounts =  \App\CtrDiscount::get();
             if ($status->academic_type == "College") {
                 $grades = \App\GradeCollege::where('idno', $idno)->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get();
             } else if ($status->academic_type == "Senior High School") {
@@ -104,8 +105,14 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <h3>Assessment</h3><hr>
-                            <ul>{{strtoupper($user->lastname)}} {{$user->extensionname}}, {{$user->firstname}} {{$user->middlename}}</ul>
-                            <ul>@if ($status->academic_type == "College"){{$status->program_name}} @elseif ($status->academic_type == "Senior High School") {{$status->type}}@endif</ul>
+                            <ul><li>{{strtoupper($user->lastname)}} {{$user->extensionname}}, {{$user->firstname}} {{$user->middlename}}</li>
+                            
+                                @if($status->academic_type == "College")
+                                <li>{{$status->program_name}} </li><li>{{$status->level}} Year</li>
+                                @elseif($status->academic_type == "Senior High School") 
+                                {{$status->type}}
+                                @endif
+                            </ul>
                         </div>
                     </div>
                     <hr>
@@ -114,7 +121,10 @@
                             <div class="col-sm-12">
                                 <h4>Subject Registered:</h4>
 
-                                @if ($status->academic_type == "College")
+                                @if($status->academic_type == "College")
+                               
+                                
+                                
                                 <table class="table table-condensed">
                                     <thead>
                                     <th>Subject Code</th>
@@ -170,21 +180,27 @@ $list_plans = \App\CtrDueDate::distinct()->get(['plan']);
                                             <select id="type_of_account" class="form form-control">
                                                 <option value="">Select Type of Account</option>
                                                 <option value="regular">Regular</option>
-                                                @foreach($list_type_of_accounts as $list_type_of_account)
-                                                <option value="{{$list_type_of_account->special_discount_code}}">{{$list_type_of_account->special_discount_code}}</option>
-                                                @endforeach
+
+                                                @if(count($special_discounts)>0)
+                                                    @foreach($special_discounts as $sd)
+                                                    <option value="{{$sd->special_discount_code}}">{{$sd->special_discount_code}}</option>
+                                                    @endforeach
+                                                @endif
+
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
                                             <label class="label">Select Plan </label>
                                             <select id="plan" class="form form-control">
                                                 <option value="">Select Plan</option>
-                                                <option value="Full">Full Payment</option>
-                                                @foreach ($list_plans as $list_plan)
-                                                <option value="{{$list_plan->plan}}">{{$list_plan->plan}}</option>
-                                                @endforeach
+                                            
+                                            
                                             </select>
                                         </div>
+                                        
+                                        
+                                        
+                                        
                                     </div>
                                     <div class="form form-group">
                                         <div class="col-sm-12">
@@ -228,6 +244,7 @@ $list_plans = \App\CtrDueDate::distinct()->get(['plan']);
                 array['type_of_account'] = $("#type_of_account").val();
                 array['program_code'] = $("#program_code").val();
                 array['academic_type'] = $("#academic_type").val();
+                array['discount']=$("#discount").val();
                 $.ajax({
                     type: "GET",
                     url: "/registrar/ajax/assessment/computePayment",
