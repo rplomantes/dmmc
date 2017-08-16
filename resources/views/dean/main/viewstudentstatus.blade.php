@@ -1,7 +1,6 @@
 @extends('layouts.deanapp')
 @section('content')
 <style>
-    .label{color: gray;}
     .bs-wizard {margin-top: 40px;}
 
 /*Form Wizard*/

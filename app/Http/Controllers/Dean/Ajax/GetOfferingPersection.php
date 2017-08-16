@@ -160,7 +160,7 @@ class GetOfferingPersection extends Controller
                             . "</td><td>". $this->getInstructorId($studentcourse->course_offering_id) 
                             . "</td><td><a href=\"javascript: void(0);\" onclick=\"removesubject('".$studentcourse->id."')\">Remove</a></td></tr>";
                 }           
-                $data=$data."<tr><td>Total Units</td><td colspan=\"4\">$units</td></table>";
+                $data=$data."<tr><td><strong>Total Units</strong></td><td colspan=\"4\"><strong>$units</strong></td></table>";
                 return $data;
             }else{
                 return "<div class='alert alert-danger'>No Subject Selected Yet!!</div>";

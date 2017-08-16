@@ -45,7 +45,7 @@ class AddToGradeCollege extends Controller
                 
                     $units=$units + $studentcourse->lec+$studentcourse->lab;
                 }
-                $data=$data."<tr><td>ToTal Units</td><td colspan=\"4\">$units</td></tr>";
+                $data=$data."<tr><td><strong>Total Units</strong></td><td colspan=\"4\"><strong>$units</strong></td></tr>";
                 $data=$data."</table>";
                 return $data;
             }else{
@@ -86,7 +86,7 @@ class AddToGradeCollege extends Controller
                 
                     $hours=$hours + $studentcourse->hours;
                 }
-                $data=$data."<tr><td>ToTal Hours</td><td colspan=\"4\">$hours</td></tr>";
+                $data=$data."<tr><td><strong>Total Hours</strong></td><td colspan=\"4\"><strong>$hours</strong></td></tr>";
                 $data=$data."</table>";
                 return $data;
             }else{
@@ -150,7 +150,7 @@ class AddToGradeCollege extends Controller
                 
                     $units = $units + $studentcourse->lec + $studentcourse->lab;
                 }
-                $data=$data."<tr><td>Total Units</td><td colspan=\"4\">$units</td></tr>";
+                $data=$data."<tr><td><strong>Total Units</strong></td><td colspan=\"4\"><strong>$units</strong></td></tr>";
                 $data=$data."</table>";
                 return $data;
             }else{
@@ -184,7 +184,7 @@ class AddToGradeCollege extends Controller
                 
                     $hours = $hours + $studentcourse->hours;
                 }
-                $data=$data."<tr><td>Total Hours</td><td colspan=\"4\">$hours</td></tr>";
+                $data=$data."<tr><td><strong>Total Hours</strong></td><td colspan=\"4\"><strong>$hours</strong></td></tr>";
                 $data=$data."</table>";
                 return $data;
             }else{

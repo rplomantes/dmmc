@@ -3,7 +3,11 @@
 <style>
     .label{color: gray;}
 </style>
+<?php
 
+$levels = \App\CourseOffering::distinct()->orderBy('level')->get(['level']);
+$sections = \App\CourseOffering::distinct()->orderBy('section')->get(['section']);
+?>
 <div class="row">
     <div class='col-sm-12'>
         <div id="imaginary_container">
@@ -28,21 +32,19 @@
                         <div class="col-sm-3">
                             <label class="label">Level</label>
                             <select id="level" class="form form-control">
-                                <option value=""></option>
-                                <option value="1st">1st year</option>
-                                <option value="2nd">2nd year</option>
-                                <option value="3rd">3rd year</option>
-                                <option value="4th">4th year</option>
+                                <option value="">Select Level</option>
+                                @foreach($levels as $level)
+                                <option value='{{$level->level}}'>{{$level->level}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-sm-3">
                             <label class="label">Section</label>
                             <select id="section" class="form form-control" onchange="getyearsection(program_code.value)">
-                                <option value=""></option>
-                                <option value="1">Section 1</option>
-                                <option value="2">Section 2</option>
-                                <option value="3">Section 3</option>
-                                <option value="4">Section 4</option>
+                                <option value="">Select Section</option>
+                                @foreach($sections as $section)
+                                <option value='{{$section->section}}'>{{$section->section}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>

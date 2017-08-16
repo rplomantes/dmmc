@@ -175,7 +175,7 @@ document.getElementById('logout-form').submit();">
                                         <td>{{$data}}</td>
                                         <td><a href="javascript: void(0);" onclick="removesubject('{{$grade_college->id}}')">Remove</a></td></tr>
                                     @endforeach
-                                    <tr><td>Total Units</td><td colspan="4">{{$units}}</td></tr>
+                                    <tr><td><strong>Total Units</strong></td><td colspan="4"><strong>{{$units}}</strong></td></tr>
                                 </table>
                                 @else
                                 <div class="alert alert-danger">No Subject Selected Yet!!</div>

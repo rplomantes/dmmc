@@ -86,7 +86,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="fa fa-folder-o">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="fa fa-folder-o fa-fw">
                             </span> ACADEMIC - ({{Auth::user()->academic_program}})</a>     
                         </h4>
                     </div>
@@ -95,17 +95,17 @@
                             <table class="table">
                                 <tr>
                                     <td>
-                                        <a href="{{url('/')}}"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+                                        <a href="{{url('/')}}"><i class="fa fa-home fa-fw" aria-hidden="true"></i> Home</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span class="fa fa-pencil"></span> <a href="">Student List Per Subject</a>
+                                        <a href="{{url('/dean', array('studentlist'))}}"><span class="fa fa-pencil fa-fw"></span> Student List Per Subject</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span class="fa fa-newspaper-o"></span> <a href="">Student Record</a>
+                                        <a href=""><span class="fa fa-newspaper-o fa-fw"></span> Student Record</a>
                                     </td>
                                 </tr>
                                 

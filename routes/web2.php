@@ -15,4 +15,12 @@ Route::get('/dean/ajax/getofferingpersectionshs','Dean\Ajax\GetOfferingPersectio
 Route::get('/dean/ajax/addtogradeshs','Dean\Ajax\AddToGradeCollege@shs');
 Route::get('/dean/ajax/removesubjectshs','Dean\Ajax\AddToGradeCollege@removesubjectshs');
 Route::get('/dean/ajax/addallsubjectsshs','Dean\Ajax\GetOfferingPersection@addallsubjectsshs');
+
+//studentlist
+Route::get('/dean/studentlist','Dean\Main\StudentList@index');
+Route::get('/dean/generatereport/studentlist/{course_offering_id}', 'Dean\Main\StudentList@printStudentlist');
+
+//studentlist ajax
+Route::get('/dean/ajax/studentlist/getsubjectlistcollege','Dean\Ajax\GetSubjectList@getlistcollege');
+Route::get('/dean/ajax/studentlist/getsubjectlistpersearchcollege','Dean\Ajax\GetSubjectList@getlistpersearchcollege');
 ?>

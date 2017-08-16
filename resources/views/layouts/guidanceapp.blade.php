@@ -91,7 +91,7 @@
                             </span> Guidance</a>
                         </h4>
                     </div>
-                    <div id="collapseOne" class="panel-collapse collapse in">
+                    <div id="collapseOne" class="panel-collapse collapse">
                         <div class="panel-body">
                             <table class="table">
                                 <tr>
@@ -99,7 +99,7 @@
                                         <a href="{{url('/')}}"><i class="fa fa-home fa-fw" aria-hidden="true"></i> Home</a>
                                     </td>
                                 </tr>
-                                <tr>
+<!--                                <tr>
                                     <td>
                                         <a href="#"><i class="fa fa-bell fa-fw" aria-hidden="true"></i> Notifications</a>
                                         <span class="badge">42</span>
@@ -114,7 +114,7 @@
                                     <td>
                                         <a href="#"><i class="fa fa-lock fa-fw" aria-hidden="true"></i> Change Password</a>
                                     </td>
-                                </tr>
+                                </tr>-->
                             </table>
                         </div>
                     </div>

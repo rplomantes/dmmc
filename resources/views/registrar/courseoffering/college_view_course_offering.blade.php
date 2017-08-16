@@ -2,6 +2,8 @@
 @section('content')
 <?php
 $curriculum_years = \App\Curriculum::distinct()->where('program_code', $program_code)->where('is_current', 1)->get(['curriculum_year']);
+$levels = \App\Curriculum::distinct()->where('program_code', $program_code)->where('is_current', 1)->orderBy('level')->get(['level']);
+$periods = \App\Curriculum::distinct()->where('program_code', $program_code)->where('is_current', 1)->orderBy('period')->get(['period']);
 $program_name = \App\CtrAcademicProgram::where('program_code', $program_code)->first(['program_name']);
 ?>
 
@@ -35,20 +37,18 @@ $program_name = \App\CtrAcademicProgram::where('program_code', $program_code)->f
                         <label class='label'>Level</label>
                         <select class='form form-control' id="level">
                             <option value=''>Select Level</option>
-                            <option value='1st'>1st</option>
-                            <option value='2nd'>2nd</option>
-                            <option value='3rd'>3rd</option>
-                            <option value='4th'>4th</option>
-                            <option value='5th'>5th</option>
+                            @foreach($levels as $level)
+                            <option value='{{$level->level}}'>{{$level->level}}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class='col-sm-3'>
                         <label class='label'>Period</label>
                         <select class='form form-control' id="period">
                             <option value=''>Select Period</option>
-                            <option value='1st'>1st Semester</option>
-                            <option value='2nd'>2nd Semester</option>
-                            <option value='Summer'>Summer</option>
+                            @foreach($periods as $period)
+                            <option value='{{$period->period}}'>{{$period->period}}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class='col-sm-3'>

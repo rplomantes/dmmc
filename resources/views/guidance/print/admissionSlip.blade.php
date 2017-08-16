@@ -1,6 +1,6 @@
 <div align="center">
     <b>DMMC INSTITUTE OF HEALTH SCIENCES</b><br>
-    Tanauan City, Batangas<br><br><br>
+    <small>#143 Narra St., Mountainview Subd., Tanauan City, Batangas</small><br><br><br>
     <b>DMMC IHS ADMISSION TEST PERMIT</b><br><br><br>
 </div>
 

@@ -38,15 +38,16 @@
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @if (Auth::guest())
                             
+                    <ul class="nav navbar-nav">
+                        <li><a href="{{ url('/my_portal') }}"><div style="color:#fff">My Portal</div></a></li>
+                        <li><a href="{{ url('/parent_portal') }}"><div style="color:#fff">Parent Portal</div></a></li>
+                    </ul>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color:#fff">
