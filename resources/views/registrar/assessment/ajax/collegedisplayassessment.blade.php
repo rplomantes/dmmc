@@ -1,107 +1,53 @@
 <?php
-$totalTuition = 0;
-$totalTuitionlec = 0;
-$totalTuitionlab = 0;
-$totalOtherFee = 0;
+$tuitionfees =  \App\ledger::where('idno',$idno)->where('school_year',$school_year)->where('period',$period)->where('category_switch','3')->get();
+$otherfees = \App\ledger::where('idno',$idno)->where('school_year',$school_year)->where('period',$period)->where('category_switch','<','3')->get();
 ?>
-@if ($type_of_account == 'regular')
-@foreach ($grades as $grade)
-<?php
-$perUnit = $tuition->per_unit * $grade->percent_tuition;
-$totalperUnit = $perUnit / 100;
-$totalTuitionlec = $grade->lec * $totalperUnit + $totalTuitionlec;
-if ($grade->lab > 0) {
-    $totalTuitionlab = ($grade->lab * ($totalperUnit * 3)) + $totalTuitionlab;
-}
-$totalTuition = $totalTuitionlab + $totalTuitionlec;
-?>
-@endforeach
-@else
-<?php
-$totalTuition = $tuition->amount;
-?>
-@endif
+<h3>Tuition Fees</h3>
+<table border ="1" class="table table-condensed">
+    <tr>
+        <td><b>Description</b></td>
+        <td>Amount</td>
+        <td>Discount</td>
+        <td>Total</td>
+    </tr>
+       <?php $totaltuitionfees=0; ?>
+        @foreach($tuitionfees as $tuitionfee)
+        <tr>
+        <td>{{$tuitionfee->description}}</td>
+        <td align="right">{{number_format($tuitionfee->amount,2)}}</td>
+        <td align="right">{{number_format($tuitionfee->discount,2)}}</td>
+        <td align="right">{{number_format($tuitionfee->amount-$tuitionfee->discount,2)}}</td>
+        <?php $totaltuitionfees = $totaltuitionfees +$tuitionfee->amount-$tuitionfee->discount; ?>       
+    </tr>
+     @endforeach 
+    <tr>
+        <td colspan="3">Total Tuition Fee</td>
+        <td align="right"><b>{{number_format($totaltuitionfees,2)}}</b></td>   
+    </tr>
+    </table>
 
-<table class="col-sm-12">
+<h3>Other Fees</h3>
+<table border ="1" class="table table-condensed">
     <tr>
-        <td><b>Tuition Fee:</b></td>
-        <td></td>
-        <td><div align="right">{{number_format($totalTuition,2)}}</div></td>
+        <td><b>Description</b></td>
+        <td>Amount</td>
+        <td>Discount</td>
+        <td>Total</td>
     </tr>
+        <?php $totaltuitionfees=0;?>
+        @foreach($otherfees as $tuitionfee)
     <tr>
-        <td><b>Other Fees:</b></td>
-        <td></td>
+        
+        <td>{{$tuitionfee->description}}</td>
+        <td align="right">{{number_format($tuitionfee->amount,2)}}</td>
+        <td align="right">{{number_format($tuitionfee->discount,2)}}</td>
+        <td align="right">{{number_format($tuitionfee->amount-$tuitionfee->discount,2)}}</td>
+        <?php $totaltuitionfees = $totaltuitionfees +$tuitionfee->amount-$tuitionfee->discount; ?>    
+           
     </tr>
-    @foreach ($other_fees as $other_fee)
+        @endforeach 
     <tr>
-        <td></td>
-        <td>{{$other_fee->description}}</td>
-        <td><div align="right">{{number_format($other_fee->amount, 2)}}</div></td>
-    </tr>    
-    <?php
-    $totalOtherFee = $other_fee->amount + $totalOtherFee;
-    ?>
-    @endforeach
-    @if ($grade->lab>0)
-    <tr>
-        <td></td>
-        <td>{{$lab_fee->description}}</td>
-        <td><div align="right">{{number_format($lab_fee->amount, 2)}}</div></td>
+        <td colspan="3">Total Tuition Fee</td>
+        <td align="right"><b>{{number_format($totaltuitionfees,2)}}</b></td>   
     </tr>
-    <?php $totalOtherFee = $lab_fee->amount + $totalOtherFee; ?>
-    @endif
-    <tr>
-        <td><b>Total Other Fees</b></td>
-        <td></td>
-        <td style="border-top: 1pt solid;"><div align="right">{{number_format($totalOtherFee,2)}}</div></td>
-    </tr>
-    <tr>
-        <td><b>Total Assessed Fees</b></td>
-        <td></td>
-        <td style="border-top: 1pt solid;"><div align="right"><?php $totalAssessedFee = $totalOtherFee + $totalTuition;
-    echo number_format($totalAssessedFee, 2); ?></div></td>
-    </tr>
-
-    @if ($plan != 'Full')
-    <?php
-    $downpayment = $totalAssessedFee * .3;
-    $payment = $totalAssessedFee - $downpayment;
-    $installment = $payment * 1.12;
-    $need_to_pay = $installment / count($plans);
-    $totalInstallment = 0;
-    ?>
-    <tr>
-        <td><h4>Schedule of Payment</h4></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td><b>{{$plan}}</b></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>Downpayment</td>
-        <td><div align="right">{{number_format($downpayment,2)}}</div></td>
-    </tr>
-    @foreach ($plans as $planss)
-    <tr>
-        <td></td>
-        <td>{{date('M d, Y (D)', strtotime($planss->due_date))}}</td>
-        <td><div align="right"><?php $totalInstallment = $need_to_pay + $totalInstallment; ?> {{number_format($need_to_pay,2)}}</div></td>
-    </tr>
-    @endforeach
-    <tr>
-        <td><b>Total Payment</b></td>
-        <td></td>
-        <td style="border-top: 1pt solid;"><div align="right"><b><?php $totalPayment = $totalInstallment + $downpayment;
-    echo number_format($totalPayment, 2); ?></b></div></td>
-    </tr>
-    @else
-    <tr>
-        <td><b>Total Payment</b></td>
-        <td></td>
-        <td style="border-top: 1pt solid;"><div align="right"><b><?php $totalPayment = $totalAssessedFee; ?>{{number_format($totalPayment, 2)}}</b></div></td>
-    </tr>
-    @endif
-</table>
+    </table>

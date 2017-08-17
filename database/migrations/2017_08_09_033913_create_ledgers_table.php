@@ -26,9 +26,9 @@ class CreateLedgersTable extends Migration
             $table->string('acccounting_code')->nullable();
             $table->string('category_switch');
             $table->decimal('amount',10,2);
-            $table->decimal('payment',10,2);
-            $table->decimal('discount',10,2);
-            $table->integer('discount_id');
+            $table->decimal('payment',10,2)->default(0);
+            $table->decimal('discount',10,2)->default(0);
+            $table->integer('discount_id')->nullable();
             $table->timestamps();
             $table->foreign('idno')
                     ->references('idno')

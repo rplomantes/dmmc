@@ -84,10 +84,13 @@
             $status = \App\Status::where('idno', $idno)->first();
             $studentinfo = \App\StudentInfo::where('idno', $idno)->first();
             $school_year = \App\CtrSchoolYear::where('academic_type', $status->academic_type)->first();
-
-            if ($status->academic_type == "College") {
+            $special_discounts = \App\CtrSpecialDiscount::where('program_code', $status->program_code)->where('level', $status->level)->get();
+            $list_plans = \App\CtrDueDate::distinct()->get(['plan']);
+            $discounts=  \App\CtrDiscount::get();
+            
+            if($status->academic_type == "College") {
                 $grades = \App\GradeCollege::where('idno', $idno)->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get();
-            } else if ($status->academic_type == "Senior High School") {
+            } elseif($status->academic_type == "Senior High School") {
                 $grades = \App\GradeShs::where('idno', $idno)->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get();
             }
             ?>
@@ -103,8 +106,8 @@
                 <div class="well">
                     <div class="row">
                         <div class="col-sm-12">
-                            <h3>Assessment</h3><hr>
-                            <ul><li>{{strtoupper($user->lastname)}} {{$user->extensionname}}, {{$user->firstname}} {{$user->middlename}}</li>
+                            <h3>Assessment</h3>
+                            <ul class="nav navbar-header"><li><strong>{{strtoupper($user->lastname)}} {{$user->extensionname}}, {{$user->firstname}} {{$user->middlename}}</strong></li>
                             
                                 @if($status->academic_type == "College")
                                 <li>{{$status->program_name}} </li><li>{{$status->level}} Year</li>
@@ -171,33 +174,50 @@
                                 <form class="form-horizontal">
                                     <div class="form form-group">
                                         <div class="col-sm-6">
-<?php
-$list_type_of_accounts = \App\CtrSpecialDiscount::where('program_code', $status->program_code)->where('level', $status->level)->get();
-$list_plans = \App\CtrDueDate::distinct()->get(['plan']);
-?>
+
                                             <label class="label">Select Type of Account </label>
                                             <select id="type_of_account" class="form form-control">
                                                 <option value="">Select Type of Account</option>
                                                 <option value="regular">Regular</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label class="label">Select Plan </label>
-                                            <select id="plan" class="form form-control">
-                                                <option value="">Select Plan</option>
-
-                                                @if(count($special_discounts)>0)
+                                                 @if(count($special_discounts)>0)
                                                     @foreach($special_discounts as $sd)
                                                     <option value="{{$sd->special_discount_code}}">{{$sd->special_discount_code}}</option>
                                                     @endforeach
                                                 @endif
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="col-sm-6">
+                                            <label class="label">Select Plan </label>
+                                            <select id="plan" class="form form-control">
+                                                <option value="">Full Payment</option>
+                                                @if(count($list_plans)>0)
+                                                    @foreach($list_plans as $plan)
+                                                      <option value="{{$plan->paln}}">{{$plan->plan}}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>    
+                                        </div>
+                                        
+                                         <div class="col-sm-6">
+                                            <label class="label">Discount </label>
+                                            <select id="discount" class="form form-control">
+                                                <option value="">None</option>
 
-                                    </div>
-                                    <div class="form form-group">
+                                                @if(count($discounts)>0)
+                                                    @foreach($discounts as $sd)
+                                                    <option value="{{$sd->discount_code}}">{{$sd->discount_description}}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>    
+                                        </div>
+                                        
+                                        </div>    
+                                        <div class="form form-group">
                                         <div class="col-sm-12">
                                             <div class="col-sm-12 btn btn-primary" onclick="computePayment()">Compute Payments</div>   
                                         </div>    
-                                    </div>
+                                         </div>
                                 </form>
 
 
@@ -235,6 +255,7 @@ $list_plans = \App\CtrDueDate::distinct()->get(['plan']);
                 array['type_of_account'] = $("#type_of_account").val();
                 array['program_code'] = $("#program_code").val();
                 array['academic_type'] = $("#academic_type").val();
+                array['discount']=$("#ddiscount").val();
                 $.ajax({
                     type: "GET",
                     url: "/registrar/ajax/assessment/computePayment",
@@ -242,7 +263,7 @@ $list_plans = \App\CtrDueDate::distinct()->get(['plan']);
                     success: function (data) {
                         $('#paymentsummary').empty();
                         $('#paymentsummary').html(data);
-                        $('#process_assessment').html("<div class='col-sm-12 btn btn-success'>Process Assessment</div>").show();
+                        //$('#process_assessment').html("<div class='col-sm-12 btn btn-success'>Process Assessment</div>").show();
                     }
 
                 });
