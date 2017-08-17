@@ -7,6 +7,14 @@ use App\Http\Controllers\Controller;
 
 class AssessmentController extends Controller {
 
+    function indexcollege(){
+        return view('registrar.assessment.indexcollege');
+    }
+    
+    function indexshs(){
+        return view('registrar.assessment.indexshs');
+    }
+    
     function viewinfo($idno) {
         $status = \App\Status::where('idno', $idno)->first();
 

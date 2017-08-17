@@ -135,25 +135,27 @@
                 <td>Entrance Exam Result</td>
                 <td>{{$exam->exam_result}}</td>
             </tr>
-        </table> 
-        @if ($status->status==0)
-        <a href="{{url('guidance',array('viewmodifyinfo',$list->idno))}}"><div class='btn btn-primary col-sm-6'>Modify</div></a> 
-        <a href="{{url('guidance',array('admission_slip',$list->idno))}}" target="_blank"><div class='btn btn-success col-sm-6'>Print Entrance Exam Slip</div></a>
+        </table>
+            @if ($status->status==0)
+            <a href="{{url('guidance',array('viewmodifyinfo',$list->idno))}}"><div class='btn btn-primary col-sm-6'>Modify</div></a> 
+            <a href="{{url('guidance',array('admission_slip',$list->idno))}}" target="_blank"><div class='btn btn-success col-sm-6'>Print Entrance Exam Slip</div></a>
 
-        @elseif ($status->status==1)
-        <a href="{{url('guidance',array('viewmodifyinfo',$list->idno))}}"><div class='btn btn-primary col-sm-12'>Modify</div></a>
+            @elseif ($status->status==1)
+            <a href="{{url('guidance',array('viewmodifyinfo',$list->idno))}}"><div class='btn btn-primary col-sm-12'>Modify</div></a>
 
-        @elseif ($status->status==-1)
-        <div class="alert alert-danger">Sorry you have failed the Entrance Exam!!!</div>
-        <a href="{{url('guidance',array('viewmodifyinfo',$list->idno))}}"><div class='btn btn-primary col-sm-12'>Modify</div></a>
-        @elseif ($status->status==2)
+            @elseif ($status->status==-1)
+            <div class="alert alert-danger">Sorry you have failed the Entrance Exam!!!</div>
+            <a href="{{url('guidance',array('viewmodifyinfo',$list->idno))}}"><div class='btn btn-primary col-sm-12'>Modify</div></a>
+            @elseif ($status->status==2)
 
-        @endif
+            @endif
         @else
-
-        <a href="{{url('guidance',array('viewmodifyinfo',$list->idno))}}"><div class='btn btn-primary col-sm-6'>Modify</div></a> 
-        <a href="{{url('guidance',array('schedule_applicant',$list->idno))}}"><div class='btn btn-success col-sm-6'>Schedule Entrance Exam</div></a>
         
+            @if ($status->status==1)
+                <a href="{{url('guidance',array('viewmodifyinfo',$list->idno))}}"><div class='btn btn-primary col-sm-6'>Modify</div></a> 
+                <a href="{{url('guidance',array('schedule_applicant',$list->idno))}}"><div class='btn btn-success col-sm-6'>Schedule Entrance Exam</div></a>
+            @endif
+            <a href="{{url('guidance',array('viewmodifyinfo',$list->idno))}}"><div class='btn btn-primary col-sm-12'>Modify</div></a> 
         @endif
         
         @if($status->status!==-1)

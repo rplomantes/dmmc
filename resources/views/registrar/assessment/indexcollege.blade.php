@@ -1,12 +1,11 @@
 @extends('layouts.registrarapp')
 @section('content')
-
 <div class="row">
-    
         <div class="col-sm-10 col-sm-offset-1">
+            <h3>ASSESSMENT OF COLLEGE/TESDA</h3>
             <div id="imaginary_container"> 
                 <div class="input-group stylish-input-group">
-                    <input type="text" id="search" class="form-control"  placeholder="Search Student Record" >
+                    <input type="text" id="search" class="form-control"  placeholder="Search" >
                     <span class="input-group-addon">
                             <span class="fa fa-search"></span>      
                     </span>
@@ -32,7 +31,7 @@
            if(key==13){
                $.ajax({
                    type:"GET",
-                   url:"/registrar/ajax/getmainstudentlist",
+                   url:"/registrar/ajax/assessment/getmainstudentlist",
                    data:array,
                    success:function(data){
                        $("#displaystudent").html(data);

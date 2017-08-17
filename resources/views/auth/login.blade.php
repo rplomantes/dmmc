@@ -13,10 +13,10 @@
         </div>
         @endif
         <div class="col-md-12">
-            <div class = "col-md-3">
+            <div class = "col-md-5">
                 <img src = "{{url("/images","dmmclogo.jpeg")}}" alt="DMMCIHS Logo" class="img-thumbnail">
             </div>
-            <div class = "col-md-9">
+            <div class = "col-md-7">
                 <div class="panel panel-default">
                     <div class="panel-heading">Login</div>
                     <div class="panel-body">

@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 */
 include_once 'web2.php';
+include_once 'web3.php';
 
 Route::auth();
 Auth::routes();
@@ -27,9 +28,12 @@ Route::get('/parent_portal', function(){
 //Registrar Assessment
 Route::get('/registrar/viewinfo/{idno}','Registrar\Assessment\AssessmentController@viewinfo');
 Route::get('/registrar/assess_payment/{idno}','Registrar\Assessment\AssessmentController@viewassessment');
+Route::get('/assessment/college','Registrar\Assessment\AssessmentController@indexcollege');
+Route::get('/assessment/shs','Registrar\Assessment\AssessmentController@indexshs');
 
 //ajax assessment
 Route::get('/registrar/ajax/assessment/computePayment', 'Registrar\Ajax\paymentAssessment@computePayment');
+Route::get('/registrar/ajax/assessment/getmainstudentlist','Registrar\Main\AjaxController@getmainstudentlistassessment');
 
 //Registrar Curriculum
 Route::get('/registrar/view_curriculum/college','Registrar\Curriculum\CollegeCurriculumController@curriculum');

@@ -121,28 +121,24 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"><span class="fa fa-check-square fa-fw">
-                                        </span> Assessment</a>
+                                        <a href="{{url('/assessment/college')}}"><span class="fa fa-check-square fa-fw"></span> Assessment - College/TESDA</a>
                                 </h4>
                             </div>
-                            <div id="collapseFour" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <table class="table">
-                                        <tr>
-                                            <td>
-                                                <a href="{{url('/')}}"><i class="fa fa-check-square fa-fw" aria-hidden="true"></i> Assessment</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                    </table>
-                                </div>
+                            
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                        <a href="{{url('/assessment/shs')}}"><span class="fa fa-check-square fa-fw"></span> Assessment - SHS</a>
+                                </h4>
                             </div>
+                            
                         </div>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><span class="fa fa-university fa-fw">
-                                        </span> College</a>
+                                        </span> Course Management - College</a>
                                 </h4>
                             </div>
                             <div id="collapseTwo" class="panel-collapse collapse">
@@ -180,8 +176,8 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><span class="fa fa-child fa-fw">
-                                        </span> Senior High School</a>
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><span class="fa fa-university fa-fw">
+                                        </span> Course Management - SHS</a>
                                 </h4>
                             </div>
                             <div id="collapseThree" class="panel-collapse collapse">
