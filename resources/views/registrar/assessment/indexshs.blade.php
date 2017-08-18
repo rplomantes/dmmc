@@ -31,7 +31,7 @@
            if(key==13){
                $.ajax({
                    type:"GET",
-                   url:"/registrar/ajax/assessment/getmainstudentlist",
+                   url:"/registrar/ajax/assessmentshs/getmainstudentlist",
                    data:array,
                    success:function(data){
                        $("#displaystudent").html(data);
