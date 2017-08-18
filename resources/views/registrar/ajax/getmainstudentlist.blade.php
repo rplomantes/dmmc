@@ -9,7 +9,7 @@
     <tr>
         <td>{{$list->idno}}</td>
         <td>{{$list->lastname}} {{$list->extensionname}}, {{$list->firstname}} {{$list->middlename}}</td>
-        <td><a href='{{url('registrar', array('viewinfo', $list->idno))}}'>View Profile</a></td>
+        <td><a href='{{url('registrar', array('viewstudentprofile', $list->idno))}}'>View Profile</a></td>
     </tr>
     @endforeach
 </tbody>

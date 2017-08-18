@@ -21,9 +21,6 @@ include_once 'web3.php';
 Route::auth();
 Auth::routes();
 Route::get('/','Main\loginController@index');
-Route::get('/parent_portal', function(){
-    return ('Hello my parent portal!');
-});
 
 //Registrar Assessment
 Route::get('/registrar/viewinfo/{idno}','Registrar\Assessment\AssessmentController@viewinfo');
