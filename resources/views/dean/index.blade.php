@@ -5,13 +5,11 @@
         <div class="col-sm-10 col-sm-offset-1">
             <div id="imaginary_container"> 
                 <div class="input-group stylish-input-group">
-                   
-                        <input type="text" id="search" class="form-control"  placeholder="Search" >
-                            <span class="input-group-addon">
-                                <span class="fa fa-search"></span>      
-                        </span>
-                       
-               </div>
+                    <input type="text" id="search" class="form-control"  placeholder="Search Student Record" >
+                    <span class="input-group-addon">
+                            <span class="fa fa-search"></span>      
+                    </span>
+                </div>
             </div>
         </div>
 </div>

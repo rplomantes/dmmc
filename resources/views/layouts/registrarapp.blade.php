@@ -121,7 +121,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                        <a href="{{url('/assessment/college')}}"><span class="fa fa-check-square fa-fw"></span> Assessment - College/TESDA</a>
+                                        <a href="{{url('registrar', array('assessment','college'))}}"><span class="fa fa-check-square fa-fw"></span> Assessment - College/TESDA</a>
                                 </h4>
                             </div>
                             
@@ -129,7 +129,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                        <a href="{{url('/assessment/shs')}}"><span class="fa fa-check-square fa-fw"></span> Assessment - SHS</a>
+                                        <a href="{{url('registrar', array('assessment','shs'))}}"><span class="fa fa-check-square fa-fw"></span> Assessment - SHS</a>
                                 </h4>
                             </div>
                             

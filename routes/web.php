@@ -25,8 +25,8 @@ Route::get('/','Main\loginController@index');
 //Registrar Assessment
 Route::get('/registrar/viewinfo/{idno}','Registrar\Assessment\AssessmentController@viewinfo');
 Route::get('/registrar/assess_payment/{idno}','Registrar\Assessment\AssessmentController@viewassessment');
-Route::get('/assessment/college','Registrar\Assessment\AssessmentController@indexcollege');
-Route::get('/assessment/shs','Registrar\Assessment\AssessmentController@indexshs');
+Route::get('/registrar/assessment/college','Registrar\Assessment\AssessmentController@indexcollege');
+Route::get('/registrar/assessment/shs','Registrar\Assessment\AssessmentController@indexshs');
 
 //ajax assessment
 Route::get('/registrar/ajax/assessment/computePayment', 'Registrar\Ajax\paymentAssessment@computePayment');
