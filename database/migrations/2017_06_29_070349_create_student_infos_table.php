@@ -34,6 +34,7 @@ class CreateStudentInfosTable extends Migration
             $table->string('school_year')->nullable();
             $table->string('period')->nullable();
             $table->string('level')->nullable();
+            $table->string('curriculum_year')->nullable();
             
             $table->string('status_upon_admission');
             $table->timestamps();
