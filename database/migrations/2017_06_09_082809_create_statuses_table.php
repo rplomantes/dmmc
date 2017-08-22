@@ -36,6 +36,7 @@ class CreateStatusesTable extends Migration
             $table->string('plan')->nullable();
             $table->integer('isesc')->default(0);
             $table->string('branch')->nullable();
+            $table->string('curriculum_year')->nullable();
             $table->string('remarks');
             $table->foreign('idno')
                 ->references('idno')->on('users')

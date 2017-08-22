@@ -103,16 +103,35 @@
                                         <a href="{{url('/dean', array('studentlist'))}}"><span class="fa fa-pencil fa-fw"></span> Student List Per Subject</a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <a href=""><span class="fa fa-newspaper-o fa-fw"></span> Student Record</a>
-                                    </td>
-                                </tr>
                                 
                             </table>
                         </div>
                     </div>
                 </div>
+                <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><span class="fa fa-check-square fa-fw">
+                                        </span> Assessment</a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <table class="table">
+                                        <tr>
+                                            <td>
+                                                <a href="{{url('')}}"><span class="fa fa-check-square fa-fw"></span> Assessment - College/TESDA</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a href="{{url('')}}"><span class="fa fa-check-square fa-fw"></span> Assessment - SHS</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                 <!--
                 <div class="panel panel-default">
                     <div class="panel-heading">
