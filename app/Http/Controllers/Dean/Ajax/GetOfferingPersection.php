@@ -65,7 +65,7 @@ class GetOfferingPersection extends Controller
                 $data="<table class=\"table table-condensed\" border=\"0\" width=\"100%\"><tr><td>Subject</td><td>Hours</td><td>Room/Schedule</td><td>Instructor</td></tr>";
                 foreach($offerings as $offering){
             
-                        $data = $data."<tr><td><a href=\"javascript: void(0);\" onclick=\"addtogradeshs('" .$idno . "','" . $offering->id ."')\" >".$offering->course_code." - " . $offering->course_name 
+                        $data = $data."<tr><td><a href=\"javascript: void(0);\" onclick=\"addtogradeshs('" .$idno . "','" . $offering->id ."')\" >".$offering->course_name 
                              . "</a></td><td>" . $offering->hours
                              . "</td><td>" . $this->getSchedule($offering->id) 
                              . "</td><td>".$offering->instructor_id."</td></tr>";
@@ -259,7 +259,7 @@ class GetOfferingPersection extends Controller
                         $hours=0;
                         foreach($studentcourses as $studentcourse){
                             $hours = $hours + $studentcourse->hours;
-                            $data = $data."<tr><td>" . $studentcourse->course_code . " - ". $studentcourse->course_name
+                            $data = $data."<tr><td>" . $studentcourse->course_name
                             . "</td><td>" . $studentcourse->hours 
                             . "</td><td>" . $this->getSchedule($studentcourse->course_offering_id)
                             . "</td><td>". $this->getInstructorId($studentcourse->course_offering_id) 

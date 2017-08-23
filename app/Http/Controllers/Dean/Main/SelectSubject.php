@@ -22,6 +22,11 @@ class SelectSubject extends Controller
                 $updatestatus->period=$schoolyear->period;
                 $updatestatus->level=$request->level;
                 $updatestatus->save();
+                
+                $updatestudentinfo = \App\StudentInfo::where('idno', $request->idno)->first();
+                $updatestudentinfo->curriculum_year=$request->curriculum_year;
+                $updatestudentinfo->save();
+                
                 return view('dean.main.selectsubjectcollege',compact('request'));
             } else {
                 return view('dean.unauthorized');
@@ -44,6 +49,10 @@ class SelectSubject extends Controller
                 $updatestatus->level=$request->level;
                 $updatestatus->track=$request->track;
                 $updatestatus->save();
+                
+                $updatestudentinfo = \App\StudentInfo::where('idno', $request->idno)->first();
+                $updatestudentinfo->curriculum_year=$request->curriculum_year;
+                $updatestudentinfo->save();
                 return view('dean.main.selectsubjectshs',compact('request'));
             }else{
                 return view('dean.unauthorized');

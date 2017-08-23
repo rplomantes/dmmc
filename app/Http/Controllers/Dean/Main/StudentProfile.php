@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Registrar\Main;
+namespace App\Http\Controllers\Dean\Main;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class StudentProfile extends Controller
 {
-    //
     function index($idno){
         $user = \App\User::where('idno',$idno)->first();
         $student_info = \App\StudentInfo::where('idno', $idno)->first();
@@ -35,7 +34,7 @@ class StudentProfile extends Controller
 //            
 //        }
         
-        return view('registrar.studentprofile', compact('idno','student_info','status','user', 'levels', 'curriculum'));
+        return view('dean.studentprofile', compact('idno','student_info','status','user', 'levels', 'curriculum'));
     }
     
     function getRemarks($idno, $course_code){
@@ -51,3 +50,4 @@ class StudentProfile extends Controller
         
     }
 }
+

@@ -17,7 +17,8 @@ class CreateGradeShsTable extends Migration
             $table->increments('id');
             $table->string('idno');
             $table->integer('course_offering_id');
-            $table->string('track');
+            $table->string('course_code');
+            $table->string('course_name');
             $table->decimal('hours', 5,2);
             $table->decimal('first_qtr', 5,2)->nullable();
             $table->decimal('second_qtr', 5,2)->nullable();

@@ -1,4 +1,4 @@
-@extends('layouts.registrarapp')
+@extends('layouts.deanapp')
 @section('content')
 
 <div class="row">

@@ -118,16 +118,19 @@
                             <div id="collapseTwo" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <table class="table">
+                                        @if (Auth::user()->academic_program != 'Senior High School')
                                         <tr>
                                             <td>
-                                                <a href="{{url('')}}"><span class="fa fa-check-square fa-fw"></span> Assessment - College/TESDA</a>
+                                                <a href="{{url('dean', array('assessment', 'college'))}}"><span class="fa fa-check-square fa-fw"></span> Assessment - College/TESDA</a>
                                             </td>
                                         </tr>
+                                        @elseif (Auth::user()->academic_program == 'Senior High School')
                                         <tr>
                                             <td>
-                                                <a href="{{url('')}}"><span class="fa fa-check-square fa-fw"></span> Assessment - SHS</a>
+                                                <a href="{{url('dean', array('assessment', 'shs'))}}"><span class="fa fa-check-square fa-fw"></span> Assessment - SHS</a>
                                             </td>
                                         </tr>
+                                        @endif
                                     </table>
                                 </div>
                             </div>

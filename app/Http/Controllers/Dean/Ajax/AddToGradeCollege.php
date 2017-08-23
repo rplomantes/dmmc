@@ -79,7 +79,7 @@ class AddToGradeCollege extends Controller
                 $data = "<table class=\"table table-condensed\" width=\"100%\"><tr><td>Subject</td><td>Hours</td><td>Room/Schedule</td><td>Instructor</td><td>Remove</td></tr>";
                 $hours=0;
                 foreach($studentcourses as $studentcourse){
-                    $data = $data."<tr><td>" . $studentcourse->course_code . " - ". $studentcourse->course_name
+                    $data = $data."<tr><td>" . $studentcourse->course_name
                             ."</td><td>" . $studentcourse->hours
                             . "</td><td>" . $this->getSchedule($studentcourse->course_offering_id)
                             . "</td><td>". $this->getInstructorId($studentcourse->course_offering_id) . "</td><td><a href=\"javascript: void(0);\" onclick=\"removesubject('".$studentcourse->id."')\">Remove</a></td></tr>";
@@ -177,7 +177,7 @@ class AddToGradeCollege extends Controller
                 $data = "<table class=\"table table-condensed\" width=\"100%\"><tr><td>Subject</td><td>Hours</td><td>Room/Schedule</td><td>Instructor</td><td>Remove</td></tr>";
                 $hours=0;
                 foreach($studentcourses as $studentcourse){
-                $data = $data."<tr><td>" . $studentcourse->course_code . " - ". $studentcourse->course_name
+                $data = $data."<tr><td>" . $studentcourse->course_name
                             ."</td><td>" . $studentcourse->hours
                             . "</td><td>" . $this->getSchedule($studentcourse->course_offering_id)
                             . "</td><td>". $this->getInstructorId($studentcourse->course_offering_id) . "</td><td><a href=\"javascript: void(0);\" onclick=\"removesubject('".$studentcourse->id."')\">Remove</a></td></tr>";

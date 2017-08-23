@@ -38,6 +38,8 @@ $info = \App\StudentInfo::where('idno',$idno)->first();
 $status = \App\Status::where('idno',$idno)->first();
 $academic_program = $status->academic_program;
 $academic_type = $status->academic_type;
+$have_curriculum = \App\StudentInfo::where('idno', $idno)->first(['curriculum_year']);
+$curriculum_years = \App\Curriculum::distinct()->get(['curriculum_year']);
 
 if($academic_type=="College"){
     $programs = \Illuminate\Support\Facades\DB::Select("Select distinct program_code, program_name from ctr_academic_programs where academic_program = '$academic_program'");
@@ -63,6 +65,7 @@ else if($academic_type=="TESDA"){
             <tr><td>Student Name</td><td><strong>{{$user->lastname}}, {{$user->firstname}} {{$user->middlename}} {{$user->extensionname}}</strong></td></tr>
                 <tr><td>Contact Number</td><td>{{$info->contact_no}}</td></tr>
                     <tr><td>Email Address</td><td>{{$user->email}}</td></tr>
+                        <tr><td>Curriculum</td><td>{{$info->curriculum_year}}</td></tr>
         @if($status->academic_program=="CBEAS" OR $status->academic_program=="CAMPS" )             
                         <tr><td>Course Intended To Enroll</td><td>{{$info->course}}</td></tr>
                             <tr><td>Second Course of Choice</td><td>{{$info->course2}}</td></tr>
@@ -81,7 +84,26 @@ else if($academic_type=="TESDA"){
                 <input type="hidden" name="academic_program" value="{{$status->academic_program}}">
                 <input type="hidden" name="idno" value="{{$idno}}">
                 
-                    <div class="form form-group">       
+                    
+                    <div class="form form-group">
+                        <div class="col-sm-12">
+                            <label>Select Curriculum</label>
+                            @if ($info->curriculum_year != NULL)
+                                <select name="curriculum_year" class="form form-control" readonly="">
+                            @else
+                                <select name="curriculum_year" class="form form-control">
+                            @endif
+                                    <option value="">Select Curriculum</option>
+                                    @foreach($curriculum_years as $curriculum_year)
+                                    <option value="{{$curriculum_year->curriculum_year}}"
+                                            @if($curriculum_year->curriculum_year == $have_curriculum->curriculum_year)
+                                            selected="selected"
+                                            @endif>{{$curriculum_year->curriculum_year}}</option>
+                                    @endforeach
+                                </select>
+                        </div>
+                    </div>
+                    <div class="form form-group">
                         <div class="col-sm-12">
                             <label>Select Course To Register</label>
                                 <select name="program_code" class="form form-control">
@@ -121,6 +143,24 @@ else if($academic_type=="TESDA"){
                 <input type="hidden" name="academic_program" value="{{$status->academic_program}}">
                 <input type="hidden" name="idno" value="{{$idno}}">
                 
+                     <div class="form form-group">
+                        <div class="col-sm-12">
+                            <label>Select Curriculum</label>
+                            @if ($info->curriculum_year != NULL)
+                                <select name="curriculum_year" class="form form-control" readonly="">
+                            @else
+                                <select name="curriculum_year" class="form form-control">
+                            @endif
+                                    <option value="">Select Curriculum</option>
+                                    @foreach($curriculum_years as $curriculum_year)
+                                    <option value="{{$curriculum_year->curriculum_year}}"
+                                            @if($curriculum_year->curriculum_year == $have_curriculum->curriculum_year)
+                                            selected="selected"
+                                            @endif>{{$curriculum_year->curriculum_year}}</option>
+                                    @endforeach
+                                </select>
+                        </div>
+                    </div>
                     <div class="form form-group">       
                         <div class="col-sm-12">
                             <label>Select Track To Register</label>
@@ -161,7 +201,26 @@ else if($academic_type=="TESDA"){
                 {{ csrf_field() }}
                 <input type="hidden" name="academic_program" value="{{$status->academic_program}}">
                 <input type="hidden" name="idno" value="{{$idno}}">
-               <div class="form form-group">       
+               
+                 <div class="form form-group">
+                        <div class="col-sm-12">
+                            <label>Select Curriculum</label>
+                            @if ($info->curriculum_year != NULL)
+                                <select name="curriculum_year" class="form form-control" readonly="">
+                            @else
+                                <select name="curriculum_year" class="form form-control">
+                            @endif
+                                    <option value="">Select Curriculum</option>
+                                    @foreach($curriculum_years as $curriculum_year)
+                                    <option value="{{$curriculum_year->curriculum_year}}"
+                                            @if($curriculum_year->curriculum_year == $have_curriculum->curriculum_year)
+                                            selected="selected"
+                                            @endif>{{$curriculum_year->curriculum_year}}</option>
+                                    @endforeach
+                                </select>
+                        </div>
+                    </div>
+                <div class="form form-group">       
                         <div class="col-sm-12">
                             <label>Select Course To Register</label>
                                 <select name="program_code" class="form form-control">

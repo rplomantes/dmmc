@@ -1,11 +1,14 @@
 <?php
 //Dean
 Route::get('/dean/viewstudentstatus/{idno}','Dean\Main\ViewStudentStatus@index');
+Route::get('/dean/viewstudentprofile/{idno}','Dean\Main\StudentProfile@index');
 Route::post('/dean/main/selectsubjectcollege','Dean\Main\SelectSubject@college');
 Route::post('/dean/main/selectsubjectshs','Dean\Main\SelectSubject@shs');
 Route::post('/dean/main/registersubjects','Dean\Main\RegisterSubjects@index');
 //Ajax Dean
 Route::get('/ajax/getdeanstudentlist','Dean\Ajax\GetStudentListController@index');
+Route::get('/ajax/assessment/getdeanstudentlistcollege','Dean\Ajax\GetStudentListController@assessmentcollege');
+Route::get('/ajax/assessment/getdeanstudentlistshs','Dean\Ajax\GetStudentListController@assessmentshs');
 Route::get('/dean/ajax/getofferingpersection','Dean\Ajax\GetOfferingPersection@index');
 Route::get('/dean/ajax/addtogradecollege','Dean\Ajax\AddToGradeCollege@index');
 Route::get('/dean/ajax/removesubject','Dean\Ajax\AddToGradeCollege@removesubject');
@@ -23,4 +26,8 @@ Route::get('/dean/generatereport/studentlist/{course_offering_id}', 'Dean\Main\S
 //studentlist ajax
 Route::get('/dean/ajax/studentlist/getsubjectlistcollege','Dean\Ajax\GetSubjectList@getlistcollege');
 Route::get('/dean/ajax/studentlist/getsubjectlistpersearchcollege','Dean\Ajax\GetSubjectList@getlistpersearchcollege');
+
+//dean assessment
+Route::get('/dean/assessment/college','Dean\Assessment\AssessmentController@indexcollege');
+Route::get('/dean/assessment/shs','Dean\Assessment\AssessmentController@indexshs');
 ?>

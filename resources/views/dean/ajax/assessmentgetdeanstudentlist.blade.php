@@ -9,11 +9,11 @@
         @foreach($lists as $list)
         <tr>
             <td>{{$list->idno}}</td>
-            <td>{{$list->lastname}} {{$list->extensionname}}, {{$list->firstname}} {{$list->middlename}}</td>
-            <td><a href='{{url('registrar', array('viewinfo', $list->idno))}}'>Assess Student</a></td>
+            <td>{{$list->lastname}}, {{$list->firstname}} {{$list->middlename}}</td>
+            <td><a href="{{url('dean',array('viewstudentstatus',$list->idno))}}">Assess Student</a></td>
         </tr>
         @endforeach    
     @else
     <tr><td colspan="4">Record Not Found!!!</td></tr>
     @endif
-</table>  
+</table>    
