@@ -13,11 +13,18 @@ class paymentAssessment extends Controller {
         if (Request::ajax()) {
             $discounttf=0;
             $discount0f=0;
+            
             $idno = Input::get("idno");
             $plan = Input::get("plan");
             $level = Input::get("level");
             $period = Input::get("period");
             $school_year = Input::get("school_year");
+            $currentledgers=  \App\ledger::where('idno',$idno)->where('school_year',$school_year)->where('period',$period)->get();
+            if(count($currentledgers)>0){
+                foreach($currentledgers as $currentledger){
+                    $currentledger->delete();
+                }
+            }
             $type_of_account = Input::get("type_of_account");
             $program_code = Input::get("program_code");
             $academic_type = Input::get("academic_type");

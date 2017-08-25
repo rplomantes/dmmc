@@ -20,6 +20,7 @@
 
         <style>
             .label{color: gray;}
+            .totalfee{font-size:20pt;color:red;font-weight: bold}
         </style>
     </head>
     <body>
@@ -232,8 +233,7 @@
                             <div class="col-sm-12">
                                 <h4>Payment Summary:</h4>
                                 <div id="paymentsummary">
-
-                                </div>
+                                    
                             </div>
                         </div>
                     </div><hr>
