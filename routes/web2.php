@@ -30,4 +30,9 @@ Route::get('/dean/ajax/studentlist/getsubjectlistpersearchcollege','Dean\Ajax\Ge
 //dean assessment
 Route::get('/dean/assessment/college','Dean\Assessment\AssessmentController@indexcollege');
 Route::get('/dean/assessment/shs','Dean\Assessment\AssessmentController@indexshs');
+//cashier student list
+Route::get('/cashier/getstudentlist','Cashier\Ajax\CashierController@getstudentlist');
+//cashier main
+Route::get('/viewledger/{idno}','Cashier\ViewLedger@index');
+
 ?>
