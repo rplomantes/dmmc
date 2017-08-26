@@ -22,6 +22,7 @@ Route::get('/dean/ajax/addallsubjectsshs','Dean\Ajax\GetOfferingPersection@addal
 //studentlist
 Route::get('/dean/studentlist','Dean\Main\StudentList@index');
 Route::get('/dean/generatereport/studentlist/{course_offering_id}', 'Dean\Main\StudentList@printStudentlist');
+Route::get('/dean/generatereport/studentlistshs/{course_offering_id}', 'Dean\Main\StudentList@printStudentlistshs');
 
 //studentlist ajax
 Route::get('/dean/ajax/studentlist/getsubjectlistcollege','Dean\Ajax\GetSubjectList@getlistcollege');
