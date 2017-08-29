@@ -7,7 +7,9 @@
     .tables, .tds, .ths {
         border-collapse: collapse;
         border: 1px solid black;
+        
     }
+    .page_break { page-break-before: always; }
 </style>
 <div align="center">
     <b>DMMC INSTITUTE OF HEALTH SCIENCES</b><br>
@@ -127,3 +129,23 @@ echo $yearend; ?> {{$school_year->period}} Semester</small><br>
         </td>
     </tr>
 </table>
+
+<div class="page_break">
+    <div style="text-align: justify">
+    <div align="center"><strong>STUDENT'S PLEDGE AND DECLARATION</strong></div>
+    <ol>
+        <li>In consideration of my admission to the DMMC Institute of Health Sciences, I hereby promise and pledge to abide by and comply with all the rules and regulations laid down by competent authority in the School in which I am enrolled.</li>
+        <li>I am fully aware of the School policy to expel, exclude or suspend indefinitely, after summary investigation, any student found to have committed major offenses as specified in the DMMC Institute of Health Sciences Student Handbook as well as those issued from time to time by the competent authority in this School.</li>
+        <li>I am fully aware that the assessment of fees stated in this registration form are still subject to audit and will be adjusted accordingly.</li>
+        <li>I am fully aware that in order to avail cash basis of my tuition fees, total amount for the year must be already paid in advance. (Due date stipulatedin the front page)</li>
+        <li>I am fully aware that my enrollment is on a semestral basis only. And when this enrollment application is withdrawn before the start of classess, a 5% of the total amount due for the school terms is to be charged. Moreover, for a student who withdrawns or transfers after enrollment period the following refund and charges shall apply:</li>
+    </ol>
+    
+    <div align='center'><i>For Higher Education Programs</i></div>
+        <ol type='A'>
+            <li>10% of the total amount due for the school term shall not be refundable if the student officially drops within the first week of classes whether or not he has actually attended classes.</li>
+            <li>20% of the total amount due for the school term shall not be refundable if the student officially drops within the second week of classes whether or not he has actually attended classes.</li>
+        </ol>
+    <div align='center'>****************************************************</div>
+    </div>
+</div>
