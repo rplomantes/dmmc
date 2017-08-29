@@ -1,7 +1,8 @@
 <?php
-$list_plans = \App\CtrDueDate::distinct()->get(['plan']);
 $tuitionfees =  \App\ledger::where('idno',$idno)->where('school_year',$school_year)->where('period',$period)->where('category_switch','3')->get();
 $otherfees = \App\ledger::where('idno',$idno)->where('school_year',$school_year)->where('period',$period)->where('category_switch','<','3')->get();
+$status = \App\Status::where('idno', $idno)->first();
+$list_plans = \App\CtrDueDate::distinct()->where('academic_type', $status->academic_type)->get(['plan']);
 ?>
 <h3>Tuition Fees</h3>
 <table border ="1" class="table table-condensed">
@@ -54,20 +55,44 @@ $otherfees = \App\ledger::where('idno',$idno)->where('school_year',$school_year)
         <td align="right"><span class="totalfee">{{number_format($totalotherfees+$totaltuitionfees,2)}}</span></td></tr>
     </tr>
     </table>
- <div class="col-sm-6">
-        <label class="label">Select Plan </label>
-               <select id="plan" class="form form-control">
-                   <option value="">Full Payment</option>
-                         @if(count($list_plans)>0)
-                               @foreach($list_plans as $plan)
-                                           <option value="{{$plan->paln}}">{{$plan->plan}}</option>
-                               @endforeach
-                               @endif
-                               </select>    
-                               </div>
-<div class="col-md-12">
-    <div class="form form-group">
-        <label>Intended Downpayment</label>
-        <input style="text-align: right" type="number" min="{{($totalotherfees+$totaltuitionfees)*.3}}" class="form-control" id="downpaymentamount" value="{{($totalotherfees+$totaltuitionfees)*.3}}">
-    </div>    
-</div>    
+<form class="form-horizontal" action="{{url('registrar', 'process_payment')}}" method="POST">
+    {{ csrf_field()}}
+    <input type="hidden" name='idno' value='{{$idno}}'>
+    <input type="hidden" name='academic_type' value='{{$status->academic_type}}'>
+    <input type="hidden" name='totalTuition' value='{{$totalotherfees+$totaltuitionfees}}'>
+    <div class="row">
+        <div class="form form-group">
+            <div class="col-sm-12">
+                <label class="label">Select Plan </label>
+                <select id="plan" required="" name="plan" class="form form-control" onchange="displaydownpayment(this.value)">
+                    <option value="">Choose Payment</option>
+                    <option value="full">Full Payment</option>
+                        @if(count($list_plans)>0)
+                            @foreach($list_plans as $plan)
+                                <option value="{{$plan->plan}}">{{$plan->plan}}</option>
+                            @endforeach
+                        @endif
+                </select>    
+            </div>
+        </div>
+        <div class="form form-group">
+            <div class="col-md-12" id="downpayment">
+                <!--<input name="downpaymentamount" style="text-align: right" type="number" min="{{($totalotherfees+$totaltuitionfees)*.3}}" class="form-control" id="downpaymentamount" value="{{($totalotherfees+$totaltuitionfees)*.3}}">-->
+            </div>    
+        </div>
+        <div class="form form-group">
+            <div class="col-sm-12">
+                <input type="submit"class="col-sm-12 btn btn-success" value="Process Payment">
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    function displaydownpayment(plan){
+        $('#downpayment').empty()
+        if (plan!="full"){
+            $('#downpayment').html("<label class=\"label\">Downpayment</label><input name=\"downpaymentamount\" style=\"text-align: right\" type=\"number\" min=\"{{($totalotherfees+$totaltuitionfees)*.3}}\" class=\"form-control\" id=\"downpaymentamount\" value=\"{{($totalotherfees+$totaltuitionfees)*.3}}\">").show()
+        } 
+    }
+</script>

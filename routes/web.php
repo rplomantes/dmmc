@@ -132,3 +132,7 @@ Route::get('/registrar/ajax/remove_coursetoinstructor_college/{id}','Registrar\A
 Route::get('/registrar/ajax/get_courseoffering_shs','Registrar\Ajax\shsAssignInstructor@getcourses');
 Route::get('/registrar/ajax/add_coursetoinstructor_shs/{id}','Registrar\Ajax\shsAssignInstructor@addcourses');
 Route::get('/registrar/ajax/remove_coursetoinstructor_shs/{id}','Registrar\Ajax\shsAssignInstructor@removecourses');
+
+//registrar payment_assessment
+Route::post('/registrar/process_payment','Registrar\Assessment\processPayment@index');
+Route::get('/registrar/registration/{idno}', 'Registrar\Assessment\registrationController@index');

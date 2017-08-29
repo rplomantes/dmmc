@@ -86,7 +86,7 @@
             $studentinfo = \App\StudentInfo::where('idno', $idno)->first();
             $school_year = \App\CtrSchoolYear::where('academic_type', $status->academic_type)->first();
             $special_discounts = \App\CtrSpecialDiscount::where('program_code', $status->program_code)->where('level', $status->level)->get();
-            $list_plans = \App\CtrDueDate::distinct()->get(['plan']);
+            $list_plans = \App\CtrDueDate::distinct()->where('academic_type', $status->academic_type)->get(['plan']);
             $discounts=  \App\CtrDiscount::get();
             
             if($status->academic_type == "College") {
@@ -174,7 +174,7 @@
                                 @if ($status->academic_type == "College")
                                 <form class="form-horizontal">
                                     <div class="form form-group">
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-12">
 
                                             <label class="label">Select Type of Account </label>
                                             <select id="type_of_account" class="form form-control">
@@ -188,7 +188,7 @@
                                             </select>
                                         </div>
                                         
-                                        <div class="col-sm-6">
+<!--                                        <div class="col-sm-6">
                                             <label class="label">Select Plan </label>
                                             <select id="plan" class="form form-control">
                                                 <option value="">Full Payment</option>
@@ -198,9 +198,9 @@
                                                     @endforeach
                                                 @endif
                                             </select>    
-                                        </div>
+                                        </div>-->
                                         
-                                         <div class="col-sm-6">
+                                         <div class="col-sm-12">
                                             <label class="label">Discount </label>
                                             <select id="discount" class="form form-control">
                                                 <option value="">None</option>
@@ -263,7 +263,7 @@
                     success: function (data) {
                         $('#paymentsummary').empty();
                         $('#paymentsummary').html(data);
-                        //$('#process_assessment').html("<div class='col-sm-12 btn btn-success'>Process Assessment</div>").show();
+                       // $('#process_assessment').html("<div class='col-sm-12 btn btn-success'>Process Assessment</div>").show();
                     }
 
                 });

@@ -2,7 +2,7 @@
 @section('content')
 <style>
     .label{color: gray;}
-    .bs-wizard {margin-top: 40px;}
+        .bs-wizard {margin-top: 40px;}
 
 /*Form Wizard*/
 .bs-wizard {border-bottom: solid 1px #e0e0e0; padding: 0 0 10px 0;}
@@ -86,7 +86,7 @@ $student_info = \App\StudentInfo::where('idno', $idno)->first();
         @if ($status->status==2)
         <a href="{{url('registrar',array('assess_payment',$idno))}}"><div class='btn btn-primary col-sm-12'>Assess Payment</div></a>
         <br>
-        @elseif ($status->status=1)
+        @elseif ($status->status==1)
         <a href="{{url('registrar',array('assess_subject',$idno))}}"><div class='btn btn-primary col-sm-12'>Assess Subject</div></a>
         <br>
         @endif
