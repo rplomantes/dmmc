@@ -16,6 +16,8 @@ class CreateLedgerDueDatesTable extends Migration
         Schema::create('ledger_due_dates', function (Blueprint $table) {
             $table->increments('id');
             $table->string('idno');
+            $table->string('school_year');
+            $table->string('period');
             $table->integer('due_switch');
             $table->date('due_date');
             $table->decimal('amount',10,2);

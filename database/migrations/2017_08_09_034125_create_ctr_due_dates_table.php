@@ -15,6 +15,7 @@ class CreateCtrDueDatesTable extends Migration
     {
         Schema::create('ctr_due_dates', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('academic_type');
             $table->string('plan');
             $table->date('due_date');
             $table->timestamps();

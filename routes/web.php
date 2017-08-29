@@ -136,3 +136,6 @@ Route::get('/registrar/ajax/remove_coursetoinstructor_shs/{id}','Registrar\Ajax\
 //registrar payment_assessment
 Route::post('/registrar/process_payment','Registrar\Assessment\processPayment@index');
 Route::get('/registrar/registration/{idno}', 'Registrar\Assessment\registrationController@index');
+
+Route::get('/registrar/reassess/{idno}', 'Registrar\Assessment\registrationController@reassess');
+Route::get('/registrar/print_registration_form/{idno}', 'Registrar\Assessment\registrationController@printform');

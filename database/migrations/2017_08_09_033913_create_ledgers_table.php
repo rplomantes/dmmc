@@ -29,6 +29,7 @@ class CreateLedgersTable extends Migration
             $table->decimal('payment',10,2)->default(0);
             $table->decimal('discount',10,2)->default(0);
             $table->integer('discount_id')->nullable();
+            $table->integer('is_final')->default(0);
             $table->timestamps();
             $table->foreign('idno')
                     ->references('idno')

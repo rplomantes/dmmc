@@ -14,12 +14,16 @@ class processPayment extends Controller
         $downpaymentamount = $request->downpaymentamount;
         $plan = $request->plan;
         $idno = $request->idno;
+        $user = \App\Status::where('idno', $idno)->first();
+        $school_year = \App\CtrSchoolYear::where('academic_type', $user->academic_type)->first();
         $totalTuition = $request->totalTuition;
         $plans = \App\CtrDueDate::where('academic_type', $request->academic_type)->where('plan', $plan)->get();
                 
         if ($plan=='full'){
             $addledgerduedates = new \App\LedgerDueDate;
             $addledgerduedates->idno=$idno;
+            $addledgerduedates->school_year=$school_year->school_year;
+            $addledgerduedates->period=$school_year->period;
             $addledgerduedates->due_switch=0;
             $addledgerduedates->due_date=date('Y-m-d');
             $addledgerduedates->amount=$totalTuition;
@@ -28,6 +32,8 @@ class processPayment extends Controller
         } else {
             $addledgerduedates = new \App\LedgerDueDate;
             $addledgerduedates->idno=$idno;
+            $addledgerduedates->school_year=$school_year->school_year;
+            $addledgerduedates->period=$school_year->period;
             $addledgerduedates->due_switch=0;
             $addledgerduedates->due_date=date('Y-m-d');
             $addledgerduedates->amount=$downpaymentamount;
@@ -37,6 +43,8 @@ class processPayment extends Controller
                                 
                 $addledgerduedates = new \App\LedgerDueDate;
                 $addledgerduedates->idno=$idno;
+                $addledgerduedates->school_year=$school_year->school_year;
+                $addledgerduedates->period=$school_year->period;
                 $addledgerduedates->due_switch=1;
                 $addledgerduedates->due_date=$paln->due_date;
                 $addledgerduedates->amount=$this->computeplan($downpaymentamount, $totalTuition, $plans);
