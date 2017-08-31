@@ -32,6 +32,7 @@ class NewStudentController extends Controller {
             'birthdate' => 'required',
             'address' => 'required',
             'contact_no' => 'required',
+            'gender' => 'required',
         ]);
 
         return $this->createapplicant($request);
@@ -67,6 +68,7 @@ class NewStudentController extends Controller {
         $student_info->course2 = $request->course2;
         $student_info->birthdate = $request->birthdate;
         $student_info->civil_status = $request->civil_status;
+        $student_info->gender= $request->gender;
         $student_info->address = $request->address;
         $student_info->contact_no = $request->contact_no;
         $student_info->last_school = $request->last_school_attended;

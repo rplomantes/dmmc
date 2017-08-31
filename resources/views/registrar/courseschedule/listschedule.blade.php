@@ -4,14 +4,22 @@
     .label{color: gray;}
 </style>
 <?php
-$school_year = \App\CtrSchoolYear::where('academic_type', 'College')->first();
+if ($course_offering->program_code=='Senior HighSchool'){
+    $school_year = \App\CtrSchoolYear::where('academic_type', 'Senior High School')->first();    
+} else {
+    $school_year = \App\CtrSchoolYear::where('academic_type', 'College')->first();
+}
 ?>
 <div class="row">
     <div class='col-sm-12'>
         <div id="imaginary_container">
             <h3>{{$course_offering->program_code}}</h3>
-            <h3>{{$course_offering->course_code}} - {{$course_offering->course_name}}</h3>
-            <h4>{{$course_offering->level}} year - @if ($course_offering->period== '1st') 1st Semester @elseif ($course_offering->period== '2nd') 2nd Semester @elseif ($course_offering->period== 'Summer') Summer @else @endif</h4>
+            <h3>@if ($course_offering->program_code!='Senior High School'){{$course_offering->course_code}} - @endif{{$course_offering->course_name}}</h3>
+            @if ($course_offering->program_code=='Senior High School')
+            <h4>{{$course_offering->level}} - @if ($course_offering->period== '1st') 1st Semester @elseif ($course_offering->period== '2nd') 2nd Semester @elseif ($course_offering->period== 'Summer') Summer @else @endif</h4>
+            @else
+            <h4>{{$course_offering->level}} - year @if ($course_offering->period== '1st') 1st Semester @elseif ($course_offering->period== '2nd') 2nd Semester @elseif ($course_offering->period== 'Summer') Summer @else @endif</h4>
+            @endif
             <h4>Section: {{$course_offering->section}}</h4>
 
             <input type="hidden" id="school_year" value="{{$school_year->school_year}}">

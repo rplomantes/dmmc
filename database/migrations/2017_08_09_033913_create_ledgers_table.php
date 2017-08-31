@@ -17,6 +17,7 @@ class CreateLedgersTable extends Migration
             $table->increments('id');
             $table->string('idno');
             $table->string('program_code');
+            $table->string('track')->nullable;
             $table->string('level');
             $table->string('school_year');
             $table->string('period');

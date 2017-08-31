@@ -10,7 +10,7 @@ class SHSCourseSchedule extends Controller {
 
     function index() {
         $school_year = \App\CtrSchoolYear::where('academic_type', 'Senior High School')->first();
-        $tracks = \App\CourseOffering::distinct()->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get(['track']);
+        $tracks = \App\CourseOffering::distinct()->where('school_year', $school_year->school_year)->where('period', $school_year->period)->where('program_code', 'Senior High School')->get(['track']);
         return view('registrar.courseschedule.shsindex', compact('tracks', 'school_year'));
     }
 

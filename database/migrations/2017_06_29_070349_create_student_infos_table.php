@@ -20,6 +20,7 @@ class CreateStudentInfosTable extends Migration
             $table->string('course2')->nullable();
             $table->string('birthdate');
             $table->string('civil_status');
+            $table->string('gender');
             $table->string('address')->nullable();
             $table->string('contact_no')->nullable();
             $table->string('last_school')->nullable();

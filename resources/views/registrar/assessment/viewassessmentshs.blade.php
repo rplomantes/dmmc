@@ -89,11 +89,8 @@
             $list_plans = \App\CtrDueDate::distinct()->where('academic_type', $status->academic_type)->get(['plan']);
             $discounts = \App\CtrDiscount::get();
 
-            if ($status->academic_type == "College") {
-                $grades = \App\GradeCollege::where('idno', $idno)->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get();
-            } elseif ($status->academic_type == "Senior High School") {
-                $grades = \App\GradeShs::where('idno', $idno)->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get();
-            }
+            $grades = \App\GradeShs::where('idno', $idno)->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get();
+            
             ?>
 
             <input type="hidden" id="idno" value="{{$idno}}">
@@ -101,6 +98,7 @@
             <input type="hidden" id="school_year" value="{{$school_year->school_year}}">
             <input type="hidden" id="period" value="{{$school_year->period}}">
             <input type="hidden" id="program_code" value="{{$status->program_code}}">
+            <input type="hidden" id="track" value="{{$status->track}}">
             <input type="hidden" id="academic_type" value="{{$status->academic_type}}">
 
             <div class="col-sm-12">
@@ -110,11 +108,8 @@
                             <h3>Assessment</h3>
                             <ul class="nav navbar-header"><li><strong>{{strtoupper($user->lastname)}} {{$user->extensionname}}, {{$user->firstname}} {{$user->middlename}}</strong></li>
 
-                                @if($status->academic_type == "College")
-                                <li>{{$status->program_name}} </li><li>{{$status->level}} Year</li>
-                                @elseif($status->academic_type == "Senior High School") 
                                 <li>{{$status->track}} </li><li>{{$status->level}}</li>
-                                @endif
+                                
                             </ul>
                         </div>
                     </div>
@@ -124,44 +119,6 @@
                             <div class="col-sm-12">
                                 <h4>Subject Registered:</h4>
                                 
-                                @if($status->academic_type == "College")
-                                <table class="table table-condensed">
-                                    <thead>
-                                    <th>Subject Code</th>
-                                    <th>Subject Name</th>
-                                    <th>Lec</th>
-                                    <th>Lab</th>
-                                    <th>Units</th>
-                                    </thead>
-                                    <?php
-                                    $totalLec = 0;
-                                    $totalLab = 0;
-                                    $totalUnits = 0;
-                                    ?>
-                                    @foreach ($grades as $grade)
-                                    <tr>
-                                        <td>{{$grade->course_code}}</td>
-                                        <td>{{$grade->course_name}}</td>
-                                        <td>@if ($grade->lec==0) @else {{$grade->lec}} @endif <?php $totalLec = $grade->lec + $totalLec; ?></td>
-                                        <td>@if ($grade->lab==0) @else {{$grade->lab}} @endif <?php $totalLab = $grade->lab + $totalLab; ?></td>
-                                        <td>{!!$grade->lec + $grade->lab!!}</td>
-                                    </tr>
-                                    @endforeach
-                                    <tr>
-                                        <td></td>
-                                        <th><div align='right'>Total</div> </th> 
-                                        <th><?php echo $totalLec; ?></th>
-                                        <th><?php
-                                            if ($totalLab != 0) {
-                                                echo $totalLab;
-                                            }
-                                            ?>
-                                        </th>
-                                        <th><?php $totalUnits = $totalUnits + $totalLec + $totalLab; ?> {!! $totalLec + $totalLab !!}</th>
-                                    </tr>
-                                </table>
-                                
-                                @else
                                 <table class="table table-condensed">
                                     <thead>
                                     <th>Subject Name</th>
@@ -182,13 +139,10 @@
                                         <th>{{$totalHours}}</th>
                                     </tr>
                                 </table>
-                                @endif
                             </div>
                             
                             <div class="col-sm-12">
                                 <h4>Payment Options:</h4>
-                                
-                                @if ($status->academic_type == "College")
                                 <form class="form-horizontal">
                                     <div class="form form-group">
                                         <div class="col-sm-12">
@@ -226,11 +180,6 @@
                                     </div>
                                 </form>
 
-                                @else
-                                <table class="table table-condensed">SHS</table>
-                                @endif
-
-
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -258,11 +207,12 @@
                     array['school_year'] = $("#school_year").val();
                     array['type_of_account'] = $("#type_of_account").val();
                     array['program_code'] = $("#program_code").val();
+                    array['track'] = $("#track").val();
                     array['academic_type'] = $("#academic_type").val();
                     array['discount'] = $("#ddiscount").val();
                     $.ajax({
                         type: "GET",
-                        url: "/registrar/ajax/assessment/computePayment",
+                        url: "/registrar/ajax/assessment/computePaymentshs",
                         data: array,
                         success: function (data) {
                             $('#paymentsummary').empty();

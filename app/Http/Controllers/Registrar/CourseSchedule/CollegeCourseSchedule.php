@@ -10,7 +10,7 @@ class CollegeCourseSchedule extends Controller {
 
     function index() {
         $school_year = \App\CtrSchoolYear::where('academic_type', 'College')->first();
-        $program_codes = \App\CourseOffering::distinct()->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get(['program_code']);
+        $program_codes = \App\CourseOffering::distinct()->where('school_year', $school_year->school_year)->where('period', $school_year->period)->where('program_code', '!=', 'Senior High School')->get(['program_code']);
         return view('registrar.courseschedule.index', compact('program_codes', 'school_year'));
     }
 

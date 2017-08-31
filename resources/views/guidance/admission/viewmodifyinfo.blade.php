@@ -143,7 +143,7 @@
                             </span>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-3">
                         <label class="label">Civil Status</label>
                         <select name="civil_status" class="form form-control">
                             <option value="single" @if ($list->civil_status== 'single')
@@ -158,6 +158,17 @@
                             <option value="widowed"@if ($list->civil_status== 'widowed')
                                     selected='selected'
                                     @endif>Widowed</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="label">Gender</label>
+                        <select name="gender" class="form form-control">
+                            <option value="Male" @if ($list->gender== 'Male')
+                                    selected='selected'
+                                    @endif>Male</option>
+                            <option value="Female"@if ($list->gender== 'Female')
+                                    selected='selected'
+                                    @endif>Female</option>
                         </select>
                     </div>
                 </div>

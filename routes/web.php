@@ -30,6 +30,7 @@ Route::get('/registrar/assessment/shs','Registrar\Assessment\AssessmentControlle
 
 //ajax assessment
 Route::get('/registrar/ajax/assessment/computePayment', 'Registrar\Ajax\paymentAssessment@computePayment');
+Route::get('/registrar/ajax/assessment/computePaymentshs', 'Registrar\Ajax\paymentAssessmentSHS@computePayment');
 Route::get('/registrar/ajax/assessmentcollege/getmainstudentlist','Registrar\Main\AjaxController@getmainstudentlistassessmentcollege');
 Route::get('/registrar/ajax/assessmentshs/getmainstudentlist','Registrar\Main\AjaxController@getmainstudentlistassessmentshs');
 
