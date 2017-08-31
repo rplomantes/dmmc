@@ -1,5 +1,5 @@
 <?php
-$students =  DB::Select("Select * from Users where (lastname like '$search%' OR firstname like '$search%' OR idno = '$search') and accesslevel='0'order by lastname, firstname");
+$students =  DB::Select("Select * from users where (lastname like '$search%' OR firstname like '$search%' OR idno = '$search') and accesslevel='0'order by lastname, firstname");
 if(count($students)>0){
 ?>
 <table class = "table table-responsive"><tr><td>Student ID</td><td>Student Name</td><td>View</td></tr>

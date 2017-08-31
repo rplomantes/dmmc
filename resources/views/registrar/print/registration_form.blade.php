@@ -72,7 +72,7 @@
     ?>
     @foreach ($grades as $grade)
     <tr  style='font-size:12px'>
-        <td class='tds' style='font-size:12px' ><small>{{$grade->course_code}} {{$grade->course_name}}</small></td>
+        <td class='tds' style='font-size:12px' ><small>@if($status->academic_type!='Senior High School'){{$grade->course_code}}@endif {{$grade->course_name}}</small></td>
         <td class='tds' style='font-size:12px'>
             <?php
             $schedule2s = \App\Schedule::distinct()->where('course_offering_id', $grade->course_offering_id)->get(['time_start', 'time_end', 'room']);

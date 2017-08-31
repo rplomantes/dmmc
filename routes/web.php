@@ -140,3 +140,9 @@ Route::get('/registrar/registration/{idno}', 'Registrar\Assessment\registrationC
 
 Route::get('/registrar/reassess/{idno}', 'Registrar\Assessment\registrationController@reassess');
 Route::get('/registrar/print_registration_form/{idno}', 'Registrar\Assessment\registrationController@printform');
+
+//registrar assess subject
+Route::get('/registrar/assess_subject/{idno}', 'Registrar\Main\ViewStudentStatus@index');
+Route::post('/registrar/main/selectsubjectcollege','Registrar\Main\SelectSubject@college');
+Route::post('/registrar/main/selectsubjectshs','Registrar\Main\SelectSubject@shs');
+Route::post('/registrar/main/registersubjects','Registrar\Main\RegisterSubjects@index');

@@ -12,7 +12,7 @@ class paymentAssessment extends Controller {
     function computePayment() {
         if (Request::ajax()) {
             $discounttf=0;
-            $discount0f=0;
+            $discountof=0;
             
             $idno = Input::get("idno");
             $plan = Input::get("plan");
@@ -38,8 +38,8 @@ class paymentAssessment extends Controller {
                 if($type_of_account=="regular"){
                         $tfr=  \App\CtrCollegeTuition::where('program_code',$program_code)->where('level',$level)->first();
                         $tuitionrate=$tfr->per_unit;
-                        $otherfee = $this->getOtherFee($idno, $school_year, $period, $level, $program_code,$discount0f,$discount_code);
-                        $tuitionfee = $this->getCollegeTuition($idno,$school_year,$period,$level,$program_code,$tuitionrate,$discounttf,$discount0f,$discount_code);
+                        $otherfee = $this->getOtherFee($idno, $school_year, $period, $level, $program_code,$discountof,$discount_code);
+                        $tuitionfee = $this->getCollegeTuition($idno,$school_year,$period,$level,$program_code,$tuitionrate,$discounttf,$discountof,$discount_code);
                  return view('registrar.assessment.ajax.collegedisplayassessment',compact('idno','school_year','level','period'));       
                 } else {
                         $tuitionfee = \App\CtrSpecialDiscount::where('special_discount_code',$type_of_account)->where('program_code',$program_code)->where('level',$level)->first()->amount;
