@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePaymentsTable extends Migration
+class CreateDebitMemosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePaymentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('debit_memos', function (Blueprint $table) {
             $table->increments('id');
             $table->date('transaction_date');
             $$table->integer('reference_id');
@@ -24,9 +24,6 @@ class CreatePaymentsTable extends Migration
             $table->string('receipt_details');
             $table->string('acccounting_code')->nullable();
             $table->string('category_switch');
-            $table->integer('payment_type')->default(0);
-            $table->string('bank_name')->nullable();
-            $table->string('check_number')->nullable();
             $table->decimal('debit',10,2)->default(0);
             $table->decimal('credit',10,2)->default(0);
             $table->integer('isreverse')->default(0);
@@ -49,6 +46,6 @@ class CreatePaymentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('debit_memos');
     }
 }
