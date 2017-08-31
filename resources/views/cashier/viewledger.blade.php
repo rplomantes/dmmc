@@ -5,7 +5,7 @@ $ledgers = DB::Select("Select idno, category, sum(amount) as amount, sum(discoun
         . " from ledgers where idno='$idno' and category_switch <= '3' group by idno,category");
 $otheracct= DB::Select("Select idno, description, amount, discount, debit_memo, payment from ledgers "
         . "where (amount-discount-debit_memo-payment > 0) AND idno = '$idno' AND category_switch = '5'");
-$duedates = \App\LedgerDueDate::where('idno',$idno)->where('school_year',$status->school_year)->where('period',$status->period)->orderBy('due_date')->get();
+$duedates = \App\LedgerDueDate::where('idno',$idno)->where('school_year',$status->school_year)->where('period',$status->period)->orderBy(['due_switch','due_date'])->get();
 $totalpayments = DB::Select("select payment, debit_memo  from ledgers where idno = '$idno' AND category_switch <= '3'");
 $totalpayment = 0;
 if(count($totalpayments)>0){
@@ -101,10 +101,14 @@ if(count($totalpayments)>0){
 </div>
     <div class="col-md-4">
         @if(count($duedates)>0)
-        <h3>Due Dates</h3>
-        <table><tr><td>Due Date</td><td>Amount</td><td>Balance</td></tr>
+        <h3>Schedule of Payments</h3>
+        <table class="table table-responsive"><tr><td>Due Date</td><td>Amount</td><td>Balance</td></tr>
             @foreach($duedates as $duedate)
-            <tr><td>{{$duedate->due_date}}</td><td align="right">{{number_format($duedate->amount,2)}}</td><td></td>
+            @if($duedate->due_switch=="0")
+            <tr><td>Down Payment</td><td align="right">{{number_format($duedate->amount,2)}}</td><td></td></tr>
+            @else
+             <tr><td>{{$duedate->due_date}}</td><td align="right">{{number_format($duedate->amount,2)}}</td><td></td></tr>
+            @endif
             @endforeach
          </table>   
         @else
