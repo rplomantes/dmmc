@@ -5,7 +5,7 @@ $ledgers = DB::Select("Select idno, category, sum(amount) as amount, sum(discoun
         . " from ledgers where idno='$idno' and category_switch <= '3' group by idno,category");
 $otheracct= DB::Select("Select idno, description, amount, discount, debit_memo, payment from ledgers "
         . "where (amount-discount-debit_memo-payment > 0) AND idno = '$idno' AND category_switch = '5'");
-$duedates = \App\LedgerDueDate::where('idno',$idno)->where('school_year',$status->school_year)->where('period',$status->period)->orderBy(['due_switch','due_date'])->get();
+$duedates = \App\LedgerDueDate::where('idno',$idno)->where('school_year',$status->school_year)->where('period',$status->period)->orderBy('due_switch')->orderBy('due_date')->get();
 $totalpayments = DB::Select("select payment, debit_memo  from ledgers where idno = '$idno' AND category_switch <= '3'");
 $totalpayment = 0;
 if(count($totalpayments)>0){
