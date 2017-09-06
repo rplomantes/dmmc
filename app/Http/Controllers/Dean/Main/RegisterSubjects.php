@@ -15,7 +15,7 @@ class RegisterSubjects extends Controller
         $student_status= \App\Status::where('idno',$request->idno)->first();
         if($student_status->academic_program == Auth::user()->academic_program){
             if($student_status->academic_type!='College'){
-            $registered_subject= \App\GradeShs::where('idno',$request->idno)->where('school_year',$student_status->school_year)->where('period',$student_status->period)->get();
+            $registered_subject= \App\GradeShs::where('idno',$request->idno)->where('school_year',$student_status->school_year)->get();
             }else{
             $registered_subject=  \App\GradeCollege::where('idno',$request->idno)->where('school_year',$student_status->school_year)->where('period',$student_status->period)->get();
             } 

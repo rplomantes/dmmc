@@ -133,19 +133,19 @@ $sections =  \App\CourseOffering::distinct()->where('track',$request->track)->wh
                 <h5>Subject to Enroll:</h5>
                 <div id="student_course">
                 <?php
-                    $grade_shs=  \App\GradeShs::where('idno',$idno)->where('school_year',$school_year->school_year)->where('period',$school_year->period)->get();
+                    $grade_shs=  \App\GradeShs::where('idno',$idno)->where('school_year',$school_year->school_year)->orderBy('period')->get();
                     $hours=0;
                 ?>
                 @if(count($grade_shs)>0)
-                <table class="table table-condensed"><tr><td>Subject</td><td>Hours</td><td>Schedule/Room</td><td>Instructor</td><td>Remove</td></tr>
+                <table class="table table-condensed"><tr><td>Subject</td><td>Period</td><td>Hours</td><td>Schedule/Room</td><td>Instructor</td><td>Remove</td></tr>
                     @foreach($grade_shs as $grade_hs)
                     <?php
                     $hours = $hours+$grade_hs->hours;
                     ?>
-                        <tr><td>{{$grade_hs->course_code}} - {{$grade_hs->course_name}}</td>
+                    <tr><td>{{$grade_hs->course_name}}</td><td>{{$grade_hs->period}}</td>
                             <td>{{$grade_hs->hours}}</td><td></td><td></td><td><a href="javascript: void(0);" onclick="removesubject('{{$grade_hs->id}}')">Remove</a></td></tr>
                     @endforeach
-                    <tr><td>Total Hours</td><td colspan="4">{{$hours}}</td></tr>
+                    <tr><td colspan="2">Total Hours</td><td colspan="4">{{$hours}}</td></tr>
                 </table>
                 @else
                     No Subject Selected Yet!!
@@ -178,7 +178,7 @@ $("#search").keypress(function(e){
        array['search']=$("#search").val();
        $.ajax({
         type:"GET",
-        url:"/dean/ajax/getofferingpersearch",
+        url:"/dean/ajax/getofferingpersearchshs",
         data:array,
         success:function(data){
             $("#offerings").html(data);
@@ -244,7 +244,6 @@ function addallsubjects(){
     array={};
     array['idno']="{{$idno}}";
     array['school_year']=$("#school_year").val();
-    array['period']=$("#period").val();
     array['track']=$("#track").val();
     array['level']=$("#level").val();
     array['section']=$("#section").val();

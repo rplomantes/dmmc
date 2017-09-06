@@ -39,18 +39,10 @@ $curriculum_years = \App\Curriculum::distinct()->where('track', $track)->where('
                             <option value='Grade 12'>Grade 12</option>
                         </select>
                     </div>
-                    <div class='col-sm-3'>
-                        <label class='label'>Period</label>
-                        <select class='form form-control' id="period">
-                            <option value=''>Select Period</option>
-                            <option value='1st'>1st Semester</option>
-                            <option value='2nd'>2nd Semester</option>
-                            <option value='Summer'>Summer</option>
-                        </select>
-                    </div>
+
                     <div class='col-sm-3'>
                         <label class='label'>Section</label>
-                        <select class='form form-control' id="section" onchange="getList(level.value, period.value, curriculum_year.value, '{{$track}}', section.value)">
+                        <select class='form form-control' id="section" onchange="getList(level.value, curriculum_year.value, '{{$track}}', section.value)">
                             <option value="">Select Section</option>
                             <option value='1'>Section 1</option>
                             <option value='2'>Section 2</option>
@@ -70,22 +62,22 @@ $curriculum_years = \App\Curriculum::distinct()->where('track', $track)->where('
     </div>
 </div>
 <script>
-    function getList(level, period, curriculum_year, track, section){
+    function getList(level, curriculum_year, track, section){
     $.ajax({
     type: "GET",
-            url: "/registrar/ajax/getlist/shs/" + track + "/" + curriculum_year + "/" + period + "/" + level,
+            url: "/registrar/ajax/shs/getlist/" + track + "/" + curriculum_year + "/" + level,
             success: function (data) {
             $('#course').html(data);
             }
 
     });
-    getCourseOffered(level, period, curriculum_year, track, section);
+    getCourseOffered(level, curriculum_year, track, section);
     }
 
-    function getCourseOffered(level, period, curriculum_year, track, section){
+    function getCourseOffered(level, curriculum_year, track, section){
     $.ajax({
     type: "GET",
-            url: "/registrar/ajax/getcourseoffered/shs/" + track + "/" + curriculum_year + "/" + period + "/" + level + "/" + section,
+            url: "/registrar/ajax/shs/getcourseoffered/" + track + "/" + curriculum_year + "/" + level + "/" + section,
             success: function (data) {
             $('#course_offered').html(data);
             }
@@ -93,10 +85,10 @@ $curriculum_years = \App\Curriculum::distinct()->where('track', $track)->where('
     });
     }
 
-    function addSubjecttoOffering(curriculum_year, level, period, section, course_code, track) {
+    function addSubjecttoOffering(curriculum_year, level, section, course_code, track) {
     $.ajax({
     type: "GET",
-            url: "/registrar/ajax/getsubject/shs/" + track + "/" + curriculum_year + "/" + period + "/" + level + "/" + section + "/" + course_code,
+            url: "/registrar/ajax/shs/getsubject/" + track + "/" + curriculum_year + "/" + level + "/" + section + "/" + course_code,
             success: function (data) {
             $('#course_offered').html(data);
             }
@@ -111,11 +103,10 @@ $curriculum_years = \App\Curriculum::distinct()->where('track', $track)->where('
     array['curriculum_year'] = $("#curriculum_year").val();
     array['section'] = $("#section").val();
     array['level'] = $("#level").val();
-    array['period'] = $("#period").val();
     if (confirm("Are You Sure To Remove?")) {
     $.ajax({
     type: "GET",
-            url: "/registrar/ajax/removesubject/shs/" + id,
+            url: "/registrar/ajax/shs/removesubject/" + id,
             data: array,
             success: function (data) {
             $('#course_offered').html(data);
@@ -131,11 +122,10 @@ $curriculum_years = \App\Curriculum::distinct()->where('track', $track)->where('
     array['curriculum_year'] = $("#curriculum_year").val();
     array['section'] = $("#section").val();
     array['level'] = $("#level").val();
-    array['period'] = $("#period").val();
     array['course_code'] = $("#course_code").val();
     $.ajax({
     type: "GET",
-    url: "/registrar/ajax/addallsubjects/shs",
+    url: "/registrar/ajax/shs/addallsubjects",
     data: array,
             success: function (data) {
             $('#course_offered').html(data);

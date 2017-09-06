@@ -10,26 +10,26 @@ use App\CourseOffering;
 
 class shsCourseOffering extends Controller {
 
-    function getList($track, $curriculum_year, $period, $level) {
+    function getList($track, $curriculum_year, $level) {
         if (Request::ajax()) {
-            $lists = DB::select("SELECT * FROM `curricula` WHERE `curriculum_year` = $curriculum_year AND `track` LIKE '$track' AND `period` LIKE '$period' AND `level` LIKE '$level' AND `is_current` = 1");
-            return view('registrar.ajax.shs_getlist', compact('lists', 'track', 'curriculum_year', 'period', 'level'));
+            $lists = DB::select("SELECT * FROM `curricula` WHERE `curriculum_year` = $curriculum_year AND `track` LIKE '$track' AND `level` LIKE '$level' AND `is_current` = 1 order by `period`");
+            return view('registrar.ajax.shs_getlist', compact('lists', 'track', 'curriculum_year', 'level'));
         }
     }
 
-    function getCourseOffered($track, $curriculum_year, $period, $level, $section) {
+    function getCourseOffered($track, $curriculum_year, $level, $section) {
         if (Request::ajax()) {
             $school_year = \App\CtrSchoolYear::where('academic_type', 'Senior High School')->first();
-            $sections = \App\CourseOffering::distinct()->where('track', $track)->where('period', $school_year->period)->where('level', $level)->where('section', $section)->get(['section']);
-            return view('registrar.ajax.shs_getcourseoffering', compact('sections', 'track', 'curriculum_year', 'period', 'level', 'school_year'));
+            $sections = \App\CourseOffering::distinct()->where('track', $track)->where('level', $level)->where('section', $section)->get(['section']);
+            return view('registrar.ajax.shs_getcourseoffering', compact('sections', 'track', 'curriculum_year', 'level', 'school_year'));
         }
     }
 
-    function getsubject($track, $curriculum_year, $period, $level, $section, $course_code) {
+    function getsubject($track, $curriculum_year, $level, $section, $course_code) {
         $course_name = \App\Curriculum::distinct()->where('course_code', $course_code)->get(['course_name', 'course_code'])->first();
         $course_details = \App\Curriculum::where('course_code', $course_code)->where('track', $track)->where('is_current', 1)->first();
-        $school_year = \App\CtrSchoolYear::where('academic_type', 'College')->first();
-        $counter = \App\CourseOffering::where('course_code', $course_code)->where('track', $track)->where('period', $school_year->period)->where('school_year', $school_year->school_year)->where('level', $level)->where('section', $section)->get();
+        $school_year = \App\CtrSchoolYear::where('academic_type', 'Senior High School')->first();
+        $counter = \App\CourseOffering::where('course_code', $course_code)->where('track', $track)->where('school_year', $school_year->school_year)->where('level', $level)->where('section', $section)->get();
         
         if (Request::ajax()) {
             if (count($counter) == 0) {
@@ -40,7 +40,7 @@ class shsCourseOffering extends Controller {
                 $addsubject->course_name = $course_name->course_name;
                 $addsubject->section = $section;
                 $addsubject->school_year = $school_year->school_year;
-                $addsubject->period = $school_year->period;
+                $addsubject->period = $course_details->period;
                 $addsubject->lec = $course_details->lec;
                 $addsubject->lab = $course_details->lab;
                 $addsubject->hours = $course_details->hours;
@@ -51,7 +51,7 @@ class shsCourseOffering extends Controller {
             } else {
                 
             }
-            return $this->getCourseOffered($track, $curriculum_year, $period, $level, $section);
+            return $this->getCourseOffered($track, $curriculum_year, $level, $section);
         }
     }
 
@@ -62,13 +62,12 @@ class shsCourseOffering extends Controller {
             $curriculum_year = Input::get("curriculum_year");
             $section = Input::get("section");
             $level = Input::get("level");
-            $period = Input::get("period");
 
 
             $removesubject = \App\CourseOffering::find($id);
             $removesubject->delete();
 
-            return $this->getCourseOffered($track, $curriculum_year, $period, $level, $section);
+            return $this->getCourseOffered($track, $curriculum_year, $level, $section);
         }
     }
 
@@ -79,14 +78,13 @@ class shsCourseOffering extends Controller {
             $curriculum_year = Input::get("curriculum_year");
             $section = Input::get("section");
             $level = Input::get("level");
-            $period = Input::get("period");
             $course_code= Input::get("course_code");
 
             $school_year = \App\CtrSchoolYear::where('academic_type', 'Senior High School')->first();
             
 
             $curriculums = \App\Curriculum::where("curriculum_year", $curriculum_year)
-                            ->where("period", $period)
+                            
                             ->where("track", $track)
                             ->where("level", $level)->get();
 
@@ -101,7 +99,7 @@ class shsCourseOffering extends Controller {
                         $addsubject->course_name = $curriculum->course_name;
                         $addsubject->section = $section;
                         $addsubject->school_year = $school_year->school_year;
-                        $addsubject->period = $school_year->period;
+                        $addsubject->period = $curriculum->period;
                         $addsubject->lec = $curriculum->lec;
                         $addsubject->lab = $curriculum->lab;
                         $addsubject->hours = $curriculum->hours;
@@ -112,7 +110,7 @@ class shsCourseOffering extends Controller {
                     }
                 }
             }
-            return $this->getCourseOffered($track, $curriculum_year, $period, $level, $section);
+            return $this->getCourseOffered($track, $curriculum_year, $level, $section);
         }
     }
 }

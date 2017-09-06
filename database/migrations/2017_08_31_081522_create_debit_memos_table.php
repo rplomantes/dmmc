@@ -16,7 +16,7 @@ class CreateDebitMemosTable extends Migration
         Schema::create('debit_memos', function (Blueprint $table) {
             $table->increments('id');
             $table->date('transaction_date');
-            $$table->integer('reference_id');
+            $table->integer('reference_id');
             $table->string('receipt_no');
             $table->string('idno');
             $table->string('category');

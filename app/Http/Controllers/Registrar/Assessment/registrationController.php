@@ -13,22 +13,22 @@ class registrationController extends Controller
     }
     
     function reassess($idno){
-        $status = \App\Status::where('idno', $idno)->first();
-        $school_year = \App\CtrSchoolYear::where('academic_type', $status->academic_type)->first();
+//        $status = \App\Status::where('idno', $idno)->first();
+//        $school_year = \App\CtrSchoolYear::where('academic_type', $status->academic_type)->first();
         
-        $changestatus = \App\Status::where('idno', $idno)->first();
-        $changestatus->status = 2;
-        $changestatus->save();
+//        $changestatus = \App\Status::where('idno', $idno)->first();
+//        $changestatus->status = 2;
+//        $changestatus->save();
         
-        $deleteledgers = \App\ledger::where('idno', $idno)->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get();
-        foreach ($deleteledgers as $deleteledger){
-            $deleteledger->delete();
-        }
-        
-        $deleteledgerduedates = \App\LedgerDueDate::where('idno', $idno)->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get();
-        foreach ($deleteledgerduedates as $deleteledgerduedate){
-            $deleteledgerduedate->delete();
-        }
+//        $deleteledgers = \App\ledger::where('idno', $idno)->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get();
+//        foreach ($deleteledgers as $deleteledger){
+//            $deleteledger->delete();
+//        }
+//        
+//        $deleteledgerduedates = \App\LedgerDueDate::where('idno', $idno)->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get();
+//        foreach ($deleteledgerduedates as $deleteledgerduedate){
+//            $deleteledgerduedate->delete();
+//        }
         return redirect("/registrar/assess_payment/$idno");
     }
     

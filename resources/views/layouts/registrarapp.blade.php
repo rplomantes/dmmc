@@ -173,10 +173,10 @@
                                                 <a href="{{url('registrar', array('assign_instructor','college'))}}"><i class="fa fa-exchange fa-fw" aria-hidden="true"></i> Assign Instructor</a>
                                             </td>
                                         </tr>
+                                        <tr>
                                             <td>
                                                 <a href="{{url('registrar', array('reports','college'))}}"><i class="fa fa-bar-chart-o fa-fw" aria-hidden="true"></i> Reports</a>
                                             </td>
-                                        </tr>
                                         </tr>
                                     </table>
                                 </div>
@@ -212,10 +212,34 @@
                                                 <a href="{{url('registrar', array('assign_instructor','shs'))}}"><i class="fa fa-exchange fa-fw" aria-hidden="true"></i> Assign Instructor</a>
                                             </td>
                                         </tr>
+                                        <tr>
                                             <td>
                                                 <a href="{{url('registrar', array('reports','shs'))}}"><i class="fa fa-bar-chart-o fa-fw" aria-hidden="true"></i> Reports</a>
                                             </td>
                                         </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive"><span class="fa fa-graduation-cap fa-fw">
+                                        </span> Grades</a>
+                                </h4>
+                            </div>
+                            <div id="collapseFive" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <table class="table">
+                                        <tr>
+                                            <td>
+                                                <a href="{{url('/registrar/import_grades/college')}}"><i class="fa fa-upload fa-fw" aria-hidden="true"></i> Import Grades - College/TESDA</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a href="{{url('/registrar/import_grades/shs')}}"><i class="fa fa-upload fa-fw" aria-hidden="true"></i> Import Grades - SHS</a>
+                                            </td>
                                         </tr>
                                     </table>
                                 </div>

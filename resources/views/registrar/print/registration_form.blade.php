@@ -94,7 +94,7 @@
             {{$instructor->firstname}} {{$instructor->lastname}}
             @endif
         </td>
-        <td class='tds' align='center'><?php $total = $total + $grade->lec; ?>{{$grade->lec}}</td>
+        <td class='tds' align='center'>@if($status->academic_type!='Senior High School')<?php $total = $total + $grade->lec; ?>{{$grade->lec}} @else <?php $total = $total + $grade->hours; ?>{{$grade->hours}} @endif</td>
     </tr>
     @endforeach
     <tr>
@@ -102,11 +102,25 @@
         <th class='ths'align='center'>{{$total}}</th>
     </tr>
 </table>
+<table width="100%">
+    <tr>
+    <td><br><b>ASSESSMENT</b></td>
+    <?php
+    $totaltuition = 0;
+    $amounts = \App\LedgerDueDate::where('idno', $status->idno)->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get();
+    foreach ($amounts as $amount){
+        $totaltuition = $totaltuition + $amount->amount;
+    }
 
-<br><b>ASSESSMENT</b>
+    ?>
+    <td align="right">
+    <br><strong>Tuition Fee: Php {{number_format($totaltuition,2)}}</strong>
+    @if (count($ledger_due_dates)>0)
+    <br><strong>Downpayment: Php {{number_format($downpayment->amount,2)}}</strong>
+    @endif
+    </td></tr>
+</table>
 @if (count($ledger_due_dates)>0)
-<br><strong>Downpayment: Php {{number_format($downpayment->amount,2)}}</strong>
-
 <table class='tables' width='100%'>
     <tr>
         <th class='ths'>Amount</th>
@@ -149,7 +163,7 @@
 <tr>
     <td class="tdd">
 <center>Approved by:<br><br>
-    ____________________________<br><strong>Ms. Liza Zabalvaro</strong><br><small>School Registrar</small>
+    ____________________________<br><strong>Anna Liza M. Sabalvaro</strong><br><small>School Registrar</small>
 </center>
 </td>
 </tr>

@@ -137,9 +137,12 @@
             </tr>
         </table>
             @if ($status->status==0)
-            <a href="{{url('guidance',array('viewmodifyinfo',$list->idno))}}"><div class='btn btn-primary col-sm-6'>Modify</div></a> 
-            <a href="{{url('guidance',array('admission_slip',$list->idno))}}" target="_blank"><div class='btn btn-success col-sm-6'>Print Entrance Exam Slip</div></a>
-
+            <table class="table-condensed col-sm-12">
+                <tr>
+                    <td class="col-sm-6"><a href="{{url('guidance',array('viewmodifyinfo',$list->idno))}}"><div class='btn btn-primary col-sm-12'>Modify</div></a></td>
+                    <td class="col-sm-6"><a href="{{url('guidance',array('admission_slip',$list->idno))}}" target="_blank"><div class='btn btn-success col-sm-12'>Print Entrance Exam Slip</div></a></td>
+                </tr>
+            </table>
             @elseif ($status->status==1)
             <a href="{{url('guidance',array('viewmodifyinfo',$list->idno))}}"><div class='btn btn-primary col-sm-12'>Modify</div></a>
 
@@ -154,8 +157,12 @@
             @if ($status->status==1)
             <a href="{{url('guidance',array('viewmodifyinfo',$list->idno))}}"><div class='btn btn-primary col-sm-12'>Modify</div></a> 
             @endif
-                <a href="{{url('guidance',array('viewmodifyinfo',$list->idno))}}"><div class='btn btn-primary col-sm-6'>Modify</div></a> 
-                <a href="{{url('guidance',array('schedule_applicant',$list->idno))}}"><div class='btn btn-success col-sm-6'>Schedule Entrance Exam</div></a>
+            <table class="table-condensed col-sm-12">
+                <tr>
+                    <td class="col-sm-6"><a href="{{url('guidance',array('viewmodifyinfo',$list->idno))}}"><div class='btn btn-primary col-sm-12'>Modify</div></a></td>
+                    <td class="col-sm-6"><a href="{{url('guidance',array('schedule_applicant',$list->idno))}}"><div class='btn btn-success col-sm-12'>Schedule Entrance Exam</div></a></td>
+                </tr>
+            </table>
         @endif
         
         @if($status->status!==-1)

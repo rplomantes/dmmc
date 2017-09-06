@@ -21,6 +21,7 @@ class AddToGradeCollege extends Controller
             $newgrade->course_offering_id = Input::get('offeringid');
             $newgrade->course_code=$offering->course_code;
             $newgrade->course_name=$offering->course_name;
+            $newgrade->level=$offering->level;
             $newgrade->lec=$offering->lec;
             $newgrade->lab=$offering->lab;
             $newgrade->hours=$offering->hours;
@@ -67,26 +68,27 @@ class AddToGradeCollege extends Controller
             $newgrade->course_name=$offering->course_name;
             $newgrade->hours=$offering->hours;
             $newgrade->school_year=$offering->school_year;
+            $newgrade->level=$offering->level;
             $newgrade->period=$offering->period;
             $newgrade->save();
             }
             $studentcourses = \App\GradeShs::where('idno',$idno)
-                    ->where('school_year',$offering->school_year)
-                    ->where('period',$offering->period)
+                    ->where('school_year',$offering->school_year)->orderBy('period')
                     ->get();
             
             if(count($studentcourses)>0){
-                $data = "<table class=\"table table-condensed\" width=\"100%\"><tr><td>Subject</td><td>Hours</td><td>Room/Schedule</td><td>Instructor</td><td>Remove</td></tr>";
+                $data = "<table class=\"table table-condensed\" width=\"100%\"><tr><td>Subject</td><td>Period</td><td>Hours</td><td>Room/Schedule</td><td>Instructor</td><td>Remove</td></tr>";
                 $hours=0;
                 foreach($studentcourses as $studentcourse){
                     $data = $data."<tr><td>" . $studentcourse->course_name
-                            ."</td><td>" . $studentcourse->hours
+                            . "</td><td>" . $studentcourse->period
+                            . "</td><td>" . $studentcourse->hours
                             . "</td><td>" . $this->getSchedule($studentcourse->course_offering_id)
                             . "</td><td>". $this->getInstructorId($studentcourse->course_offering_id) . "</td><td><a href=\"javascript: void(0);\" onclick=\"removesubject('".$studentcourse->id."')\">Remove</a></td></tr>";
                 
                     $hours=$hours + $studentcourse->hours;
                 }
-                $data=$data."<tr><td><strong>Total Hours</strong></td><td colspan=\"4\"><strong>$hours</strong></td></tr>";
+                $data=$data."<tr><td colspan = \"2\"><strong>Total Hours</strong></td><td colspan=\"4\"><strong>$hours</strong></td></tr>";
                 $data=$data."</table>";
                 return $data;
             }else{

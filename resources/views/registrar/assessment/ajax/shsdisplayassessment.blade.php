@@ -1,6 +1,6 @@
 <?php
-$tuitionfees =  \App\ledger::where('idno',$idno)->where('school_year',$school_year)->where('period',$period)->where('category_switch','3')->get();
-$otherfees = \App\ledger::where('idno',$idno)->where('school_year',$school_year)->where('period',$period)->where('category_switch','<','3')->get();
+$tuitionfees =  \App\ledger::where('idno',$idno)->where('school_year',$school_year)->where('category_switch','3')->get();
+$otherfees = \App\ledger::where('idno',$idno)->where('school_year',$school_year)->where('category_switch','<','3')->get();
 $status = \App\Status::where('idno', $idno)->first();
 $list_plans = \App\CtrDueDate::distinct()->where('academic_type', $status->academic_type)->get(['plan']);
 ?>
@@ -10,6 +10,7 @@ $list_plans = \App\CtrDueDate::distinct()->where('academic_type', $status->acade
         <td><b>Description</b></td>
         <td>Amount</td>
         <td>Discount</td>
+        <td>ESC</td>
         <td>Total</td>
     </tr>
        <?php $totaltuitionfees=0; ?>
@@ -18,12 +19,13 @@ $list_plans = \App\CtrDueDate::distinct()->where('academic_type', $status->acade
         <td>{{$tuitionfee->description}}</td>
         <td align="right">{{number_format($tuitionfee->amount,2)}}</td>
         <td align="right">{{number_format($tuitionfee->discount,2)}}</td>
-        <td align="right">{{number_format($tuitionfee->amount-$tuitionfee->discount,2)}}</td>
-        <?php $totaltuitionfees = $totaltuitionfees +$tuitionfee->amount-$tuitionfee->discount; ?>       
+        <td align="right">{{number_format($tuitionfee->esc,2)}}</td>
+        <td align="right">{{number_format(($tuitionfee->amount - $tuitionfee->discount)- $tuitionfee->esc,2)}}</td>
+        <?php $totaltuitionfees = ($totaltuitionfees + ($tuitionfee->amount - $tuitionfee->discount)-$tuitionfee->esc); ?>       
     </tr>
      @endforeach 
     <tr>
-        <td colspan="3">Total Tuition Fee</td>
+        <td colspan="4">Total Tuition Fee</td>
         <td align="right"><b>{{number_format($totaltuitionfees,2)}}</b></td>   
     </tr>
     </table>

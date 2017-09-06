@@ -132,6 +132,11 @@ class processPayment extends Controller
         $changestatus->registration_no=$registration_no;
         $changestatus->save();
         
+        $addregistrationno = new \App\RegistrationFormNo;
+        $addregistrationno->idno = $idno;
+        $addregistrationno->registration_no = $registration_no;
+        $addregistrationno->save();
+        
         $incID = \App\CtrReferenceId::where('idno', $userID)->first();
         $incID->registration_no=$inc+1;
         $incID->save();

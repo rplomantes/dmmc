@@ -137,15 +137,15 @@ $sections =  \App\CourseOffering::distinct()->where('track',$request->track)->wh
                     $hours=0;
                 ?>
                 @if(count($grade_shs)>0)
-                <table class="table table-condensed"><tr><td>Subject</td><td>Hours</td><td>Schedule/Room</td><td>Instructor</td><td>Remove</td></tr>
+                <table class="table table-condensed"><tr><td>Subject</td><td>Period</td><td>Hours</td><td>Schedule/Room</td><td>Instructor</td><td>Remove</td></tr>
                     @foreach($grade_shs as $grade_hs)
                     <?php
                     $hours = $hours+$grade_hs->hours;
                     ?>
-                        <tr><td>{{$grade_hs->course_code}} - {{$grade_hs->course_name}}</td>
+                        <tr><td>{{$grade_hs->course_name}}</td><td>{{$grade_hs->period}}</td>
                             <td>{{$grade_hs->hours}}</td><td></td><td></td><td><a href="javascript: void(0);" onclick="removesubject('{{$grade_hs->id}}')">Remove</a></td></tr>
                     @endforeach
-                    <tr><td>Total Hours</td><td colspan="4">{{$hours}}</td></tr>
+                    <tr><td colspan="2">Total Hours</td><td colspan="4">{{$hours}}</td></tr>
                 </table>
                 @else
                     No Subject Selected Yet!!

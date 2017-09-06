@@ -85,11 +85,11 @@
             $status = \App\Status::where('idno', $idno)->first();
             $studentinfo = \App\StudentInfo::where('idno', $idno)->first();
             $school_year = \App\CtrSchoolYear::where('academic_type', $status->academic_type)->first();
-            $special_discounts = \App\CtrSpecialDiscount::where('program_code', $status->program_code)->where('level', $status->level)->get();
+            $esc = \App\CtrEsc::get();
             $list_plans = \App\CtrDueDate::distinct()->where('academic_type', $status->academic_type)->get(['plan']);
             $discounts = \App\CtrDiscount::get();
 
-            $grades = \App\GradeShs::where('idno', $idno)->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get();
+            $grades = \App\GradeShs::where('idno', $idno)->where('school_year', $school_year->school_year)->orderBy('period')->get();
             
             ?>
 
@@ -122,6 +122,7 @@
                                 <table class="table table-condensed">
                                     <thead>
                                     <th>Subject Name</th>
+                                    <th>Period</th>
                                     <th>Hours</th>
                                     </thead>
                                     <?php
@@ -131,10 +132,12 @@
                                     @foreach ($grades as $grade)
                                     <tr>
                                         <td>{{$grade->course_name}}</td>
+                                        <td>{{$grade->period}}</td>
                                         <td>@if ($grade->hours==0) @else {{$grade->hours}} @endif <?php $totalHours = $grade->hours + $totalHours; ?></td>
                                     </tr>
                                     @endforeach
                                     <tr>
+                                        <th></th>
                                         <th><div align='right'>Total</div> </th> 
                                         <th>{{$totalHours}}</th>
                                     </tr>
@@ -147,13 +150,12 @@
                                     <div class="form form-group">
                                         <div class="col-sm-12">
 
-                                            <label class="label">Select Type of Account </label>
-                                            <select id="type_of_account" class="form form-control">
-                                                <option value="">Select Type of Account</option>
-                                                <option value="regular">Regular</option>
-                                                @if(count($special_discounts)>0)
-                                                @foreach($special_discounts as $sd)
-                                                <option value="{{$sd->special_discount_code}}">{{$sd->special_discount_code}}</option>
+                                            <label class="label">Voucher </label>
+                                            <select id="esc" class="form form-control">
+                                                <option value="">Please select Voucher type</option>
+                                                @if(count($esc)>0)
+                                                @foreach($esc as $escs)
+                                                <option value="{{$escs->id}}">{{$escs->type}}</option>
                                                 @endforeach
                                                 @endif
                                             </select>
@@ -205,7 +207,7 @@
                     array['level'] = $("#level").val();
                     array['period'] = $("#period").val();
                     array['school_year'] = $("#school_year").val();
-                    array['type_of_account'] = $("#type_of_account").val();
+                    array['esc'] = $("#esc").val();
                     array['program_code'] = $("#program_code").val();
                     array['track'] = $("#track").val();
                     array['academic_type'] = $("#academic_type").val();

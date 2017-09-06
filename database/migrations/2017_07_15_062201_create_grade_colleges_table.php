@@ -19,6 +19,7 @@ class CreateGradeCollegesTable extends Migration
             $table->integer('course_offering_id');
             $table->string('course_code');
             $table->string('course_name');
+            $table->string('level');
             $table->integer('lec');
             $table->integer('lab')->nullable();
             $table->decimal('hours', 5,2)->nullable();

@@ -109,12 +109,12 @@ Route::get('/registrar/ajax/addallsubjects','Registrar\Ajax\collegeCourseOfferin
 Route::get('/registrar/ajax/getyearsection/{program_code}','Registrar\Ajax\collegeCourseSchedule@getcourses');
 Route::get('/registrar/ajax/getexistingsched/{room}','Registrar\Ajax\collegeCourseSchedule@getexistingsched');
 //shs
-Route::get('/registrar/ajax/getlist/shs/{track}/{curriculum_year}/{period}/{level}','Registrar\Ajax\shsCourseOffering@getList');
-Route::get('/registrar/ajax/getcourseoffered/shs/{track}/{curriculum_year}/{period}/{level}/{section}','Registrar\Ajax\shsCourseOffering@getCourseOffered');
-Route::get('/registrar/ajax/getsubject/shs/{track}/{curriculum_year}/{period}/{level}/{section}/{course_code}','Registrar\Ajax\shsCourseOffering@getSubject');
-Route::get('/registrar/ajax/removesubject/shs/{id}','Registrar\Ajax\shsCourseOffering@removeSubject');
-Route::get('/registrar/ajax/addallsubjects/shs','Registrar\Ajax\shsCourseOffering@addAllSubjects');
-Route::get('/registrar/ajax/getyearsection/shs/{track}','Registrar\Ajax\shsCourseSchedule@getcourses');
+Route::get('/registrar/ajax/shs/getlist/{track}/{curriculum_year}/{level}','Registrar\Ajax\shsCourseOffering@getList');
+Route::get('/registrar/ajax/shs/getcourseoffered/{track}/{curriculum_year}/{level}/{section}','Registrar\Ajax\shsCourseOffering@getCourseOffered');
+Route::get('/registrar/ajax/shs/getsubject/{track}/{curriculum_year}/{level}/{section}/{course_code}','Registrar\Ajax\shsCourseOffering@getSubject');
+Route::get('/registrar/ajax/shs/removesubject/{id}','Registrar\Ajax\shsCourseOffering@removeSubject');
+Route::get('/registrar/ajax/shs/addallsubjects','Registrar\Ajax\shsCourseOffering@addAllSubjects');
+Route::get('/registrar/ajax/shs/getyearsection/{track}','Registrar\Ajax\shsCourseSchedule@getcourses');
 
 //ajax resistrar course offering
 Route::get('/registrar/ajax/addschedule_college','Registrar\Ajax\collegeCourseSchedule@addschedule');
@@ -146,3 +146,8 @@ Route::get('/registrar/assess_subject/{idno}', 'Registrar\Main\ViewStudentStatus
 Route::post('/registrar/main/selectsubjectcollege','Registrar\Main\SelectSubject@college');
 Route::post('/registrar/main/selectsubjectshs','Registrar\Main\SelectSubject@shs');
 Route::post('/registrar/main/registersubjects','Registrar\Main\RegisterSubjects@index');
+
+//registrar import grades
+Route::get('/registrar/import_grades/college','Registrar\Grades\ImportGrades@college');
+Route::get('/registrar/import_grades/shs','Registrar\Grades\ImportGrades@shs');
+Route::post('/importExcel', 'Registrar\Grades\ImportGrades@importExcel');

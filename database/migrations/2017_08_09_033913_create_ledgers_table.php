@@ -17,7 +17,7 @@ class CreateLedgersTable extends Migration
             $table->increments('id');
             $table->string('idno');
             $table->string('program_code');
-            $table->string('track')->nullable;
+            $table->string('track')->nullable();
             $table->string('level');
             $table->string('school_year');
             $table->string('period');
@@ -25,12 +25,13 @@ class CreateLedgersTable extends Migration
             $table->string('description');
             $table->string('receipt_details');
             $table->string('acccounting_code')->nullable();
-            $table->string('category_switch');
+            $table->integer('category_switch');
             $table->decimal('amount',10,2);
             $table->decimal('payment',10,2)->default(0);
             $table->decimal('discount',10,2)->default(0);
             $table->integer('discount_id')->nullable();
             $table->decimal('debit_memo', 10,2)->default(0);
+            $table->decimal('esc', 10,2)->default(0);
             $table->integer('is_final')->default(0);
             $table->timestamps();
             $table->foreign('idno')
