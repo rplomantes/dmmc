@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Input;
 
 class paymentAssessment extends Controller {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     //
     function computePayment() {
         if (Request::ajax()) {

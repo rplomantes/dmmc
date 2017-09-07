@@ -8,6 +8,11 @@ use App\Schedule;
 
 class CollegeCourseSchedule extends Controller {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     function index() {
         $school_year = \App\CtrSchoolYear::where('academic_type', 'College')->first();
         $program_codes = \App\CourseOffering::distinct()->where('school_year', $school_year->school_year)->where('period', $school_year->period)->where('program_code', '!=', 'Senior High School')->get(['program_code']);

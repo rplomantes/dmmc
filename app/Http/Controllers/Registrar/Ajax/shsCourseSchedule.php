@@ -9,6 +9,11 @@ use App\Schedule;
 
 class shsCourseSchedule extends Controller {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     function getcourses($track) {
         if (Request::ajax()) {
 

@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Auth;
 
 class SelectSubject extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     function college(Request $request){
         if(Auth::user()->accesslevel == '3'){
                 $academic_program = \App\CtrAcademicProgram::where('program_code',$request->program_code)->first();

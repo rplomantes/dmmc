@@ -107,7 +107,7 @@
     <td><br><b>ASSESSMENT</b></td>
     <?php
     $totaltuition = 0;
-    $amounts = \App\LedgerDueDate::where('idno', $status->idno)->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get();
+    $amounts = \App\LedgerDueDate::where('idno', $status->idno)->where('school_year', $y->school_year)->where('period', $y->period)->get();
     foreach ($amounts as $amount){
         $totaltuition = $totaltuition + $amount->amount;
     }

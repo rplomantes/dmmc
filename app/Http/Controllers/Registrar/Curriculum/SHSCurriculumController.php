@@ -8,6 +8,11 @@ use DB;
 
 class SHSCurriculumController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     function curriculum(){
        $curriculums = \App\CtrAcademicProgram::distinct()->where('academic_type', 'Senior High School')->get(['program_code', 'track']);
        Return view ('registrar.curriculum.shs_view_curriculum', compact('curriculums'));

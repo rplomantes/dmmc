@@ -7,6 +7,11 @@ use App\Http\Controllers\Controller;
 use App\User;
 class CollegeAssignInstructorController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     function index(){
         $instructors = User::where('accesslevel', 10)->get();
         return view('registrar.assigninstructor.college_index', compact('instructors'));

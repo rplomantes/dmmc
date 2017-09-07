@@ -11,6 +11,11 @@ use App\EntranceExamSchedule;
 class ExamSchedCreatorController extends Controller {
 
     //
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     function createSched() {
         $scheds = DB::Select("select * from entrance_exam_schedules order by is_remove");
         return view('guidance.admission.createExamSched', compact('scheds'));

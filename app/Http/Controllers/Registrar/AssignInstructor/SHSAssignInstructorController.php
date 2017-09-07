@@ -7,6 +7,11 @@ use App\Http\Controllers\Controller;
 use App\User;
 class SHSAssignInstructorController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     function index(){
         $instructors = User::where('accesslevel', 10)->get();
         return view('registrar.assigninstructor.shs_index', compact('instructors'));

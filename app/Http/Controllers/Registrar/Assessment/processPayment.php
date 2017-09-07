@@ -10,6 +10,11 @@ use DB;
 class processPayment extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     function index(Request $request){
         $downpaymentamount = $request->downpaymentamount;
         $plan = $request->plan;
@@ -55,7 +60,7 @@ class processPayment extends Controller
             }
         }
         $this->changeledgerstatus($idno);
-        $this->changeStatus($idno);
+        $this->changeStatus($idno, $plan);
         $newIDno=$this->changeIDno($idno);
         return redirect("/registrar/registration/$newIDno");
         
@@ -119,17 +124,19 @@ class processPayment extends Controller
         }
     }
     
-    function changeStatus($idno){
+    function changeStatus($idno, $plan){
         $userID = Auth::user()->idno;
         $registrationID = \App\CtrReferenceId::where('idno', $userID)->first();
         $year = date('y');
         $inc = $registrationID->registration_no;
+        $plans = \App\CtrDueDate::distinct('plan')->where('plan', $plan)->get(['plan'])->first();
         
         $registration_no=$year."".sprintf("%02s", $registrationID->id)."".sprintf("%03s", $inc);
         
         $changestatus = \App\Status::where('idno', $idno)->first();
         $changestatus->status=3;
         $changestatus->registration_no=$registration_no;
+        $changestatus->plan = $plans->plan;
         $changestatus->save();
         
         $addregistrationno = new \App\RegistrationFormNo;

@@ -8,6 +8,11 @@ use DB;
 
 class CollegeCourseOfferingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     //
     function index(){
         $programs = \App\CtrAcademicProgram::distinct()->where('academic_type', 'College')->get(['program_code', 'program_name']);

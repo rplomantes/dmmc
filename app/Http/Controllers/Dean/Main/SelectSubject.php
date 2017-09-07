@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Auth;
 
 class SelectSubject extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     function college(Request $request){
         if(Auth::user()->accesslevel == '2'){
             if(\App\Status::where('idno',$request->idno)->first()->academic_program == Auth::user()->academic_program){

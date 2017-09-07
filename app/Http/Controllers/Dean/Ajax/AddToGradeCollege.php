@@ -9,6 +9,10 @@ use Request;
 
 class AddToGradeCollege extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     //
     function index(){
         if(Request::ajax()){

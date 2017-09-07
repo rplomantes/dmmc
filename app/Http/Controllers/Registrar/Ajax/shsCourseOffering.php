@@ -10,6 +10,11 @@ use App\CourseOffering;
 
 class shsCourseOffering extends Controller {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     function getList($track, $curriculum_year, $level) {
         if (Request::ajax()) {
             $lists = DB::select("SELECT * FROM `curricula` WHERE `curriculum_year` = $curriculum_year AND `track` LIKE '$track' AND `level` LIKE '$level' AND `is_current` = 1 order by `period`");

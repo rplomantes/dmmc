@@ -10,6 +10,11 @@ use DB;
 
 class ImportGrades extends Controller {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     //
     function college() {
         return view('registrar.grades.import_grades_college');

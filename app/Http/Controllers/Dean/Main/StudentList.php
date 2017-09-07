@@ -8,6 +8,11 @@ use PDF;
 
 class StudentList extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     //
     function index(){
         $academic_program = \Illuminate\Support\Facades\Auth::user()->academic_program;

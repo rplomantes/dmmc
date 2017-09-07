@@ -13,6 +13,11 @@ use App\EntranceExam;
 class listApplicantsController extends Controller {
 
     //
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     function listApplicants() {
         return view('guidance.admission.listApplicants');
     }

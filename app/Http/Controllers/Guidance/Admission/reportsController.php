@@ -10,6 +10,11 @@ use PDF;
 class reportsController extends Controller {
 
     //
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     function index() {
         $academic_types = DB::select('select distinct academic_type from ctr_academic_programs');
         return view('guidance.reports.exam_result', compact('academic_types'));

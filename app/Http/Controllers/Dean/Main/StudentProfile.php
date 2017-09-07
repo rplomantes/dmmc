@@ -7,6 +7,11 @@ use App\Http\Controllers\Controller;
 
 class StudentProfile extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     function index($idno){
         $user = \App\User::where('idno',$idno)->first();
         $student_info = \App\StudentInfo::where('idno', $idno)->first();

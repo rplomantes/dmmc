@@ -13,6 +13,11 @@ use Response;
 
 class AjaxController extends Controller {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     //
     function getmainstudentlist() {
         if (Request::ajax()) {

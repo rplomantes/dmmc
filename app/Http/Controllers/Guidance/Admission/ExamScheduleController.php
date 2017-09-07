@@ -16,6 +16,11 @@ function __construct() {
 class ExamScheduleController extends Controller {
 
 //
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     function schedule($idno) {
         $dates = DB::table('entrance_exam_schedules')
                 ->where('is_remove', '=', 0)

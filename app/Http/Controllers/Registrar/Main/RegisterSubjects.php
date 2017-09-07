@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class RegisterSubjects extends Controller {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     function index(Request $request) {
         $idno = $request->idno;
         $users = \App\User::where('idno', $request->idno)->first();

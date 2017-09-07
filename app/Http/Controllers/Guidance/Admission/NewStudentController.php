@@ -13,6 +13,11 @@ use App\Status;
 class NewStudentController extends Controller {
 
     //
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     function newstudent() {
         $programs = DB::Select("Select distinct program_code ,program_name from ctr_academic_programs where academic_type='College'");
         return view('guidance.admission.newstudent', compact('programs'));

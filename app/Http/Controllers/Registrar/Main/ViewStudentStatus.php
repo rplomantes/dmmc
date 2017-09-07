@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class ViewStudentStatus extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     function index($idno){
         $student_status = \App\Status::where('idno',$idno)->first();
         if($student_status->academic_program == Auth::user()->academic_program AND Auth::user()->accesslevel == '2' or Auth::user()->accesslevel == '3'){
