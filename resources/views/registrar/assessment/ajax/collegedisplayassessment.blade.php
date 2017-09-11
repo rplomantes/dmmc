@@ -82,7 +82,7 @@ $list_plans = \App\CtrDueDate::distinct()->where('academic_type', $status->acade
         </div>
         <div class="form form-group">
             <div class="col-sm-12">
-                <input type="submit"class="col-sm-12 btn btn-success" value="Process Payment">
+                <button id="submit" type="submit"class="col-sm-12 btn btn-success" value="Process Payment">Process Payment</button>
             </div>
         </div>
     </div>
@@ -97,6 +97,9 @@ $list_plans = \App\CtrDueDate::distinct()->where('academic_type', $status->acade
     }
     $(document).ready(function() {
         $("#downpayment").keydown(function (e) {
+            if (e.keyCode === 27){
+                alert("hello");
+            }
             if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
                 (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
                 (e.keyCode >= 35 && e.keyCode <= 40)) {
@@ -107,4 +110,15 @@ $list_plans = \App\CtrDueDate::distinct()->where('academic_type', $status->acade
             }
         });
     });
+    $('#submit').click(function() {
+    var downpayment = "{{($totalotherfees+$totaltuitionfees)*.3}}";
+    var downpaymentamount = $("#downpaymentamount").val();
+    var plan = $("#plan").val();
+    if (plan !== "full"){
+        if (downpaymentamount < downpayment ) {
+            alert("Downpayment must be greater than or equal to Php " + downpayment + ".");
+            return false;
+        }
+    }
+});
 </script>

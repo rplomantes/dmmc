@@ -98,7 +98,7 @@ class paymentAssessmentSHS extends Controller {
                 $addledger->receipt_details=$otherfee->receipt_details;
                 $addledger->category_switch=$otherfee->category_switch;
                 $addledger->amount = $otherfee->amount;
-                $addledger->discount = $otherfee->amount*$discountof/100;
+                $addledger->discount = $otherfee->amount*($discountof/100);
                 $addledger->discount_id = $discount_code;
                 $addledger->save();
             }
@@ -107,10 +107,10 @@ class paymentAssessmentSHS extends Controller {
     
     function getdiscountrate($type,$discount_code){
         if($type=='tf'){
-            return \App\CtrDiscount::where('discount_code',$discount_code)->tuition_fee;
+            return \App\CtrDiscount::where('discount_code',$discount_code)->first()->tuition_fee;
           
         }elseif($type=='of'){
-            return $discount = \App\CtrDiscount::where('discount_code',$discount_code)->other_fee;
+            return \App\CtrDiscount::where('discount_code',$discount_code)->first()->other_fee;
         }
         
     }

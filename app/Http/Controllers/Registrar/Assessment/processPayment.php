@@ -129,14 +129,19 @@ class processPayment extends Controller
         $registrationID = \App\CtrReferenceId::where('idno', $userID)->first();
         $year = date('y');
         $inc = $registrationID->registration_no;
+        if ($plan != "full"){
         $plans = \App\CtrDueDate::distinct('plan')->where('plan', $plan)->get(['plan'])->first();
+        $paln = $plans->plan;
         
+        }else {
+            $paln = "Full";
+        }
         $registration_no=$year."".sprintf("%02s", $registrationID->id)."".sprintf("%03s", $inc);
         
         $changestatus = \App\Status::where('idno', $idno)->first();
         $changestatus->status=3;
         $changestatus->registration_no=$registration_no;
-        $changestatus->plan = $plans->plan;
+        $changestatus->plan = "$paln";
         $changestatus->save();
         
         $addregistrationno = new \App\RegistrationFormNo;

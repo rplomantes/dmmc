@@ -102,51 +102,81 @@
         <th class='ths'align='center'>{{$total}}</th>
     </tr>
 </table>
-<table width="100%">
-    <tr>
-    <td><br><b>ASSESSMENT</b></td>
+<br><b>ASSESSMENT</b>
     <?php
-    $totaltuition = 0;
-    $amounts = \App\LedgerDueDate::where('idno', $status->idno)->where('school_year', $y->school_year)->where('period', $y->period)->get();
-    foreach ($amounts as $amount){
-        $totaltuition = $totaltuition + $amount->amount;
+    $tfee = 0;
+    $dfee = 0;
+    $esc = 0;
+    $tfs = \App\ledger::where('idno', $status->idno)->where('school_year', $y->school_year)->where('period', $y->period)->get();
+    foreach($tfs as $tf){
+        $tfee = $tfee + $tf->amount;
+    }
+    $discounts = \App\ledger::where('idno', $status->idno)->where('school_year', $y->school_year)->where('period', $y->period)->get();
+    foreach($discounts as $discount){
+        $dfee = $dfee + ($discount->discount);
+        $esc = $esc + $discount->esc;
     }
 
     ?>
-    <td align="right">
-    <br><strong>Tuition Fee: Php {{number_format($totaltuition,2)}}</strong>
-    @if (count($ledger_due_dates)>0)
-    <br><strong>Downpayment: Php {{number_format($downpayment->amount,2)}}</strong>
+<table width = "60%">
+    <tr>
+        <td>Tuition Fee</td>
+        <td>:</td>
+        <td style="border-bottom: 1pt solid black;">Php {{number_format($tfee,2)}}</td>
+    </tr>
+    <tr>
+        <td>Discounts</td>
+        <td>:</td>
+        <td style="border-bottom: 1pt solid black;">(Php {{number_format($dfee,2)}})</td>
+    </tr>
+    @if($status->academic_type=="Senior High School")
+    <tr>
+        <td>ESC</td>
+        <td>:</td>
+        <td style="border-bottom: 1pt solid black;">(Php {{number_format($esc,2)}})</td>
+    </tr>
     @endif
-    </td></tr>
+    <tr>
+        <td>Total Tuition Fee</td>
+        <td>:</td>
+        <td style="border-bottom: 1pt solid black;">Php {{number_format(($tfee-$dfee)-$esc,2)}}</td>
+    </tr>
+    @if (count($ledger_due_dates)>0)
+    <tr>
+        <td><strong>Downpayment</strong></td>
+        <td><strong>:</strong></td>
+        <td style="border-bottom: 1pt solid black;"><strong>Php {{number_format($downpayment->amount,2)}}</strong></td>
+    </tr>
+    @endif
 </table>
-@if (count($ledger_due_dates)>0)
+
+    @if (count($ledger_due_dates)>0)
 <table class='tables' width='100%'>
     <tr>
-        <th class='ths'>Amount</th>
         <th class='ths'>Due Date</th>
+        <th class='ths'>Amount</th>
         <td width="50%" rowspan="{{count($ledger_due_dates)+1}}">
-            <i style="color:red;"><small><center>*For installment basis, please pay the appropriate amounts on or before the stated due dates to avoid late payment charges. Thank you!</center></small></i>
+            <i><small><center>*For installment basis, please pay the appropriate amounts on or before the stated due dates to avoid late payment charges. Thank you!</center></small></i>
         </td>
     </tr>
     @foreach ($ledger_due_dates as $ledger_due_date)
     <tr>
-        <td class='tds'>Php {{number_format($ledger_due_date->amount,2)}}</td>
         <td class='tds'>{{ date ('D, M d, Y', strtotime($ledger_due_date->due_date))}}</td>
+        <td class='tds'>Php {{number_format($ledger_due_date->amount,2)}}</td>
     </tr>
     @endforeach
 </table>
 @else
 <table class="tables" width="100%">
     <tr>
+        <th class="ths">Date</th>
         <th class="ths">Description</th>
         <th class="ths">Amount</th>
-        <th class="ths">Date</th>
     </tr>
     <tr>
+        <td class='tds'>{{ date ('D, M d, Y', strtotime($downpayment->due_date))}}</td>
         <td class="tds">Full Payment</td>
         <td class='tds'>Php {{number_format($downpayment->amount,2)}}</td>
-        <td class='tds'>{{ date ('D, M d, Y', strtotime($downpayment->due_date))}}</td>
     </tr>
 </table>
 @endif

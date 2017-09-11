@@ -245,6 +245,32 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix"><span class="fa fa-check-square fa-fw">
+                                        </span> Sectioning</a>
+                                </h4>
+                            </div>
+                            <div id="collapseSix" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <table class="table">
+                                        <tr>
+                                            <td>
+                                                <a href="{{url('/')}}"><span class="fa fa-check-square fa-fw"></span> Assessment - College/TESDA</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a href="{{url('/')}}"><span class="fa fa-check-square fa-fw"></span> Assessment - SHS</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
                 <div class="col-sm-9 col-md-9">

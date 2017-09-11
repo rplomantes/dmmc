@@ -259,7 +259,7 @@
                     array['type_of_account'] = $("#type_of_account").val();
                     array['program_code'] = $("#program_code").val();
                     array['academic_type'] = $("#academic_type").val();
-                    array['discount'] = $("#ddiscount").val();
+                    array['discount'] = $("#discount").val();
                     $.ajax({
                         type: "GET",
                         url: "/registrar/ajax/assessment/computePayment",

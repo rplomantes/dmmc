@@ -211,7 +211,7 @@
                     array['program_code'] = $("#program_code").val();
                     array['track'] = $("#track").val();
                     array['academic_type'] = $("#academic_type").val();
-                    array['discount'] = $("#ddiscount").val();
+                    array['discount'] = $("#discount").val();
                     $.ajax({
                         type: "GET",
                         url: "/registrar/ajax/assessment/computePaymentshs",

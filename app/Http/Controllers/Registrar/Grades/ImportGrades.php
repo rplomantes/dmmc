@@ -10,89 +10,128 @@ use DB;
 
 class ImportGrades extends Controller {
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('auth');
     }
-    
+
     //
     function college() {
         return view('registrar.grades.import_grades_college');
     }
 
-    function importExcel2(){
-        if (Input::hasFile('import_file')){
+    function importExcelCollege(Request $request) {
+        $row = 14;
+        $path = Input::file('import_file')->getRealPath();
+        Excel::selectSheets('Front')->load($path, function($reader) use ($row) {
+            $uploaded = array();
+            do {
+                $idno = $reader->getActiveSheet()->getCell('B' . $row)->getValue();
+                $prelim = $reader->getActiveSheet()->getCell('D' . $row)->getValue();
+                $midterm = $reader->getActiveSheet()->getCell('E' . $row)->getValue();
+                $final = $reader->getActiveSheet()->getCell('F' . $row)->getValue();
+                $final_grade = $reader->getActiveSheet()->getCell('G' . $row)->getValue();
+                $grade_point = $reader->getActiveSheet()->getCell('H' . $row)->getValue();
+                $remarks = $reader->getActiveSheet()->getCell('I' . $row)->getValue();
+
+                $uploaded[] = array('idno' => $idno, 'prelim' => $prelim, 'midterm' => $midterm, 'final' => $final, 'final_grade' => $final_grade, 'grade_point' => $grade_point, 'remarks' => $remarks);
+                $row++;
+            } while (strlen($reader->getActiveSheet()->getCell('B' . $row)->getValue()) > 6);
             
-            $path = Input::file('import_file')->getRealPath();
+            session()->flash('grades', $uploaded);
+        });
+        
+        Excel::selectSheets('Front')->load($path, function($reader){
             
-            Excel::selectSheets('Front')->load('$path', function($reader){
-                
-                // reader methods
-                
-            })->get();
-        }
+            $course_code = $reader->getActiveSheet()->getCell('C1')->getValue();
+                        
+            session()->flash('course', $course_code);
+        });
+        
+        Excel::selectSheets('Front')->load($path, function($reader){
+            
+            $prof_id = $reader->getActiveSheet()->getCell('B3')->getValue();
+                        
+            session()->flash('prof', $prof_id);
+        });
+        
+        $grades = session('grades');
+        $course = session('course'); 
+        $prof = session('prof');
+        
+        return view('registrar.grades.upload_grade', compact('grades','course','prof','request'));
     }
     
-    function importExcel() {
-        if (Input::hasFile('import_file')) {
-
-            $row = 14;
-            $path = Input::file('import_file')->getRealPath();
-
-            $data = Excel::selectSheets('Front')->load($path, function($reader) {
-                $reader->limitRows(false, 13);
-                        
-                })->get();
-
-            if (!empty($data) && $data->count()) {
-
-                foreach ($data as $key => $value) {
-                   
-                    DB::table('grade_colleges')
-                            ->where(['idno'=> $value->idno])
-                            ->where(['course_code'=> $value->course_code])
-                            ->update(['prelim'=> $value->prelim,'midterm'=> $value->midterm,'final'=> $value->final,'final_grade'=> $value->final_grade,'grade_point'=> $value->grade_point,'remarks'=> $value->remarks,]);
-
-                }
-                    
-                dd('Insert Record successfully.');
-
+    function saveExcelCollege(Request $request){
+        
+        $course_code = $request->input('course_code');
+        $prelim = $request->input('prelim');
+        $midterm = $request->input('midterm');
+        $final = $request->input('final');
+        $final_grade = $request->input('final_grade');
+        $grade_point = $request->input('grade_point');
+        $remarks = $request->input('remarks');
+        
+        //prelim
+        foreach ($prelim as $key=>$value){
+             if($value != "" || $value != null || preg_match('/^[0-9]*$/', $value)){
+                $grade_prelim = \App\GradeCollege::where('idno',$key)->where('course_code',$course_code)->first();
+                if(!empty($grade_prelim)){
+                    $grade_prelim->prelim = $value;
+                    $grade_prelim->save();
+                }                
             }
         }
-
-        return back();
-    }
-    
-//     function importExcel(){
-//        if(Input::hasFile('import_file')){
-//            $test=14;
-//            $path = Input::file('import_file')->getRealPath();
-//            Excel::selectSheets('Front')->load($path, function($reader) use ($test){
-//                $uploaded = array();
-//                do{
-//                    $idno = $reader->getActiveSheet()->getCell('A'.$test)->getOldCalculatedValue();
-//                    
-//                    $prelim = $reader->getActiveSheet()->getCell('D'.$test)->getOldCalculatedValue();
-//                    $midterm = $reader->getActiveSheet()->getCell('E'.$test)->getOldCalculatedValue();
-//                    $final = $reader->getActiveSheet()->getCell('F'.$test)->getOldCalculatedValue();
-//                    $final_grade = $reader->getActiveSheet()->getCell('G'.$test)->getOldCalculatedValue();
-//                    $grade_point = $reader->getActiveSheet()->getCell('H'.$test)->getOldCalculatedValue();
-//                    $remarks = $reader->getActiveSheet()->getCell('I'.$test)->getOldCalculatedValue();
-//                    $uploaded[] = array('idno'=>$idno,'prelim'=>$prelim,'midterm'=>$midterm,'final'=>$final,'final_grade'=>$final_grade,'grade_point'=>$grade_point,'remarks'=>$remarks);
-//                    $test++;
-//                }while(strlen($reader->getActiveSheet()->getCell('A'.$test)->getOldCalculatedValue())>1);
-//                
-//                session()->flash('grades', $uploaded);
-//                
-//            });
-//            $grades = session('grades');
-//                return view('registrar.grades.upload_grade',compact('grades', 'test'));
-//        }
-//    }
-
-    
-    function confirmImport(){
-        
+        //midterm
+        foreach ($midterm as $key=>$value){
+             if($value != "" || $value != null || preg_match('/^[0-9]*$/', $value)){
+                $grade_midterm = \App\GradeCollege::where('idno',$key)->where('course_code',$course_code)->first();
+                if(!empty($grade_midterm)){
+                    $grade_midterm->midterm = $value;
+                    $grade_midterm->save();
+                }                
+            }
+        }
+        //final
+        foreach ($final as $key=>$value){
+             if($value != "" || $value != null || preg_match('/^[0-9]*$/', $value)){
+                $final = \App\GradeCollege::where('idno',$key)->where('course_code',$course_code)->first();
+                if(!empty($grade_final)){
+                    $final->final = $value;
+                    $final->save();
+                }                
+            }
+        }
+        //final grade
+        foreach ($final_grade as $key=>$value){
+             if($value != "" || $value != null || preg_match('/^[0-9]*$/', $value)){
+                $final_grade = \App\GradeCollege::where('idno',$key)->where('course_code',$course_code)->first();
+                if(!empty($final)){
+                    $final_grade->final_grade = $value;
+                    $final_grade->save();
+                }                
+            }
+        }
+        //grade point
+        foreach ($grade_point as $key=>$value){
+             if($value != "" || $value != null || preg_match('/^[0-9]*$/', $value)){
+                $grade_point = \App\GradeCollege::where('idno',$key)->where('course_code',$course_code)->first();
+                if(!empty($grade_point)){
+                    $grade_point->grade_point = $value;
+                    $grade_point->save();
+                }                
+            }
+        }
+        //remarks
+        foreach ($remarks as $key=>$value){
+             if($value != "" || $value != null || preg_match('/^[0-9]*$/', $value)){
+                $remarks = \App\GradeCollege::where('idno',$key)->where('course_code',$course_code)->first();
+                if(!empty($remarks)){
+                    $remarks->remarks = $value;
+                    $remarks->save();
+                }                
+            }
+        }
+        return redirect('/registrar/import_grades/college');
     }
 
 }

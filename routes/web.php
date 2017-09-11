@@ -149,5 +149,7 @@ Route::post('/registrar/main/registersubjects','Registrar\Main\RegisterSubjects@
 
 //registrar import grades
 Route::get('/registrar/import_grades/college','Registrar\Grades\ImportGrades@college');
+Route::post('/importExcelCollege', 'Registrar\Grades\ImportGrades@importExcelCollege');
+Route::post('/saveentry_college', 'Registrar\Grades\ImportGrades@saveExcelCollege');
+
 Route::get('/registrar/import_grades/shs','Registrar\Grades\ImportGrades@shs');
-Route::post('/importExcel', 'Registrar\Grades\ImportGrades@importExcel');

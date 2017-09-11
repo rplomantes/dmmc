@@ -94,7 +94,31 @@ $list_plans = \App\CtrDueDate::distinct()->where('academic_type', $status->acade
     function displaydownpayment(plan){
         $('#downpayment').empty()
         if (plan!="full"){
-            $('#downpayment').html("<label class=\"label\">Downpayment</label><input name=\"downpaymentamount\" style=\"text-align: right\" type=\"number\" min=\"{{($totalotherfees+$totaltuitionfees)*.3}}\" class=\"form-control\" id=\"downpaymentamount\" value=\"{{($totalotherfees+$totaltuitionfees)*.3}}\">").show()
+            $('#downpayment').html("<label class=\"label\">Downpayment</label><div class=\"input-group stylish-input-group\"><span class=\"input-group-addon\">Php</span><input name=\"downpaymentamount\" style=\"text-align: right\" type=\"text\" min=\"{{($totalotherfees+$totaltuitionfees)*.3}}\" class=\"form-control\" id=\"downpaymentamount\" value=\"{{($totalotherfees+$totaltuitionfees)*.3}}\"></div>").show()
         } 
     }
+    
+    $(document).ready(function() {
+        $("#downpayment").keydown(function (e) {
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
+                (e.keyCode >= 35 && e.keyCode <= 40)) {
+                     return;
+            }
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
+    });
+    $('#submit').click(function() {
+    var downpayment = "{{($totalotherfees+$totaltuitionfees)*.3}}";
+    var downpaymentamount = $("#downpaymentamount").val();
+    var plan = $("#plan").val();
+    if (plan !== "full"){
+        if (downpaymentamount < downpayment ) {
+            alert("Downpayment must be greater than or equal to Php " + downpayment + ".");
+            return false;
+        }
+    }
+});
 </script>
