@@ -22,7 +22,7 @@ class CreatePaymentsTable extends Migration
             $table->string('category');
             $table->string('description');
             $table->string('receipt_details');
-            $table->string('acccounting_code')->nullable();
+            $table->string('accounting_code')->nullable();
             $table->string('category_switch');
             $table->integer('payment_type')->default(0);
             $table->string('bank_name')->nullable();

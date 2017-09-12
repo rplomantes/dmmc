@@ -24,7 +24,7 @@ class CreateLedgersTable extends Migration
             $table->string('category');
             $table->string('description');
             $table->string('receipt_details');
-            $table->string('acccounting_code')->nullable();
+            $table->string('accounting_code')->nullable();
             $table->integer('category_switch');
             $table->decimal('amount',10,2);
             $table->decimal('payment',10,2)->default(0);

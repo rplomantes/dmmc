@@ -60,6 +60,7 @@ class paymentAssessment extends Controller {
                     return view('registrar.assessment.ajax.collegedisplayassessment', compact('idno', 'school_year', 'level', 'period'));
                 } else {
                     $tuitionfee = \App\CtrSpecialDiscount::where('special_discount_code', $type_of_account)->where('program_code', $program_code)->where('level', $level)->first()->amount;
+                    $accounting_code = \App\CtrSpecialDiscount::where('special_discount_code', $type_of_account)->where('program_code', $program_code)->where('level', $level)->first()->accounting_code;
                     $addledger = new \App\ledger;
                     $addledger->idno = $idno;
                     $addledger->program_code = $program_code;
@@ -69,6 +70,7 @@ class paymentAssessment extends Controller {
                     $addledger->category = "Tuition Fee";
                     $addledger->description = $type_of_account;
                     $addledger->receipt_details = "Tuition Fee";
+                    $addledger->accounting_code = $accounting_code;
                     $addledger->category_switch = "3";
                     $addledger->amount = $tuitionfee;
                     $addledger->save();
@@ -104,10 +106,11 @@ class paymentAssessment extends Controller {
                 $addledger->category = "Tuition Fee";
                 $addledger->description = $grade->course_code;
                 $addledger->receipt_details = "Tuition Fee";
+                $addledger->accounting_code = "100100";
                 $addledger->category_switch = "3";
                 $addledger->amount = (($grade->lec * $tuitionrate * $grade->percent_tuition / 100) + (($grade->lab * $tuitionrate * $grade->percent_tuition / 100) * 3));
                 $addledger->discount = (($grade->lec * $tuitionrate * $grade->percent_tuition / 100) + (($grade->lab * $tuitionrate * $grade->percent_tuition / 100) * 3)) * ($discounttf / 100);
-                $addledger->discount_id = $discount_code;
+                $addledger->discount_code = $discount_code;
                 $addledger->save();
                 $this->getSpecialFee($grade->course_code, $level, $program_code, $school_year, $period, $idno);
                 $lab = $lab + $grade->lab;
@@ -131,10 +134,11 @@ class paymentAssessment extends Controller {
                 $addledger->category = $otherfee->category;
                 $addledger->description = $otherfee->description;
                 $addledger->receipt_details = $otherfee->receipt_details;
+                $addledger->accounting_code = $otherfee->accounting_code;
                 $addledger->category_switch = $otherfee->category_switch;
                 $addledger->amount = $otherfee->amount;
                 $addledger->discount = $otherfee->amount * ($discountof / 100);
-                $addledger->discount_id = $discount_code;
+                $addledger->discount_code = $discount_code;
                 $addledger->save();
             }
         }
@@ -153,6 +157,7 @@ class paymentAssessment extends Controller {
                 $addledger->category = $fee->category;
                 $addledger->description = $fee->description;
                 $addledger->receipt_details = $fee->receipt_details;
+                $addledger->accounting_code = $fee->accounting_code;
                 $addledger->category_switch = $fee->category_switch;
                 $addledger->amount = $fee->amount;
                 $addledger->save();
@@ -180,6 +185,7 @@ class paymentAssessment extends Controller {
         $addledger->category = $labfee->category;
         $addledger->description = $labfee->description;
         $addledger->receipt_details = $labfee->receipt_details;
+        $addledger->accounting_code = $labfee->accounting_code;
         $addledger->category_switch = $labfee->category_switch;
         $addledger->amount = $labfee->amount;
         $addledger->discount = $labfee->amount * $discountof / 100;

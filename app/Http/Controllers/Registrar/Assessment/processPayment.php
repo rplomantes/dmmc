@@ -88,6 +88,7 @@ class processPayment extends Controller
         $addledger12percent->category="Tuition Fee";
         $addledger12percent->description="12%";
         $addledger12percent->receipt_details="Tuition Fee";
+        $addledger12percent->accounting_code=100100;
         $addledger12percent->category_switch="3";
         $addledger12percent->amount = $percent12;
         $addledger12percent->save();

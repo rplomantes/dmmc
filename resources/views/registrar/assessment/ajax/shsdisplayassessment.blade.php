@@ -5,7 +5,7 @@ $status = \App\Status::where('idno', $idno)->first();
 $list_plans = \App\CtrDueDate::distinct()->where('academic_type', $status->academic_type)->get(['plan']);
 ?>
 <h3>Tuition Fees</h3>
-<table border ="1" class="table table-condensed">
+<table border ="1" class="table table-condensed table-bordered">
     <tr>
         <td><b>Description</b></td>
         <td>Amount</td>
@@ -31,11 +31,12 @@ $list_plans = \App\CtrDueDate::distinct()->where('academic_type', $status->acade
     </table>
 
 <h3>Other Fees</h3>
-<table border ="1" class="table table-condensed">
+<table border ="1" class="table table-condensed table-bordered">
     <tr>
         <td><b>Description</b></td>
         <td>Amount</td>
         <td>Discount</td>
+        <td>ESC</td>
         <td>Total</td>
     </tr>
         <?php $totalotherfees=0;?>
@@ -45,15 +46,16 @@ $list_plans = \App\CtrDueDate::distinct()->where('academic_type', $status->acade
         <td>{{$tuitionfee->description}}</td>
         <td align="right">{{number_format($tuitionfee->amount,2)}}</td>
         <td align="right">{{number_format($tuitionfee->discount,2)}}</td>
-        <td align="right">{{number_format($tuitionfee->amount-$tuitionfee->discount,2)}}</td>
-        <?php $totalotherfees = $totalotherfees +$tuitionfee->amount-$tuitionfee->discount; ?>    
+        <td align="right">{{number_format($tuitionfee->esc,2)}}</td>
+        <td align="right">{{number_format(($tuitionfee->amount-$tuitionfee->discount)- $tuitionfee->esc,2)}}</td>
+        <?php $totalotherfees = $totalotherfees +($tuitionfee->amount-$tuitionfee->discount)-$tuitionfee->esc; ?>    
            
     </tr>
         @endforeach 
     <tr>
-        <td colspan="3">Total Other Fees</td>
+        <td colspan="4">Total Other Fees</td>
         <td align="right"><b>{{number_format($totalotherfees,2)}}</b></td> </tr> 
-        <td colspan="3"><span class="totalfee">Total Fee</span></td>
+        <td colspan="4"><span class="totalfee">Total Fee</span></td>
         <td align="right"><span class="totalfee">{{number_format($totalotherfees+$totaltuitionfees,2)}}</span></td></tr>
     </tr>
     </table>
