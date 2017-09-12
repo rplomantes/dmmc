@@ -36,5 +36,9 @@ Route::get('/dean/assessment/shs','Dean\Assessment\AssessmentController@indexshs
 Route::get('/cashier/getstudentlist','Cashier\Ajax\CashierController@getstudentlist');
 //cashier main
 Route::get('/viewledger/{idno}','Cashier\ViewLedger@index');
-
+Route::get('/mainpayment/{idno}','Cashier\MainPayment@index');
+Route::post('/mainpayment','Cashier\MainPayment@processpayment');
+Route::get('/viewreceipt/{reference_id}','Cashier\ViewLedger@viewreceipt');
+Route::get('/reverserestore/{reference_id}/{action}','Cashier\MainPayment@reverserestore');
+Route::get('/collectionreport/{trandate}','Cashier\CashierReport@collectionreport');
 ?>

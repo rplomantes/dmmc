@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePaymentsTable extends Migration
+class CreateAccountingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,34 +13,34 @@ class CreatePaymentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('accountings', function (Blueprint $table) {
             $table->increments('id');
             $table->date('transaction_date');
+            $table->integer('refid')->nullable();
             $table->integer('reference_id');
             $table->string('receipt_no');
             $table->string('idno');
+            $table->string('paid_by');
             $table->string('category');
             $table->string('description');
             $table->string('receipt_details');
             $table->string('accounting_code')->nullable();
             $table->string('category_switch');
-            $table->integer('payment_type')->default(0);
-            $table->string('bank_name')->nullable();
-            $table->string('check_number')->nullable();
-            $table->decimal('cash_amount',10,2)->default(0);
-            $table->decimal('check_amount',10,2)->default(0);
-            $table->decimal('chnage_amount',10,2)->default(0);
+            $table->integer('entry_type');
+            $table->decimal('debit',10,2)->default(0);
+            $table->decimal('credit',10,2)->default(0);
+            $table->string('particular')->nullable();
             $table->integer('isreverse')->default(0);
             $table->integer('is_new')->default(1);
             $table->string('school_year')->nullable();
             $table->string('period')->nullable();
-            $table->string('remarks')->nullable();
             $table->string('posted_by');
             $table->timestamps();
             $table->foreign('idno')
                     ->references('idno')
                     ->on('users')
                     ->onUpdate('cascade');
+            
         });
     }
 
@@ -51,6 +51,6 @@ class CreatePaymentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('accountings');
     }
 }

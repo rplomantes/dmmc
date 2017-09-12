@@ -29,7 +29,7 @@ class CreateLedgersTable extends Migration
             $table->decimal('amount',10,2);
             $table->decimal('payment',10,2)->default(0);
             $table->decimal('discount',10,2)->default(0);
-            $table->integer('discount_id')->nullable();
+            $table->integer('discount_code')->nullable();
             $table->decimal('debit_memo', 10,2)->default(0);
             $table->decimal('esc', 10,2)->default(0);
             $table->integer('is_final')->default(0);

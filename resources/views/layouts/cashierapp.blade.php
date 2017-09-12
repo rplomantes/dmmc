@@ -98,22 +98,6 @@
                                         <a href="{{url('/')}}"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-flash text-success"></span><a href="http://www.jquery2dotnet.com">News</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-file text-info"></span><a href="http://www.jquery2dotnet.com">Newsletters</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-comment text-success"></span><a href="http://www.jquery2dotnet.com">Comments</a>
-                                        <span class="badge">42</span>
-                                    </td>
-                                </tr>
                             </table>
                         </div>
                     </div>
@@ -127,20 +111,13 @@
                     </div>
                 </div>
                 
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a  href="#"><span class="fa fa-address-card">
-                            </span> Encashment</a>
-                        </h4>
-                    </div>
-                </div>
+                
                 
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><span class="fa fa-book">
-                            </span> Maintenance</a>
+                            </span> Set Receipt/Query</a>
                         </h4>
                     </div>
                     <div id="collapseThree" class="panel-collapse collapse">
@@ -173,19 +150,11 @@
                             <table class="table">
                                 <tr>
                                     <td>
-                                        <a href="">Collection Report</a> 
+                                        <a href="{{url('/collectionreport',date('Y-m-d'))}}">Collection Report</a> 
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <a href="">Encashment Report</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="">Actual Deposit</a>
-                                    </td>
-                                </tr>
+                                
+                               
                                 <tr>
                                     <td>
                                         <a href="">List of Checks</a>

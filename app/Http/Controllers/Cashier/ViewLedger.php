@@ -10,8 +10,22 @@ Use Illuminate\Support\Facades\DB;
 
 class ViewLedger extends Controller
 {
+    
+      public function __construct() {
+        $this->middleware('auth');
+    }
+    
     //
     function index($idno){
-       return view('cashier.viewledger',compact('idno'));
+        $student = \App\User::where('idno',$idno)->first();
+        if(count($student)>0){
+        return view('cashier.viewledger',compact('idno','student'));
+        } else{
+        return redirect('/');    
+        }
+    }
+    
+    function viewreceipt($reference_id){
+        return view('cashier.viewreceipt',compact('reference_id'));
     }
 }

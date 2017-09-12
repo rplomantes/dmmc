@@ -15,8 +15,9 @@ class CreateCtrDiscountsTable extends Migration
     {
         Schema::create('ctr_discounts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('discount_code')->unique();
+            $table->integer('discount_code')->unique();
             $table->string('discount_description');
+            $table->string('accounting_code')->nullable();
             $table->integer('other_fee');
             $table->integer('system_fee');
             $table->integer('special_fee');
