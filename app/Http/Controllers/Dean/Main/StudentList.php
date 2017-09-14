@@ -31,7 +31,16 @@ class StudentList extends Controller
     }
     
     function printStudentList($course_offering_id){
-        $studentlists = \App\GradeCollege::where('course_offering_id', $course_offering_id)->join('users', 'users.idno', '=', 'grade_colleges.idno')->join('statuses', 'statuses.idno', '=','users.idno')->where('statuses.status', 3)->orderBy('users.lastname')->get();
+        $studentlists = \App\GradeCollege::where('course_offering_id', $course_offering_id)->join('users', 'users.idno', '=', 'grade_colleges.idno')->join('statuses', 'statuses.idno', '=','users.idno')->where('statuses.status', 4)->orderBy('users.lastname')->get();
+        $offering_id = \App\CourseOffering::find($course_offering_id);
+        $instructor = $this->getInstructorId($course_offering_id);
+        
+        $pdf = PDF::loadView('dean.print.studentlistenrolled', compact('studentlists', 'offering_id', 'instructor'));
+        return $pdf->stream("Student_List.pdf");
+    }
+    
+    function printStudentListshs($course_offering_id){
+        $studentlists = \App\GradeShs::where('course_offering_id', $course_offering_id)->join('users', 'users.idno', '=', 'grade_shs.idno')->join('statuses', 'statuses.idno', '=','users.idno')->where('statuses.status', 4)->orderBy('users.lastname')->get();
         $offering_id = \App\CourseOffering::find($course_offering_id);
         $instructor = $this->getInstructorId($course_offering_id);
         

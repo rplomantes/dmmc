@@ -113,11 +113,17 @@ $list_plans = \App\CtrDueDate::distinct()->where('academic_type', $status->acade
         });
     });
     $('#submit').click(function() {
-    var downpayment = "{{($totalotherfees+$totaltuitionfees)*.3}}";
-    var downpaymentamount = $("#downpaymentamount").val();
+    var downpayment = parseFloat("{{($totalotherfees+$totaltuitionfees)*.3}}");
+    var downpaymentamount = parseFloat($("#downpaymentamount").val());
     var plan = $("#plan").val();
     if (plan !== "full"){
-        if (downpaymentamount < downpayment ) {
+        if (downpaymentamount === downpayment){
+            return true;
+        }
+        if (downpaymentamount > downpayment){
+            return true;
+        }
+        if (downpaymentamount < downpayment) {
             alert("Downpayment must be greater than or equal to Php " + downpayment + ".");
             return false;
         }

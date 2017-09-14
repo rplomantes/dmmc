@@ -14,8 +14,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/customize.css') }}" rel="stylesheet">
     <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="{{asset ('jquery.datetimepicker.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset ('jquery.datetimepicker.css')}}">
     
     <!--Jquery -->
     <script src="{{ asset('js/jquery.js') }}"></script>  

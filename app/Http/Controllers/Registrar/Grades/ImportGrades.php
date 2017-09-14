@@ -14,7 +14,7 @@ class ImportGrades extends Controller {
         $this->middleware('auth');
     }
 
-    //
+    //START COLLEGE/TESDA
     function college() {
         return view('registrar.grades.import_grades_college');
     }
@@ -132,6 +132,52 @@ class ImportGrades extends Controller {
             }
         }
         return redirect('/registrar/import_grades/college');
+    }
+    //END COLLEGE/TESDA
+    
+    //START SENIOR HIGHSCHOOL
+    function shs() {
+        return view('registrar.grades.import_grades_shs');
+    }
+    
+    function importExcelSHS(Request $request) {
+        $row = 13;
+        $path = Input::file('import_file')->getRealPath();
+        Excel::selectSheets('Final Semestral Grade')->load($path, function($reader) use ($row) {
+            $uploaded = array();
+            do {
+                $idno = $reader->getActiveSheet()->getCell('B' . $row)->getValue();;
+                $first_qtr = $reader->getActiveSheet()->getCell('F' . $row)->getValue();
+                $second_qtr = $reader->getActiveSheet()->getCell('N' . $row)->getValue();
+                $final_grade = $reader->getActiveSheet()->getCell('V' . $row)->getValue();
+                $remarks = $reader->getActiveSheet()->getCell('Z' . $row)->getValue();
+
+                $uploaded[] = array('idno' => $idno, 'first_qtr' => $first_qtr, 'second_qtr' => $second_qtr, 'final_grade' => $final_grade, 'remarks' => $remarks);
+                $row++;
+            } while (strlen($reader->getActiveSheet()->getCell('B' . $row)->getValue()) > 6);
+            
+            session()->flash('grades', $uploaded);
+        });
+        
+//        Excel::selectSheets('Front')->load($path, function($reader){
+//            
+//            $course_code = $reader->getActiveSheet()->getCell('C1')->getValue();
+//                        
+//            session()->flash('course', $course_code);
+//        });
+//        
+//        Excel::selectSheets('Front')->load($path, function($reader){
+//            
+//            $prof_id = $reader->getActiveSheet()->getCell('B3')->getValue();
+//                        
+//            session()->flash('prof', $prof_id);
+//        });
+        
+        $grades = session('grades');
+        $course = session('course'); 
+        $prof = session('prof');
+        
+        return view('registrar.grades.upload_grade_shs', compact('grades','course','prof','request'));
     }
 
 }

@@ -173,11 +173,11 @@
                                                 <a href="{{url('registrar', array('assign_instructor','college'))}}"><i class="fa fa-exchange fa-fw" aria-hidden="true"></i> Assign Instructor</a>
                                             </td>
                                         </tr>
-                                        <tr>
+<!--                                        <tr>
                                             <td>
                                                 <a href="{{url('registrar', array('reports','college'))}}"><i class="fa fa-bar-chart-o fa-fw" aria-hidden="true"></i> Reports</a>
                                             </td>
-                                        </tr>
+                                        </tr>-->
                                     </table>
                                 </div>
                             </div>
@@ -207,7 +207,7 @@
                                                 <a href="{{url('registrar', array('course_scheduling','shs'))}}"><i class="fa fa-exchange fa-fw" aria-hidden="true"></i> Subject Schedules</a>
                                             </td>
                                         </tr>
-                                        <tr>
+<!--                                        <tr>
                                             <td>
                                                 <a href="{{url('registrar', array('assign_instructor','shs'))}}"><i class="fa fa-exchange fa-fw" aria-hidden="true"></i> Assign Instructor</a>
                                             </td>
@@ -216,7 +216,7 @@
                                             <td>
                                                 <a href="{{url('registrar', array('reports','shs'))}}"><i class="fa fa-bar-chart-o fa-fw" aria-hidden="true"></i> Reports</a>
                                             </td>
-                                        </tr>
+                                        </tr>-->
                                     </table>
                                 </div>
                             </div>
@@ -249,7 +249,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix"><span class="fa fa-check-square fa-fw">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix"><span class="fa fa-group fa-fw">
                                         </span> Sectioning</a>
                                 </h4>
                             </div>
@@ -258,12 +258,7 @@
                                     <table class="table">
                                         <tr>
                                             <td>
-                                                <a href="{{url('/')}}"><span class="fa fa-check-square fa-fw"></span> Assessment - College/TESDA</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <a href="{{url('/')}}"><span class="fa fa-check-square fa-fw"></span> Assessment - SHS</a>
+                                                <a href="{{url('/setup/shs')}}"><i class="fa fa-group fa-fw" aria-hidden="true"></i> Set up Sections</a>
                                             </td>
                                         </tr>
                                     </table>

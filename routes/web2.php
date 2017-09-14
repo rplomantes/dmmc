@@ -28,6 +28,8 @@ Route::get('/dean/generatereport/studentlistshs/{course_offering_id}', 'Dean\Mai
 //studentlist ajax
 Route::get('/dean/ajax/studentlist/getsubjectlistcollege','Dean\Ajax\GetSubjectList@getlistcollege');
 Route::get('/dean/ajax/studentlist/getsubjectlistpersearchcollege','Dean\Ajax\GetSubjectList@getlistpersearchcollege');
+Route::get('/dean/ajax/studentlist/getsubjectlistshs','Dean\Ajax\GetSubjectList@getlistshs');
+Route::get('/dean/ajax/studentlist/getsubjectlistpersearchshs','Dean\Ajax\GetSubjectList@getlistpersearchshs');
 
 //dean assessment
 Route::get('/dean/assessment/college','Dean\Assessment\AssessmentController@indexcollege');

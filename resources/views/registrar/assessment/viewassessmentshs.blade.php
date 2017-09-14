@@ -89,7 +89,9 @@
             $list_plans = \App\CtrDueDate::distinct()->where('academic_type', $status->academic_type)->get(['plan']);
             $discounts = \App\CtrDiscount::get();
 
-            $grades = \App\GradeShs::where('idno', $idno)->where('school_year', $school_year->school_year)->orderBy('period')->get();
+            $y = \App\CtrGradeSchoolYear::where('academic_type', $status->academic_type)->first();
+            $periods = \App\GradeShs::distinct()->where('idno', $idno)->where('school_year', $school_year->school_year)->orderBy('period')->get(['period']);
+            
             
             ?>
 
@@ -119,11 +121,13 @@
                             <div class="col-sm-12">
                                 <h4>Subject Registered:</h4>
                                 
+                                @foreach($periods as $period)
+                                <?php $grades = \App\GradeShs::where('idno', $idno)->where('school_year', $school_year->school_year)->where('period', $period->period)->orderBy('period')->get(); ?>
+                                <strong>{{$period->period}} Semester</strong>
                                 <table class="table table-condensed">
                                     <thead>
-                                    <th>Subject Name</th>
-                                    <th>Period</th>
-                                    <th>Hours</th>
+                                    <th width="90%">Subject Name</th>
+                                    <th width="10%">Hours</th>
                                     </thead>
                                     <?php
                                     $totalHours = 0;
@@ -132,16 +136,15 @@
                                     @foreach ($grades as $grade)
                                     <tr>
                                         <td>{{$grade->course_name}}</td>
-                                        <td>{{$grade->period}}</td>
                                         <td>@if ($grade->hours==0) @else {{$grade->hours}} @endif <?php $totalHours = $grade->hours + $totalHours; ?></td>
                                     </tr>
                                     @endforeach
                                     <tr>
-                                        <th></th>
                                         <th><div align='right'>Total</div> </th> 
                                         <th>{{$totalHours}}</th>
                                     </tr>
                                 </table>
+                                @endforeach
                             </div>
                             
                             <div class="col-sm-12">

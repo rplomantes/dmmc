@@ -107,13 +107,14 @@ class processPayment extends Controller
     
     function changeIDno($idno){    
         $userID = Auth::user()->idno;
+        $status = \App\Status::where('idno', $idno)->first();
         $referenceID = \App\CtrReferenceId::where('idno', $userID)->first();
-        $year = date('y');
+        $year = \App\CtrSchoolYear::where('academic_type', $status->academic_type)->first();
         $inc = $referenceID->student_no;
         
         if (strlen($idno)>7){
         $changeIDno = \App\User::where('idno', $idno)->first();
-        $newIDno = $changeIDno->idno=$year."".sprintf("%02s", $referenceID->id)."".sprintf("%03s", $inc);
+        $newIDno = $changeIDno->idno=substr($year->school_year,2)."".sprintf("%02s", $referenceID->id)."".sprintf("%03s", $inc);
         $changeIDno->save();
         
         $incID = \App\CtrReferenceId::where('idno', $userID)->first();
@@ -127,8 +128,9 @@ class processPayment extends Controller
     
     function changeStatus($idno, $plan){
         $userID = Auth::user()->idno;
+        $status = \App\Status::where('idno', $idno)->first();
         $registrationID = \App\CtrReferenceId::where('idno', $userID)->first();
-        $year = date('y');
+        $year = \App\CtrSchoolYear::where('academic_type', $status->academic_type)->first();
         $inc = $registrationID->registration_no;
         if ($plan != "full"){
         $plans = \App\CtrDueDate::distinct('plan')->where('plan', $plan)->get(['plan'])->first();
@@ -137,7 +139,7 @@ class processPayment extends Controller
         }else {
             $paln = "Full";
         }
-        $registration_no=$year."".sprintf("%02s", $registrationID->id)."".sprintf("%03s", $inc);
+        $registration_no=substr($year->school_year,-2)."".sprintf("%02s", $registrationID->id)."".sprintf("%03s", $inc);
         
         $changestatus = \App\Status::where('idno', $idno)->first();
         $changestatus->status=3;

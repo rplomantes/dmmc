@@ -16,7 +16,13 @@ $number = 0;
     <tr>
         <td>Section</td>
         <td>:</td>
-        <td style="border-bottom: 1pt solid black;">{{$offering_id->program_code}} - {{$offering_id->level}} year - section {{$offering_id->section}}</td>
+        <td style="border-bottom: 1pt solid black;">
+            @if($offering_id->program_code!="Senior High School")
+            {{$offering_id->program_code}} - {{$offering_id->level}} year - section {{$offering_id->section}}
+            @else
+            {{$offering_id->track}} - {{$offering_id->level}} - section {{$offering_id->section}}
+            @endif
+        </td>
     </tr>
     <tr>
         <td>Instructor</td>

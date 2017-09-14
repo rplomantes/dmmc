@@ -12,10 +12,10 @@ $instructors = \App\User::where('accesslevel', 10)->get();
 <div class="row">
     <div class='col-sm-12'>
         <div id="imaginary_container">
-            <form action="{{ URL::to('/importExcelCollege') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
+            <form action="{{ URL::to('/importExcelSHS') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <div class="form-group">
-                    <div class="col-sm-12"><h3>Import Grades - College/TESDA</h3></div>
+                    <div class="col-sm-12"><h3>Import Grades - Senior High School</h3></div>
                     <div class="col-sm-6">
                         <label> </label>
                         <input type="file" name="import_file" />

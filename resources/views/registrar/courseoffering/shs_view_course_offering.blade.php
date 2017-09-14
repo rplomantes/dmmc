@@ -2,6 +2,7 @@
 @section('content')
 <?php
 $curriculum_years = \App\Curriculum::distinct()->where('track', $track)->where('is_current', 1)->get(['curriculum_year']);
+$levels = \App\Curriculum::distinct()->where('track', $track)->where('is_current', 1)->orderBy('level')->get(['level']);
 //$program_name = \App\CtrAcademicProgram::where('program_code', $program_code)->first(['program_name']);
 ?>
 
@@ -35,8 +36,9 @@ $curriculum_years = \App\Curriculum::distinct()->where('track', $track)->where('
                         <label class='label'>Level</label>
                         <select class='form form-control' id="level">
                             <option value=''>Select Level</option>
-                            <option value='Grade 11'>Grade 11</option>
-                            <option value='Grade 12'>Grade 12</option>
+                            @foreach($levels as $level)
+                            <option value='{{$level->level}}'>{{$level->level}}</option>
+                            @endforeach
                         </select>
                     </div>
 

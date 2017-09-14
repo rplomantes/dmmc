@@ -178,7 +178,7 @@ $("#search").keypress(function(e){
        array['search']=$("#search").val();
        $.ajax({
         type:"GET",
-        url:"/dean/ajax/getofferingpersearch",
+        url:"/dean/ajax/getofferingpersearchshs",
         data:array,
         success:function(data){
             $("#offerings").html(data);

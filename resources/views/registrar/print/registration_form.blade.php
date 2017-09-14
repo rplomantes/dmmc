@@ -131,7 +131,7 @@
     </tr>
     @if($status->academic_type=="Senior High School")
     <tr>
-        <td>ESC</td>
+        <td>Voucher</td>
         <td>:</td>
         <td style="border-bottom: 1pt solid black;">(Php {{number_format($esc,2)}})</td>
     </tr>
