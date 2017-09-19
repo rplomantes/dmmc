@@ -91,16 +91,12 @@
 
             $y = \App\CtrGradeSchoolYear::where('academic_type', $status->academic_type)->first();
             $periods = \App\GradeShs::distinct()->where('idno', $idno)->where('school_year', $school_year->school_year)->orderBy('period')->get(['period']);
-            
-            
             ?>
 
             <input type="hidden" id="idno" value="{{$idno}}">
-            <input type="hidden" id="level" value="{{$status->level}}">
             <input type="hidden" id="school_year" value="{{$school_year->school_year}}">
             <input type="hidden" id="period" value="{{$school_year->period}}">
             <input type="hidden" id="program_code" value="{{$status->program_code}}">
-            <input type="hidden" id="track" value="{{$status->track}}">
             <input type="hidden" id="academic_type" value="{{$status->academic_type}}">
 
             <div class="col-sm-12">
@@ -111,7 +107,7 @@
                             <ul class="nav navbar-header"><li><strong>{{strtoupper($user->lastname)}} {{$user->extensionname}}, {{$user->firstname}} {{$user->middlename}}</strong></li>
 
                                 <li>{{$status->track}} </li><li>{{$status->level}}</li>
-                                
+
                             </ul>
                         </div>
                     </div>
@@ -119,34 +115,39 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="col-sm-12">
+                                <?php
+                                $levels = \App\CtrAcademicProgram::distinct()->where('academic_type', "Senior High School")->get(['level']);
+                                $tracks = \App\CtrAcademicProgram::distinct()->where('academic_type', "Senior High School")->get(['track']);
+                                ?>
+                                <div class="form form-horizontal">
+                                    <div class="form form-group">
+                                        <div class="col-sm-6">
+                                            <label class="label">Level </label>
+                                            <select id="levelf" class="form form-control">
+                                                <option value="">Select Level</option>
+                                                @foreach ($levels as $levelf)
+                                                <option value="{{$levelf->level}}">{{$levelf->level}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label class="label">Strand </label>
+                                            <select id="trackf" class="form form-control" onchange="addsubjectRegistered(levelf.value, this.value)">
+                                                <option value="">Select Strand</option>
+                                                @foreach ($tracks as $trackf)
+                                                <option value="{{$trackf->track}}">{{$trackf->track}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <h4>Subject Registered:</h4>
-                                
-                                @foreach($periods as $period)
-                                <?php $grades = \App\GradeShs::where('idno', $idno)->where('school_year', $school_year->school_year)->where('period', $period->period)->orderBy('period')->get(); ?>
-                                <strong>{{$period->period}} Semester</strong>
-                                <table class="table table-condensed">
-                                    <thead>
-                                    <th width="90%">Subject Name</th>
-                                    <th width="10%">Hours</th>
-                                    </thead>
-                                    <?php
-                                    $totalHours = 0;
-                                    $totalUnits = 0;
-                                    ?>
-                                    @foreach ($grades as $grade)
-                                    <tr>
-                                        <td>{{$grade->course_name}}</td>
-                                        <td>@if ($grade->hours==0) @else {{$grade->hours}} @endif <?php $totalHours = $grade->hours + $totalHours; ?></td>
-                                    </tr>
-                                    @endforeach
-                                    <tr>
-                                        <th><div align='right'>Total</div> </th> 
-                                        <th>{{$totalHours}}</th>
-                                    </tr>
-                                </table>
-                                @endforeach
+                                <div id="subjectregistered">
+                                    
+                                </div>
                             </div>
-                            
+
                             <div class="col-sm-12">
                                 <h4>Payment Options:</h4>
                                 <form class="form-horizontal">
@@ -207,12 +208,12 @@
                     array = {};
                     array['idno'] = $("#idno").val();
                     array['plan'] = $("#plan").val();
-                    array['level'] = $("#level").val();
+                    array['level'] = $("#levelf").val();
                     array['period'] = $("#period").val();
                     array['school_year'] = $("#school_year").val();
                     array['esc'] = $("#esc").val();
                     array['program_code'] = $("#program_code").val();
-                    array['track'] = $("#track").val();
+                    array['track'] = $("#trackf").val();
                     array['academic_type'] = $("#academic_type").val();
                     array['discount'] = $("#discount").val();
                     $.ajax({
@@ -225,6 +226,35 @@
                             // $('#process_assessment').html("<div class='col-sm-12 btn btn-success'>Process Assessment</div>").show();
                         }
 
+                    });
+                }
+                function addsubjectRegistered(levelf, trackf) {
+                    array = {};
+                    array['idno'] = $("#idno").val();
+                    array['period'] = $("#period").val();
+                    array['school_year'] = $("#school_year").val();
+                    $.ajax({
+                        type: "GET",
+                        url: "/registrar/ajax/addtogradeshs/" + levelf + '/' + trackf,
+                        data:array,
+                        success: function (data) {
+                            $("#subjectregistered").html(data);
+                        }
+                    });
+                }
+                function removesubject(subjectid){
+                    array = {};
+                    array['idno'] = $("#idno").val();
+                    array['period'] = $("#period").val();
+                    array['school_year'] = $("#school_year").val();
+                    array['period'] = $("#period").val();
+                    $.ajax({
+                        type: "GET",
+                        url: "/registrar/ajax/removegradeshs/" + subjectid,
+                        data:array,
+                        success: function (data) {
+                            $("#subjectregistered").html(data);
+                        }
                     });
                 }
             </script>

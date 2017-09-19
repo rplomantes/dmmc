@@ -105,11 +105,16 @@
 <br><b>ASSESSMENT</b>
     <?php
     $tfee = 0;
+    $ofee = 0;
     $dfee = 0;
     $esc = 0;
-    $tfs = \App\ledger::where('idno', $status->idno)->where('school_year', $y->school_year)->where('period', $y->period)->get();
+    $tfs = \App\ledger::where('idno', $status->idno)->where('school_year', $y->school_year)->where('period', $y->period)->where('category_switch', 3)->get();
     foreach($tfs as $tf){
         $tfee = $tfee + $tf->amount;
+    }
+    $ofs = \App\ledger::where('idno', $status->idno)->where('school_year', $y->school_year)->where('period', $y->period)->where('category_switch', 1)->get();
+    foreach($ofs as $of){
+        $ofee = $ofee + $of->amount;
     }
     $discounts = \App\ledger::where('idno', $status->idno)->where('school_year', $y->school_year)->where('period', $y->period)->get();
     foreach($discounts as $discount){
@@ -123,6 +128,11 @@
         <td>Tuition Fee</td>
         <td>:</td>
         <td style="border-bottom: 1pt solid black;">Php {{number_format($tfee,2)}}</td>
+    </tr>
+    <tr>
+        <td>Other Fee</td>
+        <td>:</td>
+        <td style="border-bottom: 1pt solid black;">Php {{number_format($ofee,2)}}</td>
     </tr>
     <tr>
         <td>Discounts</td>
@@ -139,7 +149,7 @@
     <tr>
         <td>Total Tuition Fee</td>
         <td>:</td>
-        <td style="border-bottom: 1pt solid black;">Php {{number_format(($tfee-$dfee)-$esc,2)}}</td>
+        <td style="border-bottom: 1pt solid black;">Php {{number_format((($tfee+$ofee)-$dfee)-$esc,2)}}</td>
     </tr>
     @if (count($ledger_due_dates)>0)
     <tr>

@@ -29,6 +29,10 @@ $school_year = \App\CtrSchoolYear::where('academic_type', $status->academic_type
                         <td>{{$student_info->birthdate}}</td>
                     </tr>
                     <tr>
+                        <td>Gender</td>
+                        <td>{{$student_info->gender}}</td>
+                    </tr>
+                    <tr>
                         <td>Civil Status</td>
                         <td>{{$student_info->civil_status}}</td>
                     </tr>

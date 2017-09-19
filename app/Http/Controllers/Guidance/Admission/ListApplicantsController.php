@@ -139,7 +139,6 @@ class listApplicantsController extends Controller {
         $status->academic_program = $this->getAcademicProgram($course);
         $status->academic_type = $this->getAcademicType($course);
         $status->program_code =  $this->getProgramCode($course);
-        $status->program_name =  $this->getProgramCode($course);
         $status->program_name =  $this->getProgramName($course);
 
         $status->save();

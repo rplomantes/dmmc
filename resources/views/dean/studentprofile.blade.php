@@ -23,6 +23,10 @@
                     <td>{{$student_info->birthdate}}</td>
                 </tr>
                 <tr>
+                    <td>Gender</td>
+                    <td>{{$student_info->gender}}</td>
+                </tr>
+                <tr>
                     <td>Civil Status</td>
                     <td>{{$student_info->civil_status}}</td>
                 </tr>
@@ -43,11 +47,6 @@
                     <td>{{$status->track}}</td>
                     @endif
                 </tr>
-                <tr>
-                    <td>Section</td>
-                    <td>{{$user->section}}</td>
-                </tr>
-
             </table>
             <a href=""><div class='btn btn-success col-sm-12'>Modify Student Profile</div></a>
 

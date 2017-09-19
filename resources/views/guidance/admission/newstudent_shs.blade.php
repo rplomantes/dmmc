@@ -22,9 +22,9 @@
                 <div class="form form-group">
                     <div class="col-sm-7"><h3>Senior High School Pre-registration Form</h3></div>
                     <div class="col-sm-4">
-                        <input type="radio" name="status_upon_admission" value="Freshmen" checked> Freshman
-                        <input type="radio" name="status_upon_admission" value="Transferee"> Transferee
-                        <input type="radio" name="status_upon_admission" value="Returnee"> Returnee
+                        <input type="radio" name="status_upon_admission" value="Freshmen" checked onclick="hideinput()"> Freshman
+                        <input type="radio" name="status_upon_admission" value="Transferee" onclick="displayinput()"> Transferee
+                        <input type="radio" name="status_upon_admission" value="Returnee" onclick="hideinput()"> Returnee
                     </div>
                 </div>
                 <div class="form form-group"> 
@@ -135,7 +135,7 @@
                         <input type="text" name="honors_received" class="form form-control" value="{{old('honors_received')}}">
                     </div>        
                 </div>
-                <div class="form form-group">
+                <div id='transferee' class="form form-group" style='display:none'>
                     <div class="col-sm-12"><label class="label">If transferee</label></div>
                     <div class="col-sm-8">
                         <input type="text" name="name_of_school" class="form form-control" placeholder="Name of School" value="{{old('name_of_school')}}">
@@ -156,4 +156,13 @@
         @endif
     </div>
 </div>
+
+<script>
+function displayinput(){
+    $('#transferee').show();
+}
+function hideinput(){
+    $('#transferee').hide();
+}
+</script>
 @stop

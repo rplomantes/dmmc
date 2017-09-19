@@ -36,7 +36,6 @@ class AjaxController extends Controller {
     }
 
     function changevalue($idno, $value) {
-        $stat = 1;
         if ($value == "Failed") {
             $stat = -1;
         }
@@ -45,7 +44,11 @@ class AjaxController extends Controller {
         $result->save();
 
         $status = \App\Status::where('idno', $idno)->first();
-        $status->status = $stat;
+        if ($status->academic_type=="College"){
+            $status->status = 1;
+        } else {
+            $status->status = 2;
+        }
         $status->save();
 
         return TRUE;

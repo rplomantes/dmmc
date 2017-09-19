@@ -14,6 +14,6 @@ class SetupSections extends Controller
     }
     
     function shsindex(){
-        return ('This will be sectioning');
+        return view('registrar.sectioning.shs');
     }
 }

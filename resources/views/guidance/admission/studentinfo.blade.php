@@ -39,7 +39,7 @@
         <h3>Student Information</h3>
         <table class='table table-condensed'>
             <tr>
-                <td>Reference No</td>
+                <td>ID No</td>
                 <td><b>{{$list->idno}}</b></td>
             </tr>
             <tr>
@@ -57,6 +57,10 @@
             <tr>
                 <td>Birth Date</td>
                 <td>{{$list->birthdate}}</td>
+            </tr>
+            <tr>
+                <td>Gender</td>
+                <td>{{$list->gender}}</td>
             </tr>
             <tr>
                 <td>Civil Status</td>

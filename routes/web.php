@@ -33,6 +33,8 @@ Route::get('/registrar/ajax/assessment/computePayment', 'Registrar\Ajax\paymentA
 Route::get('/registrar/ajax/assessment/computePaymentshs', 'Registrar\Ajax\paymentAssessmentSHS@computePayment');
 Route::get('/registrar/ajax/assessmentcollege/getmainstudentlist','Registrar\Main\AjaxController@getmainstudentlistassessmentcollege');
 Route::get('/registrar/ajax/assessmentshs/getmainstudentlist','Registrar\Main\AjaxController@getmainstudentlistassessmentshs');
+Route::get('/registrar/ajax/addtogradeshs/{level}/{track}', 'Registrar\Ajax\paymentAssessmentSHS@addtograde_shs');
+Route::get('/registrar/ajax/removegradeshs/{id}', 'Registrar\Ajax\paymentAssessmentSHS@removegradeshs');
 
 //Registrar Curriculum
 Route::get('/registrar/view_curriculum/college','Registrar\Curriculum\CollegeCurriculumController@curriculum');
@@ -156,4 +158,11 @@ Route::post('/importExcelSHS', 'Registrar\Grades\ImportGrades@importExcelSHS');
 Route::post('/saveentry_shs', 'Registrar\Grades\ImportGrades@saveExcelSHS');
 
 //registrar sectioning
-Route::get('/setup/shs', 'Registrar\Sectioning\SetupSections@shsindex');
+Route::get('/setup_sectioning/shs', 'Registrar\Sectioning\SetupSections@shsindex');
+Route::get('/ajax/sectioning_shs/{level}', 'Registrar\Sectioning\Ajax\AjaxController@getLevel');
+Route::get('/ajax/sectioning_list/{level}', 'Registrar\Sectioning\Ajax\AjaxController@getStudentList');
+
+//registrar report
+Route::get('/registrar/reports/enrollment_report', 'Registrar\Reports\reportsController@enrollment_report');
+Route::post('/registrar/reports/generate_enrollmentreport', 'Registrar\Reports\reportsController@generate_enrollmentreport');
+Route::get('/registrar/reports/enrollment_statistics', 'Registrar\Reports\enrollmentStatistics@index');

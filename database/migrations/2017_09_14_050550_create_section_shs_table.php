@@ -16,6 +16,7 @@ class CreateSectionShsTable extends Migration
         Schema::create('section_shs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('section');
+            $table->string('track');
             $table->string('level');
             $table->string('school_year');
             $table->timestamps();

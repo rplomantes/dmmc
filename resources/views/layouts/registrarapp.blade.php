@@ -15,6 +15,7 @@
         <link href="{{ asset('css/customize.css') }}" rel="stylesheet">
         <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet">
         <link href="{{ asset('css/jquery-ui.css') }}" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{{asset ('jquery.datetimepicker.css')}}">
         <!--Jquery -->
         <script src="{{ asset('js/jquery.js') }}"></script>
 
@@ -98,22 +99,6 @@
                                                 <a href="{{url('/')}}"><i class="fa fa-home fa-fw" aria-hidden="true"></i> Home</a>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>
-                                                <a href="#"><i class="fa fa-bell fa-fw" aria-hidden="true"></i> Notifications</a>
-                                                <span class="badge">42</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <a href="{{url('/registrar/profile')}}"><i class="fa fa-user fa-fw" aria-hidden="true"></i> User Profile</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <a href="#"><i class="fa fa-lock fa-fw" aria-hidden="true"></i> Change Password</a>
-                                            </td>
-                                        </tr>
                                     </table>
                                 </div>
                             </div>
@@ -173,11 +158,6 @@
                                                 <a href="{{url('registrar', array('assign_instructor','college'))}}"><i class="fa fa-exchange fa-fw" aria-hidden="true"></i> Assign Instructor</a>
                                             </td>
                                         </tr>
-<!--                                        <tr>
-                                            <td>
-                                                <a href="{{url('registrar', array('reports','college'))}}"><i class="fa fa-bar-chart-o fa-fw" aria-hidden="true"></i> Reports</a>
-                                            </td>
-                                        </tr>-->
                                     </table>
                                 </div>
                             </div>
@@ -207,14 +187,9 @@
                                                 <a href="{{url('registrar', array('course_scheduling','shs'))}}"><i class="fa fa-exchange fa-fw" aria-hidden="true"></i> Subject Schedules</a>
                                             </td>
                                         </tr>
-<!--                                        <tr>
+<!--                                    <tr>
                                             <td>
                                                 <a href="{{url('registrar', array('assign_instructor','shs'))}}"><i class="fa fa-exchange fa-fw" aria-hidden="true"></i> Assign Instructor</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <a href="{{url('registrar', array('reports','shs'))}}"><i class="fa fa-bar-chart-o fa-fw" aria-hidden="true"></i> Reports</a>
                                             </td>
                                         </tr>-->
                                     </table>
@@ -258,7 +233,32 @@
                                     <table class="table">
                                         <tr>
                                             <td>
-                                                <a href="{{url('/setup/shs')}}"><i class="fa fa-group fa-fw" aria-hidden="true"></i> Set up Sections</a>
+                                                <a href="{{url('/setup_sectioning/shs')}}"><i class="fa fa-group fa-fw" aria-hidden="true"></i> Set up Sections</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseSeven"><span class="fa fa-pencil fa-fw">
+                                        </span> Reports</a>
+                                </h4>
+                            </div>
+                            <div id="collapseSeven" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <table class="table">
+                                        <tr>
+                                            <td>
+                                                <a href="{{url('/registrar/reports/enrollment_statistics')}}"><i class="fa fa-bar-chart fa-fw" aria-hidden="true"></i> Enrollment Statistics</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a href="{{url('/registrar/reports/enrollment_report')}}"><i class="fa fa-group fa-fw" aria-hidden="true"></i> List of Students Enrolled</a>
                                             </td>
                                         </tr>
                                     </table>
@@ -276,6 +276,22 @@
             </div>
         </div>
         <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('build/jquery.datetimepicker.full.js')}}"></script>
+<script>
+$('#datetimepicker').datetimepicker({
+dayOfWeekStart : 1,
+lang:'en'
+});
+$('#datetimepicker').datetimepicker();
+
+$('#datepicker').datetimepicker({
+dayOfWeekStart : 1,
+timepicker:false,
+format:'Y-m-d',
+lang:'en'
+});
+$('#datepicker').datetimepicker();
+</script>
         <script src="{{ asset('js/jquery-1.12.4.js') }}"></script>
         <script src="{{ asset('js/jquery-ui.js') }}"></script>
     </body>

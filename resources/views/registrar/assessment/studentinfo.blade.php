@@ -60,6 +60,10 @@ $student_info = \App\StudentInfo::where('idno', $idno)->first();
                 <td>{{$student_info->birthdate}}</td>
             </tr>
             <tr>
+                <td>Gender</td>
+                <td>{{$student_info->gender}}</td>
+            </tr>
+            <tr>
                 <td>Civil Status</td>
                 <td>{{$student_info->civil_status}}</td>
             </tr>
