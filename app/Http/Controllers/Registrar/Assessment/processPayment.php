@@ -112,7 +112,7 @@ class processPayment extends Controller
         $year = \App\CtrSchoolYear::where('academic_type', $status->academic_type)->first();
         $inc = $referenceID->student_no;
         
-        if (strlen($idno)>7){
+        if (strlen($idno)>12){
         $changeIDno = \App\User::where('idno', $idno)->first();
         $newIDno = $changeIDno->idno=substr($year->school_year,2)."".sprintf("%02s", $referenceID->id)."".sprintf("%03s", $inc);
         $changeIDno->save();

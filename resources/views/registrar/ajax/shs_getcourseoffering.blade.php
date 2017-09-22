@@ -13,7 +13,7 @@ Subject Offered:
 </thead>
 <tbody>
     <?php
-    $lists = DB::select("select * from course_offerings where track='$track' and section=$section->section and level='$level' and school_year = '$school_year->school_year' order by `period`");
+    $lists = DB::select("select * from course_details_shs where track='$track' and section='$section->section' and level='$level' and school_year = '$school_year->school_year' order by `period`");
     ?>
     @foreach ($lists as $list)
 <input type="hidden" id="id" value="{{$list->id}}">

@@ -73,6 +73,8 @@
     @foreach ($grades as $grade)
     <tr  style='font-size:12px'>
         <td class='tds' style='font-size:12px' ><small>@if($status->academic_type!='Senior High School'){{$grade->course_code}}@endif {{$grade->course_name}}</small></td>
+        
+        @if ($status->academic_type!='Senior High School')
         <td class='tds' style='font-size:12px'>
             <?php
             $schedule2s = \App\Schedule::distinct()->where('course_offering_id', $grade->course_offering_id)->get(['time_start', 'time_end', 'room']);
@@ -94,6 +96,11 @@
             {{$instructor->firstname}} {{$instructor->lastname}}
             @endif
         </td>
+        @else
+        <td class='tds' style='font-size:12px'></td>
+        <td class='tds' style='font-size:12px'></td>
+        @endif
+        
         <td class='tds' align='center'>@if($status->academic_type!='Senior High School')<?php $total = $total + $grade->lec; ?>{{$grade->lec}} @else <?php $total = $total + $grade->hours; ?>{{$grade->hours}} @endif</td>
     </tr>
     @endforeach

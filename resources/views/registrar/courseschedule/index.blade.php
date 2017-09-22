@@ -16,7 +16,7 @@ $sections = \App\CourseOffering::distinct()->orderBy('section')->get(['section']
 
                 <div class="col-sm-12">
                     <div class="col-sm-6">
-                        <label class="label">Select Subject</label>
+                        <label class="label">Select Course</label>
                         <select id="program_code" class="form form-control">
                             <option value="">Select Course</option>
                             @foreach ($program_codes as $program_code)

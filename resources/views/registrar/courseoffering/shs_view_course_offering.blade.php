@@ -34,7 +34,7 @@ $levels = \App\Curriculum::distinct()->where('track', $track)->where('is_current
                     </div>
                     <div class='col-sm-3'>
                         <label class='label'>Level</label>
-                        <select class='form form-control' id="level">
+                        <select class='form form-control' id="level" onchange="getSection(this.value)">
                             <option value=''>Select Level</option>
                             @foreach($levels as $level)
                             <option value='{{$level->level}}'>{{$level->level}}</option>
@@ -46,10 +46,6 @@ $levels = \App\Curriculum::distinct()->where('track', $track)->where('is_current
                         <label class='label'>Section</label>
                         <select class='form form-control' id="section" onchange="getList(level.value, curriculum_year.value, '{{$track}}', section.value)">
                             <option value="">Select Section</option>
-                            <option value='1'>Section 1</option>
-                            <option value='2'>Section 2</option>
-                            <option value='3'>Section 3</option>
-                            <option value='4'>Section 4</option>
                         </select>
                     </div>
                 </div>
@@ -134,6 +130,19 @@ $levels = \App\Curriculum::distinct()->where('track', $track)->where('is_current
             }
 
     });
+    }
+    function getSection(level) {
+    array = {};   
+    array['track'] = $("#track").val();
+        $.ajax({
+            type: "GET",
+            url: "/registrar/ajax/shs_course_offering/getsection/" + level,
+            data: array,
+            success: function (data) {
+                $('#section').html(data);
+            }
+        }
+        );
     }
 </script>
 @stop

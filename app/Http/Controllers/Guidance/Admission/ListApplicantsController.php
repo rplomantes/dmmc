@@ -108,10 +108,14 @@ class listApplicantsController extends Controller {
 
         $user->save();
 
-        if ($request->input('name_of_school') == null) {
+        if ($request->status_upon_admission != "Transferee") {
             $is_transferee = 0;
+            $name_of_school = NULL;
+            $prev_course = NULL;
         } else {
             $is_transferee = 1;
+            $name_of_school = $request->name_of_school;
+            $prev_course = $request->prev_course;
         }
 
         $student_info = StudentInfo::where('idno', $idno)->first();
@@ -129,8 +133,8 @@ class listApplicantsController extends Controller {
         $student_info->gen_ave = $request->gen_ave;
         $student_info->honor = $request->honors_received;
         $student_info->is_transferee = $is_transferee;
-        $student_info->school = $request->name_of_school;
-        $student_info->prev_course = $request->prev_course;
+        $student_info->school = $name_of_school;
+        $student_info->prev_course = $prev_course;
         $student_info->status_upon_admission = $request->status_upon_admission;
 
         $student_info->save();

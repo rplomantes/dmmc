@@ -26,17 +26,17 @@
                         <input class="form form-control" id="idno" type="text" name="idno" value="{{$list->idno}}" readonly="">
                     </div>
                     <div class="col-sm-6">
-                        <input type="radio" name="status_upon_admission" value="Freshmen"
+                        <input onclick="hideinput()" type="radio" name="status_upon_admission" value="Freshmen"
                                @if ($list->status_upon_admission== 'Freshmen')
                                checked
                                @endif
                                > Freshman
-                               <input type="radio" name="status_upon_admission" value="Transferee"
+                               <input onclick="displayinput()" type="radio" name="status_upon_admission" value="Transferee"
                                @if ($list->status_upon_admission== 'Transferee')
                                checked
                                @endif
                                > Transferee
-                               <input type="radio" name="status_upon_admission" value="Returnee"
+                               <input onclick="hideinput()" type="radio" name="status_upon_admission" value="Returnee"
                                @if ($list->status_upon_admission== 'Returnee')
                                checked
                                @endif
@@ -210,7 +210,7 @@
                         <input type="text" name="honors_received" class="form form-control" value="{{$list->honor}}">
                     </div>        
                 </div>
-                <div class="form form-group">
+                <div id="transferee" class="form form-group" style="display:none">
                     <div class="col-sm-12"><label class="label">If transferee</label></div>
                     <div class="col-sm-8">
                         <input type="text" name="name_of_school" class="form form-control" placeholder="Name of School" value="{{$list->school}}">
@@ -271,5 +271,12 @@
     });
 //        alert(idno + " " +value);
     }
+
+function displayinput(){
+    $('#transferee').show();
+}
+function hideinput(){
+    $('#transferee').hide();
+}
 </script>
 @stop

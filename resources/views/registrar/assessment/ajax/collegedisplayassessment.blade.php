@@ -120,7 +120,7 @@ $list_plans = \App\CtrDueDate::distinct()->where('academic_type', $status->acade
         }
         if (downpaymentamount < downpayment) {
             alert("Downpayment must be greater than or equal to Php " + downpayment + ".");
-            return false;
+            return true;
         }
     }
 });

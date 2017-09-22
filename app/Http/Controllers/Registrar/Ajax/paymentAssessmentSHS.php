@@ -161,7 +161,7 @@ class paymentAssessmentSHS extends Controller {
             $school_year = Input::get("school_year");
             $period = Input::get("period");
 
-            $offerings = \App\CourseOffering::where("school_year", $school_year)
+            $offerings = \App\Curriculum::where("curriculum_year", $school_year)
                     ->where("track", $track)
                     ->where("level", $level)
                     ->get();
@@ -178,10 +178,10 @@ class paymentAssessmentSHS extends Controller {
                     if ($this->checksubjectshs($idno, $offering->course_code)) {
                         $newgrade = new \App\GradeShs;
                         $newgrade->idno = $idno;
-                        $newgrade->course_offering_id = $offering->id;
+                        $newgrade->course_offering_id = 1; //$offering->id;
                         $newgrade->course_code = $offering->course_code;
                         $newgrade->course_name = $offering->course_name;
-                        $newgrade->school_year = $offering->school_year;
+                        $newgrade->school_year = $school_year; //$offering->school_year
                         $newgrade->level = $level;
                         $newgrade->period = $offering->period;
                         $newgrade->hours = $offering->hours;

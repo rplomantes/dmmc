@@ -2,7 +2,7 @@
 @section('content')
 <?php
 $program = \App\Curriculum::distinct()->where('program_code', $program_code)->get(['program_name'])->first();
-$levels = \App\Curriculum::distinct()->where('program_code', $program_code)->where('curriculum_year', $curriculum_year)->get(['level', 'period']);
+$levels = \App\Curriculum::distinct()->where('program_code', $program_code)->where('curriculum_year', $curriculum_year)->orderBy('level','asc')->orderBy('period', 'asc')->get(['level', 'period']);
 
 ?>
 <style>

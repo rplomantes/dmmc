@@ -126,6 +126,7 @@ Route::get('/registrar/ajax/changetime_start_college/{sched_id}/{value}','Regist
 Route::get('/registrar/ajax/changetime_end_college/{sched_id}/{value}','Registrar\Ajax\collegeCourseSchedule@changetime_end');
 Route::get('/registrar/ajax/deletesched_college/{sched_id}','Registrar\Ajax\collegeCourseSchedule@deletesched');
 Route::get('/registrar/ajax/room/autocomplete','Registrar\Ajax\collegeCourseSchedule@getlistroom');
+Route::get('/registrar/ajax/shs_course_offering/getsection/{level}', 'Registrar\Ajax\shsCourseOffering@getsection');
 
 //ajax registrar assign instructor
 Route::get('/registrar/ajax/get_courseoffering_college','Registrar\Ajax\collegeAssignInstructor@getcourses');
@@ -159,8 +160,11 @@ Route::post('/saveentry_shs', 'Registrar\Grades\ImportGrades@saveExcelSHS');
 
 //registrar sectioning
 Route::get('/setup_sectioning/shs', 'Registrar\Sectioning\SetupSections@shsindex');
-Route::get('/ajax/sectioning_shs/{level}', 'Registrar\Sectioning\Ajax\AjaxController@getLevel');
-Route::get('/ajax/sectioning_list/{level}', 'Registrar\Sectioning\Ajax\AjaxController@getStudentList');
+Route::get('/ajax/sectioning_shs/{level}/{track}', 'Registrar\Sectioning\Ajax\AjaxController@getLevel');
+Route::get('/ajax/sectioning_list/{level}/{track}', 'Registrar\Sectioning\Ajax\AjaxController@getStudentList');
+Route::get('/ajax/sectioning_sectioninglist/{section}/{level}', 'Registrar\Sectioning\Ajax\AjaxController@getSectionList');
+Route::get('/ajax/sectioning/addtosection/{idno}', 'Registrar\Sectioning\Ajax\AjaxController@addtosection');
+Route::get('/ajax/sectioning/removetosection/{idno}', 'Registrar\Sectioning\Ajax\AjaxController@removetosection');
 
 //registrar report
 Route::get('/registrar/reports/enrollment_report', 'Registrar\Reports\reportsController@enrollment_report');

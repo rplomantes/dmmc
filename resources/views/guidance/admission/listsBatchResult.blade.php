@@ -13,16 +13,19 @@
                     </thead>
                     <tbody>
                         @foreach($lists as $list)
+                        <?php
+                        $status = \App\Status::where('idno', $list->idno)->first();
+                        ?>
                         <tr>
                             <td>{{$list->idno}}</td>
                             <td><a href="{{url('guidance',array('viewinfo',$list->idno))}}">{{$list->firstname}} {{$list->middlename}} {{$list->lastname}} {{$list->extensionname}}</a></td>
                             <td>{{$list->course}}</td>
                             <td>
-                                <input type="radio" name="exam_result[{{$list->idno}}]" value="Passed" onclick="changevalue('{{$list->idno}}', 'Passed')" 
+                                <input @if($status->status>=2)disabled="disabled" @else @endif type="radio" name="exam_result[{{$list->idno}}]" value="Passed" onclick="changevalue('{{$list->idno}}', 'Passed')" 
                                        @if($list->exam_result == "Passed")
                                        checked="checked"
                                        @endif> Passed
-                                       <input type="radio" name="exam_result[{{$list->idno}}]" value="Failed" onclick="changevalue('{{$list->idno}}', 'Failed')"
+                                       <input @if($status->status>=2)disabled="disabled" @else @endif type="radio" name="exam_result[{{$list->idno}}]" value="Failed" onclick="changevalue('{{$list->idno}}', 'Failed')"
                                        @if($list->exam_result == "Failed")
                                        checked="checked"
                                        @endif> Failed

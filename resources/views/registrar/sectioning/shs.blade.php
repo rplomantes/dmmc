@@ -3,6 +3,7 @@
 
 <?php
 $levels = \App\CtrAcademicProgram::distinct()->where('academic_type', "Senior High School")->get(['level']);
+$tracks = \App\CtrAcademicProgram::distinct()->where('academic_type', "Senior High School")->get(['track']);
 ?>
 <style>
     .label{color: gray;}
@@ -15,7 +16,7 @@ $levels = \App\CtrAcademicProgram::distinct()->where('academic_type', "Senior Hi
                 <div class="form form-group">
                     <div class="col-sm-3">
                         <label class="label">Level</label>
-                        <select class="form form-control" name="level" onchange="getSection(this.value); getStudentList(this.value)">
+                        <select class="form form-control" id="level" name="level">
                             <option value="">Select Level</option>
                             @foreach ($levels as $level)
                             <option value="{{$level->level}}">{{$level->level}}</option>
@@ -23,12 +24,21 @@ $levels = \App\CtrAcademicProgram::distinct()->where('academic_type', "Senior Hi
                         </select>
                     </div>
                     <div class="col-sm-3">
+                        <label class="label">Strand</label>
+                        <select class="form form-control" id="track" name="track" onchange="getSection(level.value, this.value); getStudentList(level.value, this.value)">
+                            <option value="">Select Strand</option>
+                            @foreach ($tracks as $track)
+                            <option value="{{$track->track}}">{{$track->track}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
                         <label class="label">Section</label>
-                        <select class="form form-control" id="section">
+                        <select class="form form-control" id="section" name="section" onchange="getSectionList(this.value, level.value)">
                             <option>Select Section</option>
                         </select>
                     </div>
-                    <div class="col-sm-5">
+                    <div class="col-sm-3">
                         <label class="label">Adviser</label>
                         <select class="form form-control">
                             <option>Select Adviser</option>
@@ -39,32 +49,72 @@ $levels = \App\CtrAcademicProgram::distinct()->where('academic_type', "Senior Hi
             <div id="studentList" class="col-sm-6">
             
             </div>
-            <div class="col-sm-6">
-            Hello
+            <div id="sectionlist" class="col-sm-6">
+            
             </div>
         </div>
     </div>
 </div>
 <script>
-    function getSection(level) {
+    function getSection(level, track) {
         $.ajax({
             type: "GET",
-            url: "/ajax/sectioning_shs/" + level,
+            url: "/ajax/sectioning_shs/" + level + "/" + track,
             success: function (data) {
                 $('#section').html(data);
             }
         }
         );
     }
-    function getStudentList(level) {
+    function getStudentList(level, track) {
         $.ajax({
             type: "GET",
-            url: "/ajax/sectioning_list/" + level,
+            url: "/ajax/sectioning_list/" + level + "/" + track,
             success: function (data) {
                 $('#studentList').html(data);
             }
         }
         );
+    }
+    function getSectionList(section, level){
+        $.ajax({
+            type: "GET",
+            url: "/ajax/sectioning_sectioninglist/" + section + "/" + level,
+            success: function (data) {
+                $('#sectionlist').html(data);
+            }
+        }
+        );
+    }
+    function addtosection(idno, level, track){
+        array = {};
+        array['section'] = $("#section").val();
+        array['level'] = $("#level").val();
+        array['track'] = $("#track").val();
+        $.ajax({
+            type: "GET",
+            url: "/ajax/sectioning/addtosection/" + idno,
+            data: array,
+            success: function(data) {
+                $('#sectionlist').html(data);
+            }
+        });
+        getStudentList(level, track);
+    }
+    function removetosection(idno, level, track){
+        array = {};
+        array['section'] = $("#section").val();
+        array['level'] = $("#level").val();
+        array['track'] = $("#track").val();
+        $.ajax({
+            type: "GET",
+            url: "/ajax/sectioning/removetosection/" + idno,
+            data: array,
+            success: function(data) {
+                $('#sectionlist').html(data);
+            }
+        });
+        getStudentList(level, track);
     }
 </script>
 @stop
