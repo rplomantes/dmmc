@@ -38,12 +38,12 @@ $tracks = \App\CtrAcademicProgram::distinct()->where('academic_type', "Senior Hi
                             <option>Select Section</option>
                         </select>
                     </div>
-                    <div class="col-sm-3">
+<!--                    <div class="col-sm-3">
                         <label class="label">Adviser</label>
                         <select class="form form-control">
                             <option>Select Adviser</option>
                         </select>
-                    </div>
+                    </div>-->
                 </div>
             </form>
             <div id="studentList" class="col-sm-6">
