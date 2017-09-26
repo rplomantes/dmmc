@@ -1,9 +1,9 @@
 <?php
 $user = \App\User::where('id', $instructor_id)->first();
-$school_year = \App\CtrSchoolYear::where('academic_type', 'Senior High School')->first();
-$loads = \App\CourseOffering::where('instructor_id', $user->id)->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get();
+$school_year = \App\CtrGradeSchoolYear::where('academic_type', 'Senior High School')->first();
+$loads = \App\CourseDetailsShs::where('instructor_id', $user->id)->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get();
 
-$courses = \App\CourseOffering::distinct()->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get(['track']);
+$courses = \App\CourseDetailsShs::distinct()->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get(['track']);
 ?>
 
 Loads:

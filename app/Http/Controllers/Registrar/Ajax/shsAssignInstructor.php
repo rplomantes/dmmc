@@ -22,7 +22,7 @@ class shsAssignInstructor extends Controller {
             $school_year = Input::get("school_year");
             $period = Input::get("period");
 
-            $courses = \App\CourseOffering::where('track', $track)
+            $courses = \App\CourseDetailsShs::where('track', $track)
                     ->where('school_year', $school_year)
                     ->where('section', $section)
                     ->where('level', $level)
@@ -43,7 +43,7 @@ class shsAssignInstructor extends Controller {
             
             $instructor_id = Input::get("instructor_id");
 
-            $addcoursetoinstructor = \App\CourseOffering::find($id);
+            $addcoursetoinstructor = \App\CourseDetailsShs::find($id);
             $addcoursetoinstructor->instructor_id = $instructor_id;
             $addcoursetoinstructor->save();
             
@@ -55,11 +55,11 @@ class shsAssignInstructor extends Controller {
         if (Request::ajax()) {            
             $instructor_id = Input::get("instructor_id");
 
-            $addcoursetoinstructor = \App\CourseOffering::find($id);
+            $addcoursetoinstructor = \App\CourseDetailsShs::find($id);
             $addcoursetoinstructor->instructor_id = null;
             $addcoursetoinstructor->save();
             
-            return view('registrar.ajax.college_existingloads', compact('instructor_id'));
+            return view('registrar.ajax.shs_existingloads', compact('instructor_id'));
         }
     }
     

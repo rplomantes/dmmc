@@ -145,7 +145,8 @@ class processPayment extends Controller
         $changestatus->status=3;
         $changestatus->registration_no=$registration_no;
         $changestatus->plan = "$paln";
-        $changestatus->date_assessed = date('Y-m-d'); 
+        $changestatus->date_assessed = date('Y-m-d');
+	$changestatus->section = NULL; 
         $changestatus->save();
         
         $addregistrationno = new \App\RegistrationFormNo;

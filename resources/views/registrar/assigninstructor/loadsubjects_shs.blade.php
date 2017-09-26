@@ -84,10 +84,10 @@
 
 
 <?php
-$school_year = \App\CtrSchoolYear::where('academic_type', 'Senior High School')->first();
-$loads = \App\CourseOffering::where('instructor_id', $user->id)->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get();
+$school_year = \App\CtrGradeSchoolYear::where('academic_type', 'Senior High School')->first();
+$loads = \App\CourseDetailsShs::where('instructor_id', $user->id)->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get();
 
-$courses = \App\CourseOffering::distinct()->where('school_year', $school_year->school_year)->where('period', $school_year->period)->where('program_code', 'Senior High School')->get(['track']);
+$courses = \App\CourseDetailsShs::distinct()->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get(['track']);
 ?>
 
 <div class="row">
@@ -123,7 +123,7 @@ $courses = \App\CourseOffering::distinct()->where('school_year', $school_year->s
                     <label class="label">Section</label>
                     <select id="section" class="form form-control" onchange="loadcourseoffering()">
                         <option value="">Section</option>
-                        <option value="1">Section 1</option>
+                        <option value="Einstein">Section 1</option>
                         <option value="2">Section 2</option>
                         <option value="3">Section 3</option>
                         <option value="4">Section 4</option>
@@ -235,7 +235,7 @@ $courses = \App\CourseOffering::distinct()->where('school_year', $school_year->s
     array['instructor_id'] = $("#instructor_id").val();
     $.ajax({
     type: "GET",
-            url: "/registrar/ajax/remove_coursetoinstructor_college/" + id,
+            url: "/registrar/ajax/remove_coursetoinstructor_shs/" + id,
             data: array,
             success: function (data) {
             $('#existingloads').html(data);

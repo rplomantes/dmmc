@@ -187,11 +187,11 @@
                                                 <a href="{{url('registrar', array('course_scheduling','shs'))}}"><i class="fa fa-exchange fa-fw" aria-hidden="true"></i> Subject Schedules</a>
                                             </td>
                                         </tr>
-<!--                                    <tr>
+                                    <tr>
                                             <td>
                                                 <a href="{{url('registrar', array('assign_instructor','shs'))}}"><i class="fa fa-exchange fa-fw" aria-hidden="true"></i> Assign Instructor</a>
                                             </td>
-                                        </tr>-->
+                                        </tr>
                                     </table>
                                 </div>
                             </div>
@@ -277,6 +277,8 @@
         </div>
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('build/jquery.datetimepicker.full.js')}}"></script>
+        <!--<script src="{{ asset('js/jquery-1.12.4.js') }}"></script>-->
+        <script src="{{ asset('js/jquery-ui.js') }}"></script>
 <script>
 $('#datetimepicker').datetimepicker({
 dayOfWeekStart : 1,
@@ -292,8 +294,6 @@ lang:'en'
 });
 $('#datepicker').datetimepicker();
 </script>
-        <script src="{{ asset('js/jquery-1.12.4.js') }}"></script>
-        <script src="{{ asset('js/jquery-ui.js') }}"></script>
     </body>
 
 </html>

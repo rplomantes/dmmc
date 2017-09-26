@@ -16,11 +16,16 @@ Route::get('/', function () {
 });
 */
 include_once 'web2.php';
-include_once 'web3.php';
 
 Route::auth();
 Auth::routes();
 Route::get('/','Main\loginController@index');
+
+//Registrar Main
+Route::get('/registrar/viewstudentprofile/{idno}','Registrar\Main\StudentProfile@index');
+
+//Student Profile
+Route::post('/registrar/update_profile', 'Registrar\Main\StudentProfile@update');
 
 //Registrar Assessment
 Route::get('/registrar/viewinfo/{idno}','Registrar\Assessment\AssessmentController@viewinfo');
@@ -165,6 +170,7 @@ Route::get('/ajax/sectioning_list/{level}/{track}', 'Registrar\Sectioning\Ajax\A
 Route::get('/ajax/sectioning_sectioninglist/{section}/{level}', 'Registrar\Sectioning\Ajax\AjaxController@getSectionList');
 Route::get('/ajax/sectioning/addtosection/{idno}', 'Registrar\Sectioning\Ajax\AjaxController@addtosection');
 Route::get('/ajax/sectioning/removetosection/{idno}', 'Registrar\Sectioning\Ajax\AjaxController@removetosection');
+Route::get('/ajax/sectioning/assignadviser/{adviser}', 'Registrar\Sectioning\Ajax\AjaxController@assignadviser');
 
 //registrar report
 Route::get('/registrar/reports/enrollment_report', 'Registrar\Reports\reportsController@enrollment_report');

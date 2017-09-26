@@ -94,6 +94,7 @@ $academics = Illuminate\Support\Facades\DB::Select("Select distinct academic_pro
                                     <option value="3">Registrar</option>
                                     <option value="4">Cashier</option>
                                     <option value="5">Accounting</option>
+                                    <option value="10">Instructor</option>
                                 </select>    
                                 <input type="hidden" name="isactive" value="1">
                                 @if ($errors->has('idno'))

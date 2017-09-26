@@ -4,6 +4,7 @@
 <?php
 $levels = \App\CtrAcademicProgram::distinct()->where('academic_type', "Senior High School")->get(['level']);
 $tracks = \App\CtrAcademicProgram::distinct()->where('academic_type', "Senior High School")->get(['track']);
+$advisers = \App\User::where('accesslevel', 10)->get();
 ?>
 <style>
     .label{color: gray;}
@@ -38,12 +39,15 @@ $tracks = \App\CtrAcademicProgram::distinct()->where('academic_type', "Senior Hi
                             <option>Select Section</option>
                         </select>
                     </div>
-<!--                    <div class="col-sm-3">
-                        <label class="label">Adviser</label>
-                        <select class="form form-control">
-                            <option>Select Adviser</option>
+                    <div class="col-sm-3">
+                        <label class="label">Class Adviser</label>
+                        <select class="form form-control" id="adviser" name="adviser" onchange="assignAdviser(this.value)">
+                            <option value="">Select Adviser</option>
+                            @foreach ($advisers as $adviser)
+                            <option value="{{$adviser->idno}}">{{$adviser->lastname}}, {{$adviser->firstname}} {{$adviser->middlename}} {{$adviser->extensionname}}</option>
+                            @endforeach
                         </select>
-                    </div>-->
+                    </div>
                 </div>
             </form>
             <div id="studentList" class="col-sm-6">
@@ -115,6 +119,19 @@ $tracks = \App\CtrAcademicProgram::distinct()->where('academic_type', "Senior Hi
             }
         });
         getStudentList(level, track);
+    }
+    function assignAdviser(adviser){
+        array = {};
+        array['section'] = $("#section").val();
+        array['level'] = $("#level").val();
+        array['track'] = $("#track").val();
+        $.ajax({
+            type: "GET",
+            url: "/ajax/sectioning/assignadviser/" + adviser,
+            data: array,
+            success: function(data) {
+            }
+        });
     }
 </script>
 @stop

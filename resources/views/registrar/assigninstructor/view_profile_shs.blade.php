@@ -26,49 +26,45 @@
                         
             <?php
             $user = \App\User::where('id', $instructor->id)->first();
-            $school_year = \App\CtrSchoolYear::where('academic_type', 'College')->first();
-            $loads = \App\CourseOffering::where('instructor_id', $user->id)->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get();
+            $school_year = \App\CtrGradeSchoolYear::where('academic_type', 'Senior High School')->first();
+            $loads = \App\CourseDetailsShs::where('instructor_id', $user->id)->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get();
 
-            $courses = \App\CourseOffering::distinct()->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get(['program_code']);
+            $courses = \App\CourseDetailsShs::distinct()->where('school_year', $school_year->school_year)->where('period', $school_year->period)->get(['track']);
             ?>
 
             Subject Load:
             @if (count($loads)>0)
             <table class="table table-condensed">
                 <thead>
-                <th class="col-sm-2">Subject Code</th>
+                <th class="col-sm-3">Subject Name</th>
                 <th class="col-sm-4">Section</th>
                 <th class="col-sm-3">Schedule</th>
-                <th class="col-sm-3">Room</th>
+                <th class="col-sm-2">Room</th>
                 </thead>
                 <tbody>
                     @foreach($loads as $load)
                     <tr>
                         <td>
                             <?php
-                            $schedules = \App\Schedule::where('course_offering_id', $load->id)->get();
+                            $schedules = \App\CourseDetailsShs::where('id', $load->id)->get();
                             ?>
-                            @if ($load->program_code=='Senior High School')
                             {{$load->course_name}}
-                            @else
-                            {{$load->course_code}}
-                            @endif
 
                         </td>
                         <td>
                             @if ($load->program_code=='Senior High School')
                             {{$load->track}} - {{$load->level}} - {{$load->section}}
                             @else 
-                            {{$load->program_code}} - {{$load->level}} year - section {{$load->section}}
+                            {{$load->track}} - {{$load->level}} - {{$load->section}}
                             @endif
                         </td>
                         <td>
                             <?php
-                            $schedule2s = \App\Schedule::distinct()->where('course_offering_id', $load->id)->get(['time_start', 'time_end', 'room']);
+                            $schedule2s = \App\CourseDetailsShs::distinct()->where('id', $load->id)->get(['time_start', 'time_end', 'room']);
                             ?>
                             @foreach ($schedule2s as $schedule2)
                             <?php
-                            $days = \App\Schedule::where('course_offering_id', $load->id)->where('time_start', $schedule2->time_start)->where('time_end', $schedule2->time_end)->where('room', $schedule2->room)->get(['day']);
+                            $days = \App\CourseDetailsShs::where('id', $load->id)->where('time_start', $schedule2->time_start)->where('time_end', $schedule2->time_end)->where('room', $schedule2->room)->get(['day']);
                             ?>
                             @foreach ($days as $day){{$day->day}}@endforeach {{date('g:i A', strtotime($schedule2->time_start))}} - {{date('g:i A', strtotime($schedule2->time_end))}} <br>
                             <!--{{$schedule2->day}} {{$schedule2->time_start}} - {{$schedule2->time_end}}<br>-->
@@ -76,7 +72,7 @@
                         </td>
                         <td>
                             <?php
-                            $schedule3s = \App\Schedule::distinct()->where('course_offering_id', $load->id)->get(['time_start', 'time_end', 'room']);
+                            $schedule3s = \App\CourseDetailsShs::distinct()->where('id', $load->id)->get(['time_start', 'time_end', 'room']);
                             ?>
                             @foreach ($schedule3s as $schedule3)
                             {{$schedule3->room}}<br>

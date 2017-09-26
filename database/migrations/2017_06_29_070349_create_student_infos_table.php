@@ -45,51 +45,58 @@ class CreateStudentInfosTable extends Migration
             //curriculum year of student
             $table->string('curriculum_year')->nullable();
             
-            $table->string('status_upon_admission');
+            $table->string('status_upon_admission')->nullable();
             
             //educational background
-            $table->string('primary');
-            $table->string('pri_school');
-            $table->string('pri_address');
-            $table->string('pri_from');
-            $table->string('pri_to');
-            $table->string('pri_degree');
-            $table->string('pri_awards');
-            $table->string('pri_awards_year');
-            $table->string('pri_lead');
-            $table->string('pri_lead_year');
-            $table->string('secondary');
-            $table->string('sec_school');
-            $table->string('sec_address');
-            $table->string('sec_from');
-            $table->string('sec_to');
-            $table->string('sec_degree');
-            $table->string('sec_awards');
-            $table->string('sec_awards_year');
-            $table->string('sec_lead');
-            $table->string('sec_lead_year');
-            $table->string('tertiary');
-            $table->string('ter_school');
-            $table->string('ter_address');
-            $table->string('ter_from');
-            $table->string('ter_to');
-            $table->string('ter_degree');
-            $table->string('ter_awards');
-            $table->string('ter_awards_year');
-            $table->string('ter_lead');
-            $table->string('ter_lead_year');
-            $table->string('vocational');
-            $table->string('voc_school');
-            $table->string('voc_address');
-            $table->string('voc_from');
-            $table->string('voc_to');
-            $table->string('voc_degree');
-            $table->string('others');
-            $table->string('oth_school');
-            $table->string('oth_address');
-            $table->string('oth_from');
-            $table->string('oth_to');
-            $table->string('oth_degree');
+            $table->string('pri_school')->nullable();
+            $table->string('pri_address')->nullable();
+            $table->string('pri_from')->nullable();
+            $table->string('pri_to')->nullable();
+            $table->string('pri_degree')->nullable();
+            $table->string('pri_awards')->nullable();
+            $table->string('pri_awards_year')->nullable();
+            $table->string('pri_lead')->nullable();
+            $table->string('pri_lead_year')->nullable();
+            $table->string('sec_school')->nullable();
+            $table->string('sec_address')->nullable();
+            $table->string('sec_from')->nullable();
+            $table->string('sec_to')->nullable();
+            $table->string('sec_degree')->nullable();
+            $table->string('sec_awards')->nullable();
+            $table->string('sec_awards_year')->nullable();
+            $table->string('sec_lead')->nullable();
+            $table->string('sec_lead_year')->nullable();
+            $table->string('ter_school')->nullable();
+            $table->string('ter_address')->nullable();
+            $table->string('ter_from')->nullable();
+            $table->string('ter_to')->nullable();
+            $table->string('ter_degree')->nullable();
+            $table->string('ter_awards')->nullable();
+            $table->string('ter_awards_year')->nullable();
+            $table->string('ter_lead')->nullable();
+            $table->string('ter_lead_year')->nullable();
+            $table->string('voc_school')->nullable();
+            $table->string('voc_address')->nullable();
+            $table->string('voc_from')->nullable();
+            $table->string('voc_to')->nullable();
+            $table->string('voc_degree')->nullable();
+            $table->string('oth_school')->nullable();
+            $table->string('oth_address')->nullable();
+            $table->string('oth_from')->nullable();
+            $table->string('oth_to')->nullable();
+            $table->string('oth_degree')->nullable();
+            
+            //other information
+            $table->string('hobbies')->nullable();
+            $table->string('sports')->nullable();
+            $table->string('talents')->nullable();
+            
+            //incase of emergency
+            $table->string('emergency_contact_person')->nullable();
+            $table->string('emergency_relationship')->nullable();
+            $table->string('emergency_address')->nullable();
+            $table->string('emergency_contact_no')->nullable();
+            
             
             $table->timestamps();
             $table->foreign('idno')

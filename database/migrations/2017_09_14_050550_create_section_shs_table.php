@@ -19,6 +19,8 @@ class CreateSectionShsTable extends Migration
             $table->string('track');
             $table->string('level');
             $table->string('school_year');
+            $table->string('adviser_id')->nullable();
+            $table->string('adviser_name')->nullable();
             $table->timestamps();
         });
     }

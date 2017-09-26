@@ -54,7 +54,8 @@ class AjaxController extends Controller
             return view('registrar.sectioning.ajax.sectionlist', compact('lists'));
             
         }
-    }function removetosection($idno){
+    }
+    function removetosection($idno){
         if (Request::ajax()){
             $level = Input::get("level");
             $section = Input::get("section");
@@ -67,6 +68,21 @@ class AjaxController extends Controller
             $school_year = \App\CtrSchoolYear::where('academic_type', "Senior High School")->first();
             $lists = \App\Status::where('section', $section)->where('level', $level)->where('status', 4)->where('school_year', $school_year->school_year)->get();
             return view('registrar.sectioning.ajax.sectionlist', compact('lists'));
+            
+        }        
+    }
+    function assignadviser($adviser){
+        if (Request::ajax()){
+            $level = Input::get("level");
+            $section = Input::get("section");
+            $track = Input::get("track");
+            $school_year = \App\CtrSchoolYear::where('academic_type', "Senior High School")->first();
+            $user = \App\User::where('idno', $adviser)->first();
+            
+            $updatesection = \App\SectionShs::where('level', $level)->where('track', $track)->where('section', $section)->where('school_year', $school_year->school_year)->first();
+            $updatesection->adviser_id = $adviser;
+            $updatesection->adviser_name = $user->firstname." ".$user->lastname." ".$user->extensionname;
+            $updatesection->save();
             
         }
     }
