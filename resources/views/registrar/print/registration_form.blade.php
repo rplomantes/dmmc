@@ -97,8 +97,13 @@
             @endif
         </td>
         @else
-        <td class='tds' style='font-size:12px'></td>
-        <td class='tds' style='font-size:12px'></td>
+        <td class='tds' style='font-size:12px'>
+            
+        </td>
+        <td class='tds' style='font-size:12px'>
+            
+        </td>
+
         @endif
         
         <td class='tds' align='center'>@if($status->academic_type!='Senior High School')<?php $total = $total + $grade->lec; ?>{{$grade->lec}} @else <?php $total = $total + $grade->hours; ?>{{$grade->hours}} @endif</td>
