@@ -4,7 +4,7 @@
 <?php
 $levels = \App\CtrAcademicProgram::distinct()->where('academic_type', "Senior High School")->get(['level']);
 $tracks = \App\CtrAcademicProgram::distinct()->where('academic_type', "Senior High School")->get(['track']);
-$advisers = \App\User::where('accesslevel', 10)->get();
+//$advisers = \App\User::where('accesslevel', 10)->get();
 ?>
 <style>
     .label{color: gray;}
@@ -33,6 +33,7 @@ $advisers = \App\User::where('accesslevel', 10)->get();
                             @endforeach
                         </select>
                     </div>
+                    <div id="sectionandinstructor">
                     <div class="col-sm-3">
                         <label class="label">Section</label>
                         <select class="form form-control" id="section" name="section" onchange="getSectionList(this.value, level.value)">
@@ -42,11 +43,9 @@ $advisers = \App\User::where('accesslevel', 10)->get();
                     <div class="col-sm-3">
                         <label class="label">Class Adviser</label>
                         <select class="form form-control" id="adviser" name="adviser" onchange="assignAdviser(this.value)">
-                            <option value="">Select Adviser</option>
-                            @foreach ($advisers as $adviser)
-                            <option value="{{$adviser->idno}}">{{$adviser->lastname}}, {{$adviser->firstname}} {{$adviser->middlename}} {{$adviser->extensionname}}</option>
-                            @endforeach
+                            <option value="None">Select Adviser</option>
                         </select>
+                    </div>
                     </div>
                 </div>
             </form>
@@ -65,7 +64,7 @@ $advisers = \App\User::where('accesslevel', 10)->get();
             type: "GET",
             url: "/ajax/sectioning_shs/" + level + "/" + track,
             success: function (data) {
-                $('#section').html(data);
+                $('#sectionandinstructor').html(data);
             }
         }
         );

@@ -18,12 +18,13 @@ class AjaxController extends Controller
         if (Request::ajax()) {
             $school_year = \App\CtrSchoolYear::where('academic_type', "Senior High School")->first();
             $sections = \App\SectionShs::where('level',$level)->where('school_year', $school_year->school_year)->where('track', $track)->get();
-            $data = "<select class=\"form form-control\"><option value=\"\">Select Section</option>";
-            foreach ($sections as $section){
-                $data = $data."<option value='".$section->section."'>".$section->section."</option>";
-            }
-            $data = $data."</select>";
-            return $data;
+//            $data = "<select class=\"form form-control\"><option value=\"\">Select Section</option>";
+//            foreach ($sections as $section){
+//                $data = $data."<option value='".$section->section."'>".$section->section."</option>";
+//            }
+//            $data = $data."</select>";
+//            return $data;
+            return view('registrar.sectioning.ajax.getlevel', compact('sections'));
         }
     }
     function getStudentList($level, $track){
@@ -77,11 +78,18 @@ class AjaxController extends Controller
             $section = Input::get("section");
             $track = Input::get("track");
             $school_year = \App\CtrSchoolYear::where('academic_type', "Senior High School")->first();
-            $user = \App\User::where('idno', $adviser)->first();
+            
+            if($adviser=="None"){
+                $advisername = NULL;
+                $adviser = NULL;
+            }else{
+                $user = \App\User::where('idno', $adviser)->first();
+                $advisername = $user->firstname." ".$user->lastname." ".$user->extensionname;
+            }
             
             $updatesection = \App\SectionShs::where('level', $level)->where('track', $track)->where('section', $section)->where('school_year', $school_year->school_year)->first();
             $updatesection->adviser_id = $adviser;
-            $updatesection->adviser_name = $user->firstname." ".$user->lastname." ".$user->extensionname;
+            $updatesection->adviser_name = $advisername;
             $updatesection->save();
             
         }

@@ -13,7 +13,6 @@ class shsCourseSchedule extends Controller {
     {
         $this->middleware('auth');
     }
-    
     function getcourses($track) {
         if (Request::ajax()) {
 
@@ -22,7 +21,7 @@ class shsCourseSchedule extends Controller {
             $section = Input::get("level");
             $level = Input::get("section");
 
-            $courses = \App\CourseOffering::where('track', $track)
+            $courses = \App\CourseDetailsShs::where('track', $track)
                     ->where('school_year', $school_year)
                     ->where('section', $section)
                     ->where('level', $level)
@@ -47,14 +46,14 @@ class shsCourseSchedule extends Controller {
 //                    ->get();
 //            return view('registrar.ajax.college_getexistingsched', compact('schedules'));
             
-            $courses = \App\Schedule::distinct()->join('course_offerings', 'course_offering_id', '=', 'course_offerings.id')
-                    ->where('course_offerings.school_year', $school_year)
-                    ->where('course_offerings.period', $period)
+            $courses = \App\ScheduleShs::distinct()->join('course_details_shs', 'course_offering_id', '=', 'course_details_shs.id')
+                    ->where('course_details_shs.school_year', $school_year)
+                    ->where('course_details_shs.period', $period)
                     ->where('room', $room)
                     ->orderBy('course_code')
-                    ->get(['course_offering_id', 'course_code', 'program_code', 'level', 'section']);
+                    ->get(['course_offering_id', 'course_code', 'course_name','track' ,'level', 'section']);
             
-            return view('registrar.ajax.college_getexistingsched', compact('courses', 'school_year', 'period', 'room'));
+            return view('registrar.ajax.shs_getexistingsched', compact('courses', 'school_year', 'period', 'room'));
         }
     }
 
@@ -69,7 +68,7 @@ class shsCourseSchedule extends Controller {
             $time_start = Input::get("time_start");
             $time_end = Input::get("time_end");
 
-            $addsched = new Schedule;
+            $addsched = new \App\ScheduleShs();
             $addsched->course_offering_id = $course_id;
             $addsched->room = "$room";
             $addsched->day = "$day";
@@ -77,9 +76,9 @@ class shsCourseSchedule extends Controller {
             $addsched->time_end = "$time_end";
             $addsched->save();
          
-            $schedules = \App\Schedule::where('course_offering_id', $course_id)->get();
+            $schedules = \App\ScheduleShs::where('course_offering_id', $course_id)->get();
         
-        return view('registrar.ajax.college_popsched', compact('schedules'));
+        return view('registrar.ajax.shs_popsched', compact('schedules'));
         }
     }
     
@@ -91,7 +90,7 @@ class shsCourseSchedule extends Controller {
             $period = Input::get("period");
             $room = Input::get("room");
             
-            $changeroom = Schedule::where('id', $sched_id)->first();
+            $changeroom = \App\ScheduleShs::where('id', $sched_id)->first();
             $changeroom->room=$value;
             $changeroom->save();
 
@@ -107,7 +106,7 @@ class shsCourseSchedule extends Controller {
             $period = Input::get("period");
             $room = Input::get("room");
             
-            $changeday = Schedule::where('id', $sched_id)->first();
+            $changeday = \App\ScheduleShs::where('id', $sched_id)->first();
             $changeday->day=$value;
             $changeday->save();
 
@@ -124,7 +123,7 @@ class shsCourseSchedule extends Controller {
             $period = Input::get("period");
             $room = Input::get("room");
             
-            $changetime = Schedule::where('id', $sched_id)->first();
+            $changetime = \App\ScheduleShs::where('id', $sched_id)->first();
             $changetime->time_start=$value;
             $changetime->save();
 
@@ -141,7 +140,7 @@ class shsCourseSchedule extends Controller {
             $period = Input::get("period");
             $room = Input::get("room");
             
-            $changetime = Schedule::where('id', $sched_id)->first();
+            $changetime = \App\ScheduleShs::where('id', $sched_id)->first();
             $changetime->time_end=$value;
             $changetime->save();
 
@@ -156,12 +155,12 @@ class shsCourseSchedule extends Controller {
             
             $course_id = Input::get("course_id");
             
-            $changetime = Schedule::where('id', $sched_id)->first();
+            $changetime = \App\ScheduleShs::where('id', $sched_id)->first();
             $changetime->delete();
 
-            $schedules = \App\Schedule::where('course_offering_id', $course_id)->get();
+            $schedules = \App\ScheduleShs::where('course_offering_id', $course_id)->get();
         
-        return view('registrar.ajax.college_popsched', compact('schedules'));
+        return view('registrar.ajax.shs_popsched', compact('schedules'));
             
         }
     }
@@ -179,6 +178,20 @@ class shsCourseSchedule extends Controller {
              return $data;
         }else{
             return ['value'=>'No Result Found','id'=>''];
+        }
+    }
+    
+    function getsection($level){
+        if (Request::ajax()) {
+            $track = Input::get("track");
+            $school_year = \App\CtrSchoolYear::where('academic_type', "Senior High School")->first();
+            $sections = \App\SectionShs::where('level',$level)->where('track', $track)->where('school_year', $school_year->school_year)->get();
+            $data = "<select class=\"form form-control\"><option value=\"\">Select Section</option>";
+            foreach ($sections as $section){
+                $data = $data."<option value='".$section->section."'>".$section->section."</option>";
+            }
+            $data = $data."</select>";
+            return $data;
         }
     }
 

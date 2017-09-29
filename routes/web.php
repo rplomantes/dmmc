@@ -23,6 +23,7 @@ Route::get('/','Main\loginController@index');
 
 //Registrar Main
 Route::get('/registrar/viewstudentprofile/{idno}','Registrar\Main\StudentProfile@index');
+Route::get('/registrar/printstudentprofile/{idno}', 'Registrar\Main\StudentProfile@printProfile');
 
 //Student Profile
 Route::post('/registrar/update_profile', 'Registrar\Main\StudentProfile@update');
@@ -62,6 +63,7 @@ Route::get('/registrar/course_scheduling/college','Registrar\CourseSchedule\Coll
 Route::get('/registrar/course_scheduling_list/{id}','Registrar\CourseSchedule\CollegeCourseSchedule@listcourseschedule');
 //shs
 Route::get('/registrar/course_scheduling/shs','Registrar\CourseSchedule\SHSCourseSchedule@index');
+Route::get('/registrar/course_scheduling_list_shs/{id}','Registrar\CourseSchedule\SHSCourseSchedule@listcourseschedule');
 
 //Registrar Assign Instructor
 Route::get('/registrar/assign_instructor/college', 'Registrar\AssignInstructor\CollegeAssignInstructorController@index');
@@ -122,6 +124,7 @@ Route::get('/registrar/ajax/shs/getsubject/{track}/{curriculum_year}/{level}/{se
 Route::get('/registrar/ajax/shs/removesubject/{id}','Registrar\Ajax\shsCourseOffering@removeSubject');
 Route::get('/registrar/ajax/shs/addallsubjects','Registrar\Ajax\shsCourseOffering@addAllSubjects');
 Route::get('/registrar/ajax/shs/getyearsection/{track}','Registrar\Ajax\shsCourseSchedule@getcourses');
+Route::get('/registrar/ajax/shs_course_offering/getsection/{level}', 'Registrar\Ajax\shsCourseOffering@getsection');
 
 //ajax resistrar course offering
 Route::get('/registrar/ajax/addschedule_college','Registrar\Ajax\collegeCourseSchedule@addschedule');
@@ -131,7 +134,19 @@ Route::get('/registrar/ajax/changetime_start_college/{sched_id}/{value}','Regist
 Route::get('/registrar/ajax/changetime_end_college/{sched_id}/{value}','Registrar\Ajax\collegeCourseSchedule@changetime_end');
 Route::get('/registrar/ajax/deletesched_college/{sched_id}','Registrar\Ajax\collegeCourseSchedule@deletesched');
 Route::get('/registrar/ajax/room/autocomplete','Registrar\Ajax\collegeCourseSchedule@getlistroom');
-Route::get('/registrar/ajax/shs_course_offering/getsection/{level}', 'Registrar\Ajax\shsCourseOffering@getsection');
+//shs
+Route::get('/registrar/ajax/addschedule_shs','Registrar\Ajax\shsCourseSchedule@addschedule');
+Route::get('/registrar/ajax/getexistingsched_shs/{room}','Registrar\Ajax\shsCourseSchedule@getexistingsched');
+Route::get('/registrar/ajax/changeroom_shs/{sched_id}/{value}','Registrar\Ajax\shsCourseSchedule@changeroom');
+Route::get('/registrar/ajax/changeday_shs/{sched_id}/{value}','Registrar\Ajax\shsCourseSchedule@changeday');
+Route::get('/registrar/ajax/changetime_start_shs/{sched_id}/{value}','Registrar\Ajax\shsCourseSchedule@changetime_start');
+Route::get('/registrar/ajax/changetime_end_shs/{sched_id}/{value}','Registrar\Ajax\shsCourseSchedule@changetime_end');
+Route::get('/registrar/ajax/deletesched_shs/{sched_id}','Registrar\Ajax\shsCourseSchedule@deletesched');
+Route::get('/registrar/ajax/room/autocomplete_shs','Registrar\Ajax\shsCourseSchedule@getlistroom');
+
+//ajax registrar course schedule
+Route::get('/registrar/ajax/shs_course_schedule/getsection/{level}','Registrar\Ajax\shsCourseSchedule@getsection');
+Route::get('/registrar/ajax/getyearsection_shs/{track}','Registrar\Ajax\shsCourseSchedule@getcourses');
 
 //ajax registrar assign instructor
 Route::get('/registrar/ajax/get_courseoffering_college','Registrar\Ajax\collegeAssignInstructor@getcourses');
@@ -141,6 +156,7 @@ Route::get('/registrar/ajax/remove_coursetoinstructor_college/{id}','Registrar\A
 Route::get('/registrar/ajax/get_courseoffering_shs','Registrar\Ajax\shsAssignInstructor@getcourses');
 Route::get('/registrar/ajax/add_coursetoinstructor_shs/{id}','Registrar\Ajax\shsAssignInstructor@addcourses');
 Route::get('/registrar/ajax/remove_coursetoinstructor_shs/{id}','Registrar\Ajax\shsAssignInstructor@removecourses');
+Route::get('/registrar/ajax/loadsubjects_shs/getsection/{level}/{track}', 'Registrar\Ajax\shsAssignInstructor@getlevel');
 
 //registrar payment_assessment
 Route::post('/registrar/process_payment','Registrar\Assessment\processPayment@index');

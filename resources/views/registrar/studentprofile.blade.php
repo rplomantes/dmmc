@@ -44,16 +44,40 @@ $getmother = \App\Family::where('idno', $idno)->where('family_role', "Mother")->
                                     <td><label class="label">Contact Number:</label><input class="form form-control" type="text" value="{{$student_info->contact_no}}" name="contact_no" placeholder="Contact Number"></td>
                                 </tr>
                                 <tr>
-                                    <td><label class="label">Date of Birth</label><input class="form form-control" type="text" value="{{$student_info->birthdate}}" id="datepicker" name="birthdate" placeholder="yyyy/mm/dd"></td>
-                                    <td><label class="label">Age</label><input class="form form-control" type="text" value="" placeholder="Age"></td>
+                                    <td><label class="label">Date of Birth</label><input class="form form-control" type="text" value="{{$student_info->birthdate}}" onchange='getAge()' id="datepicker" name="birthdate" placeholder="yyyy/mm/dd"></td>
+                                    <td><label class="label">Age</label><input class="form form-control" type="text" placeholder="Age" id='age'></td>
                                     <td><label class="label">Place of Birth</label><input class="form form-control" type="text" value="{{$student_info->place_of_birth}}" name="place_of_birth" placeholder="Place of Birth"></td>
                                     <td><label class="label">Citizenship</label><input class="form form-control" type="text" value="{{$student_info->citizenship}}" name="citizenship" placeholder="Citizenship"></td>
                                 </tr>
                                 <tr>
-                                    <td><label class="label">Civil Status</label><input class="form form-control" type="text" value="{{$student_info->civil_status}}" name="civil_status" placeholder="Civil Status"></td>
+                                    <td><label class="label">Civil Status</label>
+                                        <select name="civil_status" class="form form-control">
+                            <option value="single" @if ($student_info->civil_status== 'single')
+                                    selected='selected'
+                                    @endif>Single</option>
+                            <option value="married"@if ($student_info->civil_status== 'married')
+                                    selected='selected'
+                                    @endif>Married</option>
+                            <option value="divorced"@if ($student_info->civil_status== 'divorced')
+                                    selected='selected'
+                                    @endif>Divorced</option>
+                            <option value="widowed"@if ($student_info->civil_status== 'widowed')
+                                    selected='selected'
+                                    @endif>Widowed</option>
+                        </select>
+                                    </td>
                                     <td><label class="label">Religion</label><input class="form form-control" type="text" value="{{$student_info->religion}}" name="religion" placeholder="Religion"></td>   
-                                    <td><label class="label">Gender</label><input class="form form-control" type="text" value="{{$student_info->gender}}" name="gender" placeholder="Gender"></td>
-                                    <td><label class="label">Email Address</label><input class="form form-control" type="email" value="{{$user->email}}" name="email" placeholder="Email Address"></td>                                
+                                    <td><label class="label">Gender</label>
+                                        <select name="gender" class="form form-control">
+                            <option value="Male" @if ($student_info->gender== 'Male')
+                                    selected='selected'
+                                    @endif>Male</option>
+                            <option value="Female"@if ($student_info->gender== 'Female')
+                                    selected='selected'
+                                    @endif>Female</option>
+                        </select>
+                                    </td>
+                                    <td><label class="label">Email Address</label><input class="form form-control" type="email" value="{{$user->email}}" name="email" placeholder="Email Address" required=""></td>                                
                                 </tr>
                             </table>
                         </div>
@@ -271,9 +295,28 @@ $getmother = \App\Family::where('idno', $idno)->where('family_role', "Mother")->
                     </div>
                 </div>-->
             </div>
-            <button class="btn btn-success" type="submit">Save</button> <a href="/" target="_blank"  class="btn btn-primary">Print</a>
+            <button class="btn btn-success" type="submit">Save</button> <a href="{{url('registrar', array('printstudentprofile', $idno))}}" target="_blank"  class="btn btn-primary">Print</a>
         </form>
         </div>
     </div>
 </div>
+
+<script>
+function getAge(){
+    var bdate = document.getElementById("datepicker").value;
+    var date1 = new Date(bdate);
+    var date2 = new Date();
+    var timeDiff = Math.abs(date2.getYear() - date1.getYear());
+    var month = 0;
+    if(date2.getMonth() < date1.getMonth()){
+        timeDiff = timeDiff-1;
+        month = 12-date1.getMonth();
+        month = month+date2.getMonth();
+    } else {
+        month=date2.getMonth()-date1.getMonth();
+    }
+    document.getElementById("age").value = timeDiff + "." + month;    
+}
+    window.onload = getAge();
+</script>
 @stop

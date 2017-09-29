@@ -103,8 +103,16 @@ $courses = \App\CourseDetailsShs::distinct()->where('school_year', $school_year-
             <!-- topleft -->
             <div class="col-sm-12">
                 <div class="col-sm-2">
+                    <label class="label">Level</label>
+                    <select id="level" class="form form-control" >
+                        <option value="">Level</option>
+                        <option value="Grade 11">Grade 11</option>
+                        <option value="Grade 12">Grade 12</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
                     <label class="label">Course</label>
-                    <select id="track" class="form form-control">
+                    <select id="track" class="form form-control" onchange="getSection(level.value, this.value);">
                         <option value="">Strand</option>
                         @foreach($courses as $course)
                         <option>{{$course->track}}</option>
@@ -112,21 +120,9 @@ $courses = \App\CourseDetailsShs::distinct()->where('school_year', $school_year-
                     </select>
                 </div>
                 <div class="col-sm-2">
-                    <label class="label">Level</label>
-                    <select id="level" class="form form-control">
-                        <option value="">Level</option>
-                        <option value="Grade 11">Grade 11</option>
-                        <option value="Grade 12">Grade 12</option>
-                    </select>
-                </div>
-                <div class="col-sm-2">
                     <label class="label">Section</label>
                     <select id="section" class="form form-control" onchange="loadcourseoffering()">
-                        <option value="">Section</option>
-                        <option value="Einstein">Section 1</option>
-                        <option value="2">Section 2</option>
-                        <option value="3">Section 3</option>
-                        <option value="4">Section 4</option>
+                        <option value="">Select Section</option>
                     </select>
                 </div>
             </div>
@@ -243,6 +239,16 @@ $courses = \App\CourseDetailsShs::distinct()->where('school_year', $school_year-
             }
 
     });
+    }
+    function getSection(level, track) {
+        $.ajax({
+            type: "GET",
+            url: "/registrar/ajax/loadsubjects_shs/getsection/" + level + "/" + track,
+            success: function (data) {
+                $('#section').html(data);
+            }
+        }
+        );
     }
 </script>
 </div>

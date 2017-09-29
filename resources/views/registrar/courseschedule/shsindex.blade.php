@@ -27,7 +27,7 @@
                     <div id="yearsection">
                         <div class="col-sm-3">
                             <label class="label">Level</label>
-                            <select id="level" class="form form-control">
+                            <select id="level" class="form form-control" onchange="getSection(this.value)">
                                 <option value=""></option>
                                 <option value="Grade 11">Grade 11</option>
                                 <option value="Grade 12">Grade 12</option>
@@ -37,10 +37,6 @@
                             <label class="label">Section</label>
                             <select id="section" class="form form-control" onchange="getyearsection(track.value)">
                                 <option value=""></option>
-                                <option value="1">Section 1</option>
-                                <option value="2">Section 2</option>
-                                <option value="3">Section 3</option>
-                                <option value="4">Section 4</option>
                             </select>
                         </div>
                     </div>
@@ -61,13 +57,26 @@
         array['level'] = $("#section").val();
         $.ajax({
             type: "GET",
-            url: "/registrar/ajax/getyearsection/shs/" + track,
+            url: "/registrar/ajax/getyearsection_shs/" + track,
             data: array,
             success: function (data) {
                 $('#courses').html(data);
             }
 
         });
+    }
+    function getSection(level) {
+    array = {};   
+    array['track'] = $("#track").val();
+        $.ajax({
+            type: "GET",
+            url: "/registrar/ajax/shs_course_schedule/getsection/" + level,
+            data: array,
+            success: function (data) {
+                $('#section').html(data);
+            }
+        }
+        );
     }
 </script>
 @stop

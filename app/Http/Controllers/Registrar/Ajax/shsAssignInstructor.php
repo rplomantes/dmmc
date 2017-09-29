@@ -13,6 +13,19 @@ class shsAssignInstructor extends Controller {
         $this->middleware('auth');
     }
     
+    function getLevel($level, $track){
+        if (Request::ajax()) {
+            $school_year = \App\CtrSchoolYear::where('academic_type', "Senior High School")->first();
+            $sections = \App\SectionShs::where('level',$level)->where('school_year', $school_year->school_year)->where('track', $track)->get();
+            $data = "<select class=\"form form-control\"><option value=\"\">Select Section</option>";
+            foreach ($sections as $section){
+                $data = $data."<option value='".$section->section."'>".$section->section."</option>";
+            }
+            $data = $data."</select>";
+            return $data;
+        }
+    }
+    
     function getcourses() {
         if (Request::ajax()) {
 

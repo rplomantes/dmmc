@@ -178,7 +178,6 @@ class paymentAssessmentSHS extends Controller {
                     if ($this->checksubjectshs($idno, $offering->course_code)) {
                         $newgrade = new \App\GradeShs;
                         $newgrade->idno = $idno;
-                        $newgrade->course_offering_id = 1; //$offering->id;
                         $newgrade->course_code = $offering->course_code;
                         $newgrade->course_name = $offering->course_name;
                         $newgrade->school_year = $school_year; //$offering->school_year

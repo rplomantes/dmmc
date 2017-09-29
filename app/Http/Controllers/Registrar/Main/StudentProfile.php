@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Registrar\Main;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use PDF;
 
 class StudentProfile extends Controller
 {
@@ -162,5 +163,11 @@ class StudentProfile extends Controller
         $addmother->family_role = "Mother";
         $addmother->save();
         }
+    }
+    
+    function printProfile($idno){
+        $pdf = PDF::loadView('registrar.print.studentInformationSheet', compact('idno'));
+        $pdf->setPaper(array(0,0,612.00,936.0));
+        return $pdf->stream("student_information_sheet_$idno.pdf");
     }
 }

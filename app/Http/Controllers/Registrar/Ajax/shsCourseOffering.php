@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
 use DB;
-use App\CourseOffering;
 
 class shsCourseOffering extends Controller {
 

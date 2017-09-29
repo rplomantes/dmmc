@@ -55,6 +55,7 @@ class registrationController extends Controller
         }
         
         $pdf = PDF::loadView('registrar.print.registration_form', compact('grades','user', 'status','school_year', 'ledger_due_dates', 'downpayment','y'));
+        $pdf->setPaper(array(0,0,612.00,936.0));
         return $pdf->stream("registration_form_$status->registration_no.pdf");
     }
 }
