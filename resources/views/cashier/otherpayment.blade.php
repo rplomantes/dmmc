@@ -204,19 +204,7 @@ $otherpayment = \App\OtherPayment::distinct()->get(['accounting_name']);
 
 <script>
         $(document).ready(function(){
-        $("#paymentform").submit(function(e) {
-        target =  e.originalEvent.explicitOriginalTarget.id  || e.target.id
-        if ( target == "submit") {
-        // let the form submit
-        $("#change").removeAttr('disabled');
-        return true;
-        }
-        else {
-        
-        e.preventDefault();
-        return false;
-        }
-        });
+   
     
         $("#donereg").click(function(){
         $("#receivepayment").css("visibility",'visible'); 
@@ -231,7 +219,12 @@ $otherpayment = \App\OtherPayment::distinct()->get(['accounting_name']);
    
    $("#checkamount").keypress(function(e){
        //alert("hello")
-       checkFunction(e.keyCode);
+       ;
+       if(e.keyCode==13){
+       checkFunction()    
+       e.preventDefault();
+       return false;
+       }
    });
         
          $(".acctname1").focus();   
@@ -270,6 +263,8 @@ $otherpayment = \App\OtherPayment::distinct()->get(['accounting_name']);
        var ev = e.keyCode || event.which
        if(ev==13){
            $("#checkno").focus();
+           e.preventDefault();
+           return false;
        }
    })
             
@@ -277,6 +272,8 @@ $otherpayment = \App\OtherPayment::distinct()->get(['accounting_name']);
            var ev = e.keyCode || event.which
            if(ev==13){
            $("#checkamount").focus();
+            e.preventDefault();
+           return false;
             }
             })
             
@@ -310,7 +307,8 @@ $otherpayment = \App\OtherPayment::distinct()->get(['accounting_name']);
                 } else {
                     $("#bank").focus();
                 }
-                
+                 e.preventDefault();
+                 return false;
                 break;
         }
     });
@@ -327,6 +325,8 @@ $otherpayment = \App\OtherPayment::distinct()->get(['accounting_name']);
            
            $("#submit").css('visibility','visible');
            $("#submit").focus();
+           e.preventDefault();
+           return false;
        }
    })
             
@@ -348,6 +348,8 @@ $otherpayment = \App\OtherPayment::distinct()->get(['accounting_name']);
                         $("#other_total").val(totalamount.toFixed(2))
                         $("#add").focus();
                         $("#donereg").css("visibility","visible")
+                         e.preventDefault();
+                         return false;
                  }
         }
        
@@ -371,7 +373,10 @@ $otherpayment = \App\OtherPayment::distinct()->get(['accounting_name']);
                }
            });
            
-         }}
+         }
+          e.preventDefault();
+           return false;
+        }
        }
       
     function popotherpayment(i) {
@@ -391,19 +396,20 @@ $otherpayment = \App\OtherPayment::distinct()->get(['accounting_name']);
     function gotoexplanation(i,envt){
         if(envt.keyCode==13){
             $("#explanation" + i).focus();
+            envt.preventDefault()
+            return false;
         }
     }
     
     function gotoother_amount(i,evt){
         if(evt.keyCode==13){
             $("#other_amount" + i).focus()
+            evt.preventDefault()
+            return false;
         }
     }
     
-    function checkFunction(evt){
-    if(evt==13){
-        
-        
+    function checkFunction(){    
         if(parseFloat($("#checkamount").val()) > parseFloat($("#other_total").val())){
             alert("Invalid Amount. The Amount in Check Should Not Be Greater Than " + $("#other_total").val()) 
             $("#checkamunt").val("");
@@ -427,7 +433,8 @@ $otherpayment = \App\OtherPayment::distinct()->get(['accounting_name']);
                 $("#remarks").removeAttr('disabled');
                 $("#remarks").focus();
             }
-        }}
+        }
+        
     }
 
     </script>

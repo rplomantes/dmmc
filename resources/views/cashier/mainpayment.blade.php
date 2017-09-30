@@ -124,21 +124,10 @@ $(document).ready(function(){
                     if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
                     this.value = this.value.replace(/[^0-9\.]/g, '');
                 }}); 
-    $("#paymentform").submit(function(e) {
-     target =  e.originalEvent.explicitOriginalTarget.id  || e.target.id
-    if ( target == "submit") {
-        // let the form submit
-        $("#change").removeAttr('disabled');
-        return true;
-    }
-    else {
-        
-        e.preventDefault();
-        return false;
-    }
-    });
-        
-     
+            
+   
+    
+   
     
     
     if($("#previousaccount").val() > 0){
@@ -173,7 +162,8 @@ $(document).ready(function(){
                 } else {
                     $("#bank").focus();
                 }
-                
+                e.preventDefault();
+                return false;
                 break;
         }
     });
@@ -187,6 +177,8 @@ $(document).ready(function(){
        var ev = e.keyCode || event.which
        if(ev==13){
            $("#checkno").focus();
+           e.preventDefault();
+           return false;
        }
    })
    
@@ -194,6 +186,8 @@ $(document).ready(function(){
        var ev = e.keyCode || event.which
        if(ev==13){
            $("#checkamount").focus();
+           e.preventDefault();
+           return false;
        }
    })
    
@@ -206,6 +200,11 @@ $(document).ready(function(){
    $("#checkamount").keypress(function(e){
        //alert("hello")
        checkFunction(e.keyCode);
+       if(e.keyCode==13){
+       e.preventDefault();
+       return false;
+      }
+      
    });
    $("#remarks").keypress(function(e){
        var ev = e.keyCode || event.which
@@ -219,6 +218,8 @@ $(document).ready(function(){
            
            $("#submit").css('visibility','visible');
            $("#submit").focus();
+           e.preventDefault();
+           return false;
        }
    })
 });
@@ -251,6 +252,7 @@ function checkFunction(evt){
                 $("#remarks").focus();
             }
         }
+       
     }
 }
 
@@ -267,7 +269,7 @@ function myevent(varobject, varnextobject,total){
                         $("#receivepayment").css('visibility','hidden');
                         break;
                         
-                        case 13:
+                        case 13: 
                         //totalprevious = {{$totalprevious}};
                         if(object.val() > total){
                             alert("The Value Should Not Be Greater Than " + total);
@@ -288,6 +290,8 @@ function myevent(varobject, varnextobject,total){
                                 processcompute();   
                             }
                            }
+                           e.preventDefault();
+                           return false;
                            break;
                         default:
                         $("#receivepayment").css('visibility','hidden');
@@ -297,7 +301,8 @@ function myevent(varobject, varnextobject,total){
                     if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
                     this.value = this.value.replace(/[^0-9\.]/g, '');
                 } 
-                }) 
+                 })
+                 
     
 }
 
@@ -339,6 +344,8 @@ function otherFunction(e,object,maxamount){
         {    
         processcompute();
     }
+    e.preventDefault();
+    return false;
     }else{
         $("#receivepayment").css('visibility','hidden');
     }

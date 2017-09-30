@@ -70,6 +70,7 @@ class MainPayment extends Controller
              $status = \App\Status::where('idno',$idno)->first();
              if($status->status==3){
                 $status->status=4;
+                $status->date_enrolled=\Carbon\Carbon::now();
                 $status->update();
              }
              
@@ -116,7 +117,7 @@ class MainPayment extends Controller
                         $acctentry->save();
                         
                         if($discount > 0){
-                            $discounts = \App\CtrDiscount::where("discount_code",$account->accounting_code)->first();
+                            $discounts = \App\CtrDiscount::where("discount_code",$account->discount_code)->first();
                             $debit_accounting_code = $discounts->accounting_code;
                             $debit_description = $discounts->discount_description;
                             $acctentry = new \App\Accounting;
