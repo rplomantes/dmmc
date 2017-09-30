@@ -56,7 +56,7 @@ $school_year = \App\CtrSchoolYear::where('academic_type', $status->academic_type
                 </table>
                 
                 <table class="table table-condensed">
-                    @if ($status->status <= 4)
+                    @if ($status->status < 4)
                     <tr>
                         <td class="col-sm-6"><a href="{{url('registrar',array('reassess',$idno))}}"><div class='btn btn-danger col-sm-12'>Re-assess Student</div></a></td>
                         <td class="col-sm-6"><a href="{{url('registrar',array('print_registration_form',$idno))}}" target="_blank"><div class='btn btn-success col-sm-12'>Print Registration Form</div></a></td>
