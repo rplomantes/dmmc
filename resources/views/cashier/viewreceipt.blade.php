@@ -12,13 +12,18 @@ $status = \App\Status::where('idno',$payment->idno)->first();
 <div class="col-md-6">
 <table border = "1" class="table table-responsive">
         <tr><td>Receipt No</td><td><b>{{$payment->receipt_no}}</b></td></tr>
-        @if(count($status)>0 || $status->status >= 4)
+        @if(count($status)>0) 
+        @if($status->status >= 4)
         <tr><td>Date</td><td>{{$payment->transaction_date}}</td></tr>
         <tr><td>ID Number</td><td>{{$payment->idno}}</td></tr>
         <tr><td>Name</td><td>{{$payment->paid_by}}</td></tr>
         @else
          <tr><td>Date</td><td>{{$payment->transaction_date}}</td></tr>
-        <tr><td>Date</td><td>{{$payment->paid_by}}</td></tr>
+        <tr><td>Receive From</td><td>{{$payment->paid_by}}</td></tr>
+        @endif
+        @else
+         <tr><td>Date</td><td>{{$payment->transaction_date}}</td></tr>
+        <tr><td>Receive From</td><td>{{$payment->paid_by}}</td></tr>
         @endif
         <tr><td colspan="2">Particular</td></tr>
         @foreach($accountingscredit as $credit)
@@ -47,7 +52,11 @@ $status = \App\Status::where('idno',$payment->idno)->first();
 
 <div class="col-md-12">
  <div class="col-md-6">
+      @if($payment->idno != "999999")
         <a href="{{url('/viewledger',$payment->idno)}}" class="btn btn-primary form-control"> Back To Ledger</a>
+      @else
+         <a href="{{url('/')}}" class="btn btn-primary form-control"> Home</a>
+      @endif
     </div>    
     <div class="col-md-6">
         @if($payment->transaction_date == date('Y-m-d'))

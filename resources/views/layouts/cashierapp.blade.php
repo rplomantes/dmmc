@@ -17,6 +17,7 @@
     
     <!--Jquery -->
     <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
    
 </head>
 <body>
@@ -90,23 +91,21 @@
                             </span> Content</a>
                         </h4>
                     </div>
-                    <div id="collapseOne" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                            <table class="table">
-                                <tr>
-                                    <td>
-                                        <a href="{{url('/')}}"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
+                    
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a href="{{url('/')}}"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+                            
+                        </h4>
                     </div>
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a  href="#"><span class="fa fa-file">
-                            </span> Other Payment</a>
+                            <a  href="{{url('/othernonstudent')}}"><span class="fa fa-file">
+                            </span> Other Payment (Non Student)</a>
                         </h4>
                     </div>
                 </div>
@@ -125,12 +124,12 @@
                             <table class="table">
                                 <tr>
                                     <td>
-                                        <a href="">Set Receipt</a> 
+                                        <a href="{{url('/setreceipt')}}">Set Receipt</a> 
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a href="">Search OR</a>
+                                        <a href="{{url('/searchor')}}">Search OR</a>
                                     </td>
                                 </tr>
                             </table>
@@ -173,6 +172,6 @@
         </div>
     </div>
 </div>
-<script src="{{ asset('js/app.js') }}"></script>
+
 </body>
 </html>

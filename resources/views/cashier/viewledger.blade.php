@@ -78,6 +78,7 @@ if(count($currentdue)>0){
    <hr />  
     <div class="col-md-9">
         <div class="form-group">
+            <a href="{{url('/')}}" class="btn btn-primary">Back</a>
             <a href="{{url('otherpayment',$idno)}}" class="btn btn-primary">Other Payment</a>
         </div>  
         <div class="form-group">

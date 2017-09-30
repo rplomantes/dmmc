@@ -19,4 +19,18 @@ function getstudentlist(){
     }
 }    
 //
+function getsubsidiary(){
+    if(Request::ajax()){
+        $value = Input::get('value');
+        $i=Input::get('i');
+        $otherpayments = \App\OtherPayment::where('accounting_name',$value)->get();
+        return view("cashier.ajax.getsubsidiary",compact('otherpayments','i'));
+    }
+}
+ function searchor(){
+     if(Request::ajax()){
+         $search = Input::get('search');
+         return view('cashier.ajax.searchor',compact('search'));
+     }
+ }
 }

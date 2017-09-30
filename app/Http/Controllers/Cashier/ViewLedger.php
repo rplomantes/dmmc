@@ -26,6 +26,14 @@ class ViewLedger extends Controller
     }
     
     function viewreceipt($reference_id){
+        if(Auth::user()->accesslevel==4)
         return view('cashier.viewreceipt',compact('reference_id'));
+        }
+    function searchor(){
+        if(Auth::user()->accesslevel==4){
+        return view('cashier.searchor');    
+        }
+    }    
     }
-}
+    
+   

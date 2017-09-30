@@ -18,7 +18,7 @@
          $totalCollection = $totalCollection + $payment->cash_amount+$payment->check_amount-$payment->change_amount;    
         }
         ?>
-        <tr><td>{{$payment->receipt_no}}</td><td>{{$payment->idno}}</td><td>{{$payment->paid_by}}</td><td>{{$payment->remarks}}</td><td align="right">{{number_format($payment->cash_amount+$payment->check_amount-$payment->change_amount,2)}}</td><td>{{$status}}</td><td><a href="{{url('viewreceipt',$payment->reference_id)}}">View</a></td></tr>
+        <tr><td>{{$payment->receipt_no}}</td><td>@if($payment->idno!="999999"){{$payment->idno}}@endif</td><td>{{$payment->paid_by}}</td><td>{{$payment->remarks}}</td><td align="right">{{number_format($payment->cash_amount+$payment->check_amount-$payment->change_amount,2)}}</td><td>{{$status}}</td><td><a href="{{url('viewreceipt',$payment->reference_id)}}">View</a></td></tr>
         @endforeach
         <tr><td colspan="4">Total</td><td align="right"><b>{{number_format($totalCollection,2)}}</b></td><td></td><td></td></tr>
         <tr><td>Total Collection</td><td align="right">{{number_format($totalCollection,2)}}</td><td colspan="5" rowspan="2"></td></tr>

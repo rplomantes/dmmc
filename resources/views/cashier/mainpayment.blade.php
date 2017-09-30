@@ -87,7 +87,7 @@ if(count($currentdue)>0){
         @if(count($ledgerprevious)>0)
         <tr><td>Previous Balance</td><td align="right">{{$totalprevious}}</td><td><input class="form form-control" type="text" name="previousaccount"  id="previousaccount" value="{{$totalprevious}}"></td></tr>
         @else
-        <input type="hidden" id="previousaccount" name="previousaccount" value="0">
+        <tr><td colspan="2"><input type="hidden" id="previousaccount" name="previousaccount" value="0"></td>
         @endif
         <?php $displaydue=0;if($dueamount-$mainpayment < 0 ){$displaydue="0.00";}else{$displaydue=$dueamount-$mainpayment;} ?>
         <tr><td>Main Account</td><td align="right">{{$ledgertotal}}</td><td><input class="form form-control" type="text" name="mainaccount"  id="mainaccount" value="{{round($displaydue,2)}}"></td></tr>
@@ -125,17 +125,20 @@ $(document).ready(function(){
                     this.value = this.value.replace(/[^0-9\.]/g, '');
                 }}); 
     $("#paymentform").submit(function(e) {
-    if (e.originalEvent.explicitOriginalTarget.id == "submit") {
+     target =  e.originalEvent.explicitOriginalTarget.id  || e.target.id
+    if ( target == "submit") {
         // let the form submit
         $("#change").removeAttr('disabled');
         return true;
     }
     else {
-        //Prevent the submit event and remain on the screen
+        
         e.preventDefault();
         return false;
     }
     });
+        
+     
     
     
     if($("#previousaccount").val() > 0){
@@ -162,6 +165,9 @@ $(document).ready(function(){
                 if(parseFloat($("#cashamount").val()) >= parseFloat($("#total_collected").val())){
                     $total = parseFloat($("#cashamount").val()) - parseFloat($("#total_collected").val())
                     $("#change").val($total.toFixed(2));
+                    $("#bank").val("");
+                    $("#checkno").val("");
+                    $("#checkamount").val("");
                     $("#remarks").removeAttr('disabled');
                     $("#remarks").focus();
                 } else {
@@ -199,7 +205,7 @@ $(document).ready(function(){
    
    $("#checkamount").keypress(function(e){
        //alert("hello")
-       checkFunction(e.keyCode,this);
+       checkFunction(e.keyCode);
    });
    $("#remarks").keypress(function(e){
        var ev = e.keyCode || event.which

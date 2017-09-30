@@ -268,6 +268,26 @@ class MainPayment extends Controller
             
             
         }
+        if($payment->idno != "999999"){
         return redirect(url('/viewledger',$payment->idno));
+        } else {
+         return redirect(url('/'));   
+        }
+    }
+    
+    function setreceipt(){
+        if(Auth::user()->accesslevel==4){
+            $currentreceipt = \App\CtrReferenceId::where('idno',Auth::user()->idno)->first()->receipt_no;
+            return view('cashier.receiptno',compact('currentreceipt'));
+        }
+    }
+    
+    function setreceiptno(Request $request){
+        if(Auth::user()->accesslevel==4){
+            $currentreceipt = \App\CtrReferenceId::where('idno',Auth::user()->idno)->first();
+            $currentreceipt->receipt_no = $request->newnumber;
+            $currentreceipt->update();
+            return redirect(url('/'));
+        }
     }
 }

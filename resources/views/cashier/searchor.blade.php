@@ -1,13 +1,9 @@
-<?php
-$receiptno = \App\CtrReferenceId::where('idno',Auth::user()->idno)->first()->receipt_no;
-?>
 @extends('layouts.cashierapp')
 @section('content')
 <div class="container-fluid">
     <div class="form-group">
-        <p style="text-align:right; color: red; font-size: 12pt;font-weight: bold">Receipt No : {{$receiptno}}</p>
     </div>    
-    <h3>CASHIER - PAYMENT FOR STUDENT</h3>
+    <h3>SEARCH OR ISSUED</h3>
     <div class="form-group">
         <input type="text" class="form-control" placeholder="Search" id="search">
     </div>
@@ -27,7 +23,7 @@ $receiptno = \App\CtrReferenceId::where('idno',Auth::user()->idno)->first()->rec
                 array['search']=$("#search").val();
                 $.ajax({
                     type:"GET",
-                    url:"/cashier/getstudentlist",
+                    url:"/cashier/ajax/searchor",
                     data:array,
                     success:function(data){
                         $("#displaylist").html(data);
@@ -39,4 +35,3 @@ $receiptno = \App\CtrReferenceId::where('idno',Auth::user()->idno)->first()->rec
     });
 </script>    
 @stop
-

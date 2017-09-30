@@ -43,4 +43,15 @@ Route::post('/mainpayment','Cashier\MainPayment@processpayment');
 Route::get('/viewreceipt/{reference_id}','Cashier\ViewLedger@viewreceipt');
 Route::get('/reverserestore/{reference_id}/{action}','Cashier\MainPayment@reverserestore');
 Route::get('/collectionreport/{trandate}','Cashier\CashierReport@collectionreport');
+Route::get('/otherpayment/{idno}','Cashier\OtherPayment@otherpayment');
+Route::post('/otherpayment','Cashier\OtherPayment@processpayment');
+Route::get('/othernonstudent','Cashier\OtherPayment@nonstudent');
+Route::post('/othernonstudent','Cashier\OtherPayment@processnonstudent');
+Route::get('/setreceipt','Cashier\MainPayment@setreceipt');
+Route::post('/setreceipt','Cashier\Mainpayment@setreceiptno');
+Route::get('/searchor','Cashier\ViewLedger@searchor');
+Route::get('/printcollection/{transaction_date}','Cashier\CashierReport@printcollection');
+//cashier ajax
+Route::get('/cashier/ajax/getsubsidiary','Cashier\Ajax\CashierController@getsubsidiary');
+Route::get('/cashier/ajax/searchor','Cashier\Ajax\CashierController@searchor');
 ?>

@@ -19,4 +19,13 @@ class CashierReport extends Controller
         }
     }
     
+    function printcollection($transaction_date){
+        if(Auth::user()->accesslevel=="4"){
+        $payments = \App\Payment::where('posted_by',Auth::user()->idno)->where('transaction_date',$transaction_date)->get();     
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadView("cashier.printcollection",compact('payments','transaction_date'));
+        return $pdf->stream();
+        }
+    }
+    
 }
