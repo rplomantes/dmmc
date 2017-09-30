@@ -46,7 +46,7 @@
                     <tr>
                         <td>
                             <?php
-                            $schedules = \App\CourseDetailsShs::where('id', $load->id)->get();
+                            $schedules = \App\ScheduleShs::where('course_offering_id', $load->id)->get();
                             ?>
                             {{$load->course_name}}
 
@@ -60,11 +60,11 @@
                         </td>
                         <td>
                             <?php
-                            $schedule2s = \App\CourseDetailsShs::distinct()->where('id', $load->id)->get(['time_start', 'time_end', 'room']);
+                            $schedule2s = \App\ScheduleShs::distinct()->where('course_offering_id', $load->id)->get(['time_start', 'time_end', 'room']);
                             ?>
                             @foreach ($schedule2s as $schedule2)
                             <?php
-                            $days = \App\CourseDetailsShs::where('id', $load->id)->where('time_start', $schedule2->time_start)->where('time_end', $schedule2->time_end)->where('room', $schedule2->room)->get(['day']);
+                            $days = \App\ScheduleShs::where('course_offering_id', $load->id)->where('time_start', $schedule2->time_start)->where('time_end', $schedule2->time_end)->where('room', $schedule2->room)->get(['day']);
                             ?>
                             @foreach ($days as $day){{$day->day}}@endforeach {{date('g:i A', strtotime($schedule2->time_start))}} - {{date('g:i A', strtotime($schedule2->time_end))}} <br>
                             <!--{{$schedule2->day}} {{$schedule2->time_start}} - {{$schedule2->time_end}}<br>-->
@@ -72,7 +72,7 @@
                         </td>
                         <td>
                             <?php
-                            $schedule3s = \App\CourseDetailsShs::distinct()->where('id', $load->id)->get(['time_start', 'time_end', 'room']);
+                            $schedule3s = \App\ScheduleShs::distinct()->where('course_offering_id', $load->id)->get(['time_start', 'time_end', 'room']);
                             ?>
                             @foreach ($schedule3s as $schedule3)
                             {{$schedule3->room}}<br>

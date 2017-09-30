@@ -40,12 +40,14 @@
     <tr>
         <td width='15%'>Student No:</td>
         <td width="55%" style="border-bottom: 1pt solid black;"><b>{{strtoupper($user->idno)}}</b></td>
-        <td><div align='right'>Date:</div></td>
+        <td><div align='left'>Date:</div></td>
         <td colspan="100%" style="border-bottom: 1pt solid black;">{{$status->date_assessed}}</td>
     </tr>
     <tr>
         <td>Name:</td>
-        <td colspan="100%" style="border-bottom: 1pt solid black;">{{strtoupper($user->firstname)}} {{strtoupper($user->middlename)}} {{strtoupper($user->lastname)}} {{strtoupper($user->extensionname)}}</td>
+        <td width="55%" style="border-bottom: 1pt solid black;">{{strtoupper($user->firstname)}} {{strtoupper($user->middlename)}} {{strtoupper($user->lastname)}} {{strtoupper($user->extensionname)}}</td>
+        <td><div align='left'>Status:</div></td>
+        <td colspan="100%" style="border-bottom: 1pt solid black;">@if ($status->status == 4) Enrolled @else Not Yet Enrolled @endif</td>
     </tr>
     @if($status->academic_type!='Senior High School')
     <tr>
@@ -56,7 +58,7 @@
     <tr>
         <td>Strand:</td>
         <td width='55%' style="border-bottom: 1pt solid black;">{{$status->track}} - {{$status->level}}</td>
-        <td><div align='right'>Section:</div></td>
+        <td><div align='left'>Section:</div></td>
         <td colspan="100%" style="border-bottom: 1pt solid black;">{{$status->section}}</td>
     </tr>
     @endif
