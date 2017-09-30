@@ -4,7 +4,7 @@
 <?php
 $levels = \App\CtrAcademicProgram::distinct()->where('academic_type', "Senior High School")->get(['level']);
 $tracks = \App\CtrAcademicProgram::distinct()->where('academic_type', "Senior High School")->get(['track']);
-//$advisers = \App\User::where('accesslevel', 10)->get();
+$advisers = \App\User::where('accesslevel', 10)->get();
 ?>
 <style>
     .label{color: gray;}
@@ -33,7 +33,6 @@ $tracks = \App\CtrAcademicProgram::distinct()->where('academic_type', "Senior Hi
                             @endforeach
                         </select>
                     </div>
-                    <div id="sectionandinstructor">
                     <div class="col-sm-3">
                         <label class="label">Section</label>
                         <select class="form form-control" id="section" name="section" onchange="getSectionList(this.value, level.value)">
@@ -44,8 +43,10 @@ $tracks = \App\CtrAcademicProgram::distinct()->where('academic_type', "Senior Hi
                         <label class="label">Class Adviser</label>
                         <select class="form form-control" id="adviser" name="adviser" onchange="assignAdviser(this.value)">
                             <option value="None">Select Adviser</option>
+                            @foreach ($advisers as $adviser)
+                            <option value="{{$adviser->idno}}">{{$adviser->firstname}} {{$adviser->lastname}} {{$adviser->extensionname}}</option>
+                            @endforeach
                         </select>
-                    </div>
                     </div>
                 </div>
             </form>
@@ -64,7 +65,7 @@ $tracks = \App\CtrAcademicProgram::distinct()->where('academic_type', "Senior Hi
             type: "GET",
             url: "/ajax/sectioning_shs/" + level + "/" + track,
             success: function (data) {
-                $('#sectionandinstructor').html(data);
+                $('#section').html(data);
             }
         }
         );
@@ -92,8 +93,7 @@ $tracks = \App\CtrAcademicProgram::distinct()->where('academic_type', "Senior Hi
     function addtosection(idno, level, track){
         array = {};
         array['section'] = $("#section").val();
-        array['level'] = $("#level").val();
-        array['track'] = $("#track").val();
+        array['levels'] = $("#level").val();
         $.ajax({
             type: "GET",
             url: "/ajax/sectioning/addtosection/" + idno,
@@ -107,8 +107,7 @@ $tracks = \App\CtrAcademicProgram::distinct()->where('academic_type', "Senior Hi
     function removetosection(idno, level, track){
         array = {};
         array['section'] = $("#section").val();
-        array['level'] = $("#level").val();
-        array['track'] = $("#track").val();
+        array['levels'] = $("#level").val();
         $.ajax({
             type: "GET",
             url: "/ajax/sectioning/removetosection/" + idno,

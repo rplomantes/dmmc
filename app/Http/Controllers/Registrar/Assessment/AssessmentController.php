@@ -22,7 +22,7 @@ class AssessmentController extends Controller {
 
     function viewinfo($idno) {
         $status = \App\Status::where('idno', $idno)->first();
-        if ($status->status == 3) {
+        if ($status->status >= 3) {
             return redirect("/registrar/registration/$idno");
         } else {
             return view('registrar.assessment.studentinfo', compact('status', 'idno'));

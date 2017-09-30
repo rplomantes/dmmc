@@ -18,13 +18,13 @@ class AjaxController extends Controller
         if (Request::ajax()) {
             $school_year = \App\CtrSchoolYear::where('academic_type', "Senior High School")->first();
             $sections = \App\SectionShs::where('level',$level)->where('school_year', $school_year->school_year)->where('track', $track)->get();
-//            $data = "<select class=\"form form-control\"><option value=\"\">Select Section</option>";
-//            foreach ($sections as $section){
-//                $data = $data."<option value='".$section->section."'>".$section->section."</option>";
-//            }
-//            $data = $data."</select>";
-//            return $data;
-            return view('registrar.sectioning.ajax.getlevel', compact('sections'));
+            $data = "<select class=\"form form-control\"><option value=\"\">Select Section</option>";
+            foreach ($sections as $section){
+                $data = $data."<option value='".$section->section."'>".$section->section."</option>";
+            }
+            $data = $data."</select>";
+            return $data;
+//            return view('registrar.sectioning.ajax.getlevel', compact('sections'));
         }
     }
     function getStudentList($level, $track){
@@ -42,15 +42,22 @@ class AjaxController extends Controller
     }
     function addtosection($idno){
         if (Request::ajax()){
-            $level = Input::get("level");
+            $level = Input::get("levels");
             $section = Input::get("section");
-            $track = Input::get("track");
+            $school_year = \App\CtrGradeSchoolYear::where('academic_type', "Senior High School")->first();
             
             $updatestatus = \App\Status::where('idno', $idno)->first();
             $updatestatus->section = $section;
             $updatestatus->save();
+                        
+            $updategradeshs = \App\GradeShs::where('idno', $idno)->where('school_year', $school_year->school_year)->where('period',$school_year->period)->get();
+            foreach ($updategradeshs as $updatenow){
+                $getcoursedetails = \App\CourseDetailsShs::where('course_code',$updatenow->course_code)->where('school_year', $updatenow->school_year)->where('period', $updatenow->period)->where('section', $section)->first();
+                $updatenow->course_offering_id = $getcoursedetails->id;
+                $updatenow->save();
+            }
             
-            $school_year = \App\CtrSchoolYear::where('academic_type', "Senior High School")->first();
+            
             $lists = \App\Status::where('section', $section)->where('level', $level)->where('status', 4)->where('school_year', $school_year->school_year)->get();
             return view('registrar.sectioning.ajax.sectionlist', compact('lists'));
             
@@ -58,15 +65,20 @@ class AjaxController extends Controller
     }
     function removetosection($idno){
         if (Request::ajax()){
-            $level = Input::get("level");
+            $level = Input::get("levels");
             $section = Input::get("section");
-            $track = Input::get("track");
+            $school_year = \App\CtrGradeSchoolYear::where('academic_type', "Senior High School")->first();
             
             $updatestatus = \App\Status::where('idno', $idno)->first();
             $updatestatus->section = NULL;
             $updatestatus->save();
             
-            $school_year = \App\CtrSchoolYear::where('academic_type', "Senior High School")->first();
+            $updategradeshs = \App\GradeShs::where('idno', $idno)->where('school_year',$school_year->school_year)->where('period', $school_year->period)->get();
+            foreach($updategradeshs as $updatenow){
+                $updatenow->course_offering_id = NULL;
+                $updatenow->save();
+            }
+            
             $lists = \App\Status::where('section', $section)->where('level', $level)->where('status', 4)->where('school_year', $school_year->school_year)->get();
             return view('registrar.sectioning.ajax.sectionlist', compact('lists'));
             
