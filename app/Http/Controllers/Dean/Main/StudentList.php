@@ -41,8 +41,8 @@ class StudentList extends Controller
     
     function printStudentListshs($course_offering_id){
         $studentlists = \App\GradeShs::where('course_offering_id', $course_offering_id)->join('users', 'users.idno', '=', 'grade_shs.idno')->join('statuses', 'statuses.idno', '=','users.idno')->where('statuses.status', 4)->orderBy('users.lastname')->get();
-        $offering_id = \App\CourseOffering::find($course_offering_id);
-        $instructor = $this->getInstructorId($course_offering_id);
+        $offering_id = \App\CourseDetailsShs::find($course_offering_id);
+        $instructor = $this->getInstructorIdShs($course_offering_id);
         
         $pdf = PDF::loadView('dean.print.studentlistenrolled', compact('studentlists', 'offering_id', 'instructor'));
         return $pdf->stream("Student_List.pdf");
@@ -50,6 +50,17 @@ class StudentList extends Controller
     
     public function getInstructorId($offeringid){             
         $offering_id = \App\CourseOffering::find($offeringid);
+        $instructor = \App\User::where('id', $offering_id->instructor_id)->first();
+
+        if (count($instructor)>0){
+        $data = $instructor->firstname." ".$instructor->lastname." ".$instructor->extensionname;
+        return $data;
+        }else {
+            return "";
+        }
+    }
+    public function getInstructorIdShs($offeringid){             
+        $offering_id = \App\CourseDetailsShs::find($offeringid);
         $instructor = \App\User::where('id', $offering_id->instructor_id)->first();
 
         if (count($instructor)>0){

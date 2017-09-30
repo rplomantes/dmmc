@@ -39,7 +39,9 @@
 <table class='table' width="100%">
     <tr>
         <td width='15%'>Student No:</td>
-        <td colspan="100%" style="border-bottom: 1pt solid black;"><b>{{strtoupper($user->idno)}}</b></td>
+        <td width="55%" style="border-bottom: 1pt solid black;"><b>{{strtoupper($user->idno)}}</b></td>
+        <td><div align='right'>Date:</div></td>
+        <td colspan="100%" style="border-bottom: 1pt solid black;">{{$status->date_assessed}}</td>
     </tr>
     <tr>
         <td>Name:</td>
@@ -220,6 +222,8 @@
 </td>
 </tr>
 </table>
+<small><i>NOTE: This form is not valid until payment has been made in the cashier.
+        <br>Validity period: 10 days from the date of assessment.</i></small>
 
 <div class="page_break">
     <div style="text-align: justify">
