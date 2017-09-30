@@ -216,6 +216,7 @@ $(document).ready(function(){
                $("#cashamount").val("0.00");
            }
            
+           $("#change").removeAttr('disabled');
            $("#submit").css('visibility','visible');
            $("#submit").focus();
            e.preventDefault();

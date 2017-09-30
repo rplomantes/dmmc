@@ -322,7 +322,7 @@ $otherpayment = \App\OtherPayment::distinct()->get(['accounting_name']);
            if($("#cashamount").val()==""){
                $("#cashamount").val("0.00");
            }
-           
+           $("#change").removeAttr('disabled');
            $("#submit").css('visibility','visible');
            $("#submit").focus();
            e.preventDefault();
