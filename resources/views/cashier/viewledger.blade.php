@@ -104,12 +104,14 @@ if(count($currentdue)>0){
     </div>
     <div class="col-md-3">
         
-        <table class="table table-responsive"><tr><td align="center">
-        Amount Due Today
-        <td></tr>
-        <tr><td align="right">    
-        <div id="duedisplay">{{number_format($dueamount-$mainpayment + $previoustotal + $totalotheracct,2)}}</div>
-        </td></tr></table>
+        <table class="table table-responsive">
+            <tr>
+                <td align="center">Amount Due Today<td>
+            </tr>
+        <tr>
+            <td align="right"><div id="duedisplay">@if (($dueamount-$mainpayment + $previoustotal + $totalotheracct)<0) 0 @else{{number_format($dueamount-$mainpayment + $previoustotal + $totalotheracct,2)}}@endif</div></td>
+        </tr>
+        </table>
         <a href="{{url('mainpayment',$idno)}}" class="btn btn-danger form-control">Go To Payment</a>
         
     </div>

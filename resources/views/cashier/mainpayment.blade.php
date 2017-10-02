@@ -236,6 +236,8 @@ function checkFunction(evt){
             if(parseFloat($("#checkamount").val())+parseFloat($("#cashamount").val()) > parseFloat($("#total_collected").val())){
               totalchange=  parseFloat($("#checkamount").val())+parseFloat($("#cashamount").val()) - parseFloat($("#total_collected").val());
               $("#change").val(totalchange.toFixed(2))
+            }else if (parseFloat($("#checkamount").val())+parseFloat($("#cashamount").val()) == parseFloat($("#total_collected").val())){
+                $("#change").val("0.00")
             }
             if($("#bank").val()==""){
                 alert("Please Fill Up Check Details");

@@ -21,7 +21,17 @@
         right: 112px;
         z-index: -1;
     }
-</style>
+</style><style>
+            .header_image 
+            {
+                position: absolute;
+                bottom: 1090px;
+                right: 0;
+                left: -350;
+                z-index: -1;
+            }
+        </style>
+        <div align='center'><div class='header_image'><img src = "{{url("/images","dmmclogo2.jpeg")}}" width="8%" alt="DMMCIHS Logo" class="img-thumbnail"></div></div>
 <div class = "watermark">
     <img src = "{{url("/images","dmmclogo.jpeg")}}" width="80%" alt="DMMCIHS Logo" class="img-thumbnail">
 </div>
@@ -248,7 +258,7 @@
 </tr>
 </table>
 <small><i>NOTE: This form is not valid until payment has been made in the cashier.
-        <br>Validity period: 10 days from the date of assessment.</i></small>
+            <br>Validity period: 10 days from the date of assessment.</i></small>
 
 <div class="page_break">
     <div style="text-align: justify">

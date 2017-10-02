@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Registrar\AssignInstructor;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\User;
 class CollegeAssignInstructorController extends Controller
 {
@@ -13,28 +14,37 @@ class CollegeAssignInstructorController extends Controller
     }
     
     function index(){
+        if(Auth::user()->accesslevel=="3"){
         $instructors = User::where('accesslevel', 10)->get();
         return view('registrar.assigninstructor.college_index', compact('instructors'));
+        }
     }
     
     function viewprofile($id){
+        if(Auth::user()->accesslevel=="3"){
         $instructor = User::where('id', $id)->first();
         return view('registrar.assigninstructor.view_profile_college', compact('instructor'));
-    }
+        }
+        }
     
     function loadsubjects($id){
+        if(Auth::user()->accesslevel=="3"){
         $user = \App\User::where('id', $id)->first();
         
         return view('registrar.assigninstructor.loadsubjects_college', compact('user'));
+        }
     }
     
     function viewmodify($id){
+        if(Auth::user()->accesslevel=="3"){
         $user = \App\User::where('id', $id)->first();
         
         return view('registrar.assigninstructor.viewmodify_college', compact('user'));
+        }
     }
     
     function modifyinfo(Request $request) {
+        if(Auth::user()->accesslevel=="3"){
 
         $this->validate($request, [
             'lastname' => 'required',
@@ -43,6 +53,7 @@ class CollegeAssignInstructorController extends Controller
         ]);
 
         return $this->updateinfo($request);
+        }
     }
     
     function updateinfo(Request $request) {

@@ -13,85 +13,92 @@ use App\EntranceExam;
 class listApplicantsController extends Controller {
 
     //
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('auth');
     }
-    
+
     function listApplicants() {
-        return view('guidance.admission.listApplicants');
+        if (Auth::user()->accesslevel == "1") {
+            return view('guidance.admission.listApplicants');
+        }
     }
 
     function viewinfo($idno) {
+        if (Auth::user()->accesslevel == "1") {
 
-        $list = DB::table('users')
-                ->join('statuses', 'users.idno', '=', 'statuses.idno')
-                ->join('student_infos', 'users.idno', '=', 'student_infos.idno')
-                ->where('users.idno', '=', $idno)
-                ->orderBy('users.lastname', 'asc')
-                ->first();
+            $list = DB::table('users')
+                    ->join('statuses', 'users.idno', '=', 'statuses.idno')
+                    ->join('student_infos', 'users.idno', '=', 'student_infos.idno')
+                    ->where('users.idno', '=', $idno)
+                    ->orderBy('users.lastname', 'asc')
+                    ->first();
 
-        $exam = DB::table('entrance_exams')
-                ->join('entrance_exam_schedules', 'entrance_exams.exam_schedule', '=', 'entrance_exam_schedules.id')
-                ->where('idno', '=', $idno)
-                ->first();
+            $exam = DB::table('entrance_exams')
+                    ->join('entrance_exam_schedules', 'entrance_exams.exam_schedule', '=', 'entrance_exam_schedules.id')
+                    ->where('idno', '=', $idno)
+                    ->first();
 
-        if (count($exam) == 0) {
-            $value = 0;
-        } else {
-            $value = 1;
+            if (count($exam) == 0) {
+                $value = 0;
+            } else {
+                $value = 1;
+            }
+            return view('guidance.admission.studentinfo', compact('list', 'value', 'exam'));
         }
-        return view('guidance.admission.studentinfo', compact('list', 'value', 'exam'));
     }
 
     function viewmodifyinfo($idno) {
+        if (Auth::user()->accesslevel == "1") {
 
-        $list = DB::table('users')
-                ->join('statuses', 'users.idno', '=', 'statuses.idno')
-                ->join('student_infos', 'users.idno', '=', 'student_infos.idno')
-                ->where('users.idno', '=', $idno)
-                ->orderBy('users.lastname', 'asc')
-                ->first();
+            $list = DB::table('users')
+                    ->join('statuses', 'users.idno', '=', 'statuses.idno')
+                    ->join('student_infos', 'users.idno', '=', 'student_infos.idno')
+                    ->where('users.idno', '=', $idno)
+                    ->orderBy('users.lastname', 'asc')
+                    ->first();
 
-        $exam = DB::table('entrance_exams')
-                ->join('entrance_exam_schedules', 'entrance_exams.exam_schedule', '=', 'entrance_exam_schedules.id')
-                ->where('idno', '=', $idno)
-                ->first();
+            $exam = DB::table('entrance_exams')
+                    ->join('entrance_exam_schedules', 'entrance_exams.exam_schedule', '=', 'entrance_exam_schedules.id')
+                    ->where('idno', '=', $idno)
+                    ->first();
 
-        if (count($exam) == 0) {
-            $value = 0;
-        } else {
-            $value = 1;
+            if (count($exam) == 0) {
+                $value = 0;
+            } else {
+                $value = 1;
+            }
+
+            $dates = DB::table('entrance_exam_schedules')
+                    ->where('is_remove', '=', 0)
+                    ->orderBy('datetime', 'asc')
+                    ->get();
+
+            if ($list->academic_type == 'College') {
+                $programs = DB::Select("Select distinct program_code, program_name from ctr_academic_programs  where academic_type='College' or academic_type='TESDA'");
+            } else if ($list->academic_type == 'TESDA') {
+                $programs = DB::Select("Select distinct program_code, program_name from ctr_academic_programs  where academic_type='TESDA'");
+            } else {
+                $programs = DB::Select("Select distinct track from ctr_academic_programs  where academic_type='Senior High School'");
+            }
+            return view('guidance.admission.viewmodifyinfo', compact('list', 'exam', 'programs', 'dates', 'value'));
         }
-
-        $dates = DB::table('entrance_exam_schedules')
-                ->where('is_remove', '=', 0)
-                ->orderBy('datetime', 'asc')
-                ->get();
-
-        if ($list->academic_type == 'College') {
-            $programs = DB::Select("Select distinct program_code, program_name from ctr_academic_programs  where academic_type='College' or academic_type='TESDA'");
-        } else if ($list->academic_type == 'TESDA') {
-            $programs = DB::Select("Select distinct program_code, program_name from ctr_academic_programs  where academic_type='TESDA'");
-        } else {
-            $programs = DB::Select("Select distinct track from ctr_academic_programs  where academic_type='Senior High School'");
-        }
-        return view('guidance.admission.viewmodifyinfo', compact('list', 'exam', 'programs', 'dates', 'value'));
     }
 
     function modifyinfo(Request $request) {
+        if (Auth::user()->accesslevel == "1") {
 
-        $this->validate($request, [
-            'lastname' => 'required',
-            'firstname' => 'required',
-            'course' => 'required',
-            'email' => 'required',
-            'birthdate' => 'required',
-            'address' => 'required',
-            'contact_no' => 'required'
-        ]);
+            $this->validate($request, [
+                'lastname' => 'required',
+                'firstname' => 'required',
+                'course' => 'required',
+                'email' => 'required',
+                'birthdate' => 'required',
+                'address' => 'required',
+                'contact_no' => 'required'
+            ]);
 
-        return $this->updateinfo($request);
+            return $this->updateinfo($request);
+        }
     }
 
     function updateinfo($request) {
@@ -142,8 +149,8 @@ class listApplicantsController extends Controller {
         $status = \App\Status::where('idno', $idno)->first();
         $status->academic_program = $this->getAcademicProgram($course);
         $status->academic_type = $this->getAcademicType($course);
-        $status->program_code =  $this->getProgramCode($course);
-        $status->program_name =  $this->getProgramName($course);
+        $status->program_code = $this->getProgramCode($course);
+        $status->program_name = $this->getProgramName($course);
 
         $status->save();
 
@@ -182,7 +189,7 @@ class listApplicantsController extends Controller {
             return $academic_program->academic_type;
         }
     }
-    
+
     function getProgramCode($course) {
         if ($course == 'ABM' or $course == 'STEM' or $course == 'GAS' or $course == 'HUMMS') {
             $academic_program = \App\CtrAcademicProgram::where('track', $course)->first();
@@ -192,7 +199,7 @@ class listApplicantsController extends Controller {
             return $academic_program->program_code;
         }
     }
-    
+
     function getProgramName($course) {
         if ($course == 'ABM' or $course == 'STEM' or $course == 'GAS' or $course == 'HUMMS') {
             $academic_program = \App\CtrAcademicProgram::where('track', $course)->first();

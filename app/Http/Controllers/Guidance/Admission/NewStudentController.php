@@ -13,34 +13,39 @@ use App\Status;
 class NewStudentController extends Controller {
 
     //
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('auth');
     }
-    
+
     function newstudent() {
-        $programs = DB::Select("Select distinct program_code ,program_name from ctr_academic_programs where academic_type='College'");
-        return view('guidance.admission.newstudent', compact('programs'));
+        if (Auth::user()->accesslevel == "1") {
+            $programs = DB::Select("Select distinct program_code ,program_name from ctr_academic_programs where academic_type='College'");
+            return view('guidance.admission.newstudent', compact('programs'));
+        }
     }
 
     function newstudent_shs() {
-        $programs = DB::Select("Select distinct track from ctr_academic_programs where academic_type='Senior High School'");
-        return view('guidance.admission.newstudent_shs', compact('programs'));
+        if (Auth::user()->accesslevel == "1") {
+            $programs = DB::Select("Select distinct track from ctr_academic_programs where academic_type='Senior High School'");
+            return view('guidance.admission.newstudent_shs', compact('programs'));
+        }
     }
 
     function addapplicant(Request $request) {
-        $this->validate($request, [
-            'lastname' => 'required',
-            'firstname' => 'required',
-            'course' => 'required',
-            'email' => 'required',
-            'birthdate' => 'required',
-            'address' => 'required',
-            'contact_no' => 'required',
-            'gender' => 'required',
-        ]);
+        if (Auth::user()->accesslevel == "1") {
+            $this->validate($request, [
+                'lastname' => 'required',
+                'firstname' => 'required',
+                'course' => 'required',
+                'email' => 'required',
+                'birthdate' => 'required',
+                'address' => 'required',
+                'contact_no' => 'required',
+                'gender' => 'required',
+            ]);
 
-        return $this->createapplicant($request);
+            return $this->createapplicant($request);
+        }
     }
 
     function createapplicant($request) {
@@ -69,7 +74,7 @@ class NewStudentController extends Controller {
             $prev_course = $request->prev_course;
         }
 
-        
+
         $student_info = new StudentInfo;
 
         $student_info->idno = $idno;
@@ -77,7 +82,7 @@ class NewStudentController extends Controller {
         $student_info->course2 = $request->course2;
         $student_info->birthdate = $request->birthdate;
         $student_info->civil_status = $request->civil_status;
-        $student_info->gender= $request->gender;
+        $student_info->gender = $request->gender;
         $student_info->address = $request->address;
         $student_info->contact_no = $request->contact_no;
         $student_info->last_school = $request->last_school_attended;
@@ -137,7 +142,7 @@ class NewStudentController extends Controller {
             return $academic_program->academic_type;
         }
     }
-    
+
     function getProgramCode($course) {
         if ($course == 'ABM' or $course == 'STEM' or $course == 'GAS' or $course == 'HUMMS') {
             $academic_program = \App\CtrAcademicProgram::where('track', $course)->first();
@@ -147,7 +152,7 @@ class NewStudentController extends Controller {
             return $academic_program->program_code;
         }
     }
-    
+
     function getProgramName($course) {
         if ($course == 'ABM' or $course == 'STEM' or $course == 'GAS' or $course == 'HUMMS') {
             $academic_program = \App\CtrAcademicProgram::where('track', $course)->first();

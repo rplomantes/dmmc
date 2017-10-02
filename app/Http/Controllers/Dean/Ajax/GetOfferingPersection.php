@@ -9,11 +9,6 @@ use Request;
 
 class GetOfferingPersection extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
     function index(){
         if(Request::ajax()){
             $idno=Input::get("idno");

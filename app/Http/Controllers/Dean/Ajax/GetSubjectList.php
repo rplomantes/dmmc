@@ -10,12 +10,6 @@ use Request;
 
 class GetSubjectList extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
-    //
     function getlistcollege(){
         if(Request::ajax()){
             $level = Input::get("level");

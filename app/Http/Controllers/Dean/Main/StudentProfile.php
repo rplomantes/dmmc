@@ -4,20 +4,21 @@ namespace App\Http\Controllers\Dean\Main;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
-class StudentProfile extends Controller
-{
-    public function __construct()
-    {
+class StudentProfile extends Controller {
+
+    public function __construct() {
         $this->middleware('auth');
     }
-    
-    function index($idno){
-        $user = \App\User::where('idno',$idno)->first();
-        $student_info = \App\StudentInfo::where('idno', $idno)->first();
-        $status = \App\Status::where('idno', $idno)->first();
-        $levels = \App\Curriculum::distinct()->where('curriculum_year', $student_info->curriculum_year)->where('program_code', $status->program_code)->orderBy('level')->get(['level', 'period']);
-        
+
+    function index($idno) {
+        if (Auth::user()->accesslevel == "2") {
+            $user = \App\User::where('idno', $idno)->first();
+            $student_info = \App\StudentInfo::where('idno', $idno)->first();
+            $status = \App\Status::where('idno', $idno)->first();
+            $levels = \App\Curriculum::distinct()->where('curriculum_year', $student_info->curriculum_year)->where('program_code', $status->program_code)->orderBy('level')->get(['level', 'period']);
+
 //        if (count($levels)>0){ 
 //            foreach ($levels as $level){
 //                $courses = \App\Curriculum::where('curriculum_year', $student_info->curriculum_year)
@@ -38,21 +39,23 @@ class StudentProfile extends Controller
 //            }
 //            
 //        }
-        
-        return view('dean.studentprofile', compact('idno','student_info','status','user', 'levels', 'curriculum'));
-    }
-    
-    function getRemarks($idno, $course_code){
-        $grade = \App\GradeCollege::where('idno', $idno)->where('course_code', $course_code)->get();
-        if (count($grade)>0){
-            foreach ($grade as $grades){
-                $data = $grades->remarks;
-                return $data;
-            }
-        }else {
-            return "";
-        }
-        
-    }
-}
 
+            return view('dean.studentprofile', compact('idno', 'student_info', 'status', 'user', 'levels', 'curriculum'));
+        }
+    }
+
+    function getRemarks($idno, $course_code) {
+        if (Auth::user()->accesslevel == "2") {
+            $grade = \App\GradeCollege::where('idno', $idno)->where('course_code', $course_code)->get();
+            if (count($grade) > 0) {
+                foreach ($grade as $grades) {
+                    $data = $grades->remarks;
+                    return $data;
+                }
+            } else {
+                return "";
+            }
+        }
+    }
+
+}

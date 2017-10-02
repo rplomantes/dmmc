@@ -9,11 +9,6 @@ use DB;
 
 class paymentAssessmentSHS extends Controller {
 
-    public function __construct() {
-        $this->middleware('auth');
-    }
-
-    //
     function computePayment() {
         if (Request::ajax()) {
             $discounttf = 0;

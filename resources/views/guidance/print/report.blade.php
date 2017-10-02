@@ -1,3 +1,14 @@
+<style>
+            .header_image 
+            {
+                position: absolute;
+                bottom: 890px;
+                right: 0;
+                left: -350;
+                z-index: -1;
+            }
+        </style>
+        <div align="center"><div class='header_image'><img src = "{{url("/images","dmmclogo2.jpeg")}}" width="8%" alt="DMMCIHS Logo" class="img-thumbnail"></div></div>
 <div align="center">
     <b>DMMC INSTITUTE OF HEALTH SCIENCES</b><br>
     <small>#143 Narra St., Mountainview Subd., Tanauan City, Batangas</small><br><br><br>

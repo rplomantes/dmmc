@@ -9,11 +9,6 @@ use Illuminate\Support\Facades\Input;
 class AjaxController extends Controller
 {
     //
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
     function getLevel($level, $track){
         if (Request::ajax()) {
             $school_year = \App\CtrSchoolYear::where('academic_type', "Senior High School")->first();

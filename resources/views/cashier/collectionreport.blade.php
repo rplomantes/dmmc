@@ -24,7 +24,7 @@
         <tr><td>Total Collection</td><td align="right">{{number_format($totalCollection,2)}}</td><td colspan="5" rowspan="2"></td></tr>
         <tr><td>Total Cancelled</td><td align="right">{{number_format($totalReversal,2)}}</td></tr>
         </table>
-        <a href="{{url('printcollection',$trandate)}}" class="btn btn-primary form-control">Print Colletion Report</a>
+        <a href="{{url('printcollection',$trandate)}}" target="_blank" class="btn btn-primary form-control">Print Colletion Report</a>
         @else
     <h3>No Collection on This Date.</h3>
     @endif

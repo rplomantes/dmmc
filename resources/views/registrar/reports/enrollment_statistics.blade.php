@@ -44,10 +44,10 @@ $totalCollege = 0;
                     ?>
                     <tr>
                         <td>{{$listshs->track}}</td>
-                        <td>{{count($gr11m)}}</td>
-                        <td>{{count($gr11f)}}</td>
-                        <td>{{count($gr12m)}}</td>
-                        <td>{{count($gr12f)}}</td>
+                        <td>@if(count($gr11m)>0) {{count($gr11m)}}@endif</td>
+                        <td>@if(count($gr11f)>0) {{count($gr11f)}}@endif</td>
+                        <td>@if(count($gr12m)>0) {{count($gr12m)}}@endif</td>
+                        <td>@if(count($gr12f)>0) {{count($gr12f)}}@endif</td>
                         <td>{{count($gr11m)+count($gr11f)+count($gr12m)+count($gr12f)}}<?php $totalSHS = $totalSHS + count($gr11m)+count($gr11f)+count($gr12m)+count($gr12f); ?></td>
                     </tr>
                     @endforeach
@@ -108,16 +108,16 @@ $totalCollege = 0;
                     ?>
                     <tr>
                         <td>{{$program->program_code}}</td>
-                        <td>{{count($firstm)}}</td>
-                        <td>{{count($firstf)}}</td>
-                        <td>{{count($secondm)}}</td>
-                        <td>{{count($secondf)}}</td>
-                        <td>{{count($thirdm)}}</td>
-                        <td>{{count($thirdf)}}</td>
-                        <td>{{count($fourthm)}}</td>
-                        <td>{{count($fourthf)}}</td>
-                        <td>{{count($fifthm)}}</td>
-                        <td>{{count($fifthf)}}</td>
+                        <td>@if(count($firstm)>0) {{count($firstm)}}@endif</td>
+                        <td>@if(count($firstf)>0) {{count($firstf)}}@endif</td>
+                        <td>@if(count($secondm)>0) {{count($secondm)}}@endif</td>
+                        <td>@if(count($secondf)>0) {{count($secondf)}}@endif</td>
+                        <td>@if(count($thirdm)>0) {{count($thirdm)}}@endif</td>
+                        <td>@if(count($thirdf)>0) {{count($thirdf)}}@endif</td>
+                        <td>@if(count($fourthm)>0) {{count($fourthm)}}@endif</td>
+                        <td>@if(count($fourthf)>0) {{count($fourthf)}}@endif</td>
+                        <td>@if(count($fifthm)>0) {{count($fifthm)}}@endif</td>
+                        <td>@if(count($fifthf)>0) {{count($fifthf)}}@endif</td>
                         <td><?php $totalNow = count($firstm)+count($firstf)+count($secondm)+count($secondf)+count($thirdm)+count($thirdf)+count($fourthm)+count($fourthf)+count($fifthm)+count($fifthf); $totalperProgram = $totalperProgram+$totalNow;?>{{$totalNow}}</td>
                     </tr>
                     @endforeach

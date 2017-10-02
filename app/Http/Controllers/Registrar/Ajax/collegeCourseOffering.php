@@ -10,11 +10,6 @@ use App\CourseOffering;
 
 class collegeCourseOffering extends Controller {
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
     function getList($program_code, $curriculum_year, $period, $level) {
         if (Request::ajax()) {
             $lists = DB::select("SELECT * FROM `curricula` WHERE `curriculum_year` = $curriculum_year AND `program_code` LIKE '$program_code' AND `period` LIKE '$period' AND `level` LIKE '$level' AND `is_current` = 1");

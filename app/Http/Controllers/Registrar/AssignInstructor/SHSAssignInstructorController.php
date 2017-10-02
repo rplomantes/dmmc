@@ -4,47 +4,58 @@ namespace App\Http\Controllers\Registrar\AssignInstructor;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\User;
-class SHSAssignInstructorController extends Controller
-{
-    public function __construct()
-    {
+
+class SHSAssignInstructorController extends Controller {
+
+    public function __construct() {
         $this->middleware('auth');
     }
-    
-    function index(){
-        $instructors = User::where('accesslevel', 10)->get();
-        return view('registrar.assigninstructor.shs_index', compact('instructors'));
+
+    function index() {
+        if (Auth::user()->accesslevel == "3") {
+            $instructors = User::where('accesslevel', 10)->get();
+            return view('registrar.assigninstructor.shs_index', compact('instructors'));
+        }
     }
-    
-    function viewprofile($id){
-        $instructor = User::where('id', $id)->first();
-        return view('registrar.assigninstructor.view_profile_shs', compact('instructor'));
+
+    function viewprofile($id) {
+        if (Auth::user()->accesslevel == "3") {
+            $instructor = User::where('id', $id)->first();
+            return view('registrar.assigninstructor.view_profile_shs', compact('instructor'));
+        }
     }
-    
-    function loadsubjects($id){
-        $user = \App\User::where('id', $id)->first();
-        
-        return view('registrar.assigninstructor.loadsubjects_shs', compact('user'));
+
+    function loadsubjects($id) {
+        if (Auth::user()->accesslevel == "3") {
+            $user = \App\User::where('id', $id)->first();
+
+            return view('registrar.assigninstructor.loadsubjects_shs', compact('user'));
+        }
     }
-    
-    function viewmodify($id){
-        $user = \App\User::where('id', $id)->first();
-        
-        return view('registrar.assigninstructor.viewmodify_shs', compact('user'));
+
+    function viewmodify($id) {
+        if (Auth::user()->accesslevel == "3") {
+            $user = \App\User::where('id', $id)->first();
+
+            return view('registrar.assigninstructor.viewmodify_shs', compact('user'));
+        }
     }
-    
+
     function modifyinfo(Request $request) {
+        if (Auth::user()->accesslevel == "3") {
 
-        $this->validate($request, [
-            'lastname' => 'required',
-            'firstname' => 'required',
-            'email' => 'required',
-        ]);
+            $this->validate($request, [
+                'lastname' => 'required',
+                'firstname' => 'required',
+                'email' => 'required',
+            ]);
 
-        return $this->updateinfo($request);
+            return $this->updateinfo($request);
+        }
     }
-    
+
     function updateinfo(Request $request) {
 
         $id = $request->id;
@@ -61,4 +72,5 @@ class SHSAssignInstructorController extends Controller
 
         return redirect("/registrar/assign_instructor/view_profile_shs/$id");
     }
+
 }

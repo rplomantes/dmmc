@@ -8,11 +8,6 @@ use Illuminate\Support\Facades\Input;
 
 class collegeAssignInstructor extends Controller {
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
     function getcourses() {
         if (Request::ajax()) {
 

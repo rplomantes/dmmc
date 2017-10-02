@@ -9,11 +9,6 @@ use App\Schedule;
 
 class collegeCourseSchedule extends Controller {
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
     function getcourses($program_code) {
         if (Request::ajax()) {
 
