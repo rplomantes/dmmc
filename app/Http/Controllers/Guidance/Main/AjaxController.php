@@ -31,18 +31,26 @@ class AjaxController extends Controller {
     }
 
     function changevalue($idno, $value) {
-        if ($value == "Failed") {
-            $stat = -1;
-        }
+         
         $result = \App\EntranceExam::where('idno', $idno)->first();
         $result->exam_result = $value;
         $result->save();
 
         $status = \App\Status::where('idno', $idno)->first();
         if ($status->academic_type=="College"){
-            $status->status = 1;
+            if ($value == "Failed") {
+            $stat = -1;
+            }else{
+            $stat = 1;
+            }
+            $status->status = $stat;
         } else {
-            $status->status = 2;
+            if ($value == "Failed") {
+            $stat = -1;
+            }else{
+            $stat = 2;
+            }
+            $status->status = $stat;
         }
         $status->save();
 
