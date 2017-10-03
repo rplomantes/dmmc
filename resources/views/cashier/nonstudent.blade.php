@@ -103,7 +103,7 @@ $otherpayment = \App\OtherPayment::distinct()->get(['accounting_name']);
 <div class="container-fluid">
     <div class="col-md-12">
         <a class="btn btn-primary" href="{{url('/')}}">Back</a>
-        <a class="btn btn-primary" href="{{url('/nonstudent')}}">Refresh</a>
+        <a class="btn btn-primary" href="{{url('/othernonstudent')}}">Refresh</a>
 
     </div>    
     <hr />
@@ -205,6 +205,7 @@ $otherpayment = \App\OtherPayment::distinct()->get(['accounting_name']);
 
 <script>
         $(document).ready(function(){
+        /*    
         $("#paymentform").submit(function(e) {
         target =  e.originalEvent.explicitOriginalTarget.id  || e.target.id
         if ( target == "submit") {
@@ -218,7 +219,7 @@ $otherpayment = \App\OtherPayment::distinct()->get(['accounting_name']);
         return false;
         }
         });
-    
+        */
         $("#donereg").click(function(){
         $("#receivepayment").css("visibility",'visible'); 
         $("#cashamount").focus();
@@ -233,6 +234,8 @@ $otherpayment = \App\OtherPayment::distinct()->get(['accounting_name']);
    $("#checkamount").keypress(function(e){
        //alert("hello")
        checkFunction(e.keyCode);
+       e.preventDefault();
+       return false;
    });
         
          $("#receive_from").focus();   
@@ -271,6 +274,8 @@ $otherpayment = \App\OtherPayment::distinct()->get(['accounting_name']);
        var ev = e.keyCode || event.which
        if(ev==13){
            $("#checkno").focus();
+           e.preventDefault();
+           return false;
        }
    })
             $("#receive_from").keypress(function(e){
@@ -281,13 +286,18 @@ $otherpayment = \App\OtherPayment::distinct()->get(['accounting_name']);
                       
                   }else{ 
                   $(".acctname1").focus(); 
-               }}
+               }
+           e.preventDefault();
+           return false;
+            }
             });
             
            $("#checkno").keypress(function(e){
            var ev = e.keyCode || event.which
            if(ev==13){
            $("#checkamount").focus();
+           e.preventDefault();
+           return false;
             }
             })
             
@@ -297,7 +307,7 @@ $otherpayment = \App\OtherPayment::distinct()->get(['accounting_name']);
             }
             })
             
-             $("#cashamount").keypress(function(e){
+       $("#cashamount").keypress(function(e){
                  
         var ev = e.keyCode || event.which
         switch(ev){
@@ -321,7 +331,8 @@ $otherpayment = \App\OtherPayment::distinct()->get(['accounting_name']);
                 } else {
                     $("#bank").focus();
                 }
-                
+                e.preventDefault();
+                return false;
                 break;
         }
     });
@@ -338,6 +349,8 @@ $otherpayment = \App\OtherPayment::distinct()->get(['accounting_name']);
            
            $("#submit").css('visibility','visible');
            $("#submit").focus();
+           e.preventDefault()
+           return false;
        }
    })
             
@@ -359,6 +372,8 @@ $otherpayment = \App\OtherPayment::distinct()->get(['accounting_name']);
                         $("#other_total").val(totalamount.toFixed(2))
                         $("#add").focus();
                         $("#donereg").css("visibility","visible")
+                        e.preventDefault();
+                        return false;
                  }
         }
        
@@ -382,7 +397,10 @@ $otherpayment = \App\OtherPayment::distinct()->get(['accounting_name']);
                }
            });
            
-         }}
+         }
+        e.preventDefault();
+        return false;
+        }
        }
       
     function popotherpayment(i) {
@@ -408,6 +426,8 @@ $otherpayment = \App\OtherPayment::distinct()->get(['accounting_name']);
     function gotoother_amount(i,evt){
         if(evt.keyCode==13){
             $("#other_amount" + i).focus()
+            evt.preventDefault()
+            return false;
         }
     }
     
