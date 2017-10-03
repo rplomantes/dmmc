@@ -234,8 +234,10 @@ $otherpayment = \App\OtherPayment::distinct()->get(['accounting_name']);
    $("#checkamount").keypress(function(e){
        //alert("hello")
        checkFunction(e.keyCode);
+       if(e.keyCode==13){
        e.preventDefault();
        return false;
+   }
    });
         
          $("#receive_from").focus();   
@@ -346,7 +348,7 @@ $otherpayment = \App\OtherPayment::distinct()->get(['accounting_name']);
            if($("#cashamount").val()==""){
                $("#cashamount").val("0.00");
            }
-           
+           $("#change").removeAttr('disabled');
            $("#submit").css('visibility','visible');
            $("#submit").focus();
            e.preventDefault()

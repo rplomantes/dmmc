@@ -313,7 +313,7 @@ $otherpayment = \App\OtherPayment::distinct()->get(['accounting_name']);
         }
     });
             
-             $("#remarks").keypress(function(e){
+      $("#remarks").keypress(function(e){
        var ev = e.keyCode || event.which
        if(ev==13){
            if($("#checkamount").val()==""){
@@ -322,6 +322,7 @@ $otherpayment = \App\OtherPayment::distinct()->get(['accounting_name']);
            if($("#cashamount").val()==""){
                $("#cashamount").val("0.00");
            }
+           
            $("#change").removeAttr('disabled');
            $("#submit").css('visibility','visible');
            $("#submit").focus();
