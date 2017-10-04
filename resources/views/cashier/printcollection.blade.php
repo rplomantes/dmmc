@@ -69,8 +69,8 @@ $totalReversal = 0;
         </tr>
         @endif
         <tr>
-            <td colspan="2"><b>Total</b></td>
-            <td colspan="3" align="right"><b>{{number_format($totalCollection,2)}}</b></td>
+            <td colspan="4"><b>Total</b></td>
+            <td colspan="1" align="right"><b>{{number_format($totalCollection,2)}}</b></td>
             <td></td>
         </tr>
         <tr>
