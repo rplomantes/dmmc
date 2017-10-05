@@ -82,7 +82,7 @@ $list_plans = \App\CtrDueDate::distinct()->where('academic_type', $status->acade
         </div>
         <div class="form form-group">
             <div class="col-sm-12">
-                <button id="submit" type="submit"class="col-sm-12 btn btn-success" value="Process Payment">Process Payment</button>
+                <button id="submit" type="submit"class="col-sm-12 btn btn-success" value="Process Registration">Process Registration</button>
             </div>
         </div>
     </div>

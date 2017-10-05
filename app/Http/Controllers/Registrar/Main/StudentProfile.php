@@ -69,6 +69,7 @@ class StudentProfile extends Controller {
             $updatestudentinfo = \App\StudentInfo::where('idno', $request->idno)->first();
             $updatestudentinfo->address = $request->address;
             $updatestudentinfo->contact_no = $request->contact_no;
+            $updatestudentinfo->lrn = $request->lrn;
             $updatestudentinfo->birthdate = $request->birthdate;
             $updatestudentinfo->place_of_birth = $request->place_of_birth;
             $updatestudentinfo->citizenship = $request->citizenship;

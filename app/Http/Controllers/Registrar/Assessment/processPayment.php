@@ -78,7 +78,7 @@ class processPayment extends Controller {
 
         $status = \App\Status::where('idno', $idno)->first();
         $school_year = \App\CtrSchoolYear::where('academic_type', $status->academic_type)->first();
-        $chartofaccount = \App\ChartOfAccount::where('accounting_name', "Tuition Fee")->first();
+        $chartofaccount = \App\ChartOfAccount::where('accounting_name', "Tuition Fees")->first();
         
         $addledger12percent = new \App\ledger;
         $addledger12percent->idno = $status->idno;

@@ -30,6 +30,7 @@ class CreateStudentInfosTable extends Migration
             $table->string('gender')->nullable();
             $table->string('address')->nullable();
             $table->string('contact_no')->nullable();
+            $table->string('lrn')->nullable();
             
             //last school attended
             $table->string('last_school')->nullable();

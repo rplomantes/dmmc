@@ -235,17 +235,17 @@
                     </div>
                     <div class="col-sm-6">
                         <label class="label">Exam Result</label><br>
-                        @if ($exam->exam_result=="")
-                        No exam result yet.<br>
-                        @endif
-                        <input type="radio" name="exam_result[{{$list->idno}}]" value="Passed" onclick="changevalue('{{$list->idno}}', 'Passed')" 
-                               @if($exam->exam_result == "Passed")
-                               checked="checked"
-                               @endif> Passed
-                               <input type="radio" name="exam_result[{{$list->idno}}]" value="Failed" onclick="changevalue('{{$list->idno}}', 'Failed')"
-                               @if($exam->exam_result == "Failed")
-                               checked="checked"
-                               @endif> Failed
+                        <select @if($list->status>=2)disabled="disabled" @else @endif class="form form-control" name="exam_result[{{$list->idno}}]" onchange="changevalue('{{$list->idno}}', this.value)">
+                                 <option value="">Not Yet Graded</option>
+                            <option value="Passed"
+                                    @if($exam->exam_result == "Passed")
+                                    selected="selected"
+                                    @endif>Passed</option>
+                            <option value="Failed"
+                                    @if($exam->exam_result == "Failed")
+                                    selected="selected"
+                                    @endif>Failed</option>
+                        </select>
                     </div>
                 </div>
                 @else 
@@ -261,22 +261,22 @@
     </div>
 </div>
 <script>
-    function changevalue(idno, value){
-    $.ajax({
-    type: "GET",
+    function changevalue(idno, value) {
+        $.ajax({
+            type: "GET",
             url: "/guidance/ajax/changevalue/" + idno + "/" + value,
             data: "",
             success: function (data) {
             }
-    });
+        });
 //        alert(idno + " " +value);
     }
 
-function displayinput(){
-    $('#transferee').show();
-}
-function hideinput(){
-    $('#transferee').hide();
-}
+    function displayinput() {
+        $('#transferee').show();
+    }
+    function hideinput() {
+        $('#transferee').hide();
+    }
 </script>
 @stop

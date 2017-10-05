@@ -97,8 +97,9 @@ $age = $yearDiff. '.' .$month;
         <td class='tdc' width='25%'>@if($user->extenstionname==null)<br>@else{{$user->extensionname}}@endif<p class="pc">EXTENSION NAME</p></td>
     </tr>
     <tr>
-        <td style="border-collapse: collapse; border: 1px solid black; text-align: left;" colspan="3">&nbsp; @if ($student_info->address==null)<br> @else{{$student_info->address}}@endif<p class="ps">&nbsp; ADDRESS</p></td>
+        <td style="border-collapse: collapse; border: 1px solid black; text-align: left;" colspan="2">&nbsp; @if ($student_info->address==null)<br> @else{{$student_info->address}}@endif<p class="ps">&nbsp; ADDRESS</p></td>
         <td class='tdc' width='25%'>@if ($student_info->contact_no==null)<br>@else{{$student_info->contact_no}}@endif<p class="pc">CONTACT NUMBER</p></td>
+        <td class='tdc' width='25%'>@if ($student_info->lrn==null)<br>@else{{$student_info->lrn}}@endif<p class="pc">LRN</p></td>
     </tr>
     <tr>
         <td class='tdc' width='25%'>@if ($student_info->birthdate==null)<br>@else{{$student_info->birthdate}}@endif<p class="pc">BIRTHDATE</p></td>
