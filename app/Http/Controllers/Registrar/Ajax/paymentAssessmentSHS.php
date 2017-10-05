@@ -72,6 +72,8 @@ class paymentAssessmentSHS extends Controller {
 
     function getSHSTuition($idno, $school_year, $period, $level, $program_code, $track, $tuition, $discounttf, $discount_code, $esc_amount, $getESC) {
 
+        $chartofaccount = \App\ChartOfAccount::where('accounting_name', "Tuition Fees")->first();
+        
         $addledger = new \App\ledger;
         $addledger->idno = $idno;
         $addledger->program_code = $program_code;
@@ -82,7 +84,8 @@ class paymentAssessmentSHS extends Controller {
         $addledger->category = "Tuition Fee";
         $addledger->description = "Tuition Fee";
         $addledger->receipt_details = "Tuition Fee";
-        $addledger->accounting_code = 100100;
+        $addledger->receipt_type = "OR";
+        $addledger->accounting_code = $chartofaccount;
         $addledger->category_switch = "3";
         $addledger->amount = $tuition;
         $addledger->discount = $tuition * ($discounttf / 100);
@@ -110,6 +113,7 @@ class paymentAssessmentSHS extends Controller {
                 $addledger->category = $otherfee->category;
                 $addledger->description = $otherfee->description;
                 $addledger->receipt_details = $otherfee->receipt_details;
+                $addledger->receipt_type = $otherfee->receipt_type;
                 $addledger->accounting_code = $otherfee->accounting_code;
                 $addledger->category_switch = $otherfee->category_switch;
                 $addledger->amount = $otherfee->amount;

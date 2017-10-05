@@ -64,6 +64,7 @@ class paymentAssessment extends Controller {
                     $addledger->category = "Tuition Fee";
                     $addledger->description = $type_of_account;
                     $addledger->receipt_details = "Tuition Fee";
+                    $addledger->receipt_type = "OR";
                     $addledger->accounting_code = $accounting_code;
                     $addledger->category_switch = "3";
                     $addledger->amount = $tuitionfee;
@@ -88,6 +89,7 @@ class paymentAssessment extends Controller {
 
     function getCollegeTuition($idno, $school_year, $period, $level, $program_code, $tuitionrate, $discounttf, $discountof, $discount_code) {
         $grades = \App\GradeCollege::where('idno', $idno)->where('school_year', $school_year)->where('period', $period)->get();
+        $chartofaccount = \App\ChartOfAccount::where('accounting_name', "Tuition Fees")->first();
         if (count($grades) > 0) {
             $lab = 0;
             foreach ($grades as $grade) {
@@ -100,7 +102,8 @@ class paymentAssessment extends Controller {
                 $addledger->category = "Tuition Fee";
                 $addledger->description = $grade->course_code;
                 $addledger->receipt_details = "Tuition Fee";
-                $addledger->accounting_code = "100100";
+                $addledger->receipt_type = "OR";
+                $addledger->accounting_code = $chartofaccount;
                 $addledger->category_switch = "3";
                 $addledger->amount = (($grade->lec * $tuitionrate * $grade->percent_tuition / 100) + (($grade->lab * $tuitionrate * $grade->percent_tuition / 100) * 3));
                 $addledger->discount = (($grade->lec * $tuitionrate * $grade->percent_tuition / 100) + (($grade->lab * $tuitionrate * $grade->percent_tuition / 100) * 3)) * ($discounttf / 100);
@@ -128,6 +131,7 @@ class paymentAssessment extends Controller {
                 $addledger->category = $otherfee->category;
                 $addledger->description = $otherfee->description;
                 $addledger->receipt_details = $otherfee->receipt_details;
+                $addledger->receipt_type = $otherfee->receipt_type;
                 $addledger->accounting_code = $otherfee->accounting_code;
                 $addledger->category_switch = $otherfee->category_switch;
                 $addledger->amount = $otherfee->amount;
@@ -151,6 +155,7 @@ class paymentAssessment extends Controller {
                 $addledger->category = $fee->category;
                 $addledger->description = $fee->description;
                 $addledger->receipt_details = $fee->receipt_details;
+                $addledger->receipt_type = $fee->receipt_type;
                 $addledger->accounting_code = $fee->accounting_code;
                 $addledger->category_switch = $fee->category_switch;
                 $addledger->amount = $fee->amount;
@@ -179,6 +184,7 @@ class paymentAssessment extends Controller {
         $addledger->category = $labfee->category;
         $addledger->description = $labfee->description;
         $addledger->receipt_details = $labfee->receipt_details;
+        $addledger->receipt_type = $labfee->receipt_type;
         $addledger->accounting_code = $labfee->accounting_code;
         $addledger->category_switch = $labfee->category_switch;
         $addledger->amount = $labfee->amount;
