@@ -122,6 +122,14 @@ class StudentProfile extends Controller {
             $updatestudentinfo->emergency_relationship = $request->emergency_relationship;
             $updatestudentinfo->emergency_address = $request->emergency_address;
             $updatestudentinfo->emergency_contact_no = $request->emergency_contact_no;
+            
+            $updatestudentinfo->form_137 = $request->form_137;
+            $updatestudentinfo->form_138 = $request->form_138;
+            $updatestudentinfo->psa_birth_cert = $request->psa_birth_cert;
+            $updatestudentinfo->transfer_credential = $request->transfer_credential;
+            $updatestudentinfo->good_moral = $request->good_moral;
+            $updatestudentinfo->married_cert = $request->married_cert;
+            $updatestudentinfo->id_picture = $request->id_picture;
 
             $updatestudentinfo->save();
 

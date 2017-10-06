@@ -78,7 +78,7 @@ class processPayment extends Controller {
 
         $status = \App\Status::where('idno', $idno)->first();
         $school_year = \App\CtrSchoolYear::where('academic_type', $status->academic_type)->first();
-        $chartofaccount = \App\ChartOfAccount::where('accounting_name', "Tuition Fees")->first();
+        $chartofaccount = \App\ChartOfAccount::where('accounting_name', "Accounts Receivables")->first();
         
         $addledger12percent = new \App\ledger;
         $addledger12percent->idno = $status->idno;
@@ -89,6 +89,7 @@ class processPayment extends Controller {
         $addledger12percent->category = "Tuition Fee";
         $addledger12percent->description = "12%";
         $addledger12percent->receipt_details = "Tuition Fee";
+        $addledger12percent->receipt_type = "OR";
         $addledger12percent->accounting_code = $chartofaccount->accounting_code;
         $addledger12percent->category_switch = "3";
         $addledger12percent->amount = $percent12;
@@ -113,8 +114,9 @@ class processPayment extends Controller {
         $year = \App\CtrSchoolYear::where('academic_type', $status->academic_type)->first();
         $inc = $referenceID->student_no;
 
-        if (strlen($idno) > 12) {
+        if (strlen($idno) > 7) {
             $changeIDno = \App\User::where('idno', $idno)->first();
+            $changeIDno->old_idno = $idno;
             $newIDno = $changeIDno->idno = substr($year->school_year, 2) . "" . sprintf("%02s", $referenceID->id) . "" . sprintf("%03s", $inc);
             $changeIDno->save();
 

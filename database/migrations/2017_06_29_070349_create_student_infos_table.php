@@ -98,6 +98,14 @@ class CreateStudentInfosTable extends Migration
             $table->string('emergency_address')->nullable();
             $table->string('emergency_contact_no')->nullable();
             
+            //requirements
+            $table->string('form_138')->default(0);
+            $table->string('form_137')->default(0);
+            $table->string('psa_birth_cert')->default(0);
+            $table->string('good_moral')->default(0);
+            $table->string('transfer_credential')->default(0);
+            $table->string('married_cert')->default(0);
+            $table->string('id_picture')->default(0);
             
             $table->timestamps();
             $table->foreign('idno')

@@ -85,7 +85,7 @@ class paymentAssessmentSHS extends Controller {
         $addledger->description = "Tuition Fee";
         $addledger->receipt_details = "Tuition Fee";
         $addledger->receipt_type = "OR";
-        $addledger->accounting_code = $chartofaccount;
+        $addledger->accounting_code = $chartofaccount->accounting_code;
         $addledger->category_switch = "3";
         $addledger->amount = $tuition;
         $addledger->discount = $tuition * ($discounttf / 100);
@@ -130,7 +130,7 @@ class paymentAssessmentSHS extends Controller {
             foreach ($updateesc as $updateescs) {
                 $amount = $updateescs->amount;
                 $discounts = $updateescs->discount;
-                $esc = number_format((($amount - $discounts) / $difference) * ($esc_amount - $getESC), 2);
+                $esc = (($amount - $discounts) / $difference) * ($esc_amount - $getESC);
 
                 if ($tesc <= $esc) {
                     $updateescs->esc = $tesc;

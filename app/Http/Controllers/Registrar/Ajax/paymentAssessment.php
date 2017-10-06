@@ -103,7 +103,7 @@ class paymentAssessment extends Controller {
                 $addledger->description = $grade->course_code;
                 $addledger->receipt_details = "Tuition Fee";
                 $addledger->receipt_type = "OR";
-                $addledger->accounting_code = $chartofaccount;
+                $addledger->accounting_code = $chartofaccount->accounting_code;
                 $addledger->category_switch = "3";
                 $addledger->amount = (($grade->lec * $tuitionrate * $grade->percent_tuition / 100) + (($grade->lab * $tuitionrate * $grade->percent_tuition / 100) * 3));
                 $addledger->discount = (($grade->lec * $tuitionrate * $grade->percent_tuition / 100) + (($grade->lab * $tuitionrate * $grade->percent_tuition / 100) * 3)) * ($discounttf / 100);
