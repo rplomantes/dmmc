@@ -34,6 +34,8 @@ class CreateStatusesTable extends Migration
             $table->string('period')->nullable();
             $table->integer('class_no')->nullable();
             $table->string('plan')->nullable();
+            $table->string('type_of_account')->nullable();
+            $table->string('type_of_discount')->nullable();
             $table->integer('isesc')->default(0);
             $table->string('branch')->nullable();
             $table->date('date_registered')->nullable();

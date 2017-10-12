@@ -33,6 +33,7 @@ class CreateGradeCollegesTable extends Migration
             $table->string('school_year');
             $table->integer('percent_tuition');
             $table->integer('is_lock')->default(0);
+            $table->integer('is_drop')->default(0);
             $table->timestamps();
             $table->foreign('idno')
                     ->references('idno')

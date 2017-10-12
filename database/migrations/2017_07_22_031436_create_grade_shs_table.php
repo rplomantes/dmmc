@@ -29,6 +29,7 @@ class CreateGradeShsTable extends Migration
             $table->string('period');
             $table->string('school_year');
             $table->integer('is_lock')->default(0);
+            $table->integer('is_drop')->default(0);
             $table->foreign('idno')
                 ->references('idno')->on('users')
                 ->onUpdate('cascade');
