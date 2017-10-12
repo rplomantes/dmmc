@@ -21,7 +21,7 @@ $course_offerings = \App\CourseOffering::where('program_code', $status->program_
     <div class='col-sm-12'>
         <div class="form-group">
             <ul class="nav navbar-header">
-                <li>Student Id : {{$student->idno}}</li>
+                <li>Student ID : {{$student->idno}}</li>
                 <li><b>Student Name : {{strtoupper($student->lastname)}}, {{$student->firstname}}</b></li>
                 @if($status->academic_type=="Senior High School")
                 <li>Grade/Section : {{$status->level}} - {{$status->section}}<li>
