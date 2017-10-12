@@ -216,6 +216,11 @@
                                                 <a href="{{url('/registrar/import_grades/shs')}}"><i class="fa fa-upload fa-fw" aria-hidden="true"></i> Import Grades - SHS</a>
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <td>
+                                                <a href="{{url('/registrar/adding_dropping')}}"><i class="fa fa-plus-circle fa-fw" aria-hidden="true"></i> Adding/Dropping</a>
+                                            </td>
+                                        </tr>
                                     </table>
                                 </div>
                             </div>

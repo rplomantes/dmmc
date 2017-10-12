@@ -192,3 +192,10 @@ Route::get('/ajax/sectioning/assignadviser/{adviser}', 'Registrar\Sectioning\Aja
 Route::get('/registrar/reports/enrollment_report', 'Registrar\Reports\reportsController@enrollment_report');
 Route::post('/registrar/reports/generate_enrollmentreport', 'Registrar\Reports\reportsController@generate_enrollmentreport');
 Route::get('/registrar/reports/enrollment_statistics', 'Registrar\Reports\enrollmentStatistics@index');
+
+//adding dropping
+Route::get('/registrar/adding_dropping','Registrar\Grades\AddingDroppingController@index');
+Route::get('/registrar/adding_dropping/{idno}','Registrar\Grades\AddingDroppingController@viewprofile');
+Route::get('/registrar/ajax/adding_dropping/getmainstudentlist','Registrar\Grades\Ajax\adding_dropping@getmainstudentlist');
+Route::get('/registrar/ajax/adding_course/{id}','Registrar\Grades\Ajax\adding_dropping@addcourse');
+Route::get('/registrar/ajax/drop_course/{id}','Registrar\Grades\Ajax\adding_dropping@dropcourse');

@@ -2,7 +2,7 @@
     .thd, .tdd {
         border-collapse: collapse;
         border: 1px solid black;
-    }
+    } 
 
     .tables, .tds, .ths {
         border-collapse: collapse;
@@ -22,16 +22,16 @@
         z-index: -1;
     }
 </style><style>
-            .header_image 
-            {
-                position: absolute;
-                bottom: 1090px;
-                right: 0;
-                left: -350;
-                z-index: -1;
-            }
-        </style>
-        <div align='center'><div class='header_image'><img src = "{{url("/images","dmmclogo2.jpeg")}}" width="8%" alt="DMMCIHS Logo" class="img-thumbnail"></div></div>
+    .header_image 
+    {
+        position: absolute;
+        bottom: 1090px;
+        right: 0;
+        left: -350;
+        z-index: -1;
+    }
+</style>
+<div align='center'><div class='header_image'><img src = "{{url("/images","dmmclogo2.jpeg")}}" width="8%" alt="DMMCIHS Logo" class="img-thumbnail"></div></div>
 <div class = "watermark">
     <img src = "{{url("/images","dmmclogo.jpeg")}}" width="80%" alt="DMMCIHS Logo" class="img-thumbnail">
 </div>
@@ -57,7 +57,7 @@
         <td>Name:</td>
         <td width="55%" style="border-bottom: 1pt solid black;">{{strtoupper($user->firstname)}} {{strtoupper($user->middlename)}} {{strtoupper($user->lastname)}} {{strtoupper($user->extensionname)}}</td>
         <td><div align='left'>Status:</div></td>
-        <td colspan="100%" style="border-bottom: 1pt solid black;">@if ($status->status == 4) Enrolled @else Not Yet Enrolled @endif</td>
+        <td colspan="100%" style="border-bottom: 1pt solid black;">@if ($status->status == 4) Enrolled @endif</td>
     </tr>
     @if($status->academic_type!='Senior High School')
     <tr>
@@ -86,8 +86,8 @@
     ?>
     @foreach ($grades as $grade)
     <tr  style='font-size:12px'>
-        <td class='tds' style='font-size:12px' ><small>@if($status->academic_type!='Senior High School'){{$grade->course_code}}@endif {{$grade->course_name}}</small></td>
-        
+        <td class='tds' style='font-size:12px' ><small>@if($status->academic_type!='Senior High School'){{$grade->course_code}}@endif {{$grade->course_name}} @if($grade->is_drop == 1) [DROPPED] @endif </small></td>
+
         @if ($status->academic_type!='Senior High School')
         <td class='tds' style='font-size:12px'>
             <?php
@@ -111,9 +111,9 @@
             @endif
         </td>
         @else
-        
+
         @if ($status->section != NULL)
-        
+
         <td class='tds' style='font-size:12px'>
             <?php
             $schedule2s = \App\ScheduleShs::distinct()->where('course_offering_id', $grade->course_offering_id)->get(['time_start', 'time_end', 'room']);
@@ -135,15 +135,21 @@
             {{$instructor->firstname}} {{$instructor->lastname}}
             @endif
         </td>
-        
+
         @else
         <td class='tds' style='font-size:12px'></td>
         <td class='tds' style='font-size:12px'></td>
         @endif
-        
+
         @endif
-        
-        <td class='tds' align='center'>@if($status->academic_type!='Senior High School')<?php $total = $total + $grade->lec; ?>{{$grade->lec}} @else <?php $total = $total + $grade->hours; ?>{{$grade->hours}} @endif</td>
+
+        <td class='tds' align='center'>
+            @if($status->academic_type!='Senior High School')
+                <?php if($grade->is_drop == 1){ $total = $total; } else { $total = $total + $grade->lec + $grade->lab; $sum = $grade->lec + $grade->lab; echo "$sum"; }?>
+            @else
+                <?php if($grade->is_drop == 1){ $total = $total; } else { $total = $total + $grade->hours; echo "$grade->hours"; }?>
+            @endif
+        </td>
     </tr>
     @endforeach
     <tr>
@@ -151,66 +157,84 @@
         <th class='ths'align='center'>{{$total}}</th>
     </tr>
 </table>
-<br><b>ASSESSMENT</b>
-    <?php
-    $tfee = 0;
-    $ofee = 0;
-    $dfee = 0;
-    $esc = 0;
-    $tfs = \App\ledger::where('idno', $status->idno)->where('school_year', $y->school_year)->where('period', $y->period)->where('category_switch', 3)->get();
-    foreach($tfs as $tf){
-        $tfee = $tfee + $tf->amount;
-    }
-    $ofs = \App\ledger::where('idno', $status->idno)->where('school_year', $y->school_year)->where('period', $y->period)->where('category_switch', 1)->get();
-    foreach($ofs as $of){
-        $ofee = $ofee + $of->amount;
-    }
-    $discounts = \App\ledger::where('idno', $status->idno)->where('school_year', $y->school_year)->where('period', $y->period)->get();
-    foreach($discounts as $discount){
-        $dfee = $dfee + ($discount->discount);
-        $esc = $esc + $discount->esc;
-    }
+<br>
+<?php
+$tfee = 0;
+$ofee = 0;
+$dfee = 0;
+$esc = 0;
+$oaccounts = \App\ledger::where('idno', $status->idno)->where('school_year', $y->school_year)->where('period', $y->period)->where('category_switch', 5)->get();
+$tfs = \App\ledger::where('idno', $status->idno)->where('school_year', $y->school_year)->where('period', $y->period)->where('category_switch', 3)->get();
+foreach ($tfs as $tf) {
+    $tfee = $tfee + $tf->amount;
+}
+$ofs = \App\ledger::where('idno', $status->idno)->where('school_year', $y->school_year)->where('period', $y->period)->where('category_switch', 1)->get();
+foreach ($ofs as $of) {
+    $ofee = $ofee + $of->amount;
+}
+$discounts = \App\ledger::where('idno', $status->idno)->where('school_year', $y->school_year)->where('period', $y->period)->get();
+foreach ($discounts as $discount) {
+    $dfee = $dfee + ($discount->discount);
+    $esc = $esc + $discount->esc;
+}
+?>
+<div>
+    <table width = "50%" style="float:left">
+        <tr>
+            <td colspan="3"><b>TUITION FEE</b></td>
+        </tr>
+        <tr>
+            <td>Tuition Fee</td>
+            <td>:</td>
+            <td style="border-bottom: 1pt solid black;">Php {{number_format($tfee,2)}}</td>
+        </tr>
+        <tr>
+            <td>Other Fee</td>
+            <td>:</td>
+            <td style="border-bottom: 1pt solid black;">Php {{number_format($ofee,2)}}</td>
+        </tr>
+        <tr>
+            <td>Discounts</td>
+            <td>:</td>
+            <td style="border-bottom: 1pt solid black;">(Php {{number_format($dfee,2)}})</td>
+        </tr>
+        @if($status->academic_type=="Senior High School")
+        <tr>
+            <td>Voucher</td>
+            <td>:</td>
+            <td style="border-bottom: 1pt solid black;">(Php {{number_format($esc,2)}})</td>
+        </tr>
+        @endif
+        <tr>
+            <td>Total Tuition Fee</td>
+            <td>:</td>
+            <td style="border-bottom: 1pt solid black;">Php {{number_format((($tfee+$ofee)-$dfee)-$esc,2)}}</td>
+        </tr>
+        @if (count($ledger_due_dates)>0)
+        <tr>
+            <td><strong>Downpayment</strong></td>
+            <td><strong>:</strong></td>
+            <td style="border-bottom: 1pt solid black;"><strong>Php {{number_format($downpayment->amount,2)}}</strong></td>
+        </tr>
+        @endif
+    </table>
+    
+    <table width="50%" style="float:left">
+        <tr>
+            <td colspan="3"><b>OTHER PAYMENTS</b></td>
+        </tr>
+        @foreach ($oaccounts as $oaccount)
+        <tr>
+            <td>{{$oaccount->description}}</td>
+            <td>:</td>
+            <td style="border-bottom: 1pt solid black;">Php {{number_format($oaccount->amount,2)}}</td>
+        </tr>
+        @endforeach
+    </table>
+</div>
 
-    ?>
-<table width = "60%">
-    <tr>
-        <td>Tuition Fee</td>
-        <td>:</td>
-        <td style="border-bottom: 1pt solid black;">Php {{number_format($tfee,2)}}</td>
-    </tr>
-    <tr>
-        <td>Other Fee</td>
-        <td>:</td>
-        <td style="border-bottom: 1pt solid black;">Php {{number_format($ofee,2)}}</td>
-    </tr>
-    <tr>
-        <td>Discounts</td>
-        <td>:</td>
-        <td style="border-bottom: 1pt solid black;">(Php {{number_format($dfee,2)}})</td>
-    </tr>
-    @if($status->academic_type=="Senior High School")
-    <tr>
-        <td>Voucher</td>
-        <td>:</td>
-        <td style="border-bottom: 1pt solid black;">(Php {{number_format($esc,2)}})</td>
-    </tr>
-    @endif
-    <tr>
-        <td>Total Tuition Fee</td>
-        <td>:</td>
-        <td style="border-bottom: 1pt solid black;">Php {{number_format((($tfee+$ofee)-$dfee)-$esc,2)}}</td>
-    </tr>
-    @if (count($ledger_due_dates)>0)
-    <tr>
-        <td><strong>Downpayment</strong></td>
-        <td><strong>:</strong></td>
-        <td style="border-bottom: 1pt solid black;"><strong>Php {{number_format($downpayment->amount,2)}}</strong></td>
-    </tr>
-    @endif
-</table>
-
-    @if (count($ledger_due_dates)>0)
-<table class='tables' width='100%'>
+@if (count($ledger_due_dates)>0)
+<table class='tables' width='100%' style="clear:both">
     <tr>
         <th class='ths'>Due Date</th>
         <th class='ths'>Amount</th>
@@ -258,7 +282,7 @@
 </tr>
 </table>
 <small><i>NOTE: This form is not valid until payment has been made in the cashier.
-            <br>Validity period: 10 days from the date of assessment.</i></small>
+        <br>Validity period: 10 days from the date of assessment.</i></small>
 
 <div class="page_break">
     <div style="text-align: justify">

@@ -30,14 +30,22 @@ class paymentAssessmentSHS extends Controller {
                     $deleteledgerduedate->delete();
                 }
             }
-
+            
             $esc_id = Input::get("esc");
             $esc = \App\CtrEsc::where('id', $esc_id)->first();
+
             $esc_amount = $esc->amount;
             $program_code = Input::get("program_code");
             $track = Input::get("track");
             $academic_type = Input::get("academic_type");
             $discount_code = Input::get('discount');
+            
+            
+            $changestatus = \App\Status::where('idno', $idno)->first();
+            $changestatus->type_of_account = $esc->type;
+            $changestatus->type_of_discount = $discount_code;
+            $changestatus->save();
+            
             if (!is_null($discount_code)) {
                 $discounttf = $this->getdiscountrate('tf', $discount_code);
                 $discountof = $this->getdiscountrate('of', $discount_code);

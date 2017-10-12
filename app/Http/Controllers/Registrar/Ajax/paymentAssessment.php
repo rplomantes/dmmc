@@ -32,14 +32,18 @@ class paymentAssessment extends Controller {
                 }
             }
             
-            $changestatus = \App\Status::where('idno', $idno)->first();
-            $changestatus->status = 2;
-            $changestatus->save();
-
+            
             $type_of_account = Input::get("type_of_account");
             $program_code = Input::get("program_code");
             $academic_type = Input::get("academic_type");
             $discount_code = Input::get('discount');
+            
+            $changestatus = \App\Status::where('idno', $idno)->first();
+            $changestatus->status = 2;
+            $changestatus->type_of_account = $type_of_account;
+            $changestatus->type_of_discount = $discount_code;
+            $changestatus->save();
+            
             if (!is_null($discount_code)) {
                 $discounttf = $this->getdiscountrate('tf', $discount_code);
                 $discountof = $this->getdiscountrate('of', $discount_code);
