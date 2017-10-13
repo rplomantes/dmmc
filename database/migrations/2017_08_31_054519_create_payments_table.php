@@ -17,7 +17,8 @@ class CreatePaymentsTable extends Migration
             $table->increments('id');
             $table->date('transaction_date');
             $table->string('reference_id');
-            $table->string('receipt_no');
+            $table->string('receipt_no')->nullable();
+            $table->string('acknowledgement_no')->nullable();
             $table->string('idno');
             $table->string('category');
             $table->string('description');

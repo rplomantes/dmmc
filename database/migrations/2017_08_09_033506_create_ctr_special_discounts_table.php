@@ -22,6 +22,7 @@ class CreateCtrSpecialDiscountsTable extends Migration
             $table->string('description');
             $table->string('receipt_details');
             $table->string('accounting_code')->nullable();
+            $table->string('receipt_type')->default("OR");
             $table->string('category_switch');
             $table->decimal('amount',10,2);
             $table->timestamps();

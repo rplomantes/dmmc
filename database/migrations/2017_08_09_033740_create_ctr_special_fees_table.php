@@ -19,6 +19,7 @@ class CreateCtrSpecialFeesTable extends Migration
             $table->string('category');
             $table->string('description');
             $table->string('receipt_details');
+            $table->string('receipt_type')->default("OR");
             $table->string('accounting_code')->nullable();
             $table->string('category_switch');
             $table->decimal('amount',10,2);

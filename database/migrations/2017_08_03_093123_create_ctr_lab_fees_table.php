@@ -18,6 +18,7 @@ class CreateCtrLabFeesTable extends Migration
             $table->string('program_code');
             $table->string('level');
             $table->string('period');
+            $table->string('receipt_type')->default("OR");
             $table->string('category');
             $table->string('description');
             $table->string('receipt_details');

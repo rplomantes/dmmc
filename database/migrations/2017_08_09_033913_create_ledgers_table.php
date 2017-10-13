@@ -21,6 +21,7 @@ class CreateLedgersTable extends Migration
             $table->string('level');
             $table->string('school_year');
             $table->string('period');
+            $table->string('receipt_type')->default("OR");
             $table->string('category');
             $table->string('description');
             $table->string('receipt_details');

@@ -19,6 +19,7 @@ class CreateCtrReferenceIdsTable extends Migration
             $table->integer('student_no')->default(1);
             $table->integer('registration_no')->default(1);
             $table->integer('receipt_no')->default(1);
+            $table->integer('acknowledgement_no')->default(1);
             $table->timestamps();
             $table->foreign('idno')
                     ->references('idno')

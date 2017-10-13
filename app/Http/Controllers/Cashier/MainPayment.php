@@ -10,6 +10,11 @@ Use Illuminate\Support\Facades\DB;
 
 class MainPayment extends Controller
 {
+    public $withOr = 0;
+    public $withAR = 0;
+    public $receipt_no ="";
+    public $acknowlegment_no="";
+    public $reference_id="";
     
       public function __construct() {
         $this->middleware('auth');
@@ -26,9 +31,16 @@ class MainPayment extends Controller
     
     function processpayment(Request $request){
         if(Auth::user()->accesslevel==4){
+            $referenceno = \App\CtrReferenceId::where('idno',Auth::user()->idno)->first();
+            $this->receipt_no=$referenceno->receipt_no;
+            $this->acknowlegment_no=$referenceno->id . " - " . $referenceno->acknowledgement_no;
+            $this ->reference_id=uniqid();
+            
             $idno = $request->idno;
             $student=  \App\User::where('idno',$idno)->first();
-            $receiptno = \App\CtrReferenceId::where('idno',Auth::user()->idno)->first()->receipt_no;
+            //$referenceno = \App\CtrReferenceId::where('idno',Auth::user()->idno)->first();
+            //$receiptno = $referenceno->receipt_no;
+            //$acknowlegeno =  $referenceno->id . " - " . $referenceno->acknowledgement_no;
             $referenceid = uniqid();
             $cashamount=0;
              $remarks = $request->remarks;
@@ -37,7 +49,7 @@ class MainPayment extends Controller
                     $previousaccounts = DB::Select("select * from ledgers where category_switch >= 10 and "
                         . "amount-discount-debit_memo-payment-esc > 0 and idno = '$idno'");
                     //$previousaccounts = \App\ledger::where('idno',$idno)->where("category_switch",">=","10")->where("amount-debit_memo-discount-payment-esc",">","0")->get();
-                    $this->process_current_previous_acct($idno, $request->previousaccount, $previousaccounts,$student,$receiptno,$referenceid);
+                    $this->process_current_previous_acct($idno, $request->previousaccount, $previousaccounts,$student);
                     $cashamount=$cashamount+$request->previousaccount;    
                 } 
             }
@@ -47,7 +59,7 @@ class MainPayment extends Controller
                    $mainaccounts = DB::Select("select * from ledgers where category_switch <= 5 and "
                         . "amount-discount-debit_memo-payment-esc > 0 and idno = '$idno'");
                    //$mainaccounts = \App\ledger::where('idno',$idno)->where("category_switch","<=","5")->where("amount-debit_memo-discount-payment-esc",">","0")->get();
-                   $this->process_current_previous_acct($idno,$request->mainaccount,$mainaccounts,$student,$receiptno,$referenceid);    
+                   $this->process_current_previous_acct($idno,$request->mainaccount,$mainaccounts,$student);    
                    $cashamount=$cashamount+$request->mainaccount;
                    
                 }
@@ -57,16 +69,23 @@ class MainPayment extends Controller
                  $otheraccount = $request->otheracct;
                  foreach($otheraccount as $key=>$value){
                      $otheraccounts = \App\ledger::where('id',$key)->get();
-                     $this->process_current_previous_acct($idno,$value,$otheraccounts,$student,$receiptno,$referenceid);
+                     $this->process_current_previous_acct($idno,$value,$otheraccounts,$student);
                      $cashamount=$cashamount+$value;
                  }
              }
              
-             $this->add_debit_cash_entry($idno,$cashamount,$student,$receiptno,$referenceid);
-             $this->add_payment_details($request,$receiptno,$student,$referenceid,$idno);
+             $this->add_debit_cash_entry($idno,$cashamount,$student);
+             $this->add_payment_details($request,$student,$idno);
+             
              $receipt = \App\CtrReferenceId::where('idno',Auth::user()->idno)->first();
+             if($this->withOr=="1"){
              $receipt->receipt_no = $receipt->receipt_no + 1;
              $receipt->update();
+             }
+             if($this->withAR=="1"){
+             $receipt->acknowledgement_no = $receipt->acknowledgement_no + 1;
+             $receipt->update();        
+             }
              $status = \App\Status::where('idno',$idno)->first();
              if($status->status==3){
                 $status->status=4;
@@ -74,16 +93,16 @@ class MainPayment extends Controller
                 $status->update();
              }
              
-             return redirect(url('/viewreceipt',$referenceid));
+             return redirect(url('/viewreceipt',$this->reference_id));
              
         }else{
             return "Unauthorized to access this module. Please see Administrator!!!";
         }
             
     }
-    function process_current_previous_acct($idno,$acct_amount,$accounts,$student,$receiptno,$referenceid){
+    function process_current_previous_acct($idno,$acct_amount,$accounts,$student){
             
-            
+               $fiscalyear = \App\CtrFiscalYear::first()->fiscal_year;   
             //process payment for main and previous balances
                 foreach($accounts as $account){
                     $refid=$account->id;
@@ -102,8 +121,16 @@ class MainPayment extends Controller
                         $acctentry = new \App\Accounting;
                         $acctentry->transaction_date = \Carbon\Carbon::now();
                         $acctentry->refid=$refid;
-                        $acctentry->reference_id=$referenceid;
-                        $acctentry->receipt_no=$receiptno;
+                        $acctentry->reference_id=$this->reference_id;
+                        if($account->receipt_type=="OR"){
+                        $acctentry->receipt_no=$this->receipt_no;
+                        $this->withOr=1;
+                        }
+                        else{
+                        $this->withAR=1;
+                        $acctentry->acknowledgement_no=$this->acknowlegment_no;    
+                        }
+                        $acctentry->receipt_type=$account->receipt_type;
                         $acctentry->idno=$idno;
                         $acctentry->paid_by=$student->lastname . "' " . $student->firstname;
                         $acctentry->category = $account->category;
@@ -112,6 +139,7 @@ class MainPayment extends Controller
                         $acctentry->accounting_code = $account->accounting_code;
                         $acctentry->category_switch=$account->category_switch;
                         $acctentry->entry_type="1";
+                        $acctentry->fiscal_year=$fiscalyear;
                         $acctentry->credit = $amount-$debit_memo-$payment-$esc;
                         $acctentry->posted_by=Auth::user()->idno;
                         $acctentry->save();
@@ -123,8 +151,12 @@ class MainPayment extends Controller
                             $acctentry = new \App\Accounting;
                             $acctentry->transaction_date = \Carbon\Carbon::now();
                             $acctentry->refid=$refid;
-                            $acctentry->reference_id=$referenceid;
-                            $acctentry->receipt_no=$receiptno;
+                            $acctentry->reference_id=$this->reference_id;
+                            if($discounts->receipt_type=="OR"){
+                            $acctentry->receipt_no=$this->receipt_no;
+                            } else {
+                              $acctentry->acknowledgement_no=$this->acknowlegment_no;  
+                            }
                             $acctentry->idno=$idno;
                             $acctentry->paid_by=$student->lastname . "' " . $student->firstname;
                             $acctentry->category = "Discount";
@@ -133,6 +165,7 @@ class MainPayment extends Controller
                             $acctentry->accounting_code = $debit_accounting_code;
                             $acctentry->category_switch=$account->category_switch;
                             $acctentry->entry_type="1";
+                            $acctentry->fiscal_year=$fiscalyear;
                             $acctentry->debit = $discount;
                             $acctentry->posted_by=Auth::user()->idno;
                             $acctentry->save();
@@ -169,8 +202,15 @@ class MainPayment extends Controller
                         $acctentry = new \App\Accounting;
                         $acctentry->transaction_date = \Carbon\Carbon::now();
                         $acctentry->refid=$refid;
-                        $acctentry->reference_id=$referenceid;
-                        $acctentry->receipt_no=$receiptno;
+                        $acctentry->reference_id=$this->reference_id;
+                       
+                        if($account->receipt_type == "OR"){
+                        $acctentry->receipt_no=$this->receipt_no;
+                        $this->withOr=1;
+                        }else{
+                        $acctentry->acknowledgement_no=$this->acknowlegment_no;
+                        $this->withAR=1;
+                        }
                         $acctentry->idno=$idno;
                         $acctentry->paid_by=$student->lastname . "' " . $student->firstname;
                         $acctentry->category = $account->category;
@@ -179,6 +219,7 @@ class MainPayment extends Controller
                         $acctentry->accounting_code = $account->accounting_code;
                         $acctentry->category_switch=$account->category_switch;
                         $acctentry->entry_type="1";
+                        $acctentry->fiscal_year=$fiscalyear;
                         $acctentry->credit = $acct_amount;
                         $acctentry->posted_by=Auth::user()->idno;
                         $acctentry->save();
@@ -187,34 +228,46 @@ class MainPayment extends Controller
                     }
                 }
                 
-                
     }
     
-    function add_debit_cash_entry($idno,$cashamount,$student,$receiptno,$referenceid){
+    function add_debit_cash_entry($idno,$cashamount,$student){
+        $fiscalyear = \App\CtrFiscalYear::first()->fiscal_year;
+        $entries = \App\CtrCashierDebit::first();
         $acctentry = new \App\Accounting;
+        $acctentry->reference_id=$this->reference_id;
         $acctentry->transaction_date = \Carbon\Carbon::now();
-        $acctentry->reference_id=$referenceid;
-        $acctentry->receipt_no=$receiptno;
+        if($this->withOr=="1"){
+        $acctentry->receipt_no=$this->receipt_no;
+        }
+        if($this->withAR=="1"){
+         $acctentry->acknowledgement_no= $this->acknowlegment_no;   
+        }
         $acctentry->idno=$idno;
         $acctentry->paid_by=$student->lastname . "' " . $student->firstname;
-        $acctentry->category = "Cash On Hand";
-        $acctentry->description = "Cash On Hand";
+        $acctentry->category = $entries->accounting_name;
+        $acctentry->description = $entries->accounting_name;
         $acctentry->receipt_details = "Total Amount";
-        $acctentry->accounting_code = "100001";
+        $acctentry->accounting_code = $entries->accounting_code;
         $acctentry->category_switch="";
         $acctentry->entry_type="1";
+        $acctentry->fiscal_year=$fiscalyear;
         $acctentry->debit = $cashamount;
         $acctentry->posted_by=Auth::user()->idno;
         $acctentry->save();
         
     }
     
-    function add_payment_details($request,$receiptno,$student,$referenceid,$idno){
+    function add_payment_details($request,$student,$idno){
        
         $addpayment = new \App\Payment;
         $addpayment->transaction_date=  \Carbon\Carbon::now();
-        $addpayment->receipt_no = $receiptno;
-        $addpayment->reference_id=$referenceid;
+        if($this->withOr=="1"){
+        $addpayment->receipt_no = $this->receipt_no;
+        }
+        if($this->withAR=="1"){
+        $addpayment->acknowledgement_no = $this->acknowlegment_no;    
+        }
+        $addpayment->reference_id=$this->reference_id;
         $addpayment->idno=$idno;
         $addpayment->paid_by=$student->lastname . ", " .$student->firstname;
         $addpayment->bank_name=$request->bank;
