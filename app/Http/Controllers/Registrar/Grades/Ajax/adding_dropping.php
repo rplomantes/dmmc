@@ -63,13 +63,13 @@ class adding_dropping extends Controller {
             $courses = \App\GradeCollege::where('idno', $idno)->where('school_year', $status->school_year)->where('period', $status->period)->get();
             foreach ($courses as $course) {
                 $section = \App\CourseOffering::where('id', $course->course_offering_id)->first();
-                
-                if ($course->is_drop == 0){
-                    $dropped= "<a href=\"javascript:void(0)\" onclick=\"dropcourse('".$course->course_offering_id."')\">Drop</a>";
-                }else{
+
+                if ($course->is_drop == 0) {
+                    $dropped = "<a href=\"javascript:void(0)\" onclick=\"dropcourse('" . $course->course_offering_id . "')\">Drop</a>";
+                } else {
                     $dropped = "Dropped";
                 }
-                
+
                 $data = $data . "<tr>
                     <td>" . $course->course_code . "</td>
                     <td>" . $course->course_name . "</td>
@@ -84,31 +84,57 @@ class adding_dropping extends Controller {
 
     function recomputeduedate($idno) {
         $status = \App\Status::where('idno', $idno)->first();
-        $totalTuition = DB::Select("Select sum(amount) as amounts from ledgers where school_year = $status->school_year and idno=$idno and period = '$status->period' and (category_switch = 1 or category_switch = 3)");
 
-        $total = 0;
-        foreach ($totalTuition as $totalTuitions) {
-            $total = $totalTuitions->amounts;
-        }
         $plans = \App\CtrDueDate::where('academic_type', $status->academic_type)->where('plan', $status->plan)->get();
 
         if ($status->plan == 'full') {
+            $totalTuition = DB::Select("Select sum(amount) as amounts from ledgers where school_year = $status->school_year and idno=$idno and period = '$status->period' and (category_switch = 1 or category_switch = 3)");
+            $total = 0;
+            foreach ($totalTuition as $totalTuitions) {
+                $total = $totalTuitions->amounts;
+            }
 
             $oldledgerduedates = \App\LedgerDueDate::where('idno', $idno)->where('school_year', $status->school_year)->where('period', $status->period)->where('due_switch', 0)->first();
             $oldledgerduedates->amount = $total;
             $oldledgerduedates->amount2 = $total;
             $oldledgerduedates->save();
         } else {
+            //get and delete payment12percent
+            $get12percents = \App\ledger::where('program_code', $status->program_code)->where('level', $status->level)->where('school_year', $status->school_year)->where('period', $status->period)->where('description', '12%')->get();
+            $payment12percent = 0;
+            foreach ($get12percents as $get12percent) {
+                $payment12percent = $payment12percent + $get12percent->payment;
+                $get12percent->delete();
+            }
+            
+            //get totaluition w/o 12percent
+            $totalTuition = DB::Select("Select sum(amount) as amounts from ledgers where school_year = $status->school_year and idno=$idno and period = '$status->period' and (category_switch = 1 or category_switch = 3)");
+            $total = 0;
+            foreach ($totalTuition as $totalTuitions) {
+                $total = $totalTuitions->amounts;
+            }
+            
+            //compute 12 percent
             $down = \App\LedgerDueDate::where('idno', $idno)->where('school_year', $status->school_year)->where('period', $status->period)->where('due_switch', 0)->first();
-            $increase = ($total - $down->amount) / count($plans);
+            foreach ($plans as $pa){
+                $this->compute12percent($down->amount, $total, $plans, $idno, $payment12percent);                
+            }
+            
+            //get totaltuition w/ 12percent
+            $totalTuition2 = DB::Select("Select sum(amount) as amounts from ledgers where school_year = $status->school_year and idno=$idno and period = '$status->period' and (category_switch = 1 or category_switch = 3)");
+            $total2 = 0;
+            foreach ($totalTuition2 as $totalTuitions2) {
+                $total2 = $totalTuitions2->amounts;
+            }
+            $increase2 = ($total2 - $down->amount) / count($plans);
+            
+            //update duedates
             foreach ($plans as $paln) {
 
                 $oldledgerduedates = \App\LedgerDueDate::where('idno', $idno)->where('school_year', $status->school_year)->where('period', $status->period)->where('due_switch', 1)->where('due_date', $paln->due_date)->first();
-                $oldledgerduedates->amount = $increase;
-                $oldledgerduedates->amount2 = $increase;
+                $oldledgerduedates->amount = $increase2;
+                $oldledgerduedates->amount2 = $increase2;
                 $oldledgerduedates->save();
-
-                //$this->compute12percent($down, $totalTuition, $plans, $idno);
             }
         }
     }
@@ -123,7 +149,7 @@ class adding_dropping extends Controller {
 
     function getCollegeTuition($idno, $school_year, $period, $level, $program_code, $tuitionrate, $course_code) {
         $grades = \App\GradeCollege::where('idno', $idno)->where('school_year', $school_year)->where('period', $period)->where('course_code', $course_code)->get();
-        $chartofaccount = \App\ChartOfAccount::where('accounting_name', "Tuition Fees")->first();
+        $chartofaccount = \App\ChartOfAccount::where('accounting_name', "Tuition Fee")->first();
         if (count($grades) > 0) {
             foreach ($grades as $grade) {
                 $addledger = new \App\ledger;
@@ -217,13 +243,13 @@ class adding_dropping extends Controller {
             $courses = \App\GradeCollege::where('idno', $idno)->where('school_year', $status->school_year)->where('period', $status->period)->get();
             foreach ($courses as $course) {
                 $section = \App\CourseOffering::where('id', $course->course_offering_id)->first();
-                
-                if ($course->is_drop == 0){
-                    $dropped= "<a href=\"javascript:void(0)\" onclick=\"dropcourse('".$course->course_offering_id."')\">Drop</a>";
-                }else{
+
+                if ($course->is_drop == 0) {
+                    $dropped = "<a href=\"javascript:void(0)\" onclick=\"dropcourse('" . $course->course_offering_id . "')\">Drop</a>";
+                } else {
                     $dropped = "Dropped";
                 }
-                
+
                 $data = $data . "<tr>
                     <td>" . $course->course_code . "</td>
                     <td>" . $course->course_name . "</td>
@@ -232,11 +258,38 @@ class adding_dropping extends Controller {
                 </tr>";
             }
             $data = $data . "</tbody></table>";
-            
+
             $this->recomputeduedate($idno);
-            
+
             return $data;
         }
+    }
+
+    function compute12percent($downpaymentamount, $totalTuition, $plans, $idno, $payment12percent) {
+        $planpayment = (($totalTuition - $downpaymentamount) / count($plans) * 1.12);
+        $rawplan = (($totalTuition - $downpaymentamount) / count($plans));
+        $percent12 = ($planpayment - $rawplan);
+        $payment = $payment12percent / count($plans);
+        $status = \App\Status::where('idno', $idno)->first();
+
+        $school_year = \App\CtrSchoolYear::where('academic_type', $status->academic_type)->first();
+        $chartofaccount = \App\ChartOfAccount::where('accounting_name', "Accounts Receivables")->first();
+
+        $addledger12percent = new \App\ledger;
+        $addledger12percent->idno = $status->idno;
+        $addledger12percent->program_code = $status->program_code;
+        $addledger12percent->level = $status->level;
+        $addledger12percent->school_year = $school_year->school_year;
+        $addledger12percent->period = $school_year->period;
+        $addledger12percent->category = "Tuition Fee";
+        $addledger12percent->description = "12%";
+        $addledger12percent->receipt_details = "Tuition Fee";
+        $addledger12percent->receipt_type = "OR";
+        $addledger12percent->accounting_code = $chartofaccount->accounting_code;
+        $addledger12percent->category_switch = "3";
+        $addledger12percent->amount = $percent12;
+        $addledger12percent->payment = $payment;
+        $addledger12percent->save();
     }
 
 }
