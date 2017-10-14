@@ -243,7 +243,7 @@ class MainPayment extends Controller
          $acctentry->acknowledgement_no= $this->acknowlegment_no;   
         }
         $acctentry->idno=$idno;
-        $acctentry->paid_by=$student->lastname . "' " . $student->firstname;
+        $acctentry->paid_by=$student->lastname . ", " . $student->firstname;
         $acctentry->category = $entries->accounting_name;
         $acctentry->description = $entries->accounting_name;
         $acctentry->receipt_details = "Total Amount";
