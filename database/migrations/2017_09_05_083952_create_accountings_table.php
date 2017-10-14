@@ -19,7 +19,7 @@ class CreateAccountingsTable extends Migration
             $table->integer('refid')->nullable();
             $table->string('reference_id');
             $table->string('receipt_no')->nullable();
-            $table->string('acknowledgement_no')->nullable;
+            $table->string('acknowledgement_no')->nullable();
             $table->string('idno');
             $table->string('paid_by');
             $table->string('category');
@@ -29,7 +29,7 @@ class CreateAccountingsTable extends Migration
             $table->string('category_switch');
             $table->integer('entry_type');
             $table->integer('fiscal_year');
-            $table->string('receip_type')->default('OR');
+            $table->string('receipt_type')->default('OR');
             $table->decimal('debit',10,2)->default(0);
             $table->decimal('credit',10,2)->default(0);
             $table->string('particular')->nullable();
