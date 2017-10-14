@@ -93,7 +93,7 @@ class paymentAssessment extends Controller {
 
     function getCollegeTuition($idno, $school_year, $period, $level, $program_code, $tuitionrate, $discounttf, $discountof, $discount_code) {
         $grades = \App\GradeCollege::where('idno', $idno)->where('school_year', $school_year)->where('period', $period)->get();
-        $chartofaccount = \App\ChartOfAccount::where('accounting_name', "Tuition Fees")->first();
+        $chartofaccount = \App\ChartOfAccount::where('accounting_name', "Tuition Fee")->first();
         if (count($grades) > 0) {
             $lab = 0;
             foreach ($grades as $grade) {

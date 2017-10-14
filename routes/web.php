@@ -199,3 +199,7 @@ Route::get('/registrar/adding_dropping/{idno}','Registrar\Grades\AddingDroppingC
 Route::get('/registrar/ajax/adding_dropping/getmainstudentlist','Registrar\Grades\Ajax\adding_dropping@getmainstudentlist');
 Route::get('/registrar/ajax/adding_course/{id}','Registrar\Grades\Ajax\adding_dropping@addcourse');
 Route::get('/registrar/ajax/drop_course/{id}','Registrar\Grades\Ajax\adding_dropping@dropcourse');
+
+//manual changing of grades
+Route::get('/registrar/manualchange_college', 'Registrar\Grades\ManualChanges@college');
+Route::get('/registrar/manualchange_shs');

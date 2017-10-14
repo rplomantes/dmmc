@@ -218,6 +218,16 @@
                                         </tr>
                                         <tr>
                                             <td>
+                                                <a href="{{url('/registrar/manualchange_college')}}"><i class="fa fa-exchange fa-fw" aria-hidden="true"></i> Manual Changes - College/TESDA</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a href="{{url('/registrar/manualchange_shs')}}"><i class="fa fa-exchange fa-fw" aria-hidden="true"></i> Manual Changes - SHS</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
                                                 <a href="{{url('/registrar/adding_dropping')}}"><i class="fa fa-plus-circle fa-fw" aria-hidden="true"></i> Adding/Dropping</a>
                                             </td>
                                         </tr>

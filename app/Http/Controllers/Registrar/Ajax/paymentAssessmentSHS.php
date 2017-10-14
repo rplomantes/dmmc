@@ -80,7 +80,7 @@ class paymentAssessmentSHS extends Controller {
 
     function getSHSTuition($idno, $school_year, $period, $level, $program_code, $track, $tuition, $discounttf, $discount_code, $esc_amount, $getESC) {
 
-        $chartofaccount = \App\ChartOfAccount::where('accounting_name', "Tuition Fees")->first();
+        $chartofaccount = \App\ChartOfAccount::where('accounting_name', "Tuition Fee")->first();
         
         $addledger = new \App\ledger;
         $addledger->idno = $idno;
