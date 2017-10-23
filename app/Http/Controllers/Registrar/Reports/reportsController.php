@@ -32,7 +32,7 @@ class reportsController extends Controller {
             if ($request->program_code == NULL) {
                 $program_code = "";
             } else {
-                $program_code = "and program_code = '" . $request->program_code . "'";
+                $program_code = "and (program_code = '" . $request->program_code . "' or track = '" . $request->program_code . "')";
             }
 
             if ($request->level == NULL) {

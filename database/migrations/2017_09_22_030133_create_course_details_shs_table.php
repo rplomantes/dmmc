@@ -22,6 +22,7 @@ class CreateCourseDetailsShsTable extends Migration
             $table->string('school_year')->nullable();
             $table->string('period')->nullable();
             $table->string('track')->nullable();
+            $table->decimal('hours', 5,2)->nullable();
             $table->string('level')->nullable();
             $table->string('course_type')->nullable();
             $table->timestamps();

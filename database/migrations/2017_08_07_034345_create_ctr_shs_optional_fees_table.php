@@ -23,6 +23,7 @@ class CreateCtrShsOptionalFeesTable extends Migration
             $table->string('receipt_details');
             $table->string('accounting_code')->nullable();
             $table->string('category_switch');
+            $table->string('receipt_type')->default("OR");
             $table->decimal('amount',10,2);
             $table->timestamps();
         });

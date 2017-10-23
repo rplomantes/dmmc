@@ -48,7 +48,7 @@ class OtherPayment extends Controller
             $acctentry->reference_id=$request->referenceid;
             $acctentry->receipt_no=$request->receipt_no;
             $acctentry->idno=$request->idno;
-            $acctentry->paid_by=$student->lastname . "' " . $student->firstname;
+            $acctentry->paid_by=$student->lastname . ", " . $student->firstname;
             $acctentry->category = "Other Payment";
             $acctentry->description = $subsidiary[$i];
             $acctentry->receipt_details = $subsidiary[$i] . " - " . $explanation[$i];

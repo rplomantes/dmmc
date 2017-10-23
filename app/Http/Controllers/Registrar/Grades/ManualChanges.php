@@ -20,4 +20,10 @@ class ManualChanges extends Controller
             return view('registrar.grades.manualchanges_college');
         }
     }
+    function liststudents_college($id) {
+        if (Auth::user()->accesslevel == "3") {
+            $students = \App\GradeCollege::where('course_offering_id', $id)->get();
+            return view('registrar.grades.liststudents_college', compact('students'));
+        }
+    }
 }

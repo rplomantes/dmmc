@@ -202,4 +202,19 @@ Route::get('/registrar/ajax/drop_course/{id}','Registrar\Grades\Ajax\adding_drop
 
 //manual changing of grades
 Route::get('/registrar/manualchange_college', 'Registrar\Grades\ManualChanges@college');
+Route::get('/ajax/manualchange_college/displaysubjects/{idno}', 'Registrar\Grades\Ajax\manualchanges@listsubjectcollege');
+Route::get('/ajax/manualchange_college/prelim/{id}/{grade}', 'Registrar\Grades\Ajax\manualchanges@changeprelim');
+Route::get('/ajax/manualchange_college/midterm/{id}/{grade}', 'Registrar\Grades\Ajax\manualchanges@changemidterm');
+Route::get('/ajax/manualchange_college/final/{id}/{grade}', 'Registrar\Grades\Ajax\manualchanges@changefinal');
+Route::get('/registrar/liststudents/manualchange_college/{id}', 'Registrar\Grades\ManualChanges@liststudents_college');
 Route::get('/registrar/manualchange_shs');
+
+//studentlist
+Route::get('/registrar/studentlist_college','Registrar\Main\StudentList@college');
+Route::get('/registrar/studentlist_shs','Registrar\Main\StudentList@shs');
+Route::get('/registrar/generatereport/studentlist/{course_offering_id}', 'Registrar\Main\StudentList@printStudentlist_college');
+//studentlist ajax
+Route::get('/registrar/ajax/studentlist/getsubjectlistcollege','Registrar\Ajax\GetSubjectList@getlistcollege');
+Route::get('/registrar/ajax/studentlist/getsubjectlistpersearchcollege','Registrar\Ajax\GetSubjectList@getlistpersearchcollege');
+Route::get('/registrar/ajax/studentlist/getsubjectlistshs','Registrar\Ajax\GetSubjectList@getlistshs');
+Route::get('/registrar/ajax/studentlist/getsubjectlistpersearchshs','Registrar\Ajax\GetSubjectList@getlistpersearchshs');

@@ -59,18 +59,22 @@ class paymentAssessment extends Controller {
                 } else {
                     $tuitionfee = \App\CtrSpecialDiscount::where('special_discount_code', $type_of_account)->where('program_code', $program_code)->where('level', $level)->first()->amount;
                     $accounting_code = \App\CtrSpecialDiscount::where('special_discount_code', $type_of_account)->where('program_code', $program_code)->where('level', $level)->first()->accounting_code;
+                    $receiptdetails = \App\CtrSpecialDiscount::where('special_discount_code', $type_of_account)->where('program_code', $program_code)->where('level', $level)->first()->receipt_details;
+                    $receipttype = \App\CtrSpecialDiscount::where('special_discount_code', $type_of_account)->where('program_code', $program_code)->where('level', $level)->first()->receipt_type;
+                    $category = \App\CtrSpecialDiscount::where('special_discount_code', $type_of_account)->where('program_code', $program_code)->where('level', $level)->first()->category;
+                    $catswitch = \App\CtrSpecialDiscount::where('special_discount_code', $type_of_account)->where('program_code', $program_code)->where('level', $level)->first()->category_switch;
                     $addledger = new \App\ledger;
                     $addledger->idno = $idno;
                     $addledger->program_code = $program_code;
                     $addledger->level = $level;
                     $addledger->school_year = $school_year;
                     $addledger->period = $period;
-                    $addledger->category = "Tuition Fee";
+                    $addledger->category = $category;
                     $addledger->description = $type_of_account;
-                    $addledger->receipt_details = "Tuition Fee";
-                    $addledger->receipt_type = "OR";
+                    $addledger->receipt_details = $receiptdetails;
+                    $addledger->receipt_type = $receipttype;
                     $addledger->accounting_code = $accounting_code;
-                    $addledger->category_switch = "3";
+                    $addledger->category_switch = $catswitch;
                     $addledger->amount = $tuitionfee;
                     $addledger->save();
                     $otherfee = $this->getOtherFee($idno, $school_year, $period, $level, $program_code, $discountof, $discount_code);
@@ -97,6 +101,7 @@ class paymentAssessment extends Controller {
         if (count($grades) > 0) {
             $lab = 0;
             foreach ($grades as $grade) {
+                if ($grade->course_code == "NSTP101" or $grade->course_code == "NSTP102"){ $receipt_type = "AR"; } else { $receipt_type = "OR"; }
                 $addledger = new \App\ledger;
                 $addledger->idno = $idno;
                 $addledger->program_code = $program_code;
@@ -106,7 +111,7 @@ class paymentAssessment extends Controller {
                 $addledger->category = "Tuition Fee";
                 $addledger->description = $grade->course_code;
                 $addledger->receipt_details = "Tuition Fee";
-                $addledger->receipt_type = "OR";
+                $addledger->receipt_type = $receipt_type;
                 $addledger->accounting_code = $chartofaccount->accounting_code;
                 $addledger->category_switch = "3";
                 $addledger->amount = (($grade->lec * $tuitionrate * $grade->percent_tuition / 100) + (($grade->lab * $tuitionrate * $grade->percent_tuition / 100) * 3));

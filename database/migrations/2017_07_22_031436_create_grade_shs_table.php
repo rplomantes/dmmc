@@ -16,7 +16,7 @@ class CreateGradeShsTable extends Migration
         Schema::create('grade_shs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('idno');
-            $table->integer('course_offering_id');
+            $table->integer('course_offering_id')->nullable();
             $table->string('course_code');
             $table->string('course_name');
             $table->string('level');

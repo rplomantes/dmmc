@@ -152,6 +152,7 @@ class adding_dropping extends Controller {
         $chartofaccount = \App\ChartOfAccount::where('accounting_name', "Tuition Fee")->first();
         if (count($grades) > 0) {
             foreach ($grades as $grade) {
+                if ($grade->course_code == "NSTP101" or $grade->course_code == "NSTP102"){ $receipt_type = "AR"; } else { $receipt_type = "OR"; }
                 $addledger = new \App\ledger;
                 $addledger->idno = $idno;
                 $addledger->program_code = $program_code;
@@ -161,7 +162,7 @@ class adding_dropping extends Controller {
                 $addledger->category = "Tuition Fee";
                 $addledger->description = $grade->course_code;
                 $addledger->receipt_details = "Tuition Fee";
-                $addledger->receipt_type = "OR";
+                $addledger->receipt_type = $receipt_type;
                 $addledger->accounting_code = $chartofaccount->accounting_code;
                 $addledger->category_switch = "3";
                 $addledger->amount = (($grade->lec * $tuitionrate * $grade->percent_tuition / 100) + (($grade->lab * $tuitionrate * $grade->percent_tuition / 100) * 3));
@@ -227,6 +228,9 @@ class adding_dropping extends Controller {
                                 }
                             }
                         }
+                    }
+                    if ($payment>0){
+                        $this->addstudentdeposit($payment, $idno);
                     }
                 }
             }

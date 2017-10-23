@@ -223,13 +223,16 @@ foreach ($discounts as $discount) {
         <tr>
             <td colspan="3"><b>OTHER PAYMENTS</b></td>
         </tr>
+        <?php $totalotherpayments = 0; ?>
         @foreach ($oaccounts as $oaccount)
+        <?php $totalotherpayments = $oaccount->amount + $totalotherpayments; ?>
         <tr>
             <td>{{$oaccount->description}}</td>
             <td>:</td>
             <td style="border-bottom: 1pt solid black;">Php {{number_format($oaccount->amount,2)}}</td>
         </tr>
         @endforeach
+        <tr><td><strong>Total Other Payments</strong></td><td><strong>:</strong></td><td style="border-bottom: 1pt solid black;"><strong>Php {{number_format($totalotherpayments,2)}}</strong></td></tr>
     </table>
 </div>
 

@@ -276,6 +276,16 @@
                                                 <a href="{{url('/registrar/reports/enrollment_report')}}"><i class="fa fa-group fa-fw" aria-hidden="true"></i> List of Students Enrolled</a>
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <td>
+                                                <a href="{{url('/registrar/studentlist_college')}}"><i class="fa fa-group fa-fw" aria-hidden="true"></i> Student List Per Subject - College</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a href="{{url('/registrar/studentlist_shs')}}"><i class="fa fa-group fa-fw" aria-hidden="true"></i> Student List Per Subject - SHS</a>
+                                            </td>
+                                        </tr>
                                     </table>
                                 </div>
                             </div>
