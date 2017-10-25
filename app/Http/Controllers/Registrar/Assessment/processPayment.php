@@ -114,10 +114,10 @@ class processPayment extends Controller {
         $year = \App\CtrSchoolYear::where('academic_type', $status->academic_type)->first();
         $inc = $referenceID->student_no;
 
-        if (strlen($idno) > 7) {
+        if (strlen($idno) > 9) {
             $changeIDno = \App\User::where('idno', $idno)->first();
             $changeIDno->old_idno = $idno;
-            $newIDno = $changeIDno->idno = substr($year->school_year, 2) . "" . sprintf("%02s", $referenceID->id) . "" . sprintf("%03s", $inc);
+            $newIDno = $changeIDno->idno = substr($year->school_year, 2) . "" . sprintf("%02s", $referenceID->id) . "" . sprintf("%04s", $inc);
             $changeIDno->save();
 
             $incID = \App\CtrReferenceId::where('idno', $userID)->first();
@@ -144,10 +144,11 @@ class processPayment extends Controller {
         $registration_no = substr($year->school_year, -2) . "" . sprintf("%02s", $registrationID->id) . "" . sprintf("%03s", $inc);
 
         $changestatus = \App\Status::where('idno', $idno)->first();
-        $changestatus->status = 3;
+        $changestatus->status = 4;
         $changestatus->registration_no = $registration_no;
         $changestatus->plan = "$paln";
         $changestatus->date_assessed = date('Y-m-d');
+        $changestatus->date_enrolled = date('Y-m-d');
         $changestatus->section = NULL;
         $changestatus->save();
 

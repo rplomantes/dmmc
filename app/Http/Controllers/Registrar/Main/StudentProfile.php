@@ -187,5 +187,20 @@ class StudentProfile extends Controller {
             return $pdf->stream("student_information_sheet_$idno.pdf");
         }
     }
+    
+    function viewGrades($idno) {
+        if (Auth::user()->accesslevel == "3") {
+            $status = \App\Status::where('idno', $idno)->first();
+            if($status->academic_type == "College"){
+                $levels = \App\GradeCollege::distinct()->where('idno', $idno)->get(['level']);
+            }else if ($status->academic_type == "Senior High School"){
+                $levels = \App\GradeShs::distinct()->where('idno', $idno)->get(['level']);
+            }else{
+                
+            }
+            
+            return view('registrar.main.viewgrades', compact('levels', 'status', 'idno'));
+        }
+    }
 
 }

@@ -3,14 +3,14 @@
     <th class="col-sm-2">ID numbers</th>
     <th class="col-sm-6">Student Name</th>
     <th class="col-sm-2">View Profile</th>
-    <th class="col-sm-2">Assess</th>
+    <th class="col-sm-2">Grades</th>
 </thead>
 <tbody>
     @foreach($lists as $list)
     <tr>
         <td>{{$list->idno}}</td>
         <td>{{$list->lastname}} {{$list->extensionname}}, {{$list->firstname}} {{$list->middlename}}</td>
-        <td><a href='{{url('registrar', array('viewstudentprofile', $list->idno))}}'>View Profile</a></td><td><a href='{{url('registrar', array('viewinfo', $list->idno))}}'>Assess</a></td>
+        <td><a href='{{url('registrar', array('viewstudentprofile', $list->idno))}}'>View Profile</a></td><td><a href='{{url('registrar', array('viewgrades', $list->idno))}}'>View Grades</a></td>
     </tr>
     @endforeach
 </tbody>

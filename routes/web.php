@@ -24,7 +24,7 @@ Route::get('/','Main\loginController@index');
 //Registrar Main
 Route::get('/registrar/viewstudentprofile/{idno}','Registrar\Main\StudentProfile@index');
 Route::get('/registrar/printstudentprofile/{idno}', 'Registrar\Main\StudentProfile@printProfile');
-
+Route::get('/registrar/viewgrades/{idno}', 'Registrar\Main\StudentProfile@viewGrades');
 //Student Profile
 Route::post('/registrar/update_profile', 'Registrar\Main\StudentProfile@update');
 
