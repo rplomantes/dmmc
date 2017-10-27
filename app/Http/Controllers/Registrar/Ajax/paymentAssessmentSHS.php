@@ -66,15 +66,21 @@ class paymentAssessmentSHS extends Controller {
         $discount = $tuition * ($discounttf / 100);
 
         $bal = $tuition - $discount;
+        
+        if($esc_amount>$tuition){
+            $minus = $esc_amount-$tuition;
+        }else{
+            $minus = 0;
+        }
 
         if ($discounttf == 0) {
-            return $esc_amount;
+            return $esc_amount - $minus;
         } else if ($bal <= 0) {
             return 0;
         } else if ($bal >= $esc_amount) {
-            return $esc_amount;
+            return $esc_amount - $minus;
         } else {
-            return ($esc_amount - ($esc_amount - $bal));
+            return (($esc_amount - $minus) - (($esc_amount - $minus) - $bal));
         }
     }
 
@@ -127,7 +133,7 @@ class paymentAssessmentSHS extends Controller {
                 $addledger->amount = $otherfee->amount;
                 $addledger->discount = $otherfee->amount * ($discountof / 100);
                 $addledger->discount_code = $discount_code;
-                //$addledger->esc = ($esc_amount-$getESC)/count($otherfees);
+                $addledger->esc = ($esc_amount-$getESC)/count($otherfees);
                 $addledger->save();
             }
 

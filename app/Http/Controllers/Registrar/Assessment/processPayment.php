@@ -52,11 +52,11 @@ class processPayment extends Controller {
                     $addledgerduedates->period = $school_year->period;
                     $addledgerduedates->due_switch = 1;
                     $addledgerduedates->due_date = $paln->due_date;
-                    $addledgerduedates->amount = $this->computeplan($downpaymentamount, $totalTuition, $plans);
-                    $addledgerduedates->amount2 = $this->computeplan($downpaymentamount, $totalTuition, $plans);
+                    $addledgerduedates->amount = $this->computeplan($downpaymentamount, $totalTuition, $plans, $user->academic_type);
+                    $addledgerduedates->amount2 = $this->computeplan($downpaymentamount, $totalTuition, $plans, $user->academic_type);
                     $addledgerduedates->save();
 
-                    $this->compute12percent($downpaymentamount, $totalTuition, $plans, $idno);
+                    $this->compute12percent($downpaymentamount, $totalTuition, $plans, $idno, $user->academic_type);
                 }
             }
             $this->changeledgerstatus($idno);
@@ -66,13 +66,40 @@ class processPayment extends Controller {
         }
     }
 
-    function computeplan($downpaymentamount, $totalTuition, $plans) {
-        $planpayment = (($totalTuition - $downpaymentamount) / count($plans) * 1.12);
+    function computeplan($downpaymentamount, $totalTuition, $plans, $academic_type) {
+        
+        if($academic_type == "College"){
+            $interest = 1.12;
+        } else if ($academic_type == "Senior High School"){
+            if(count($plans) == 4){
+                $interest = 1.09;
+            }else{
+                $interest = 1.135;                
+            }
+            $downpaymentamount = 0;
+        } else {
+            $interest = 1.12;
+        }
+        
+        $planpayment = (($totalTuition - $downpaymentamount) / count($plans) * $interest);
         return $planpayment;
     }
 
-    function compute12percent($downpaymentamount, $totalTuition, $plans, $idno) {
-        $planpayment = (($totalTuition - $downpaymentamount) / count($plans) * 1.12);
+    function compute12percent($downpaymentamount, $totalTuition, $plans, $idno, $academic_type) {
+        if($academic_type == "College"){
+            $interest = 1.12;
+        } else if ($academic_type == "Senior High School"){
+            if(count($plans) == 4){
+                $interest = 1.09;
+            }else{
+                $interest = 1.135;                
+            }
+            $downpaymentamount = 0;
+        } else {
+            $interest = 1.12;
+        }
+        
+        $planpayment = (($totalTuition - $downpaymentamount) / count($plans) * $interest);
         $rawplan = (($totalTuition - $downpaymentamount) / count($plans));
         $percent12 = ($planpayment - $rawplan);
 

@@ -10,7 +10,7 @@
             }
         </style>
 <div align="center">
-    <div class='header_image'><img src = "{{url("/images","dmmclogo2.jpeg")}}" width="8%" alt="DMMCIHS Logo" class="img-thumbnail"></div>
+    <div class='header_image'><img src = "{{public_path("images/dmmclogo2.jpeg")}}" width="8%" alt="DMMCIHS Logo" class="img-thumbnail"></div>
     <b>DMMC INSTITUTE OF HEALTH SCIENCES</b><br>
     <small>#143 Narra St., Mountainview Subd., Tanauan City, Batangas</small><br><br><br>
     <b>DMMC IHS ADMISSION TEST PERMIT</b><br><br><br>

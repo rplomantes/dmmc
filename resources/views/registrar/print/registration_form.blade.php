@@ -31,9 +31,9 @@
         z-index: -1;
     }
 </style>
-<div align='center'><div class='header_image'><img src = "{{url("/images","dmmclogo2.jpeg")}}" width="8%" alt="DMMCIHS Logo" class="img-thumbnail"></div></div>
+<div align='center'><div class='header_image'><img src = "{{public_path("images/dmmclogo2.jpeg")}}" width="8%" alt="DMMCIHS Logo" class="img-thumbnail"></div></div>
 <div class = "watermark">
-    <img src = "{{url("/images","dmmclogo.jpeg")}}" width="80%" alt="DMMCIHS Logo" class="img-thumbnail">
+    <img src = "{{public_path("images/dmmclogo.jpeg")}}" width="80%" alt="DMMCIHS Logo" class="img-thumbnail">
 </div>
 <div align="center">
     <b>DMMC INSTITUTE OF HEALTH SCIENCES</b><br>
@@ -253,7 +253,7 @@ foreach ($discounts as $discount) {
     @endforeach
 </table>
 @else
-<table class="tables" width="100%">
+<table class="tables" width="100%" style="clear:both">
     <tr>
         <th class="ths">Date</th>
         <th class="ths">Description</th>
