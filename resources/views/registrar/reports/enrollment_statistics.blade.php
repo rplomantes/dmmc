@@ -11,6 +11,10 @@ $totalSHS = 0;
 $school_year_college = \App\CtrSchoolYear::where('academic_type', "College")->first();
 $list_college = \App\CtrAcademicProgram::distinct()->where('academic_type', "College")->get(['academic_program']);
 $totalCollege = 0;
+
+$school_year_tesda = \App\CtrSchoolYear::where('academic_type', "TESDA")->first();
+$list_tesda = \App\CtrAcademicProgram::distinct()->where('academic_type', "TESDA")->get(['academic_program']);
+$totalTesda = 0;
 ?>
 <div class="row">
     <div class='col-sm-12'>
@@ -130,11 +134,62 @@ $totalCollege = 0;
                 </tbody>
             </table>
             
+            <!--tesda-->
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th width="30%"><h3>TESDA</h3></th>
+                        <th colspan="2">1st Year</th>
+                        <th colspan="2">2nd Year</th>
+                        <th width="10%">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($list_tesda as $listtesda)
+                    <tr  style="background-color: #ddd">
+                        <th>{{$listtesda->academic_program}}</th>
+                        <th>M</th>
+                        <th>F</th>
+                        <th>M</th>
+                        <th>F</th>
+                        <th></th>
+                    </tr>
+                    <?php
+                    $programs = \App\CtrAcademicProgram::distinct()->where('academic_program', $listtesda->academic_program)->get(['program_code']);
+                    
+                    $totalperProgram = 0;
+                    ?>
+                    @foreach($programs as $program)
+                    
+                    <?php
+                    $firstm = \App\Status::where('status', 4)->where('statuses.school_year', $school_year_tesda->school_year)->where('statuses.period', $school_year_tesda->period)->where('statuses.level', '1st')->where('academic_type', "TESDA")->join('student_infos', 'student_infos.idno', '=', 'statuses.idno')->where('student_infos.gender', 'Male')->where('statuses.program_code', $program->program_code)->get();
+                    $firstf = \App\Status::where('status', 4)->where('statuses.school_year', $school_year_tesda->school_year)->where('statuses.period', $school_year_tesda->period)->where('statuses.level', '1st')->where('academic_type', "TESDA")->join('student_infos', 'student_infos.idno', '=', 'statuses.idno')->where('student_infos.gender', 'Female')->where('statuses.program_code', $program->program_code)->get();
+                    $secondm = \App\Status::where('status', 4)->where('statuses.school_year', $school_year_tesda->school_year)->where('statuses.period', $school_year_tesda->period)->where('statuses.level', '2nd')->where('academic_type', "TESDA")->join('student_infos', 'student_infos.idno', '=', 'statuses.idno')->where('student_infos.gender', 'Male')->where('statuses.program_code', $program->program_code)->get();
+                    $secondf = \App\Status::where('status', 4)->where('statuses.school_year', $school_year_tesda->school_year)->where('statuses.period', $school_year_tesda->period)->where('statuses.level', '2nd')->where('academic_type', "TESDA")->join('student_infos', 'student_infos.idno', '=', 'statuses.idno')->where('student_infos.gender', 'Female')->where('statuses.program_code', $program->program_code)->get();
+                    ?>
+                    <tr>
+                        <td>{{$program->program_code}}</td>
+                        <td>@if(count($firstm)>0) {{count($firstm)}}@endif</td>
+                        <td>@if(count($firstf)>0) {{count($firstf)}}@endif</td>
+                        <td>@if(count($secondm)>0) {{count($secondm)}}@endif</td>
+                        <td>@if(count($secondf)>0) {{count($secondf)}}@endif</td>
+                        <td><?php $totalNow = count($firstm)+count($firstf)+count($secondm)+count($secondf); $totalperProgram = $totalperProgram+$totalNow;?>{{$totalNow}}</td>
+                    </tr>
+                    @endforeach
+                    <tr>
+                        <th colspan="5">Total</th>
+                        <th>{{$totalperProgram}}</th>
+                    </tr>
+                    <?php $totalTesda = $totalperProgram + $totalTesda; ?>
+                    @endforeach
+                </tbody>
+            </table>
+            
             <!--total -->
             <table class="table table-condensed">
                 <tr>
                     <th>Total Enrollees</th>
-                    <th width="10%">{{$totalSHS+$totalCollege}}</th>
+                    <th width="10%">{{$totalSHS+$totalCollege+$totalTesda}}</th>
                 </tr>
             </table>
             
