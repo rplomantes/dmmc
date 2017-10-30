@@ -24,7 +24,7 @@ class AjaxController extends Controller {
     function getmainstudentlistassessmentcollege() {
         if (Request::ajax()) {
             $search = Input::get("search");
-            $lists = DB::select("SELECT * FROM `users` join statuses on users.idno = statuses.idno join student_infos on student_infos.idno = users.idno where (users.lastname like '%$search%' or users.firstname like '%$search%' or users.idno like '%$search%') and statuses.academic_type='College' order by users.lastname asc");
+            $lists = DB::select("SELECT * FROM `users` join statuses on users.idno = statuses.idno join student_infos on student_infos.idno = users.idno where (users.lastname like '%$search%' or users.firstname like '%$search%' or users.idno like '%$search%') and (statuses.academic_type='College' or statuses.academic_type='TESDA') order by users.lastname asc");
             return view('registrar.ajax.getmainstudentlistassessment', compact('lists'));
         }
     }

@@ -171,7 +171,7 @@ class processPayment extends Controller {
         $registration_no = substr($year->school_year, -2) . "" . sprintf("%02s", $registrationID->id) . "" . sprintf("%03s", $inc);
 
         $changestatus = \App\Status::where('idno', $idno)->first();
-        $changestatus->status = 4;
+        $changestatus->status = 3;
         $changestatus->registration_no = $registration_no;
         $changestatus->plan = "$paln";
         $changestatus->date_assessed = date('Y-m-d');

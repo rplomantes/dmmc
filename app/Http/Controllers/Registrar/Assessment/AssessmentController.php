@@ -38,7 +38,7 @@ class AssessmentController extends Controller {
     function viewassessment($idno) {
         if (Auth::user()->accesslevel == "3") {
             $status = \App\Status::where('idno', $idno)->first();
-            if ($status->academic_type != 'College') {
+            if ($status->academic_type == 'Senior High School') {
                 return view('registrar.assessment.viewassessmentshs', compact('status', 'idno'));
             } else {
                 return view('registrar.assessment.viewassessment', compact('status', 'idno'));

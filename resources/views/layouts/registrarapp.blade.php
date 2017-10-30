@@ -162,6 +162,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -196,6 +197,42 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseEight"><span class="fa fa-university fa-fw">
+                                        </span> Course Management - TESDA</a>
+                                </h4>
+                            </div>
+                            <div id="collapseEight" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <table class="table">
+                                        <tr>
+                                            <td>
+                                                <a href="{{url('registrar', array('view_curriculum','tesda'))}}"><i class="fa fa-book fa-fw" aria-hidden="true"></i> View Curriculum</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a href="{{url('registrar', array('course_offering','tesda'))}}"><i class="fa fa-exchange fa-fw" aria-hidden="true"></i> Subject Offering</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a href="{{url('registrar', array('course_scheduling','tesda'))}}"><i class="fa fa-exchange fa-fw" aria-hidden="true"></i> Subject Schedules</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a href="{{url('registrar', array('assign_instructor','tesda'))}}"><i class="fa fa-exchange fa-fw" aria-hidden="true"></i> Assign Instructor</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">

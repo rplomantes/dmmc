@@ -30,6 +30,13 @@ class NewStudentController extends Controller {
             return view('guidance.admission.newstudent_shs', compact('programs'));
         }
     }
+    
+    function newstudent_tesda() {
+        if (Auth::user()->accesslevel == "1") {
+            $programs = DB::Select("Select distinct program_code ,program_name from ctr_academic_programs where academic_type='TESDA'");
+            return view('guidance.admission.newstudent_tesda', compact('programs'));
+        }
+    }
 
     function addapplicant(Request $request) {
         if (Auth::user()->accesslevel == "1") {

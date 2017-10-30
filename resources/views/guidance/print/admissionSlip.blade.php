@@ -53,7 +53,7 @@
             </ol>
         </td>
         <td valign="bottom">
-            <b>RISHA L. MERCADO, MA, RGC</b><br>Head, OSWD/Guidance Counselor
+            <b>RISHA L. MERCADO, MA, RGC, LPT</b><br>Head, OSWD/Guidance Counselor
         </td>
     </tr>
 </table>

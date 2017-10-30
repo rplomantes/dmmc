@@ -140,6 +140,11 @@
                                 </tr>
                                 <tr>
                                     <td>
+                                        <a href="{{url('/guidance/newstudent_tesda')}}"><i class="fa fa-user fa-fw" aria-hidden="true"></i> TESDA Application</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
                                         <a href="{{url('/guidance/list_of_applicants')}}"><i class="fa fa-list fa-fw" aria-hidden="true"></i> List of Applicants</a>
                                     </td>
                                 </tr>
