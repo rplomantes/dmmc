@@ -76,12 +76,15 @@ class processPayment extends Controller {
             }else{
                 $interest = 1.135;                
             }
-            $downpaymentamount = 0;
+                $total = ((($totalTuition) / count($plans) * $interest)*count($plans))-$downpaymentamount;
+                $planpayment = $total/count($plans);
+//            $downpaymentamount = 0;
         } else {
             $interest = 1.12;
+            $planpayment = (($totalTuition - $downpaymentamount) / count($plans) * $interest);
         }
         
-        $planpayment = (($totalTuition - $downpaymentamount) / count($plans) * $interest);
+
         return $planpayment;
     }
 
