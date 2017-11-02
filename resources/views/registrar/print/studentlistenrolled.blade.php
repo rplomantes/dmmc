@@ -1,6 +1,17 @@
 <?php
 $number = 0;
 ?>
+<style>
+            .header_image 
+            {
+                position: absolute;
+                bottom: 890px;
+                right: 0;
+                left: -350;
+                z-index: -1;
+            }
+        </style>
+        <div align="center"><div class='header_image'><img src = "{{public_path("images/dmmclogo2.jpeg")}}" width="8%" alt="DMMCIHS Logo" class="img-thumbnail"></div></div>
 <div align="center">
     <b>DMMC INSTITUTE OF HEALTH SCIENCES</b><br>
     <small>#143 Narra St., Mountainview Subd., Tanauan City, Batangas</small><br><br><br>
@@ -17,7 +28,7 @@ $number = 0;
         <td>Section</td>
         <td>:</td>
         <td style="border-bottom: 1pt solid black;">
-            @if($offering_id->program_code!="Senior High School")
+            @if($offering_id->program_code != NULL)
             {{$offering_id->program_code}} - {{$offering_id->level}} year - section {{$offering_id->section}}
             @else
             {{$offering_id->track}} - {{$offering_id->level}} - section {{$offering_id->section}}

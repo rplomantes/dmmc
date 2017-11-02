@@ -252,9 +252,14 @@ Route::get('/registrar/manualchange_shs');
 //Registrar Studentlist
 Route::get('/registrar/studentlist_college','Registrar\Main\StudentList@college');
 Route::get('/registrar/studentlist_shs','Registrar\Main\StudentList@shs');
-Route::get('/registrar/generatereport/studentlist/{course_offering_id}', 'Registrar\Main\StudentList@printStudentlist_college');
+Route::get('/registrar/studentlist_tesda','Registrar\Main\StudentList@tesda');
+Route::get('/registrar/generatereport/studentlist_college/{course_offering_id}', 'Registrar\Main\StudentList@printStudentlist_college');
+Route::get('/registrar/generatereport/studentlist_shs/{course_offering_id}', 'Registrar\Main\StudentList@printStudentlist_shs');
+Route::get('/registrar/generatereport/studentlist_tesda/{course_offering_id}', 'Registrar\Main\StudentList@printStudentlist_tesda');
 //Ajax Registrar Studentlist
 Route::get('/registrar/ajax/studentlist/getsubjectlistcollege','Registrar\Ajax\GetSubjectList@getlistcollege');
 Route::get('/registrar/ajax/studentlist/getsubjectlistpersearchcollege','Registrar\Ajax\GetSubjectList@getlistpersearchcollege');
 Route::get('/registrar/ajax/studentlist/getsubjectlistshs','Registrar\Ajax\GetSubjectList@getlistshs');
 Route::get('/registrar/ajax/studentlist/getsubjectlistpersearchshs','Registrar\Ajax\GetSubjectList@getlistpersearchshs');
+Route::get('/registrar/ajax/studentlist/getsubjectlisttesda','Registrar\Ajax\GetSubjectList@getlisttesda');
+Route::get('/registrar/ajax/studentlist/getsubjectlistpersearchtesda','Registrar\Ajax\GetSubjectList@getlistpersearchtesda');

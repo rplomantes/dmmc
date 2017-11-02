@@ -24,7 +24,7 @@ class GetSubjectList extends Controller
                 foreach ($course_offerings as $course_offering) {
                     $data = $data . "<tr>"
                             . "<td>" . $course_offering->course_code . "</td>"
-                            . "<td><a href=\"/dean/generatereport/studentlist/$course_offering->id\" target=\"_blank\">". $course_offering->course_name . "</a></td>"
+                            . "<td><a href=\"/registrar/generatereport/studentlist_college/$course_offering->id\" target=\"_blank\">". $course_offering->course_name . "</a></td>"
                             . "<td>" . $course_offering->program_code . " - section " . $course_offering->section . "</td>"
                             . "<td>" . $this->getSchedule($course_offering->id) . "</td>"
                             . "<td>" . $this->getInstructorId($course_offering->id) . "</td>"
@@ -82,7 +82,7 @@ class GetSubjectList extends Controller
                 $data = "<table class=\"table table-condensed\"><thead><th>Subject Name</th><th>Section</th><th>Schedule</th><th>Professor</th></thead>";
                 foreach ($course_offerings as $course_offering) {
                     $data = $data . "<tr>"
-                            . "<td><a href=\"/dean/generatereport/studentlistshs/$course_offering->id\" target=\"_blank\">". $course_offering->course_name . "</a></td>"
+                            . "<td><a href=\"/registrar/generatereport/studentlist_shs/$course_offering->id\" target=\"_blank\">". $course_offering->course_name . "</a></td>"
                             . "<td>" . $course_offering->track . " - section " . $course_offering->section . "</td>"
                             . "<td>" . $this->getScheduleShs($course_offering->id) . "</td>"
                             . "<td>" . $this->getInstructorIdShs($course_offering->id) . "</td>"
@@ -110,7 +110,7 @@ class GetSubjectList extends Controller
                 $data = "<table class=\"table table-condensed\"><thead><th>Subject Name</th><th>Section</th><th>Schedule</th><th>Professor</th></thead>";
                 foreach ($course_offerings as $course_offering) {
                     $data = $data . "<tr>"
-                            . "<td><a href=\"/dean/generatereport/studentlistshs/$course_offering->id\" target=\"_blank\">". $course_offering->course_name . "</a></td>"
+                            . "<td><a href=\"/registrar/generatereport/studentlist_shs/$course_offering->id\" target=\"_blank\">". $course_offering->course_name . "</a></td>"
                             . "<td>" . $course_offering->track . " - section " . $course_offering->section . "</td>"
                             . "<td>" . $this->getScheduleShs($course_offering->id) . "</td>"
                             . "<td>" . $this->getInstructorIdShs($course_offering->id) . "</td>"
@@ -181,6 +181,63 @@ class GetSubjectList extends Controller
         return $data;
         }else {
             return "";
+        }
+    }
+
+    function getlisttesda(){
+        if(Request::ajax()){
+            $level = Input::get("level");
+            $program_code = Input::get("program_code");
+            $academic_program = Input::get("academic_program");
+            
+            $school_year = \App\CtrSchoolYear::where('academic_type', 'TESDA')->first();
+            $course_offerings = \App\CourseOffering::where('level', $level)->where('program_code', $program_code)->where('school_year',$school_year->school_year)->where('period', $school_year->period)->get();
+            
+            if (count($course_offerings)>0){
+                $data = "<table class=\"table table-condensed\"><thead><th>Subject Name</th><th>Section</th><th>Schedule</th><th>Professor</th></thead>";
+                foreach ($course_offerings as $course_offering) {
+                    $data = $data . "<tr>"
+                            . "<td><a href=\"/registrar/generatereport/studentlist_tesda/$course_offering->id\" target=\"_blank\">". $course_offering->course_name . "</a></td>"
+                            . "<td>" . $course_offering->program_code . " - section " . $course_offering->section . "</td>"
+                            . "<td>" . $this->getSchedule($course_offering->id) . "</td>"
+                            . "<td>" . $this->getInstructorId($course_offering->id) . "</td>"
+                            . "</tr>";
+                }
+                $data=$data."</table>";
+                
+                return $data;
+                
+            }else{
+                return "<div class='alert alert-danger'>No subject offerings for this level and course.</div>";
+            }
+        }
+    }
+    
+    function getlistpersearchtesda(){
+        if(Request::ajax()){
+            $search = Input::get("search");
+            $academic_program = Input::get("academic_program");
+            
+            $school_year = \App\CtrSchoolYear::where('academic_type', 'TESDA')->first();
+            $course_offerings = \App\CourseOffering::where('school_year',$school_year->school_year)->where('period', $school_year->period)->where("course_code","like","%".$search."%")->orWhere("course_name","like","%".$search."%")->get();
+            
+            if (count($course_offerings)>0){
+                $data = "<table class=\"table table-condensed\"><thead><th>Subject Name</th><th>Section</th><th>Schedule</th><th>Professor</th></thead>";
+                foreach ($course_offerings as $course_offering) {
+                    $data = $data . "<tr>"
+                            . "<td><a href=\"/registrar/generatereport/studentlist_tesda/$course_offering->id\" target=\"_blank\">". $course_offering->course_name . "</a></td>"
+                            . "<td>" . $course_offering->program_code . " - section " . $course_offering->section . "</td>"
+                            . "<td>" . $this->getSchedule($course_offering->id) . "</td>"
+                            . "<td>" . $this->getInstructorId($course_offering->id) . "</td>"
+                            . "</tr>";
+                }
+                $data=$data."</table>";
+                
+                return $data;
+                
+            }else{
+                return "<div class='alert alert-danger'>No subject offerings for this level and course.</div>";
+            }
         }
     }
 }
