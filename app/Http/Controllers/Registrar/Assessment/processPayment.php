@@ -52,8 +52,8 @@ class processPayment extends Controller {
                     $addledgerduedates->period = $school_year->period;
                     $addledgerduedates->due_switch = 1;
                     $addledgerduedates->due_date = $paln->due_date;
-                    $addledgerduedates->amount = $this->computeplan($downpaymentamount, $totalTuition, $plans, $user->academic_type);
-                    $addledgerduedates->amount2 = $this->computeplan($downpaymentamount, $totalTuition, $plans, $user->academic_type);
+                    $addledgerduedates->amount = $this->computeplan($downpaymentamount, $totalTuition, $plans, $user->academic_type, $idno);
+                    $addledgerduedates->amount2 = $this->computeplan($downpaymentamount, $totalTuition, $plans, $user->academic_type, $idno);
                     $addledgerduedates->save();
 
                     $this->compute12percent($downpaymentamount, $totalTuition, $plans, $idno, $user->academic_type);
@@ -66,42 +66,72 @@ class processPayment extends Controller {
         }
     }
 
-    function computeplan($downpaymentamount, $totalTuition, $plans, $academic_type) {
-        
-        if($academic_type == "College"){
+    function computeplan($downpaymentamount, $totalTuition, $plans, $academic_type, $idno) {
+
+        $type_of_account = \App\Status::where('idno', $idno)->first()->type_of_account;
+        if ($academic_type == "College") {
             $interest = 1.12;
-        } else if ($academic_type == "Senior High School"){
-            if(count($plans) == 4){
-                $interest = 1.09;
-            }else{
-                $interest = 1.135;                
+            $planpayment = (($totalTuition - $downpaymentamount) / count($plans) * $interest);
+        } else if ($academic_type == "Senior High School") {
+            if ($type_of_account == "Public") {
+                if (count($plans) == 4) {
+                    $interest = 1.09;
+                } else {
+                    $interest = 1.135;
+                }
+            } else if ($type_of_account == "Private" or $type_of_account == "ESC Grant") {
+                if (count($plans) == 4) {
+                    $interest = 1.05294117;
+                } else {
+                    $interest = 1.0794117;
+                }
+            } else if ($type_of_account == "No Voucher") {
+                if (count($plans) == 4) {
+                    $interest = 1.02;
+                } else {
+                    $interest = 1.03;
+                }
             }
-                $total = ((($totalTuition) / count($plans) * $interest)*count($plans))-$downpaymentamount;
-                $planpayment = $total/count($plans);
-//            $downpaymentamount = 0;
+            $total = ((($totalTuition) / count($plans) * $interest) * count($plans)) - $downpaymentamount;
+            $planpayment = $total / count($plans);
         } else {
             $interest = 1.12;
             $planpayment = (($totalTuition - $downpaymentamount) / count($plans) * $interest);
         }
-        
+
 
         return $planpayment;
     }
 
     function compute12percent($downpaymentamount, $totalTuition, $plans, $idno, $academic_type) {
-        if($academic_type == "College"){
+        $type_of_account = \App\Status::where('idno', $idno)->first()->type_of_account;
+        if ($academic_type == "College") {
             $interest = 1.12;
-        } else if ($academic_type == "Senior High School"){
-            if(count($plans) == 4){
-                $interest = 1.09;
-            }else{
-                $interest = 1.135;                
+        } else if ($academic_type == "Senior High School") {
+            if ($type_of_account == "Public") {
+                if (count($plans) == 4) {
+                    $interest = 1.09;
+                } else {
+                    $interest = 1.135;
+                }
+            } else if ($type_of_account == "Private" or $type_of_account == "ESC Grant") {
+                if (count($plans) == 4) {
+                    $interest = 1.05294117;
+                } else {
+                    $interest = 1.0794117;
+                }
+            } else if ($type_of_account == "No Voucher") {
+                if (count($plans) == 4) {
+                    $interest = 1.02;
+                } else {
+                    $interest = 1.03;
+                }
             }
             $downpaymentamount = 0;
         } else {
             $interest = 1.12;
         }
-        
+
         $planpayment = (($totalTuition - $downpaymentamount) / count($plans) * $interest);
         $rawplan = (($totalTuition - $downpaymentamount) / count($plans));
         $percent12 = ($planpayment - $rawplan);
@@ -109,7 +139,7 @@ class processPayment extends Controller {
         $status = \App\Status::where('idno', $idno)->first();
         $school_year = \App\CtrSchoolYear::where('academic_type', $status->academic_type)->first();
         $chartofaccount = \App\ChartOfAccount::where('accounting_name', "Accounts Receivables")->first();
-        
+
         $addledger12percent = new \App\ledger;
         $addledger12percent->idno = $status->idno;
         $addledger12percent->program_code = $status->program_code;
