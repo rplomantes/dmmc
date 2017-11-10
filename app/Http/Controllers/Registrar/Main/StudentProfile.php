@@ -19,7 +19,7 @@ class StudentProfile extends Controller {
 
 //        if (count($levels)>0){ 
 //            foreach ($levels as $level){
-//                $courses = \App\Curriculum::where('curriculum_year', $student_info->curriculum_year)
+//                $courses = \App\Curriculum::where('curriculum_year', $updatestudentinfo->curriculum_year)
 //                            ->where('level', $level->level)
 //                            ->where('program_code', $status->program_code)
 //                            ->where('period', $level->period)
@@ -67,7 +67,11 @@ class StudentProfile extends Controller {
             $updateuser->save();
 
             $updatestudentinfo = \App\StudentInfo::where('idno', $request->idno)->first();
-            $updatestudentinfo->address = $request->address;
+            $updatestudentinfo->street = $request->street;
+            $updatestudentinfo->barangay = $request->barangay;
+            $updatestudentinfo->municipality = $request->municipality;
+            $updatestudentinfo->province = $request->province;
+            $updatestudentinfo->zip = $request->zip;
             $updatestudentinfo->contact_no = $request->contact_no;
             $updatestudentinfo->lrn = $request->lrn;
             $updatestudentinfo->birthdate = $request->birthdate;
@@ -122,7 +126,7 @@ class StudentProfile extends Controller {
             $updatestudentinfo->emergency_relationship = $request->emergency_relationship;
             $updatestudentinfo->emergency_address = $request->emergency_address;
             $updatestudentinfo->emergency_contact_no = $request->emergency_contact_no;
-            
+
             $updatestudentinfo->form_137 = $request->form_137;
             $updatestudentinfo->form_138 = $request->form_138;
             $updatestudentinfo->psa_birth_cert = $request->psa_birth_cert;
@@ -184,21 +188,21 @@ class StudentProfile extends Controller {
         if (Auth::user()->accesslevel == "3") {
             $pdf = PDF::loadView('registrar.print.studentInformationSheet', compact('idno'));
             $pdf->setPaper(array(0, 0, 612.00, 936.0));
-            return $pdf->stream("student_information_sheet_$idno.pdf");
+            return $pdf->stream("updatestudentinformation_sheet_$idno.pdf");
         }
     }
-    
+
     function viewGrades($idno) {
         if (Auth::user()->accesslevel == "3") {
             $status = \App\Status::where('idno', $idno)->first();
-            if($status->academic_type == "College"){
+            if ($status->academic_type == "College") {
                 $levels = \App\GradeCollege::distinct()->where('idno', $idno)->get(['level']);
-            }else if ($status->academic_type == "Senior High School"){
+            } else if ($status->academic_type == "Senior High School") {
                 $levels = \App\GradeShs::distinct()->where('idno', $idno)->get(['level']);
-            }else{
+            } else {
                 
             }
-            
+
             return view('registrar.main.viewgrades', compact('levels', 'status', 'idno'));
         }
     }

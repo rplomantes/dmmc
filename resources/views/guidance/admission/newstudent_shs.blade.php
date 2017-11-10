@@ -98,11 +98,30 @@
                     </div>
                 </div>
 
-                <div class="form form-group"> 
-                    <div class="col-sm-12">
-                        <label class="label">Address*</label>
-                        <input type="text" name="address" class="form form-control" value="{{old('address')}}">
-                    </div>
+                <div class="form form-group">
+                        <div class="col-sm-12">
+                            <label class="label">Address*</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" name="street" placeholder="House/Lot & Block No., Street, Subdivision" class="form form-control" value="{{old('street')}}">
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" name="barangay" placeholder="Barangay" class="form form-control" value="{{old('barangay')}}">
+                        </div>
+                </div>
+                <div class="form form-group">
+                        <div class="col-sm-12">
+                            <label class="label"></label>
+                        </div>
+                        <div class="col-sm-5">
+                            <input type="text" name="municipality" placeholder="City/Municipality (REQUIRED)" class="form form-control" value="{{old('municipality')}}">
+                        </div>
+                        <div class="col-sm-5">
+                            <input type="text" name="province" class="form form-control" placeholder="Province (REQUIRED)" value="{{old('province')}}">
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="text" name="zip" class="form form-control" placeholder="ZIP Code" value="{{old('zip')}}">
+                        </div>
                 </div>
 
                 <div class="form form-group">

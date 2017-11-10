@@ -28,7 +28,11 @@ class CreateStudentInfosTable extends Migration
             $table->string('civil_status')->nullable();
             $table->string('religion')->nullable();
             $table->string('gender')->nullable();
-            $table->string('address')->nullable();
+            $table->string('street')->nullable();
+            $table->string('barangay')->nullable();
+            $table->string('municipality')->nullable();
+            $table->string('province')->nullable();
+            $table->string('zip')->nullable();
             $table->string('contact_no')->nullable();
             $table->string('lrn')->nullable();
             

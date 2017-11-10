@@ -40,7 +40,13 @@ $getmother = \App\Family::where('idno', $idno)->where('family_role', "Mother")->
                                         <td><label class="label">Extension Name</label><input class="form form-control" type="text" value="{{$user->extensionname}}" name="extensionname" placeholder="Extensionname"></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2"><label class="label">No. & Street, Brgy, Town/City, Province</label><input class="form form-control" type="text" value="{{$student_info->address}}" name="address" placeholder="No. & Street, Brgy, Town/City, Province"></td>
+                                        <td colspan="1"><label class="label">House/Lot & Block No., Street, Subdivision</label><input class="form form-control" type="text" value="{{$student_info->street}}" name="street" placeholder="House/Lot & Block No., Street, Subdivision"></td>
+                                        <td colspan="1"><label class="label">Barangay</label><input class="form form-control" type="text" value="{{$student_info->barangay}}" name="barangay" placeholder="Barangay"></td>
+                                        <td colspan="2"><label class="label">City/Municipality</label><input class="form form-control" type="text" value="{{$student_info->municipality}}" name="municipality" placeholder="City/Municipality"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="1"><label class="label">Province</label><input class="form form-control" type="text" value="{{$student_info->province}}" name="province" placeholder="Province"></td>
+                                        <td colspan="1"><label class="label">ZIP Code</label><input class="form form-control" type="text" value="{{$student_info->zip}}" name="zip" placeholder="ZIP Code"></td>
                                         <td><label class="label">Contact Number:</label><input class="form form-control" type="text" value="{{$student_info->contact_no}}" name="contact_no" placeholder="Contact Number"></td>
                                         <td><label class="label">LRN:</label><input class="form form-control" type="text" value="{{$student_info->lrn}}" name="lrn" placeholder="LRN"></td>
                                     </tr>

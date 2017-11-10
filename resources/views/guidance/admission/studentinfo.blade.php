@@ -52,7 +52,7 @@
             </tr>
             <tr>
                 <td>Address</td>
-                <td>{{$list->address}}</td>
+                <td>{{$list->street}} {{$list->barangay}} {{$list->municipality}} {{$list->province}} {{$list->zip}}</td>
             </tr>
             <tr>
                 <td>Birth Date</td>

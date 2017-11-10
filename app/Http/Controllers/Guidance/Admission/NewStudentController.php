@@ -46,7 +46,8 @@ class NewStudentController extends Controller {
                 'course' => 'required',
                 'email' => 'required',
                 'birthdate' => 'required',
-                'address' => 'required',
+                'municipality' => 'required',
+                'province' => 'required',
                 'contact_no' => 'required',
                 'gender' => 'required',
             ]);
@@ -90,7 +91,11 @@ class NewStudentController extends Controller {
         $student_info->birthdate = $request->birthdate;
         $student_info->civil_status = $request->civil_status;
         $student_info->gender = $request->gender;
-        $student_info->address = $request->address;
+        $student_info->street = $request->street;
+        $student_info->barangay = $request->barangay;
+        $student_info->municipality = $request->municipality;
+        $student_info->province = $request->province;
+        $student_info->zip = $request->zip;
         $student_info->contact_no = $request->contact_no;
         $student_info->last_school = $request->last_school_attended;
         $student_info->year_graduated = $request->year_graduated;

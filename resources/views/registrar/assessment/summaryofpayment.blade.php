@@ -22,7 +22,7 @@ $school_year = \App\CtrSchoolYear::where('academic_type', $status->academic_type
                     </tr>
                     <tr>
                         <td>Address</td>
-                        <td>{{$student_info->address}}</td>
+                        <td>{{$student_info->street}} {{$student_info->barangay}} {{$student_info->municipality}} {{$student_info->province}} {{$student_info->zip}}</td>
                     </tr>
                     <tr>
                         <td>Birth Date</td>
