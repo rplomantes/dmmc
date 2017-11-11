@@ -28,4 +28,20 @@ class CashierReport extends Controller
         }
     }
     
+    function listofchecks($trandate){
+        if(Auth::user()->accesslevel=="4"){
+            $payments = \App\Payment::where('posted_by',Auth::user()->idno)->where('bank_name', '!=' ,NULL)->where('transaction_date',$trandate)->get();
+            return view('cashier.listofchecks',compact('payments','trandate'));
+        }
+    }
+    
+    function printchecks($transaction_date){
+        if(Auth::user()->accesslevel=="4"){
+        $payments = \App\Payment::where('posted_by',Auth::user()->idno)->where('bank_name', '!=' ,NULL)->where('transaction_date',$transaction_date)->get();     
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadView("cashier.printcheck",compact('payments','transaction_date'));
+        return $pdf->stream();
+        }
+    }
+    
 }

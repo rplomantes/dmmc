@@ -156,7 +156,7 @@
                                
                                 <tr>
                                     <td>
-                                        <a href="">List of Checks</a>
+                                        <a href="{{url('/listofchecks',date('Y-m-d'))}}">List of Checks</a>
                                     </td>
                                 </tr>
                             </table>

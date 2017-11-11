@@ -51,6 +51,8 @@ Route::get('/setreceipt','Cashier\MainPayment@setreceipt');
 Route::post('/setreceipt','Cashier\Mainpayment@setreceiptno');
 Route::get('/searchor','Cashier\ViewLedger@searchor');
 Route::get('/printcollection/{transaction_date}','Cashier\CashierReport@printcollection');
+Route::get('/listofchecks/{trandate}','Cashier\CashierReport@listofchecks');
+Route::get('/printcheck/{transaction_date}','Cashier\CashierReport@printchecks');
 //cashier ajax
 Route::get('/cashier/ajax/getsubsidiary','Cashier\Ajax\CashierController@getsubsidiary');
 Route::get('/cashier/ajax/searchor','Cashier\Ajax\CashierController@searchor');
