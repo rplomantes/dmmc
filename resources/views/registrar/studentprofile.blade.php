@@ -338,6 +338,13 @@ $getmother = \App\Family::where('idno', $idno)->where('family_role', "Mother")->
                                                 <option @if($student_info->id_picture == 1) selected="selected" @endif value="1">Submitted</option>
                                             </select>
                                         </td>
+                                        <td colspan="2">
+                                            <label class="label">Certificate of Clearance</label>
+                                            <select class="form form-control" name="cert_clearance">
+                                                <option @if($student_info->cert_clearance == 0) selected="selected" @endif value="0">Not yet submitted</option>
+                                                <option @if($student_info->cert_clearance == 1) selected="selected" @endif value="1">Submitted</option>
+                                            </select>
+                                        </td>
                                     </tr>
                                 </table>
                             </div>

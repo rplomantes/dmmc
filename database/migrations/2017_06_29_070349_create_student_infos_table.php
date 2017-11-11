@@ -110,6 +110,7 @@ class CreateStudentInfosTable extends Migration
             $table->string('transfer_credential')->default(0);
             $table->string('married_cert')->default(0);
             $table->string('id_picture')->default(0);
+            $table->string('cert_clearance')->default(0);
             
             $table->timestamps();
             $table->foreign('idno')
