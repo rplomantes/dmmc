@@ -18,10 +18,12 @@ class CreateCtrDiscountsTable extends Migration
             $table->integer('discount_code')->unique();
             $table->string('discount_description');
             $table->string('accounting_code')->nullable();
-            $table->integer('other_fee');
-            $table->integer('system_fee');
-            $table->integer('special_fee');
-            $table->integer('tuition_fee');
+            $table->integer('other_fee')->nullable();
+            $table->integer('system_fee')->nullable();
+            $table->integer('special_fee')->nullable();
+            $table->integer('tuition_fee')->nullable();
+            $table->integer('discount_type')->default(0);
+            $table->decimal('amount', 10,2)->nullable();
             $table->timestamps();
         });
     }
