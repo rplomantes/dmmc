@@ -13,6 +13,7 @@ class paymentAssessmentSHS extends Controller {
         if (Request::ajax()) {
             $discounttf = 0;
             $discountof = 0;
+            $discounttype = 0;
 
             $idno = Input::get("idno");
             $level = Input::get("level");
@@ -47,28 +48,38 @@ class paymentAssessmentSHS extends Controller {
             $changestatus->save();
             
             if (!is_null($discount_code)) {
-                $discounttf = $this->getdiscountrate('tf', $discount_code);
-                $discountof = $this->getdiscountrate('of', $discount_code);
+                $discounttype = \App\CtrDiscount::where('discount_code', $discount_code)->first()->discount_type;
+                if ($discounttype == 0){
+                    $discounttf = $this->getdiscountrate('tf', $discount_code);
+                    $discountof = $this->getdiscountrate('of', $discount_code);
+                } else if ($discounttype == 1){
+                    $discounttf = $this->getdiscount('tf', $discount_code);
+                }
             }
 
             if ($academic_type == "Senior High School") {
                 $tfr = \App\CtrShsTuition::where('track', $track)->where('level', $level)->first();
                 $tuition = $tfr->amount;
-                $getESC = $this->getESC($tuition, $discounttf, $esc_amount);
-                $tuitionfee = $this->getSHSTuition($idno, $school_year, $period, $level, $program_code, $track, $tuition, $discounttf, $discount_code, $esc_amount, $getESC);
+                $getESC = $this->getESC($tuition, $discounttf, $esc_amount, $discounttype);
+                $tuitionfee = $this->getSHSTuition($idno, $school_year, $period, $level, $program_code, $track, $tuition, $discounttf, $discount_code, $esc_amount, $getESC, $discounttype);
                 $otherfee = $this->getOtherFee($idno, $school_year, $period, $level, $program_code, $track, $discountof, $discount_code, $esc_amount, $getESC);
                 return view('registrar.assessment.ajax.shsdisplayassessment', compact('idno', 'school_year', 'level', 'period'));
             }
         }
     }
 
-    function getESC($tuition, $discounttf, $esc_amount) {
-        $discount = $tuition * ($discounttf / 100);
+    function getESC($tuition, $discounttf, $esc_amount, $discounttype) {
+        
+        if ($discounttype == 0){
+            $discount = $tuition * ($discounttf / 100);
+        } else if ($discounttype == 1){
+            $discount = $tuition - ($tuition - $discounttf);
+        }
 
         $bal = $tuition - $discount;
         
         if($esc_amount>$tuition){
-            $minus = $esc_amount-$tuition;
+            $minus = ($esc_amount-$tuition);
         }else{
             $minus = 0;
         }
@@ -84,9 +95,15 @@ class paymentAssessmentSHS extends Controller {
         }
     }
 
-    function getSHSTuition($idno, $school_year, $period, $level, $program_code, $track, $tuition, $discounttf, $discount_code, $esc_amount, $getESC) {
+    function getSHSTuition($idno, $school_year, $period, $level, $program_code, $track, $tuition, $discounttf, $discount_code, $esc_amount, $getESC, $discounttype) {
 
         $chartofaccount = \App\ChartOfAccount::where('accounting_name', "Tuition Fee")->first();
+        
+        if ($discounttype == 0){
+            $tobediscount = $tuition * ($discounttf / 100);
+        } else if ($discounttype == 1){
+            $tobediscount = $tuition - ($tuition - $discounttf);
+        }
         
         $addledger = new \App\ledger;
         $addledger->idno = $idno;
@@ -102,7 +119,7 @@ class paymentAssessmentSHS extends Controller {
         $addledger->accounting_code = $chartofaccount->accounting_code;
         $addledger->category_switch = "3";
         $addledger->amount = $tuition;
-        $addledger->discount = $tuition * ($discounttf / 100);
+        $addledger->discount = $tobediscount;
         $addledger->discount_code = $discount_code;
         $addledger->esc = $getESC;
         $addledger->save();
@@ -164,6 +181,11 @@ class paymentAssessmentSHS extends Controller {
             return \App\CtrDiscount::where('discount_code', $discount_code)->first()->tuition_fee;
         } elseif ($type == 'of') {
             return \App\CtrDiscount::where('discount_code', $discount_code)->first()->other_fee;
+        }
+    }
+    function getdiscount($type, $discount_code) {
+        if ($type == 'tf') {
+            return \App\CtrDiscount::where('discount_code', $discount_code)->first()->amount;
         }
     }
 

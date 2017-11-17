@@ -12,6 +12,7 @@ class paymentAssessment extends Controller {
         if (Request::ajax()) {
             $discounttf = 0;
             $discountof = 0;
+            $discounttype = 0;
 
             $idno = Input::get("idno");
             $plan = Input::get("plan");
@@ -45,8 +46,13 @@ class paymentAssessment extends Controller {
             $changestatus->save();
             
             if (!is_null($discount_code)) {
-                $discounttf = $this->getdiscountrate('tf', $discount_code);
-                $discountof = $this->getdiscountrate('of', $discount_code);
+                $discounttype = \App\CtrDiscount::where('discount_code', $discount_code)->first()->discount_type;
+                if ($discounttype == 0){
+                    $discounttf = $this->getdiscountrate('tf', $discount_code);
+                    $discountof = $this->getdiscountrate('of', $discount_code);
+                } else if ($discounttype == 1){
+                    $discounttf = $this->getdiscount('tf', $discount_code);
+                }
             }
 
             if ($academic_type == "College") {
@@ -54,7 +60,7 @@ class paymentAssessment extends Controller {
                     $tfr = \App\CtrCollegeTuition::where('program_code', $program_code)->where('level', $level)->first();
                     $tuitionrate = $tfr->per_unit;
                     $otherfee = $this->getOtherFee($idno, $school_year, $period, $level, $program_code, $discountof, $discount_code);
-                    $tuitionfee = $this->getCollegeTuition($idno, $school_year, $period, $level, $program_code, $tuitionrate, $discounttf, $discountof, $discount_code);
+                    $tuitionfee = $this->getCollegeTuition($idno, $school_year, $period, $level, $program_code, $tuitionrate, $discounttf, $discountof, $discount_code, $discounttype);
                     return view('registrar.assessment.ajax.collegedisplayassessment', compact('idno', 'school_year', 'level', 'period'));
                 } else {
                     $tuitionfee = \App\CtrSpecialDiscount::where('special_discount_code', $type_of_account)->where('program_code', $program_code)->where('level', $level)->first()->amount;
@@ -95,12 +101,18 @@ class paymentAssessment extends Controller {
         }
     }
 
-    function getCollegeTuition($idno, $school_year, $period, $level, $program_code, $tuitionrate, $discounttf, $discountof, $discount_code) {
+    function getCollegeTuition($idno, $school_year, $period, $level, $program_code, $tuitionrate, $discounttf, $discountof, $discount_code, $discounttype) {
         $grades = \App\GradeCollege::where('idno', $idno)->where('school_year', $school_year)->where('period', $period)->get();
         $chartofaccount = \App\ChartOfAccount::where('accounting_name', "Tuition Fee")->first();
         if (count($grades) > 0) {
             $lab = 0;
             foreach ($grades as $grade) {
+                if ($discounttype == 0){
+            $tobediscount = (($grade->lec * $tuitionrate * $grade->percent_tuition / 100) + (($grade->lab * $tuitionrate * $grade->percent_tuition / 100) * 3)) * ($discounttf / 100);
+        } else if ($discounttype == 1){
+            $tobediscount = $discounttf/count($grades);
+        }
+                
                 if ($grade->course_code == "NSTP101" or $grade->course_code == "NSTP102"){ $receipt_type = "AR"; } else { $receipt_type = "OR"; }
                 $addledger = new \App\ledger;
                 $addledger->idno = $idno;
@@ -115,7 +127,7 @@ class paymentAssessment extends Controller {
                 $addledger->accounting_code = $chartofaccount->accounting_code;
                 $addledger->category_switch = "3";
                 $addledger->amount = (($grade->lec * $tuitionrate * $grade->percent_tuition / 100) + (($grade->lab * $tuitionrate * $grade->percent_tuition / 100) * 3));
-                $addledger->discount = (($grade->lec * $tuitionrate * $grade->percent_tuition / 100) + (($grade->lab * $tuitionrate * $grade->percent_tuition / 100) * 3)) * ($discounttf / 100);
+                $addledger->discount = $tobediscount;
                 $addledger->discount_code = $discount_code;
                 $addledger->save();
                 $this->getSpecialFee($grade->course_code, $level, $program_code, $school_year, $period, $idno);
@@ -178,6 +190,11 @@ class paymentAssessment extends Controller {
             return \App\CtrDiscount::where('discount_code', $discount_code)->first()->tuition_fee;
         } elseif ($type == 'of') {
             return \App\CtrDiscount::where('discount_code', $discount_code)->first()->other_fee;
+        }
+    }
+    function getdiscount($type, $discount_code) {
+        if ($type == 'tf') {
+            return \App\CtrDiscount::where('discount_code', $discount_code)->first()->amount;
         }
     }
 
