@@ -263,3 +263,13 @@ Route::get('/registrar/ajax/studentlist/getsubjectlistshs','Registrar\Ajax\GetSu
 Route::get('/registrar/ajax/studentlist/getsubjectlistpersearchshs','Registrar\Ajax\GetSubjectList@getlistpersearchshs');
 Route::get('/registrar/ajax/studentlist/getsubjectlisttesda','Registrar\Ajax\GetSubjectList@getlisttesda');
 Route::get('/registrar/ajax/studentlist/getsubjectlistpersearchtesda','Registrar\Ajax\GetSubjectList@getlistpersearchtesda');
+
+//Registrar Forms
+Route::get('/registrar/forms/clearance', 'Registrar\Forms\Clearance@viewClearance');
+Route::get('/registrar/forms/REGForm01-2011_blank', 'Registrar\Forms\Clearance@viewBlank_clearance');
+Route::get('/registrar/forms/{idno}/{form}', 'Registrar\Forms\Clearance@view_clearance');
+Route::post('/registrar/forms/REGForm01-2011_bulk', 'Registrar\Forms\Clearance@bulk_clearance');
+
+//Ajax Registrar Forms
+Route::get('/registrar/ajax/clearance_sections/{course}/{level}', 'Registrar\Ajax\clearance@getSection');
+Route::get('/registrar/ajax/studentclearancelist', 'Registrar\Ajax\clearance@getSearch');

@@ -10,7 +10,6 @@ $program_name = \App\CtrAcademicProgram::where('program_code', $program_code)->f
 <style>
     .label{color: gray;}
 </style>
-
 <div class="row">
     <div class='col-sm-12'>
         <div id="imaginary_container">

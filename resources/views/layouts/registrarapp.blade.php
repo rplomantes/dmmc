@@ -333,6 +333,26 @@
                             </div>
                         </div>
                         
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseNine"><span class="fa fa-file-text fa-fw">
+                                        </span> Forms</a>
+                                </h4>
+                            </div>
+                            <div id="collapseNine" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <table class="table">
+                                        <tr>
+                                            <td>
+                                                <a href="{{url('/registrar/forms/clearance')}}"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i> Clearance Form</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
                 <div class="col-sm-9 col-md-9">
